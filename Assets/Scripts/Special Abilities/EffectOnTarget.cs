@@ -9,15 +9,10 @@ using EffectType = Constants.EffectType;
 [System.Serializable]
 public class EffectOnTarget : SpecialAbility {
 
-    public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
 
 
 
-    public override void RegisterEventListeners() {
-
-    }
-
-    private void Unsubscribe() {
+    protected override void Unsubscribe() {
         if (source == null) {
             Debug.LogError("[Effect on Target] has no source cardvisual");
             return;
@@ -28,40 +23,32 @@ public class EffectOnTarget : SpecialAbility {
             return;
         }
 
-
-        Debug.Log("[Effect on Target is Unsubscribing]");
-        //source.StartCoroutine(CombatManager.SetTargetingMode(CombatManager.TargetingMode.CombatTargeting));
-
-
-        //CombatManager.StaticReset();
-        //source.owner.combatManager.ResetTargeting();
-        //CombatManager.combatManager.targetCallback -= Effect;
-        source.owner.combatManager.targetCallback -= Effect;
+        CombatManager.combatManager.confirmedTargetCallback -= ProcessEffect;
 
     }
 
-    public override void Effect(CardVisual card) {
 
-        Debug.Log("[Effect on Target] Applying effect");
+    protected override void Effect(CardVisual card) {
 
-        switch (effect) {
-            case EffectType.StatAdjustment:
-                ApplyStatAdjustments(card);
-                Unsubscribe();
-                break;
+        base.Effect(card);
 
-        }
+        Unsubscribe();
+
+        //targets.Add(card);
+
+        //Debug.Log("[Effect on Target] Applying effect");
+
+        //switch (effect) {
+        //    case EffectType.StatAdjustment:
+        //        ApplyStatAdjustments(card);
+        //        Unsubscribe();
+        //        break;
+
+        //}
     }
 
 
 
 
-
-
-    private void ApplyStatAdjustments(CardVisual card) {
-        for(int i = 0; i < statAdjustments.Count; i++) {
-            card.RPCAlterStat(PhotonTargets.All, statAdjustments[i]);
-        }
-    }
 
 }

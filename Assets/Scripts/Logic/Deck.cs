@@ -51,24 +51,12 @@ public class Deck : Photon.MonoBehaviour {
         activeCards.Add(card);
         card.currentDeck = this;
 
-        //EventManager.CardEnteringZone(card, this);
+        EventData data = new EventData();
 
+        data.AddMonoBehaviour("Card", card);
+        data.AddMonoBehaviour("Deck", this);
 
-
-
-        if (photonView.isMine) {
-
-            EventData data = new EventData();
-
-            data.AddMonoBehaviour("Card", card);
-            data.AddMonoBehaviour("Deck", this);
-
-            Grid.EventManager.SendEvent(Constants.GameEvent.CardEnteredZone, data);
-        }
-        else {
-            Debug.Log(card.cardData.cardImage + " has been added to " + gameObject.name + " it's not my deck " + " view ID is " + photonView.viewID);
-        }
-
+        Grid.EventManager.SendEvent(Constants.GameEvent.CardEnteredZone, data);
 
     }
 
@@ -78,20 +66,29 @@ public class Deck : Photon.MonoBehaviour {
             activeCards.Remove(card);
         }
 
-        //EventManager.CardLeavingZone(card, this);
+        EventData data = new EventData();
+
+        data.AddMonoBehaviour("Card", card);
+        data.AddMonoBehaviour("Deck", this);
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.CardLeftZone, data);
     }
 
 
     public void DrawCard() {
         if (photonView.isMine && activeCards.Count > 0 && owner.GetComponent<Deck>().activeCards.Count < owner.handManager.cardPositions.Count) {
 
+            int randomCard = Random.Range(0, activeCards.Count);
+            //Debug.Log(activeCards[randomCard].gameObject.name);
+
+
             //if (owner.gameHasStarted) {
-            activeCards[0].RPCSetCardAciveState(PhotonTargets.All, true);
+            activeCards[randomCard].RPCSetCardAciveState(PhotonTargets.All, true);
             //}
 
             switch (decktype) {
                 case DeckType.Grimoire:
-                    RPCTransferCard(PhotonTargets.All, activeCards[0], owner.myHand);
+                    RPCTransferCard(PhotonTargets.All, activeCards[randomCard], owner.myHand);
 
                     break;
 
@@ -112,7 +109,7 @@ public class Deck : Photon.MonoBehaviour {
         if (cards == null)
             cards = activeCards;
 
-        for(int i = 0; i < cards.Count; i++) {
+        for (int i = 0; i < cards.Count; i++) {
             //CreatureCardVisual creature;
             //if (cards[i] is CreatureCardVisual) {
             //    creature = cards[i] as CreatureCardVisual;
@@ -129,6 +126,8 @@ public class Deck : Photon.MonoBehaviour {
 
     public IEnumerator SpawnAllCards() {
 
+        //Debug.Log(gameObject.name + " is spawning cards");
+
         int index = 0;
         foreach (CardData card in cards) {
             yield return null;
@@ -136,6 +135,7 @@ public class Deck : Photon.MonoBehaviour {
             switch (card.primaryCardType) {
                 case Constants.CardType.Soul:
                     CardFactory(card, GlobalSettings._globalSettings.creatureCard.name, null, index);
+                    //Debug.Log(card.cardName + " is a soul and being spawned");
                     break;
 
                 case Constants.CardType.Spell:
@@ -150,16 +150,16 @@ public class Deck : Photon.MonoBehaviour {
             }
         }
 
-        if(_allCards.activeCards.Count >= cards.Count) {
-            DoneSpawningCards();
-        }
+        //if(_allCards.activeCards.Count >= cards.Count) {
+        //    DoneSpawningCards();
+        //}
     }
 
     public void DoneSpawningCards() {
-        Debug.Log(gameObject.name +  " Is done spanwing cards");
-        for(int i = 0; i < activeCards.Count; i++) {
-            activeCards[i].SourceAssignment();
-        }
+        Debug.Log(gameObject.name + " Is done spanwing cards");
+        //for(int i = 0; i < activeCards.Count; i++) {
+        //    activeCards[i].SourceAssignment();
+        //}
     }
 
     private void CardFactory(CardData data, string prefabname, Deck targetDeck = null, int index = 0) {
@@ -195,7 +195,7 @@ public class Deck : Photon.MonoBehaviour {
         //Debug.Log(cardVisual.photonView.viewID + " has been created");
         //cardVisual.InitializeSpecialAbilities(cardVisual.photonView.viewID);
 
-        
+
     }
 
     public void AssignCardLocationAndOwner(GameObject newCard, Player owner, Deck parent) {
@@ -422,7 +422,7 @@ public class Deck : Photon.MonoBehaviour {
     }
 
     private IEnumerator SendCardToSoulCrypt(CardVisual card) {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
 
         if (card.photonView.isMine) {
             card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
@@ -434,11 +434,13 @@ public class Deck : Photon.MonoBehaviour {
             creature.RPCToggleExhaust(PhotonTargets.All, false);
         }
 
+        card.RestCardData();
         //card.RPCSetUpCardData(PhotonTargets.All);
-        card.SetupCardData();
-        card.transform.localPosition = new Vector3(-40f, 20f, 20f);
+        //card.SetupCardData();
+        if(card.photonView.isMine)
+            card.transform.localPosition = new Vector3(-40f, 20f, 20f);
 
-        
+
     }
 
     #endregion

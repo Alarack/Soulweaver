@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 224120972217879946}
   - component: {fileID: 222465845838051906}
   - component: {fileID: 114358862556072744}
+  - component: {fileID: 95329766460164288}
   m_Layer: 5
   m_Name: Size
   m_TagString: Untagged
@@ -256,6 +257,7 @@ GameObject:
   - component: {fileID: 114276585371048872}
   - component: {fileID: 114921991416364142}
   - component: {fileID: 65124979451756100}
+  - component: {fileID: 114023969125079232}
   m_Layer: 8
   m_Name: PlayerCard
   m_TagString: Untagged
@@ -421,6 +423,7 @@ GameObject:
   - component: {fileID: 224127453062855680}
   - component: {fileID: 222470452698506692}
   - component: {fileID: 114248757318455336}
+  - component: {fileID: 95957095223129186}
   m_Layer: 5
   m_Name: Attack
   m_TagString: Untagged
@@ -470,6 +473,7 @@ GameObject:
   - component: {fileID: 224293501141851212}
   - component: {fileID: 222692372722376252}
   - component: {fileID: 114771451426901998}
+  - component: {fileID: 95713389157305630}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -569,6 +573,57 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 10, z: 0}
   m_Center: {x: 0.36, y: 0, z: 0}
+--- !u!95 &95329766460164288
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1345991998131800}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c49a332c77d88984cab0433ea17784ed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95713389157305630
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1841813277329774}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c49a332c77d88984cab0433ea17784ed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95957095223129186
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809184325446844}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c49a332c77d88984cab0433ea17784ed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114003679217407432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -590,6 +645,24 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 50
+--- !u!114 &114023969125079232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1469190766055066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc370f6f65fbf30449958e1d7a58dd23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textAnimInfo:
+  - rect: {fileID: 224127453062855680}
+    stat: 2
+  - rect: {fileID: 224120972217879946}
+    stat: 3
+  - rect: {fileID: 224293501141851212}
+    stat: 4
 --- !u!114 &114117774987432028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -864,6 +937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 114856733758317724}
   attack: {fileID: 114248757318455336}
   size: {fileID: 114358862556072744}
   health: {fileID: 114771451426901998}
@@ -925,6 +999,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 4294961664
+  animationManager: {fileID: 114023969125079232}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -938,7 +1013,8 @@ MonoBehaviour:
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114573520174807894}
   cardSizeText: {fileID: 114774396572043598}
   cardHealthText: {fileID: 114234402383070808}

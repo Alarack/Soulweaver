@@ -9,10 +9,14 @@ public class CardIDs {
         TestPlayer = 1,
 
 
-        //Neutral Cards
+        //Test Cards
         Shock_100 = 100,
         Awe_101 = 101,
-        FlameSprite_102 = 102
+        FlameSprite_102 = 102,
+        PainLover_103 = 103,
+        Blargen_104 = 104,
+        FireLover_105 = 105,
+        ATKBuffTotem_106 = 106,
 
     }
 

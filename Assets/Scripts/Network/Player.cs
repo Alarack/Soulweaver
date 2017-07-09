@@ -112,10 +112,7 @@ public class Player : Photon.MonoBehaviour {
                     if(battlefield != null)
                         RefreshMySouls();
 
-                    EventData data = new EventData();
-                    data.AddMonoBehaviour("Player", this);
-
-                    Grid.EventManager.SendEvent(Constants.GameEvent.TurnStarted, data);
+                    RPCBroadcastTurnStart(PhotonTargets.All, this);
 
                     break;
 
@@ -148,7 +145,11 @@ public class Player : Photon.MonoBehaviour {
             gameState = GameStates.Idle;
         }
 
-    }
+        if (Input.GetKeyDown(KeyCode.D)) {
+            DrawFromGrimoire();
+        }
+
+    }//End of Update
 
 
 
@@ -163,6 +164,8 @@ public class Player : Photon.MonoBehaviour {
         //EndOfTurnCleanUp();
         //KillGlow();
         //EventManager.EffectOnEndTurn();
+
+        RPCBroadcastTurnEnd(PhotonTargets.All, this);
     }
 
     //void KillGlow() {
@@ -485,6 +488,47 @@ public class Player : Photon.MonoBehaviour {
     }
 
 
+    //The call for this is in Combat Manager
+    [PunRPC]
+    public void BroadcastAttacker(int id) {
+        CardVisual attacker = Finder.FindCardByID(id);
+
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Card", attacker);
+        Grid.EventManager.SendEvent(Constants.GameEvent.CharacterAttacked, data);
+
+    }
+
+    public void RPCBroadcastTurnStart(PhotonTargets targets, Player player) {
+        int playerID = player.photonView.viewID;
+        photonView.RPC("BroadcastTurnStart", targets, playerID);
+    }
+
+
+    [PunRPC]
+    public void BroadcastTurnStart(int playerID) {
+        Player p = Finder.FindPlayerByID(playerID);
+
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Player", p);
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.TurnStarted, data);
+    }
+
+    public void RPCBroadcastTurnEnd(PhotonTargets targets, Player player) {
+        int playerID = player.photonView.viewID;
+        photonView.RPC("BroadcastTurnEnd", targets, playerID);
+    }
+
+    [PunRPC]
+    public void BroadcastTurnEnd(int playerID) {
+        Player p = Finder.FindPlayerByID(playerID);
+
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Player", p);
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.TurnEnded, data);
+    }
 
 
     //[PunRPC]

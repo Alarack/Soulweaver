@@ -5,16 +5,17 @@ using UnityEngine;
 public class Constants {
 
     public enum CardType {
+        None = 0,
         Soul,
         Spell,
         Enchantment,
         Relic,
         Domain,
-        None,
         Player
     }
 
     public enum SubTypes {
+        None = 0,
         Zombie,
         Skeleton,
         Phoenix,
@@ -28,7 +29,6 @@ public class Constants {
         Gift,
         Curse,
         Emanation,
-        None,
         Spider,
         Artificial,
         Soldier,
@@ -41,10 +41,12 @@ public class Constants {
         Manipulator,
         Devourer,
         Nightmare,
-        Cultist
+        Cultist,
+        Token
     }
 
     public enum Attunements {
+        None = 0,
         Air,
         Earth,
         Fire,
@@ -61,10 +63,11 @@ public class Constants {
         Unholy,
         Order,
         Chaos,
-        None
+
     }
 
-    public enum Keywords : byte {
+    public enum Keywords {
+        None = 0,
         Flight,
         Momentum,
         Guardian,
@@ -82,7 +85,6 @@ public class Constants {
         Pacifist,
         Defender,
         DamageVulnerable,
-        None,
         Reanimator,
         NoIntercept,
         AttackSelf,
@@ -92,15 +94,39 @@ public class Constants {
         Exhausted
     }
 
-    public enum SpecialAbilityActivationTrigger {
-        Inspire,
-        Finale,
-        EndofTurn,
-        BeginingOfTurn,
-        EveryTurn
+    public enum AbilityActivationTrigger {
+        None = 0,
+        TakesDamage,
+        EntersZone,
+        LeavesZone,
+        Attacks,
+        Defends,
+        Dies,
+        Healed,
+        TurnStarts,
+        TurnEnds,
+        Targted
+
+    }
+
+    public enum ConstraintType {
+        None = 0,
+        Owner,
+        PrimaryType,
+        AdditionalType,
+        CurrentZone,
+        PreviousZone,
+        Subtype,
+        Attunement,
+        Keyword,
+        StatMinimum,
+        StatMaximum,
+        CreatureStatus
+
     }
 
     public enum EffectType {
+        None = 0,
         StatAdjustment,
         ZoneChange,
         SpawnToken,
@@ -117,7 +143,6 @@ public class Constants {
         SpawnMultipleTokens,
         DrawCards,
         SummonCopy,
-        None,
         Dispel,
         ForceIntercept,
         MindControl,
@@ -133,28 +158,57 @@ public class Constants {
         SpawnTokenSet
     }
 
+
+    public enum SpecialAbilityTypes {
+        None = 0,
+        UserSingleTargeted,
+        LogicMultiTarget,
+        
+    }
+
+    public enum EffectDuration {
+        None = 0,
+        Permanent,
+        EndOfTurn,
+        StartOfTurn,
+        WhileInZone
+    }
+
     public enum OwnerConstraints {
+        None = 0,
         All,
         Mine,
         Theirs,
-        None
+
     }
 
     public enum DeckType {
+        None = 0,
         Grimoire,
         Domain,
         Hand,
         SoulCrypt,
         Battlefield,
         Void,
-        AllCards
+        AllCards,
+
     }
 
     public enum CardStats {
+        None = 0,
         Cost,
         Attack,
         Size,
-        Health
+        Health,
+
+    }
+
+    public enum CreatureStatus {
+        None = 0,
+        Damaged,
+        Undamaged,
+        MostStat,
+        LeastStat
     }
 
     public enum GameEvent {
@@ -166,7 +220,12 @@ public class Constants {
         CreatureDied = 102,
 
         TurnStarted = 200,
-        TurnEnded = 201
+        TurnEnded = 201,
+
+        CreatureStatAdjusted = 300,
+        CharacterAttacked = 301,
+
+        CardClicked = 400
     }
 
 

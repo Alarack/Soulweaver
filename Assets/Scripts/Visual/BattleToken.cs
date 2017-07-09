@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BattleToken : MonoBehaviour {
 
-    
 
+    public Image image;
     public Text attack;
     public Text size;
     public Text health;
@@ -18,7 +18,9 @@ public class BattleToken : MonoBehaviour {
 
     public void Initalize(CardCreatureData data, CreatureCardVisual parentCard) {
         _creatureData = data;
+
         _parentCard = parentCard;
+        image.sprite = data.cardImage;
         SetUpTokenText();
     }
 

@@ -59,4 +59,10 @@ MonoBehaviour:
   - ToggleKeyword
   - TargetCard
   - UntargetCard
+  - BroadcastAttacker
+  - BroadcastTurnEnd
+  - BroadcastTurnStart
+  - ApplystatAdjustment
+  - RemoveStatAdjustment
+  - ApplyCombatDamage
   DisableAutoOpenWizard: 1

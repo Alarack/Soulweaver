@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5061d9f85402c4495c4bd500cc14a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decktype: 1
+  decktype: 2
   cards: []
   activeCards: []
   owner: {fileID: 0}

@@ -15,21 +15,15 @@ MonoBehaviour:
   cardName: Flame Sprite
   cardText: 'Inspire: Deal 1 Damage'
   cardCost: 1
-  cardImage: {fileID: 0}
-  primaryCardType: 0
+  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
+  cardImagePos: {x: 0, y: 36.7}
+  primaryCardType: 1
   otherCardTypes: 
-  attunements: 02000000
-  subTypes: 04000000
+  attunements: 03000000
+  subTypes: 05000000
   keywords: 
-  specialAbilities:
-  - type: 0
-    effect: 0
-    abilityName: Flame Sprite 30 Effect On Target
-    effectValue: 0
-    source: {fileID: 0}
-    statAdjustments:
-    - stat: 2
-      value: 1
+  userTargtedAbilities: []
+  multiTargetAbilities: []
   attack: 1
   size: 1
-  health: 2
+  health: 3

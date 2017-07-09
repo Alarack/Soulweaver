@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class CreatureCardVisual : CardVisual {
 
 
@@ -59,13 +60,41 @@ public class CreatureCardVisual : CardVisual {
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
     }
 
-    public override void AlterCardStats(Constants.CardStats stat, int value) {
-        base.AlterCardStats(stat, value);
+    public override void RestCardData() {
+        base.RestCardData();
+
+
+        int tempAtk = _creatureData.attack;
+        attack = tempAtk;
+
+        int tempSize = _creatureData.size;
+        size = tempSize;
+
+        int tempHealth = _creatureData.health;
+        health = tempHealth;
+
+
+        cardAttackText.text = _creatureData.attack.ToString();
+        cardSizeText.text = _creatureData.size.ToString();
+        cardHealthText.text = _creatureData.health.ToString();
+
+        TextTools.SetTextColor(cardAttackText, Color.white);
+        TextTools.SetTextColor(cardSizeText, Color.white);
+        TextTools.SetTextColor(cardHealthText, Color.white);
+
+        battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Attack, attack);
+        battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Size, size);
+        battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
+
+    }
+
+    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source) {
+        base.AlterCardStats(stat, value, source);
 
         //Debug.Log("creature card alter stat");
         switch (stat) {
             case Constants.CardStats.Attack:
-                TextTools.AlterTextColor(value, _creatureData.attack, cardAttackText);
+                
                 attack += value;
 
                 if (attack <= 0)
@@ -73,10 +102,11 @@ public class CreatureCardVisual : CardVisual {
 
                 cardAttackText.text = attack.ToString();
                 battleToken.UpdateBattleTokenTokenText(stat, attack);
+                TextTools.AlterTextColor(attack, _creatureData.attack, cardAttackText);
                 break;
 
             case Constants.CardStats.Size:
-                TextTools.AlterTextColor(value, _creatureData.size, cardSizeText);
+                
                 size += value;
 
                 if (size <= 0)
@@ -84,13 +114,16 @@ public class CreatureCardVisual : CardVisual {
 
                 cardSizeText.text = size.ToString();
                 battleToken.UpdateBattleTokenTokenText(stat, size);
+                TextTools.AlterTextColor(size, _creatureData.size, cardSizeText);
                 break;
 
             case Constants.CardStats.Health:
-                TextTools.AlterTextColor(value, _creatureData.health, cardHealthText);
+
+                
                 health += value;
                 cardHealthText.text = health.ToString();
                 battleToken.UpdateBattleTokenTokenText(stat, health);
+                TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
                 break;
         }
     }
