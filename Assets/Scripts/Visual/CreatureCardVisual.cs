@@ -24,6 +24,9 @@ public class CreatureCardVisual : CardVisual {
     public int attack;
     public int size;
     public int health;
+    [Header("VFX")]
+    public string damageVFX;
+    public CardVFX damageToken;
 
     private CardCreatureData _creatureData;
 
@@ -121,9 +124,21 @@ public class CreatureCardVisual : CardVisual {
 
                 
                 health += value;
+
+                if(health > _creatureData.health) {
+                    health = _creatureData.health;
+                }
+
+
                 cardHealthText.text = health.ToString();
                 battleToken.UpdateBattleTokenTokenText(stat, health);
                 TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
+
+
+                if(value < 0) {
+                    RPCShowDamage(PhotonTargets.All, value);
+                }
+
                 break;
         }
     }
@@ -218,7 +233,32 @@ public class CreatureCardVisual : CardVisual {
 
     }
 
+    public void RPCShowDamage(PhotonTargets targets, int damage) {
+        //GameObject dmgVFX = PhotonNetwork.Instantiate(damageVFX, transform.position, Quaternion.identity, 0) as GameObject;
+        //CardVFX vfx = dmgVFX.GetComponent<CardVFX>();
+        //int id = dmgVFX.GetPhotonView().viewID;
 
+        photonView.RPC("ShowDamage", targets, damage);
+    }
+
+
+    [PunRPC]
+    public void ShowDamage(int value) {
+        //CardVFX vfx = Finder.FindEffectByID(vfxID).GetComponent<CardVFX>();
+
+        //vfx.transform.SetParent(battleToken.incomingEffectLocation, true);
+        //vfx.transform.localPosition = Vector3.zero;
+        //vfx.transform.SetParent(vfx.transform);
+
+        //vfx.SetText(value.ToString());
+
+        damageToken.SetText(value.ToString());
+        damageToken.PlayAnim();
+        damageToken.PlayParticles();
+
+
+
+    }
 
 
     #endregion

@@ -15,6 +15,8 @@ public class CardData : ScriptableObject {
     public Sprite cardImage;
     public Vector2 cardImagePos;
 
+    public string attackEffect;
+
     [Header("Types and Attunements")]
     public Constants.CardType primaryCardType;
     public List<Constants.CardType> otherCardTypes = new List<Constants.CardType>();

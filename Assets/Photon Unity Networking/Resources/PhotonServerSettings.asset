@@ -65,4 +65,9 @@ MonoBehaviour:
   - ApplystatAdjustment
   - RemoveStatAdjustment
   - ApplyCombatDamage
+  - DeployAttackEffect
+  - BeginDrawing
+  - StopDrawing
+  - SetVFXActiveState
+  - ShowDamage
   DisableAutoOpenWizard: 1

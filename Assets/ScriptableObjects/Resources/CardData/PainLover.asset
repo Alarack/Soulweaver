@@ -17,11 +17,13 @@ MonoBehaviour:
   cardCost: 1
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
+  attackEffect: VFX_Primal_Slash
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0e000000
   subTypes: 05000000
   keywords: 
+  specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   attack: 1

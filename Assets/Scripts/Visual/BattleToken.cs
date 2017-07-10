@@ -12,6 +12,7 @@ public class BattleToken : MonoBehaviour {
     public Text health;
     [Space(10)]
     public GameObject battleTokenGlow;
+    public Transform incomingEffectLocation;
 
     private CreatureCardVisual _parentCard;
     private CardCreatureData _creatureData;

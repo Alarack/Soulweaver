@@ -21,6 +21,7 @@ public class CombatManager : Photon.MonoBehaviour {
 
 
     public static CombatManager combatManager;
+    public DrawLine lineDrawer;
     public TargetingMode targetingMode;
     public LayerMask whatIsCard;
     public bool isChoosingTarget;
@@ -58,8 +59,11 @@ public class CombatManager : Photon.MonoBehaviour {
         if(Input.GetMouseButtonDown(1) && isInCombat && owner.myTurn) {
             EndCombat();
         }
-        if (Input.GetKeyDown(KeyCode.T)) {
-            ActivateSpellTargeting();
+
+        if(isInCombat && attacker != null) {
+
+            lineDrawer.BeginDrawing(attacker.battleToken.incomingEffectLocation.position, Input.mousePosition);
+            //lineDrawer.RPCBeginDrawing(PhotonTargets.Others, attacker.battleToken.incomingEffectLocation.position, Input.mousePosition);
         }
 
 
@@ -237,6 +241,12 @@ public class CombatManager : Photon.MonoBehaviour {
 
         SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -damageDealer.attack, false, false, damageDealer);
 
+        if(damageDealer.attackEffect != null) {
+            GameObject atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
+
+            damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker);
+        }
+       
 
         damageTaker.RPCApplyCombatDamage(PhotonTargets.All, adj, attacker);
 
@@ -286,6 +296,10 @@ public class CombatManager : Photon.MonoBehaviour {
 
         isInCombat = false;
         selectingDefender = false;
+
+        if (lineDrawer.lineRenderer.enabled) {
+            lineDrawer.RPCStopDrawing(PhotonTargets.All);
+        }
 
     }
 

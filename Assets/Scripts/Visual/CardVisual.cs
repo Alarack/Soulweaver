@@ -26,6 +26,9 @@ public class CardVisual : Photon.MonoBehaviour {
     public GameObject glow;
     public GameObject cardFront;
     public GameObject cardBack;
+    [Header("Particle Info")]
+    public string attackEffect;
+
     [Header("Colors Info")]
     public Color32 activeColor;
     public Color32 targetedColor;
@@ -61,23 +64,15 @@ public class CardVisual : Photon.MonoBehaviour {
     public List<MultiTargetedAbility> multiTargetAbiliies = new List<MultiTargetedAbility>();
 
 
-
-
     protected float lerpSmoothing = 10f;
     protected CardVisualState _visualState;
     protected Vector3 position;
 
     protected CombatManager combatManager;
 
-
     protected virtual void Start() {
         combatManager = FindObjectOfType<CombatManager>();
-
-
-        //Debug.Log(specialAbilities[0].source.gameObject.name + " is my ability source");
     }
-
-
 
     protected virtual void Update() {
 
@@ -100,11 +95,6 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    public virtual void RegisterEventListeners() {
-
-    }
-
-
     public virtual void SetupCardData() {
         if (cardData == null) {
             Debug.LogError("[Visual Card] Card Data is Null");
@@ -122,6 +112,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         cardImage.sprite = cardData.cardImage;
         cardImage.transform.localPosition = cardData.cardImagePos;
+        attackEffect = cardData.attackEffect;
 
         // Initalizing Current Data
         int tempCost = cardData.cardCost;
@@ -156,17 +147,6 @@ public class CardVisual : Photon.MonoBehaviour {
             multiTargetAbiliies.Add(newEffect);
         }
 
-        //List<SpecialAbility> allSpecials = new List<SpecialAbility>(cardData.allAbilities);
-
-        //foreach (SpecialAbility ability in allSpecials) {
-        //    SpecialAbility newAbility = ObjectCopier.Clone(ability) as SpecialAbility;
-        //    specialAbilities.Add(ability);
-        //}
-
-
-
-
-
         for (int i = 0; i < userTargtedAbilities.Count; i++) {
             //userTargtedAbilities[i].source = this;
             userTargtedAbilities[i].Initialize(this);
@@ -177,19 +157,12 @@ public class CardVisual : Photon.MonoBehaviour {
             multiTargetAbiliies[i].Initialize(this);
         }
 
-        //for (int i = 0; i < specialAbilities.Count; i++) {
-        //    userTargtedAbilities[i].source = this;
-        //    specialAbilities[i].Initialize(this);
-        //}
-
-        Debug.Log(specialAbilities.Count + " is the total number of specials on " + cardData.cardName);
+        //Debug.Log(specialAbilities.Count + " is the total number of specials on " + cardData.cardName);
     }
 
 
     public virtual void RestCardData() {
         statAdjustments.Clear();
-
-
 
     }
 
@@ -272,15 +245,8 @@ public class CardVisual : Photon.MonoBehaviour {
             glow.SetActive(false);
     }
 
-    //public virtual void ApplyStatAdjustment(SpecialAbility.StatAdjustment adjustment) {
-    //    RPCAlterStat(PhotonTargets.All, adjustment.stat, adjustment.value);
-    //}
 
 
-    public virtual void ApplyStatAdjustments(List<SpecialAbility.StatAdjustment> adjustments) {
-
-
-    }
 
     #region Private Methods
 
@@ -333,7 +299,18 @@ public class CardVisual : Photon.MonoBehaviour {
             //Debug.Log("Targeting");
 
             RPCTargetCard(PhotonTargets.All, true);
+
+            if(this is CreatureCardVisual && combatManager.isInCombat) {
+                CreatureCardVisual soul = this as CreatureCardVisual;
+
+                combatManager.lineDrawer.RPCBeginDrawing(PhotonTargets.Others, combatManager.attacker.battleToken.incomingEffectLocation.position, soul.battleToken.incomingEffectLocation.position);
+            }
+
+            
+
         }
+
+
 
         if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
             RPCTargetCard(PhotonTargets.All, false);
@@ -352,10 +329,18 @@ public class CardVisual : Photon.MonoBehaviour {
     protected virtual void OnMouseExit() {
         if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
             RPCTargetCard(PhotonTargets.All, false);
+
+
+            if (this is CreatureCardVisual) {
+                CreatureCardVisual soul = this as CreatureCardVisual;
+
+                combatManager.lineDrawer.RPCStopDrawing(PhotonTargets.Others);
+            }
+
+
         }
 
     }
-
 
 
     protected void KeepCardInhand() {
@@ -400,35 +385,6 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     #region Events
-    // Event stuff
-    //private void OnEnterZone(EventData data) {
-    //    CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
-    //    Deck deck = data.GetMonoBehaviour("Deck") as Deck;
-
-    //    if (currentDeck.decktype == Constants.DeckType.Battlefield) {
-
-    //        if (deck.decktype == Constants.DeckType.Battlefield) {
-    //            Debug.Log(card.cardData.cardName + " has entered " + deck.decktype.ToString());
-    //            combatManager.targetCallback += DealOneDamage;
-    //            combatManager.isChoosingTarget = true;
-    //        }
-    //    }
-    //}
-
-    //private void DealOneDamage(CardVisual target) {
-    //    target.RPCAlterStat(PhotonTargets.All, Constants.CardStats.Health, -1);
-    //}
-
-    //private void OnTurnStart(EventData data) {
-    //    Player player = data.GetMonoBehaviour("Player") as Player;
-
-
-    //    if (currentDeck.decktype == Constants.DeckType.Battlefield) {
-    //        Debug.Log(player.gameObject.name + " has started their turn");
-    //    }
-    //}
-
-
 
 
     #endregion
@@ -605,24 +561,14 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
     public virtual void RPCApplyStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
-        //int statEnum = (int)adjustment.stat;
-        //int value = adjustment.value;
         int sourceID = source.photonView.viewID;
-        //bool stacks = adjustment.nonStacking;
-        //bool temp = adjustment.temporary;
 
         photonView.RPC("ApplystatAdjustment", targets, sourceID, adjustment.uniqueID);
     }
 
     [PunRPC]
     public void ApplystatAdjustment(int sourceID, int adjID) {
-        //Constants.CardStats statEnum = (Constants.CardStats)stat;
         CardVisual source = Finder.FindCardByID(sourceID);
-
-        //SpecialAbility.StatAdjustment newAdjustment = new SpecialAbility.StatAdjustment(statEnum, value, nonStacking, temp, source);
-
-        //SpecialAbility.StatAdjustment target = null;
-
 
         //TODO: Make this search a single ability list
         for(int i = 0; i < source.specialAbilities.Count; i++) {
@@ -632,34 +578,18 @@ public class CardVisual : Photon.MonoBehaviour {
                 SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
 
                 if(adj.uniqueID == adjID) {
-                    Debug.Log("Match found : " +adj.source.gameObject.name + " and " + gameObject.name);
-
-
+                    //Debug.Log("Match found : " +adj.source.gameObject.name + " and " + gameObject.name);
 
                     if (adj.nonStacking && statAdjustments.Contains(adj)) {
-                        Debug.Log("Non Stacking effect found, aborting");
+                        //Debug.Log("Non Stacking effect found, aborting");
                         return;
                     }
-                        
-
 
                     AlterCardStats(adj.stat, adj.value, adj.source);
                     statAdjustments.Add(adj);
                 }
-
             }
         }
-
-
-        //for(int i = 0; i < statAdjustments.Count; i++) {
-        //    if(statAdjustments[i].source == newAdjustment.source && statAdjustments[i].nonStacking) {
-        //        return;
-        //    }
-        //}
-
-        //AlterCardStats(statEnum, value, source);
-        //statAdjustments.Add(newAdjustment);
-
     }
 
     //public virtual void RPCRemoveStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
@@ -679,12 +609,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public virtual void RPCRemoveStatAdjustment(PhotonTargets targets, int adjID, CardVisual source) {
         int sourceID = source.photonView.viewID;
 
-
-        //if (removeStat) {
-        //    value = -value;
-        //}
-
-        Debug.Log(adjID + " is the ID I'm Sending");
+        //Debug.Log(adjID + " is the ID I'm Sending");
 
         photonView.RPC("RemoveStatAdjustment", targets, adjID, sourceID);
     }
@@ -693,10 +618,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public void RemoveStatAdjustment(int adjID, int sourceID) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(adjID + " is the ID I'm searching for");
-
-        //SpecialAbility.StatAdjustment targetAdj = new ;
-
+        //Debug.Log(adjID + " is the ID I'm searching for");
 
         for (int i = 0; i < source.specialAbilities.Count; i++) {
             SpecialAbility special = source.specialAbilities[i];
@@ -705,10 +627,10 @@ public class CardVisual : Photon.MonoBehaviour {
                 SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
 
                 if (adj.uniqueID == adjID) {
-                    Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
+                    //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
 
                     if (!adj.temporary) {
-                        Debug.Log("This adjustment is not temporary, aborting");
+                        //Debug.Log("This adjustment is not temporary, aborting");
                         return;
                     }
 
@@ -716,32 +638,8 @@ public class CardVisual : Photon.MonoBehaviour {
                     statAdjustments.Remove(adj);
                 
                 }
-
             }
         }
-
-
-
-
-
-
-
-        //for (int i = 0; i < statAdjustments.Count; i++) {
-        //    if(statAdjustments[i].source == source && statAdjustments[i].uniqueID == adjID) {
-
-        //        Debug.Log("Found match");
-
-        //        AlterCardStats(statAdjustments[i].stat, -statAdjustments[i].value, statAdjustments[i].source);
-        //        statAdjustments.Remove(statAdjustments[i]);
-        //        break;
-        //    }
-        //}
-
-        //Forget removeing the stat from the list, just do the inverse value and call it good.
-        //or do the unique ID thing and don't send a adjustment, just an id, then use finder.
-
-
-
     }
 
     public virtual void RPCTargetCard(PhotonTargets targets, bool target) {
@@ -818,8 +716,41 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     }
+    
+    
+    
+    public virtual void RPCDeployAttackEffect(PhotonTargets targets, int effectId, CardVisual target) {
+        int targetID = target.photonView.viewID;
+
+        photonView.RPC("DeployAttackEffect", targets, effectId, targetID);
+    }
+
+    [PunRPC]
+    public void DeployAttackEffect(int effectID, int targetID) {
+        GameObject effect = Finder.FindEffectByID(effectID);
+        CreatureCardVisual target = Finder.FindCardByID(targetID) as CreatureCardVisual;
+
+        if(target.battleToken.incomingEffectLocation != null) {
+            effect.transform.SetParent(target.battleToken.incomingEffectLocation, false);
+            effect.transform.localPosition = Vector3.zero;
+        }
+    }
+
+
+
+    
+    
+    
+    
+    
     #endregion
 
+
+
+
+
+
+    #region PhotonNetwork Methods
 
     protected void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
@@ -830,4 +761,5 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
+    #endregion
 }

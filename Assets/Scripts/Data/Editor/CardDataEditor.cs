@@ -36,6 +36,13 @@ public class CardDataEditor : Editor {
        // _cardData.cardImagePos = EditorHelper.Vector2Field(_cardData.cardImagePos);
         _cardData.cardImagePos = EditorGUILayout.Vector2Field("Card Image Position", _cardData.cardImagePos);
 
+
+        _cardData.attackEffect = EditorGUILayout.TextField("Attack Effect Name", _cardData.attackEffect);
+
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+
         _cardData.primaryCardType = (Constants.CardType)EditorGUILayout.EnumPopup("Primary Type", _cardData.primaryCardType);
         _cardData.otherCardTypes = EditorHelper.DrawList("Other Card Types", _cardData.otherCardTypes, true, Constants.CardType.None, true, DrawCardTypes);
         _cardData.subTypes = EditorHelper.DrawList("Subtypes", _cardData.subTypes, true, Constants.SubTypes.None, true, DrawSubtypes);
@@ -92,11 +99,11 @@ public class CardDataEditor : Editor {
 
     private T DrawAbilityList<T>(T ability ) where T : SpecialAbility {
 
-        return (T)DrawUserTargetedAbilities(ability);
+        return (T)DrawSpecalAbilities(ability);
     }
 
 
-    private SpecialAbility DrawUserTargetedAbilities(SpecialAbility entry) {
+    private SpecialAbility DrawSpecalAbilities(SpecialAbility entry) {
 
 
         EditorHelper.DrawInspectorSectionHeader("Effect Triggers:");
@@ -127,6 +134,7 @@ public class CardDataEditor : Editor {
         EditorGUILayout.Separator();
 
         EditorHelper.DrawInspectorSectionHeader("Effect:");
+        entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
         entry.duration = EditorHelper.EnumPopup("Duration", entry.duration);
         entry.statAdjustments = EditorHelper.DrawExtendedList("Stat Adjustments", entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);

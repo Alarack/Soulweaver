@@ -255,34 +255,34 @@ public static class Finder {
         }
     }
 
-    public static bool CheckConstraints(CardVisual card,
-        CardType primaryType = CardType.None,
-        Subtypes subType = Subtypes.None,
-        Attunements attunement = Attunements.None,
-        Keywords keyword = Keywords.None,
-        OwnerConstraints ownerConstraint = OwnerConstraints.None) {
+    //public static bool CheckConstraints(CardVisual card,
+    //    CardType primaryType = CardType.None,
+    //    Subtypes subType = Subtypes.None,
+    //    Attunements attunement = Attunements.None,
+    //    Keywords keyword = Keywords.None,
+    //    OwnerConstraints ownerConstraint = OwnerConstraints.None) {
 
-        bool result = true;
+    //    bool result = true;
 
-        if (primaryType != CardType.None && result)
-            result = CardHasPrimaryType(card, primaryType);
+    //    if (primaryType != CardType.None && result)
+    //        result = CardHasPrimaryType(card, primaryType);
 
-        if (subType != Subtypes.None && result)
-            result = CardHasSubType(card, subType);
+    //    if (subType != Subtypes.None && result)
+    //        result = CardHasSubType(card, subType);
 
-        if (attunement != Attunements.None && result)
-            result = CardHasAttunement(card, attunement);
+    //    if (attunement != Attunements.None && result)
+    //        result = CardHasAttunement(card, attunement);
 
-        if (keyword != Keywords.None && result)
-            result = CardHasKeyword(card, keyword);
+    //    if (keyword != Keywords.None && result)
+    //        result = CardHasKeyword(card, keyword);
 
-        if (ownerConstraint != OwnerConstraints.None && result)
-            result = CardHasOwner(card, ownerConstraint);
+    //    if (ownerConstraint != OwnerConstraints.None && result)
+    //        result = CardHasOwner(card, ownerConstraint);
 
 
-        return result;
+    //    return result;
 
-    }
+    //}
 
 
     public static Deck FindDeckByID(int id) {
@@ -309,6 +309,20 @@ public static class Finder {
         }
 
         return data;
+    }
+
+    public static GameObject FindEffectByID(int id) {
+        GameObject[] allEffects = GameObject.FindGameObjectsWithTag("VFX");
+
+        for(int i = 0; i < allEffects.Length; i++) {
+            if(allEffects[i].GetPhotonView().viewID == id) {
+                return allEffects[i];
+            }
+        }
+
+
+        return null;
+
     }
 
 

@@ -17,6 +17,7 @@ MonoBehaviour:
   cardCost: 1
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
+  attackEffect: VFX_Primal_Slash
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0b000000
@@ -80,6 +81,7 @@ MonoBehaviour:
       leastStat: 0
       thisCardOnly: 0
     ID: 0
+    abilityVFX: 
     statAdjustments: []
   multiTargetAbilities: []
   attack: 2

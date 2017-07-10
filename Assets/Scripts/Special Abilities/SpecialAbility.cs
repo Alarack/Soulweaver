@@ -34,6 +34,7 @@ public abstract class SpecialAbility {
     //public List<Constraint> constraints = new List<Constraint>();
     public ConstraintList limitations = new ConstraintList();
     public int ID;
+    public string abilityVFX;
 
     public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
 
@@ -73,6 +74,11 @@ public abstract class SpecialAbility {
 
         if(!targets.Contains(card))
             targets.Add(card);
+
+
+        if(abilityVFX != null && abilityVFX != "") {
+            CreateVFX();
+        }
 
         //Debug.Log("[Special Ability] Applying effect");
 
@@ -592,6 +598,16 @@ public abstract class SpecialAbility {
 
 
     #endregion
+
+
+    public void CreateVFX() {
+
+        GameObject atkVFX = PhotonNetwork.Instantiate(abilityVFX, targets[0].transform.position, Quaternion.identity, 0) as GameObject;
+
+        source.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, targets[0]);
+    }
+
+
 
 
     private void InitializeStatAdjusments() {

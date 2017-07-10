@@ -17,14 +17,14 @@ MonoBehaviour:
   cardCost: 1
   cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
   cardImagePos: {x: 0, y: 16.8}
+  attackEffect: VFX_Primal_Slash
   primaryCardType: 1
   otherCardTypes: 
   attunements: 03000000
   subTypes: 05000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities: []
-  multiTargetAbilities:
+  userTargtedAbilities:
   - trigger: 02000000
     duration: 0
     triggerConstraints:
@@ -44,9 +44,30 @@ MonoBehaviour:
       leastStat: 0
       thisCardOnly: 1
     sourceConstraints:
-      types: 
+      types: 04000000
       owner: 0
       primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 05000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    effect: 1
+    abilityName: 
+    effectValue: 0
+    source: {fileID: 0}
+    targets: []
+    limitations:
+      types: 02000000
+      owner: 0
+      primaryType: 0100000006000000
       additionalType: 
       subtype: 
       keyword: 
@@ -59,36 +80,16 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
-    effect: 0
-    abilityName: 
-    effectValue: 0
-    source: {fileID: 0}
-    targets: []
-    limitations:
-      types: 02000000010000000700000004000000
-      owner: 2
-      primaryType: 01000000
-      additionalType: 
-      subtype: 
-      keyword: 
-      attunement: 03000000
-      currentZone: 03000000
-      previousZone: 
-      creatureStatus: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
     ID: 0
+    abilityVFX: VFX_Heal_Gold
     statAdjustments:
-    - stat: 2
+    - stat: 4
       value: 1
       nonStacking: 0
       temporary: 0
       source: {fileID: 0}
-      uniqueID: 0
-    numberofTargets: 0
+      uniqueID: -1
+  multiTargetAbilities: []
   attack: 2
   size: 1
   health: 3
