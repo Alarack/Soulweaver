@@ -17,6 +17,9 @@ public class CardIDs {
         Blargen_104 = 104,
         FireLover_105 = 105,
         ATKBuffTotem_106 = 106,
+        SparkSpawner_107 =107,
+        SparkSpawn_108 = 108,
+        AngrySkeletons_109 = 109,
 
     }
 

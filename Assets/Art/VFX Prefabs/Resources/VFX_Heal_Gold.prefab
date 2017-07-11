@@ -71,6 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4125870432336434}
   - component: {fileID: 114648615312512542}
+  - component: {fileID: 114300196456240200}
   m_Layer: 0
   m_Name: VFX_Heal_Gold
   m_TagString: VFX
@@ -164,6 +165,28 @@ Transform:
   m_Father: {fileID: 4334859499047700}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114300196456240200
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1388787995138818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f14685eda5eb2408b3d26a75cff76d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 5
+  moveSpeed: 1
+  lerpSmoothing: 10
+  active: 0
+  beginMovement: 0
+  target: {fileID: 0}
+  optionalText: {fileID: 0}
+  animMain: {fileID: 0}
+  animText: {fileID: 0}
+  particles: {fileID: 0}
+  playAnimOnStart: 0
 --- !u!114 &114648615312512542
 MonoBehaviour:
   m_ObjectHideFlags: 1

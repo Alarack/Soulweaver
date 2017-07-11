@@ -49,6 +49,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public List<SpecialAbility.StatAdjustment> statAdjustments = new List<SpecialAbility.StatAdjustment>();
     [Header("Types and Attunements")]
     public int essenceCost;
+    public bool isToken;
     public Constants.CardType primaryCardType;
     public List<Constants.CardType> otherCardTypes = new List<Constants.CardType>();
     public List<Constants.Attunements> attunements = new List<Constants.Attunements>();
@@ -61,7 +62,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     public List<EffectOnTarget> userTargtedAbilities = new List<EffectOnTarget>();
-    public List<MultiTargetedAbility> multiTargetAbiliies = new List<MultiTargetedAbility>();
+    public List<LogicTargetedAbility> multiTargetAbiliies = new List<LogicTargetedAbility>();
 
 
     protected float lerpSmoothing = 10f;
@@ -140,10 +141,10 @@ public class CardVisual : Photon.MonoBehaviour {
             userTargtedAbilities.Add(newEffect);
         }
 
-        List<MultiTargetedAbility> tempMulti = new List<MultiTargetedAbility>(cardData.multiTargetAbilities);
+        List<LogicTargetedAbility> tempMulti = new List<LogicTargetedAbility>(cardData.multiTargetAbilities);
 
-        foreach (MultiTargetedAbility effect in tempMulti) {
-            MultiTargetedAbility newEffect = ObjectCopier.Clone(effect) as MultiTargetedAbility;
+        foreach (LogicTargetedAbility effect in tempMulti) {
+            LogicTargetedAbility newEffect = ObjectCopier.Clone(effect) as LogicTargetedAbility;
             multiTargetAbiliies.Add(newEffect);
         }
 
@@ -668,6 +669,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public void RPCToggleIntercept(PhotonTargets targets, bool intercept) {
         photonView.RPC("ToggleKeyword", targets, intercept, (int)Constants.Keywords.Interceptor);
+    }
+
+    public void RPCAddKeyword(PhotonTargets targets, Constants.Keywords keyword, bool add) {
+        photonView.RPC("ToggleKeyword", targets, add, (int)keyword);
     }
 
     [PunRPC]

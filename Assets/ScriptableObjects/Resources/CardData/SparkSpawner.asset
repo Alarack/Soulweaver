@@ -9,22 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: FlameSprite
+  m_Name: SparkSpawner
   m_EditorClassIdentifier: 
-  cardID: 102
-  cardName: Flame Sprite
-  cardText: 'Inspire: Deal 1 Damage'
+  cardID: 107
+  cardName: Spark Spawner
+  cardText: 'Inspire: Summon a Spark Spawn'
   cardCost: 1
-  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
-  cardImagePos: {x: 0, y: 36.7}
+  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 03000000
+  attunements: 01000000
   subTypes: 05000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
+  userTargtedAbilities: []
+  multiTargetAbilities:
   - trigger: 02000000
     duration: 0
     triggerConstraints:
@@ -59,20 +60,20 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
-    effect: 1
+    effect: 3
     abilityName: 
     effectValue: 0
     source: {fileID: 0}
     targets: []
     limitations:
-      types: 0200000004000000
+      types: 
       owner: 0
-      primaryType: 01000000
+      primaryType: 
       additionalType: 
       subtype: 
       keyword: 
       attunement: 
-      currentZone: 05000000
+      currentZone: 
       previousZone: 
       creatureStatus: 
       minStats: []
@@ -81,25 +82,20 @@ MonoBehaviour:
       leastStat: 0
       thisCardOnly: 0
     ID: 0
-    abilityVFX: VFX_Primal_Slash
-    statAdjustments:
-    - stat: 4
-      value: -1
-      nonStacking: 0
-      temporary: 0
-      source: {fileID: 0}
-      uniqueID: -1
-    keywordsToAddorRemove: 0900000010000000
-    copyTargets: 1
-    spawnableTokenDataName: 
-    spawnTokenLocation: 3
-    spawnCardType: 0
+    abilityVFX: 
+    statAdjustments: []
+    keywordsToAddorRemove: 
+    copyTargets: 0
+    spawnableTokenDataName: SparkSpawn
+    spawnTokenLocation: 5
+    spawnCardType: 1
     numberOfSpawns: 1
-    targetZone: 3
+    targetZone: 0
     requireMultipleTriggers: 0
     triggersRequired: 0
     counter: 0
-  multiTargetAbilities: []
-  attack: 1
+    logicTargetingMethod: 0
+    numberofTargets: 0
+  attack: 2
   size: 1
   health: 3

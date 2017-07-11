@@ -54,7 +54,7 @@ public class CardDataEditor : Editor {
         _cardData.userTargtedAbilities = EditorHelper.DrawExtendedList("User Targted Effects", _cardData.userTargtedAbilities, "Ability", DrawAbilityList);
         EditorGUILayout.Separator();
         EditorGUILayout.Separator();
-        _cardData.multiTargetAbilities = EditorHelper.DrawExtendedList("Multi Target Effects", _cardData.multiTargetAbilities, "Ability", DrawAbilityList);
+        _cardData.multiTargetAbilities = EditorHelper.DrawExtendedList("Logic Target Effects", _cardData.multiTargetAbilities, "Ability", DrawAbilityList);
 
 
         //_cardData.specialAbilityTypes = EditorHelper.DrawList("Special Abilitiy Type", _cardData.specialAbilityTypes, true, Constants.SpecialAbilityTypes.None, true, DrawAbilityTypes);
@@ -69,33 +69,33 @@ public class CardDataEditor : Editor {
         //PopulateSpecialAbilitiesList(_cardData.userTargtedAbilities);
         //PopulateSpecialAbilitiesList(_cardData.multiTargetAbilities);
 
-
-        EditorUtility.SetDirty(target);
-
-
+        if(GUI.changed)
+            EditorUtility.SetDirty(target);
 
 
-        DrawDefaultInspector();
+
+
+        //DrawDefaultInspector();
     }
 
-    private void ShowSpecialAbility(Constants.SpecialAbilityTypes type) {
-        switch (type) {
-            case Constants.SpecialAbilityTypes.UserSingleTargeted:
-                _cardData.allAbilities = EditorHelper.DrawExtendedList("User Targted Abilities", _cardData.allAbilities, "Ability", DrawAbilityList);
-                break;
-        }
+    //private void ShowSpecialAbility(Constants.SpecialAbilityTypes type) {
+    //    switch (type) {
+    //        case Constants.SpecialAbilityTypes.UserSingleTargeted:
+    //            _cardData.allAbilities = EditorHelper.DrawExtendedList("User Targted Abilities", _cardData.allAbilities, "Ability", DrawAbilityList);
+    //            break;
+    //    }
 
-    }
+    //}
 
 
-    private void PopulateSpecialAbilitiesList<T>(List<T> abilities) where T : SpecialAbility {
+    //private void PopulateSpecialAbilitiesList<T>(List<T> abilities) where T : SpecialAbility {
 
-        foreach(SpecialAbility ability in abilities) {
-            if (!_cardData.allAbilities.Contains(ability)) {
-                Debug.Log("Adding an ability to a list of all");
-            }
-        }
-    }
+    //    foreach(SpecialAbility ability in abilities) {
+    //        if (!_cardData.allAbilities.Contains(ability)) {
+    //            Debug.Log("Adding an ability to a list of all");
+    //        }
+    //    }
+    //}
 
     private T DrawAbilityList<T>(T ability ) where T : SpecialAbility {
 
@@ -109,7 +109,10 @@ public class CardDataEditor : Editor {
         EditorHelper.DrawInspectorSectionHeader("Effect Triggers:");
 
         entry.trigger = EditorHelper.DrawList("Triggers", entry.trigger, true, AbilityActivationTrigger.None, true, DrawActivationTrigger);
-
+        entry.requireMultipleTriggers = EditorGUILayout.Toggle("Require Multiple Triggers?", entry.requireMultipleTriggers);
+        if (entry.requireMultipleTriggers) {
+            entry.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggersRequired);
+        }
         EditorGUILayout.Separator();
 
         entry.triggerConstraints.thisCardOnly = EditorGUILayout.Toggle("Only this card can trigger this effect?", entry.triggerConstraints.thisCardOnly);
@@ -136,6 +139,37 @@ public class CardDataEditor : Editor {
         EditorHelper.DrawInspectorSectionHeader("Effect:");
         entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
+
+        switch (entry.effect) {
+            case EffectType.SpawnToken:
+                entry.copyTargets = EditorGUILayout.Toggle("Copy targets?", entry.copyTargets);
+
+                if (!entry.copyTargets) {
+                    entry.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.spawnableTokenDataName);
+                    entry.spawnCardType = EditorHelper.EnumPopup("Card Type", entry.spawnCardType);
+                }
+
+                entry.spawnTokenLocation = EditorHelper.EnumPopup("Send Token Where?", entry.spawnTokenLocation);
+                entry.numberOfSpawns = EditorGUILayout.IntField("Number of Spawns", entry.numberOfSpawns);
+
+                break;
+
+            case EffectType.ZoneChange:
+                entry.targetZone = EditorHelper.EnumPopup("Target Zone", entry.targetZone);
+                break;
+
+            case EffectType.GrantKeywordAbilities:
+            case EffectType.RemoveKeywordAbilities:
+                entry.keywordsToAddorRemove = EditorHelper.DrawList("Keywords", entry.keywordsToAddorRemove, true, Keywords.None, true, DrawKeywords);
+                //entry.removeKeyword = EditorGUILayout.Toggle("Remove this Kewyord from Target?", entry.removeKeyword);
+                break;
+
+
+        }
+
+
+
+
         entry.duration = EditorHelper.EnumPopup("Duration", entry.duration);
         entry.statAdjustments = EditorHelper.DrawExtendedList("Stat Adjustments", entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);
 
@@ -144,10 +178,16 @@ public class CardDataEditor : Editor {
         entry.limitations.thisCardOnly = EditorGUILayout.Toggle("This card only targets itself?", entry.limitations.thisCardOnly);
         entry.limitations.types = EditorHelper.DrawList("Target Constraints", entry.limitations.types, true, ConstraintType.None, true, DrawConstraintTypes);
 
-        if (entry is MultiTargetedAbility) {
-            MultiTargetedAbility multi = entry as MultiTargetedAbility;
+        if (entry is LogicTargetedAbility) {
+            LogicTargetedAbility logicTargeted = entry as LogicTargetedAbility;
 
-            multi.numberofTargets = EditorGUILayout.IntField("Number of Targets", multi.numberofTargets);
+            logicTargeted.logicTargetingMethod = EditorHelper.EnumPopup("Targeting Method", logicTargeted.logicTargetingMethod);
+
+            if(logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
+                logicTargeted.numberofTargets = EditorGUILayout.IntField("Number of Targets", logicTargeted.numberofTargets);
+            }
+            
+            //multi.onlyThisCard = EditorGUILayout.Toggle("Only This", multi.onlyThisCard);
         }
 
         for (int i = 0; i < entry.limitations.types.Count; i++) {

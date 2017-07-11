@@ -83,6 +83,12 @@ MonoBehaviour:
     ID: 0
     abilityVFX: 
     statAdjustments: []
+    copyTargets: 0
+    spawnableTokenDataName: 
+    spawnTokenLocation: 0
+    spawnCardType: 0
+    numberOfSpawns: 0
+    targetZone: 0
   multiTargetAbilities: []
   attack: 2
   size: 1

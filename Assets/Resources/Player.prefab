@@ -8419,7 +8419,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 19.5
+  orthographic size: 18.33
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -8859,7 +8859,7 @@ MonoBehaviour:
   glow: {fileID: 1523490092331590}
   cardFront: {fileID: 1728891773831966}
   cardBack: {fileID: 1228555207926188}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -8879,6 +8879,7 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -8901,6 +8902,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114006366944120202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9264,7 +9267,7 @@ MonoBehaviour:
   glow: {fileID: 1674588603231346}
   cardFront: {fileID: 1659137624310184}
   cardBack: {fileID: 1904131321080102}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -9284,6 +9287,7 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -9306,6 +9310,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114041197317727070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9420,7 +9426,7 @@ MonoBehaviour:
   glow: {fileID: 1832531031719376}
   cardFront: {fileID: 1187900243297520}
   cardBack: {fileID: 1930627183509606}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -9440,6 +9446,7 @@ MonoBehaviour:
   cardCollider: {fileID: 65584784599887182}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -9462,6 +9469,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114046802951508052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10138,7 +10147,7 @@ MonoBehaviour:
   glow: {fileID: 1028750671726692}
   cardFront: {fileID: 1922159207985984}
   cardBack: {fileID: 1047372596006370}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -10158,6 +10167,7 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -10180,6 +10190,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114127416976872578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11753,7 +11765,7 @@ MonoBehaviour:
   glow: {fileID: 1119431808650088}
   cardFront: {fileID: 1239136816175786}
   cardBack: {fileID: 1788934708861728}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -11773,6 +11785,7 @@ MonoBehaviour:
   cardCollider: {fileID: 65901740609085418}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -11795,6 +11808,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114239110248604226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12188,7 +12203,7 @@ MonoBehaviour:
   glow: {fileID: 1321223332435490}
   cardFront: {fileID: 1958789596993684}
   cardBack: {fileID: 1951317440211060}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -12208,6 +12223,7 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -12230,6 +12246,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114259239735327398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13122,7 +13140,7 @@ MonoBehaviour:
   glow: {fileID: 1659331417908716}
   cardFront: {fileID: 1714179041193108}
   cardBack: {fileID: 1430182048518316}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -13142,6 +13160,7 @@ MonoBehaviour:
   cardCollider: {fileID: 65076819653533560}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -13164,6 +13183,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114332700829780692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16252,7 +16273,7 @@ MonoBehaviour:
   glow: {fileID: 1805702137533532}
   cardFront: {fileID: 1305576357366618}
   cardBack: {fileID: 1231738643978026}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -16272,6 +16293,7 @@ MonoBehaviour:
   cardCollider: {fileID: 65763954175744972}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -16294,6 +16316,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114625655249526040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17061,7 +17085,7 @@ MonoBehaviour:
   glow: {fileID: 1104268086799720}
   cardFront: {fileID: 1777181486533004}
   cardBack: {fileID: 1022381167157566}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -17081,6 +17105,7 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -17103,6 +17128,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114684938330755252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17584,7 +17611,7 @@ MonoBehaviour:
   glow: {fileID: 1888938949625244}
   cardFront: {fileID: 1069434827595238}
   cardBack: {fileID: 1247945434286602}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -17604,6 +17631,7 @@ MonoBehaviour:
   cardCollider: {fileID: 65797203859876148}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -17626,6 +17654,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114717994579454704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18900,7 +18930,7 @@ MonoBehaviour:
   glow: {fileID: 1816327609630534}
   cardFront: {fileID: 1074973859656884}
   cardBack: {fileID: 1331744739100760}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -18920,6 +18950,7 @@ MonoBehaviour:
   cardCollider: {fileID: 65930834343848736}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -18942,6 +18973,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114825572831453518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19640,7 +19673,7 @@ MonoBehaviour:
   glow: {fileID: 1033594953988910}
   cardFront: {fileID: 1370787620771930}
   cardBack: {fileID: 1555185024142820}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -19660,6 +19693,7 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -19682,6 +19716,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114902211953554726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19993,7 +20029,7 @@ MonoBehaviour:
   glow: {fileID: 1344013548646086}
   cardFront: {fileID: 1359498001690526}
   cardBack: {fileID: 1011120863105336}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -20013,6 +20049,7 @@ MonoBehaviour:
   cardCollider: {fileID: 65970622780980898}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -20035,6 +20072,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114945562438475678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20056,7 +20095,7 @@ MonoBehaviour:
   glow: {fileID: 1711925310901182}
   cardFront: {fileID: 1114483280320696}
   cardBack: {fileID: 1560357264460468}
-  AttackEffect: {fileID: 0}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -20076,6 +20115,7 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -20098,6 +20138,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114946299576492258
 MonoBehaviour:
   m_ObjectHideFlags: 1

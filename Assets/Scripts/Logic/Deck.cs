@@ -155,6 +155,29 @@ public class Deck : Photon.MonoBehaviour {
         //}
     }
 
+    public string GetCardPrefabNameByType(Constants.CardType type) {
+        string result = "";
+
+        switch (type) {
+            case Constants.CardType.Soul:
+                result = GlobalSettings._globalSettings.creatureCard.name;
+                break;
+
+            case Constants.CardType.Spell:
+
+                result = GlobalSettings._globalSettings.spellCard.name;
+                break;
+
+            case Constants.CardType.Player:
+                result = GlobalSettings._globalSettings.playerCard.name;
+
+                break;
+        }
+
+        return result;
+    }
+
+
     public void DoneSpawningCards() {
         Debug.Log(gameObject.name + " Is done spanwing cards");
         //for(int i = 0; i < activeCards.Count; i++) {
@@ -162,9 +185,9 @@ public class Deck : Photon.MonoBehaviour {
         //}
     }
 
-    private void CardFactory(CardData data, string prefabname, Deck targetDeck = null, int index = 0) {
+    public CardVisual CardFactory(CardData data, string prefabname, Deck targetDeck = null, int index = 0) {
         GameObject activeCard = PhotonNetwork.Instantiate(prefabname, new Vector3(40f, 20f, 20f), Quaternion.identity, 0) as GameObject;
-        CreatureCardVisual cardVisual = activeCard.GetComponent<CreatureCardVisual>();
+        CardVisual cardVisual = activeCard.GetComponent<CardVisual>();
 
         cardVisual.RegisterCard(cardVisual.photonView.viewID);
         cardVisual.RPCRegisterCard(PhotonTargets.Others, cardVisual.photonView.viewID);
@@ -195,7 +218,7 @@ public class Deck : Photon.MonoBehaviour {
         //Debug.Log(cardVisual.photonView.viewID + " has been created");
         //cardVisual.InitializeSpecialAbilities(cardVisual.photonView.viewID);
 
-
+        return cardVisual;
     }
 
     public void AssignCardLocationAndOwner(GameObject newCard, Player owner, Deck parent) {
@@ -276,6 +299,11 @@ public class Deck : Photon.MonoBehaviour {
         CardVisual card = Finder.FindCardByID(cardID);
         Deck targetLocation = Finder.FindDeckByID(deckID);
 
+        if(owner == null) {
+            owner = card.owner;
+        }
+
+
         if (card == null) {
             Debug.LogError("[Deck] Could not find card with ID: " + cardID);
             return;
@@ -300,8 +328,16 @@ public class Deck : Photon.MonoBehaviour {
                 break;
 
             case DeckType.Battlefield:
-
-                SendCardToBattlefield(card);
+                if (!owner.battleFieldManager.IsCollectionFull()) {
+                    SendCardToBattlefield(card);
+                }
+                else {
+                    //Debug.Log("Full");
+                    if (card.photonView.isMine) {
+                        RPCTransferCard(PhotonTargets.All, card, owner.myHand);
+                        return;
+                    }
+                }
                 break;
 
             case DeckType.SoulCrypt:
@@ -368,6 +404,8 @@ public class Deck : Photon.MonoBehaviour {
 
     private void SendCardToHand(CardVisual card) {
 
+        //Debug.Log(card.gameObject.name + " is being sent to the hand");
+
         if (owner.handManager.IsCollectionFull()) {
             Debug.LogWarning("Hand is Full");
             StartCoroutine(SendCardToSoulCrypt(card));
@@ -376,6 +414,8 @@ public class Deck : Photon.MonoBehaviour {
 
         if (card.photonView.isMine) {
             card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
+            card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
+            //Debug.Log(card.cardData.cardName + " is mine and is showing the card back to others");
         }
 
         card.handPos = owner.handManager.GetFirstEmptyCardPosition();
@@ -390,8 +430,14 @@ public class Deck : Photon.MonoBehaviour {
 
         if (owner.battleFieldManager.IsCollectionFull()) {
             Debug.LogWarning("board is Full");
-            SendCardToHand(card);
+            //SendCardToHand(card);
+            if (card.photonView.isMine) {
+                RPCTransferCard(PhotonTargets.All, card, owner.myHand);
+            }
+            return;
         }
+
+        //Debug.Log(card.gameObject.name + " is going to the battlefield");
 
         switch (card.cardData.primaryCardType) {
             case Constants.CardType.Player:
@@ -404,9 +450,11 @@ public class Deck : Photon.MonoBehaviour {
 
             case Constants.CardType.Soul:
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowBattleToken);
-
-                if (card.photonView.isMine)
+                
+                if (card.photonView.isMine) {
                     card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition();
+                }
+
 
                 break;
 
@@ -437,7 +485,7 @@ public class Deck : Photon.MonoBehaviour {
         card.RestCardData();
         //card.RPCSetUpCardData(PhotonTargets.All);
         //card.SetupCardData();
-        if(card.photonView.isMine)
+        if (card.photonView.isMine)
             card.transform.localPosition = new Vector3(-40f, 20f, 20f);
 
 

@@ -31,14 +31,33 @@ public abstract class SpecialAbility {
     public int effectValue;
     public CardVisual source;
     public List<CardVisual> targets = new List<CardVisual>();
-    //public List<Constraint> constraints = new List<Constraint>();
     public ConstraintList limitations = new ConstraintList();
     public int ID;
     public string abilityVFX;
 
     public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
 
-    //protected abstract void Effect(CardVisual card);
+
+    //Keyword Fields
+    public List<Keywords> keywordsToAddorRemove = new List<Keywords>();
+
+    //Spawn Token Fields
+    public bool copyTargets;
+    public string spawnableTokenDataName;
+    public DeckType spawnTokenLocation;
+    public CardType spawnCardType;
+    public int numberOfSpawns;
+
+    //Zone Change Fields
+    public DeckType targetZone;
+
+
+    //Count Toward Effect
+    public bool requireMultipleTriggers;
+    public int triggersRequired;
+
+    public int counter;
+
 
     public virtual bool ProcessEffect(CardVisual card) {
         bool check = CheckConstraints(limitations, card);
@@ -56,9 +75,14 @@ public abstract class SpecialAbility {
 
     }
 
-
     public virtual void Initialize(CardVisual owner) {
         source = owner;
+
+        if (source == null) {
+            Debug.LogError("[Special Ability] This Ability has a null source.");
+            return;
+        }
+
         RegisterListeners();
         InitializeStatAdjusments();
 
@@ -69,14 +93,17 @@ public abstract class SpecialAbility {
         //Debug.Log(source.gameObject.name + " has a special ability with ID " + ID);
     }
 
-
     protected virtual void Effect(CardVisual card) {
 
-        if(!targets.Contains(card))
+
+
+
+
+        if (!targets.Contains(card))
             targets.Add(card);
 
 
-        if(abilityVFX != null && abilityVFX != "") {
+        if (abilityVFX != null && abilityVFX != "") {
             CreateVFX();
         }
 
@@ -85,6 +112,24 @@ public abstract class SpecialAbility {
         switch (effect) {
             case EffectType.StatAdjustment:
                 ApplyStatAdjustments(card);
+                break;
+
+
+            case EffectType.SpawnToken:
+
+                //for (int i = 0; i < numberOfSpawns; i++) {
+                SpawnToken(spawnableTokenDataName, spawnCardType, spawnTokenLocation);
+                //}
+                break;
+
+            case EffectType.ZoneChange:
+
+                ForcedZoneChange(card, targetZone);
+
+                break;
+
+            case EffectType.GrantKeywordAbilities:
+                GrantKeywords(card, keywordsToAddorRemove);
                 break;
 
             case EffectType.None:
@@ -102,6 +147,18 @@ public abstract class SpecialAbility {
 
                 case EffectType.StatAdjustment:
                     RemoveStatAdjustments(cards[i]);
+                    break;
+
+                case EffectType.SpawnToken:
+
+                    break;
+
+                case EffectType.ZoneChange:
+
+                    break;
+
+                case EffectType.GrantKeywordAbilities:
+                    RemoveKeywords(cards[i], keywordsToAddorRemove);
                     break;
 
             }
@@ -138,10 +195,6 @@ public abstract class SpecialAbility {
         if (duration == EffectDuration.WhileInZone && source.photonView.isMine) {
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZoneEndDuration);
         }
-
-
-
-
 
 
         if (trigger.Contains(AbilityActivationTrigger.EntersZone))
@@ -205,7 +258,7 @@ public abstract class SpecialAbility {
         //    Debug.Log(card.gameObject.name + " has entered " + deck.decktype.ToString());
 
 
-        if (this is MultiTargetedAbility) {
+        if (this is LogicTargetedAbility) {
             if (source.photonView.isMine) {
                 //Debug.Log("Processing a multi-target effect");
 
@@ -252,15 +305,36 @@ public abstract class SpecialAbility {
         CardVisual target = data.GetGameObject("Target").GetComponent<CardVisual>();
         CardVisual sourceOfAdjustment = data.GetMonoBehaviour("Source") as CardVisual;
 
-        if (limitations.currentZone.Count > 0 && !limitations.currentZone.Contains(source.currentDeck.decktype)) {
-            //Debug.Log(source.gameObject.name + " is not in the proper zone to detect a stat adjustment, but is still listening for one");
+        if (!ManageConstraints(target)) {
             return;
         }
+
+
+        //if (limitations.currentZone.Count > 0 && !limitations.currentZone.Contains(source.currentDeck.decktype)) {
+        //    //Debug.Log(source.gameObject.name + " is not in the proper zone to detect a stat adjustment, but is still listening for one");
+        //    return;
+        //}
 
 
         if (trigger.Contains(AbilityActivationTrigger.TakesDamage)) {
             if (stat == CardStats.Health && value < 0) {
                 Debug.Log(target.gameObject.name + " has taken " + Mathf.Abs(value) + " point(s) of damage");
+                
+                if (requireMultipleTriggers) {
+
+                    if(counter < triggersRequired) {
+                        counter++;
+                    }
+
+                    if(counter == triggersRequired) {
+                        ProcessEffect(target);
+                        counter = 0;
+                    }
+
+                }
+                else {
+                    ProcessEffect(target);
+                }
             }
 
 
@@ -600,18 +674,112 @@ public abstract class SpecialAbility {
     #endregion
 
 
+
+
+    #region Effect Methods
+
+
+    public List<CardVisual> SpawnToken(string cardDataName, CardType primaryType, DeckType intendedLocation) {
+
+        List<CardVisual> tokens = new List<CardVisual>();
+        int spawnIndex = numberOfSpawns;
+
+        if (spawnIndex > targets.Count)
+            spawnIndex = targets.Count;
+
+
+        for (int i = 0; i < numberOfSpawns; i++) {
+
+            CardData tokenData = Resources.Load<CardData>("CardData/" + cardDataName) as CardData;
+
+
+            if (copyTargets) {
+                primaryType = targets[spawnIndex - 1].primaryCardType;
+                tokenData = Resources.Load<CardData>("CardData/" + targets[spawnIndex - 1].cardData.name) as CardData;
+            }
+
+            string prefabName = Deck._allCards.GetCardPrefabNameByType(primaryType);
+
+            CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(tokenData, prefabName, GetDeckFromType(intendedLocation, source));
+            tokenCard.isToken = true;
+
+            tokens.Add(tokenCard);
+
+            spawnIndex++;
+        }
+
+        return tokens;
+    }
+
+
+    private Deck GetDeckFromType(DeckType type, CardVisual card) {
+        switch (type) {
+            case DeckType.Battlefield:
+                return card.owner.battlefield;
+
+            case DeckType.Hand:
+                return card.owner.myHand;
+
+            case DeckType.Grimoire:
+                return card.owner.activeGrimoire.GetComponent<Deck>();
+
+            case DeckType.SoulCrypt:
+                return card.owner.activeCrypt.GetComponent<Deck>();
+
+            case DeckType.None:
+                return null;
+
+            default:
+                return null;
+        }
+    }
+
+
+    public void ForcedZoneChange(CardVisual target, DeckType zone) {
+
+        target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(zone, target));
+
+    }
+
+    public void GrantKeywords(CardVisual target, List<Keywords> keywords) {
+
+        for (int i = 0; i < keywords.Count; i++) {
+            target.RPCAddKeyword(PhotonTargets.All, keywords[i], true);
+        }
+
+        //grantedKeywords.Add(target.photonView.viewID, keywords);
+
+    }
+
+    public void RemoveKeywords(CardVisual target, List<Keywords> keywords) {
+
+        for (int i = 0; i < keywords.Count; i++) {
+            target.RPCAddKeyword(PhotonTargets.All, keywords[i], false);
+        }
+
+        //removedKeywords.Add(target.photonView.viewID, keywords);
+
+    }
+
+
+    #endregion
+
+
+
     public void CreateVFX() {
 
-        GameObject atkVFX = PhotonNetwork.Instantiate(abilityVFX, targets[0].transform.position, Quaternion.identity, 0) as GameObject;
+        for (int i = 0; i < targets.Count; i++) {
+            GameObject atkVFX = PhotonNetwork.Instantiate(abilityVFX, targets[i].transform.position, Quaternion.identity, 0) as GameObject;
 
-        source.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, targets[0]);
+            source.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, targets[i]);
+        }
     }
 
 
 
 
     private void InitializeStatAdjusments() {
-        for(int i = 0; i < statAdjustments.Count; i++) {
+        for (int i = 0; i < statAdjustments.Count; i++) {
             statAdjustments[i].uniqueID = IDFactory.GenerateID();
             statAdjustments[i].source = source;
         }

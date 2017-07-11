@@ -90,6 +90,13 @@ MonoBehaviour:
       temporary: 1
       source: {fileID: 0}
       uniqueID: -1
+    copyTargets: 0
+    spawnableTokenDataName: 
+    spawnTokenLocation: 0
+    spawnCardType: 0
+    numberOfSpawns: 0
+    targetZone: 0
+    logicTargetingMethod: 0
     numberofTargets: 0
   attack: 0
   size: 2

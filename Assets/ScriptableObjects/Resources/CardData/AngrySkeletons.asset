@@ -9,40 +9,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: FlameSprite
+  m_Name: AngrySkeletons
   m_EditorClassIdentifier: 
-  cardID: 102
-  cardName: Flame Sprite
-  cardText: 'Inspire: Deal 1 Damage'
+  cardID: 109
+  cardName: Angry Skeletons
+  cardText: 'Finale: Summon an Thing'
   cardCost: 1
-  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
-  cardImagePos: {x: 0, y: 36.7}
+  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 03000000
-  subTypes: 05000000
+  attunements: 08000000
+  subTypes: 02000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
-  - trigger: 02000000
+  userTargtedAbilities: []
+  multiTargetAbilities:
+  - trigger: 01000000
     duration: 0
     triggerConstraints:
-      types: 04000000
+      types: 0400000002000000
       owner: 0
-      primaryType: 
+      primaryType: 0100000006000000
       additionalType: 
       subtype: 
       keyword: 
       attunement: 
       currentZone: 05000000
-      previousZone: 
+      previousZone: 05000000
       creatureStatus: 
       minStats: []
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
     sourceConstraints:
       types: 04000000
       owner: 0
@@ -59,20 +60,20 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
-    effect: 1
+    effect: 3
     abilityName: 
     effectValue: 0
     source: {fileID: 0}
     targets: []
     limitations:
-      types: 0200000004000000
+      types: 
       owner: 0
-      primaryType: 01000000
+      primaryType: 
       additionalType: 
       subtype: 
       keyword: 
       attunement: 
-      currentZone: 05000000
+      currentZone: 
       previousZone: 
       creatureStatus: 
       minStats: []
@@ -81,25 +82,20 @@ MonoBehaviour:
       leastStat: 0
       thisCardOnly: 0
     ID: 0
-    abilityVFX: VFX_Primal_Slash
-    statAdjustments:
-    - stat: 4
-      value: -1
-      nonStacking: 0
-      temporary: 0
-      source: {fileID: 0}
-      uniqueID: -1
-    keywordsToAddorRemove: 0900000010000000
-    copyTargets: 1
-    spawnableTokenDataName: 
-    spawnTokenLocation: 3
-    spawnCardType: 0
+    abilityVFX: 
+    statAdjustments: []
+    keywordsToAddorRemove: 
+    copyTargets: 0
+    spawnableTokenDataName: SparkSpawn
+    spawnTokenLocation: 5
+    spawnCardType: 1
     numberOfSpawns: 1
-    targetZone: 3
-    requireMultipleTriggers: 0
-    triggersRequired: 0
+    targetZone: 0
+    requireMultipleTriggers: 1
+    triggersRequired: 2
     counter: 0
-  multiTargetAbilities: []
+    logicTargetingMethod: 0
+    numberofTargets: 0
   attack: 1
   size: 1
-  health: 3
+  health: 1
