@@ -7,7 +7,7 @@ using UnityEditor;
 public class CardCreatureDataEditor : CardDataEditor {
 
     public override void OnInspectorGUI() {
-        base.OnInspectorGUI();
+        
 
         CardCreatureData _creatureData = (CardCreatureData)target;
 
@@ -15,6 +15,10 @@ public class CardCreatureDataEditor : CardDataEditor {
         _creatureData.attack = EditorGUILayout.IntField("Attack", _creatureData.attack);
         _creatureData.size = EditorGUILayout.IntField("Size", _creatureData.size);
         _creatureData.health = EditorGUILayout.IntField("Health", _creatureData.health);
+
+
+        base.OnInspectorGUI();
+
     }
 
 

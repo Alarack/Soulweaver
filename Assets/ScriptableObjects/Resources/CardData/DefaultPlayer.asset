@@ -15,13 +15,17 @@ MonoBehaviour:
   cardName: Player
   cardText: 
   cardCost: 0
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 21300000, guid: 94fd082ef7af46c40892e3185ea8491c, type: 3}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: VFX_Primal_Slash
   primaryCardType: 6
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
   attack: 1
   size: 3
   health: 25

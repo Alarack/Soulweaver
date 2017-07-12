@@ -1543,6 +1543,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1218365145034060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224220712638351600}
+  - component: {fileID: 114180662367406406}
+  - component: {fileID: 120998247418145882}
+  - component: {fileID: 114205877212664566}
+  m_Layer: 0
+  m_Name: Line Drawer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1219966564216340
 GameObject:
   m_ObjectHideFlags: 1
@@ -1936,6 +1954,7 @@ GameObject:
   - component: {fileID: 114537894808448892}
   - component: {fileID: 114176474132916960}
   - component: {fileID: 114442056750621004}
+  - component: {fileID: 114403262060636384}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -8008,6 +8027,7 @@ Transform:
   - {fileID: 4564351651418816}
   - {fileID: 4544196762609838}
   - {fileID: 4809212648459076}
+  - {fileID: 224220712638351600}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8399,7 +8419,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 19.5
+  orthographic size: 18.33
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -8839,6 +8859,7 @@ MonoBehaviour:
   glow: {fileID: 1523490092331590}
   cardFront: {fileID: 1728891773831966}
   cardBack: {fileID: 1228555207926188}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -8848,6 +8869,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 0
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -8855,13 +8877,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 0}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114187623374597274}
   cardSizeText: {fileID: 114750126849668124}
   cardHealthText: {fileID: 114220340319264476}
@@ -8877,6 +8902,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114006366944120202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9240,6 +9267,7 @@ MonoBehaviour:
   glow: {fileID: 1674588603231346}
   cardFront: {fileID: 1659137624310184}
   cardBack: {fileID: 1904131321080102}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -9249,6 +9277,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 0
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -9256,13 +9285,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 0}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114245855918478540}
   cardSizeText: {fileID: 114462080224354224}
   cardHealthText: {fileID: 114602932178047254}
@@ -9278,6 +9310,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114041197317727070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9392,6 +9426,7 @@ MonoBehaviour:
   glow: {fileID: 1832531031719376}
   cardFront: {fileID: 1187900243297520}
   cardBack: {fileID: 1930627183509606}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -9401,6 +9436,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 4294961664
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -9408,13 +9444,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 65584784599887182}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114341226690447654}
   cardSizeText: {fileID: 114278024349274314}
   cardHealthText: {fileID: 114816814550265152}
@@ -9430,6 +9469,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114046802951508052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9695,10 +9736,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114712807452946788}
   size: {fileID: 114799102781733420}
   health: {fileID: 114808935479156448}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114078142432186476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10104,6 +10147,7 @@ MonoBehaviour:
   glow: {fileID: 1028750671726692}
   cardFront: {fileID: 1922159207985984}
   cardBack: {fileID: 1047372596006370}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -10113,6 +10157,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 0
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -10120,13 +10165,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 0}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114906730572959410}
   cardSizeText: {fileID: 114212872768144690}
   cardHealthText: {fileID: 114919306154984746}
@@ -10142,6 +10190,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114127416976872578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10718,6 +10768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09f6b2093b930ee4293afbdcdbaeb024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineDrawer: {fileID: 114180662367406406}
   targetingMode: 0
   whatIsCard:
     serializedVersion: 2
@@ -10727,6 +10778,18 @@ MonoBehaviour:
   selectingDefender: 0
   attacker: {fileID: 0}
   defender: {fileID: 0}
+--- !u!114 &114180662367406406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218365145034060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c3e35f905e816746a2625199f74c9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 120998247418145882}
 --- !u!114 &114180667333153338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11298,6 +11361,32 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 10
+--- !u!114 &114205877212664566
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218365145034060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114180662367406406}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114207183556941914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11435,10 +11524,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114410065035806596}
   size: {fileID: 114019565231223522}
   health: {fileID: 114846951693545378}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114212872768144690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11674,6 +11765,7 @@ MonoBehaviour:
   glow: {fileID: 1119431808650088}
   cardFront: {fileID: 1239136816175786}
   cardBack: {fileID: 1788934708861728}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -11683,6 +11775,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 4294961664
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -11690,13 +11783,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 65901740609085418}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114408965427747880}
   cardSizeText: {fileID: 114078142432186476}
   cardHealthText: {fileID: 114385937295394434}
@@ -11712,6 +11808,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114239110248604226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12105,6 +12203,7 @@ MonoBehaviour:
   glow: {fileID: 1321223332435490}
   cardFront: {fileID: 1958789596993684}
   cardBack: {fileID: 1951317440211060}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -12114,6 +12213,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 0
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -12121,13 +12221,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 0}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114906748188069972}
   cardSizeText: {fileID: 114095805973188398}
   cardHealthText: {fileID: 114552717589133734}
@@ -12143,6 +12246,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114259239735327398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12464,10 +12569,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114325712304588812}
   size: {fileID: 114697723022763654}
   health: {fileID: 114542417767266548}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114290735881498444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13033,6 +13140,7 @@ MonoBehaviour:
   glow: {fileID: 1659331417908716}
   cardFront: {fileID: 1714179041193108}
   cardBack: {fileID: 1430182048518316}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -13042,6 +13150,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 4294961664
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -13049,13 +13158,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 65076819653533560}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114332700829780692}
   cardSizeText: {fileID: 114511737892753992}
   cardHealthText: {fileID: 114308380588992556}
@@ -13071,6 +13183,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114332700829780692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13294,10 +13408,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114092147353413660}
   size: {fileID: 114950953110803062}
   health: {fileID: 114145067359168190}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114383815136292468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13441,10 +13557,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114219407066404562}
   size: {fileID: 114700241833833360}
   health: {fileID: 114994745854822490}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114395055274416962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13577,6 +13695,32 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 10
+--- !u!114 &114403262060636384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1266457769110374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114176474132916960}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114404984034698290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13984,10 +14128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114676573740181566}
   size: {fileID: 114466930708614312}
   health: {fileID: 114418008059907268}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114427705691918322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14113,10 +14259,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114817585303699200}
   size: {fileID: 114324153525741412}
   health: {fileID: 114249108384534542}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114441528153281820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14719,10 +14867,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114295390468759558}
   size: {fileID: 114067095294049330}
   health: {fileID: 114865117164684252}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114508494389140808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16123,6 +16273,7 @@ MonoBehaviour:
   glow: {fileID: 1805702137533532}
   cardFront: {fileID: 1305576357366618}
   cardBack: {fileID: 1231738643978026}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -16132,6 +16283,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 4294961664
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -16139,13 +16291,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 65763954175744972}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114441528153281820}
   cardSizeText: {fileID: 114436428157763120}
   cardHealthText: {fileID: 114556152119801536}
@@ -16161,6 +16316,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114625655249526040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16215,7 +16372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5061d9f85402c4495c4bd500cc14a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decktype: 2
+  decktype: 3
   cards: []
   activeCards: []
   owner: {fileID: 0}
@@ -16928,6 +17085,7 @@ MonoBehaviour:
   glow: {fileID: 1104268086799720}
   cardFront: {fileID: 1777181486533004}
   cardBack: {fileID: 1022381167157566}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -16937,6 +17095,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 0
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -16944,13 +17103,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 0}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114861487493763996}
   cardSizeText: {fileID: 114326438203806870}
   cardHealthText: {fileID: 114989913519106220}
@@ -16966,6 +17128,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114684938330755252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17049,10 +17213,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114222588217753018}
   size: {fileID: 114749068107635618}
   health: {fileID: 114734658539421098}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114689252523627298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17064,10 +17230,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114202061516983020}
   size: {fileID: 114840887556637086}
   health: {fileID: 114401214371011056}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114690485627842174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17443,6 +17611,7 @@ MonoBehaviour:
   glow: {fileID: 1888938949625244}
   cardFront: {fileID: 1069434827595238}
   cardBack: {fileID: 1247945434286602}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -17452,6 +17621,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 4294961664
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -17459,13 +17629,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 65797203859876148}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114155601094612462}
   cardSizeText: {fileID: 114383815136292468}
   cardHealthText: {fileID: 114529924736666198}
@@ -17481,6 +17654,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114717994579454704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18755,6 +18930,7 @@ MonoBehaviour:
   glow: {fileID: 1816327609630534}
   cardFront: {fileID: 1074973859656884}
   cardBack: {fileID: 1331744739100760}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -18764,6 +18940,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 4294961664
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -18771,13 +18948,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 65930834343848736}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114953086009033550}
   cardSizeText: {fileID: 114654311699115852}
   cardHealthText: {fileID: 114186757662490926}
@@ -18793,6 +18973,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114825572831453518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18996,10 +19178,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114950816366681004}
   size: {fileID: 114646462699656182}
   health: {fileID: 114630626725067810}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114845108757004098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19408,10 +19592,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114249489116530714}
   size: {fileID: 114281935518354508}
   health: {fileID: 114415054084318542}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114900081219294968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19487,6 +19673,7 @@ MonoBehaviour:
   glow: {fileID: 1033594953988910}
   cardFront: {fileID: 1370787620771930}
   cardBack: {fileID: 1555185024142820}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -19496,6 +19683,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 0
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -19503,13 +19691,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 0}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114146212072619134}
   cardSizeText: {fileID: 114529760380825334}
   cardHealthText: {fileID: 114501319799097616}
@@ -19525,6 +19716,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114902211953554726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19836,6 +20029,7 @@ MonoBehaviour:
   glow: {fileID: 1344013548646086}
   cardFront: {fileID: 1359498001690526}
   cardBack: {fileID: 1011120863105336}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -19845,6 +20039,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 4294961664
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -19852,13 +20047,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 65970622780980898}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114555924561774606}
   cardSizeText: {fileID: 114006861996105900}
   cardHealthText: {fileID: 114599109696730458}
@@ -19874,6 +20072,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114945562438475678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19895,6 +20095,7 @@ MonoBehaviour:
   glow: {fileID: 1711925310901182}
   cardFront: {fileID: 1114483280320696}
   cardBack: {fileID: 1560357264460468}
+  attackEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -19904,6 +20105,7 @@ MonoBehaviour:
   castColor:
     serializedVersion: 2
     rgba: 0
+  animationManager: {fileID: 0}
   owner: {fileID: 0}
   currentDeck: {fileID: 0}
   previousDeck: {fileID: 0}
@@ -19911,13 +20113,16 @@ MonoBehaviour:
   battlefieldPos: {fileID: 0}
   active: 0
   cardCollider: {fileID: 0}
+  statAdjustments: []
   essenceCost: 0
+  isToken: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
   keywords: 
-  specialAbilities: []
+  userTargtedAbilities: []
+  multiTargetAbiliies: []
   cardAttackText: {fileID: 114444936724860714}
   cardSizeText: {fileID: 114894312804169364}
   cardHealthText: {fileID: 114726270891119048}
@@ -19933,6 +20138,8 @@ MonoBehaviour:
   attack: 0
   size: 0
   health: 0
+  damageVFX: 
+  damageToken: {fileID: 0}
 --- !u!114 &114946299576492258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20344,12 +20551,12 @@ MonoBehaviour:
   handManager: {fileID: 114265399519392936}
   battleFieldManager: {fileID: 114273829988085762}
   deckInfo:
-  - deckType: 0
-    deck: {fileID: 0}
   - deckType: 1
-    deck: {fileID: 0}
-  - deckType: 3
-    deck: {fileID: 0}
+    deck: {fileID: 1920508968966266, guid: cd0342b4adf72e44198578b4cd309d58, type: 2}
+  - deckType: 2
+    deck: {fileID: 1780107244512956, guid: 3a669ae059b144b49976182081e4b2e2, type: 2}
+  - deckType: 4
+    deck: {fileID: 1857061015209064, guid: 6d72ff4b67846514ba05b21fbba1ecdf, type: 2}
   hud: {fileID: 1266457769110374}
   myCamera: {fileID: 1341306738509736}
   endTurnButton: {fileID: 114150764853571970}
@@ -20516,10 +20723,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114303773241013924}
   size: {fileID: 114606840546876710}
   health: {fileID: 114553051110953262}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114993398472935158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20531,10 +20740,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6741917c0056dd54fbb77d981569f221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   attack: {fileID: 114195387326764914}
   size: {fileID: 114318997098155712}
   health: {fileID: 114304137270219508}
   battleTokenGlow: {fileID: 0}
+  incomingEffectLocation: {fileID: 0}
 --- !u!114 &114994745854822490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20627,6 +20838,104 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Back of the Card
+--- !u!120 &120998247418145882
+LineRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218365145034060}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    serializedVersion: 2
+    widthMultiplier: 0.2
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      key0:
+        serializedVersion: 2
+        rgba: 4294967295
+      key1:
+        serializedVersion: 2
+        rgba: 4294967295
+      key2:
+        serializedVersion: 2
+        rgba: 0
+      key3:
+        serializedVersion: 2
+        rgba: 0
+      key4:
+        serializedVersion: 2
+        rgba: 0
+      key5:
+        serializedVersion: 2
+        rgba: 0
+      key6:
+        serializedVersion: 2
+        rgba: 0
+      key7:
+        serializedVersion: 2
+        rgba: 0
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+  m_UseWorldSpace: 1
 --- !u!124 &124730600919025844
 Behaviour:
   m_ObjectHideFlags: 1
@@ -24927,6 +25236,24 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224220712638351600
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218365145034060}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2.8600006}
+  m_LocalScale: {x: 0.063004844, y: 0.063004844, z: 0.063004844}
+  m_Children: []
+  m_Father: {fileID: 4230362993992184}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.0000019073486, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224222988225087656
 RectTransform:

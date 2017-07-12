@@ -59,4 +59,15 @@ MonoBehaviour:
   - ToggleKeyword
   - TargetCard
   - UntargetCard
+  - BroadcastAttacker
+  - BroadcastTurnEnd
+  - BroadcastTurnStart
+  - ApplystatAdjustment
+  - RemoveStatAdjustment
+  - ApplyCombatDamage
+  - DeployAttackEffect
+  - BeginDrawing
+  - StopDrawing
+  - SetVFXActiveState
+  - ShowDamage
   DisableAutoOpenWizard: 1

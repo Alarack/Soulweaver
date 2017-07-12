@@ -15,6 +15,10 @@ public static class TextTools {
             text.color = Color.white;
     }
 
+    public static void SetTextColor(Text text, Color color) {
+        text.color = color;
+    }
+
 
 
 }

@@ -36,6 +36,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4064690772199086}
+  - component: {fileID: 114810997228438780}
+  - component: {fileID: 114625546913959772}
   m_Layer: 0
   m_Name: VFX_Cross_Slash_v1
   m_TagString: Untagged
@@ -101,6 +103,54 @@ Transform:
   m_Father: {fileID: 4109602423228614}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114625546913959772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1705204329609352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f14685eda5eb2408b3d26a75cff76d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 3
+  moveSpeed: 1
+  lerpSmoothing: 10
+  active: 0
+  beginMovement: 0
+  target: {fileID: 0}
+  optionalText: {fileID: 0}
+  animMain: {fileID: 0}
+  animText: {fileID: 0}
+  particles: {fileID: 0}
+  playAnimOnStart: 0
+--- !u!114 &114810997228438780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1705204329609352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!198 &198232962168451582
 ParticleSystem:
   m_ObjectHideFlags: 1

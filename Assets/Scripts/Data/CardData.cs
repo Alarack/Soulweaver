@@ -13,6 +13,9 @@ public class CardData : ScriptableObject {
     public string cardText;
     public int cardCost;
     public Sprite cardImage;
+    public Vector2 cardImagePos;
+
+    public string attackEffect;
 
     [Header("Types and Attunements")]
     public Constants.CardType primaryCardType;
@@ -22,8 +25,15 @@ public class CardData : ScriptableObject {
     [Header("Keywords")]
     public List<Constants.Keywords> keywords = new List<Constants.Keywords>();
     [Header("Special Abilities")]
-    [SerializeField]public List<EffectOnTarget> specialAbilities = new List<EffectOnTarget>();
-    //public List<EffectOnTarget>
+
+    public List<Constants.SpecialAbilityTypes> specialAbilityTypes = new List<Constants.SpecialAbilityTypes>();
+
+    public List<SpecialAbility> allAbilities = new List<SpecialAbility>();
+
+    public List<EffectOnTarget> userTargtedAbilities = new List<EffectOnTarget>();
+    public List<LogicTargetedAbility> multiTargetAbilities = new List<LogicTargetedAbility>();
+
+
 
 
 }

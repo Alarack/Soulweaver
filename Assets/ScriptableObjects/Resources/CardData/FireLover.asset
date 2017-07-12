@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
+  m_Name: FireLover
+  m_EditorClassIdentifier: 
+  cardID: 0
+  cardName: Fire Lover
+  cardText: 'Inspire: Give Fire Souls +1 ATK'
+  cardCost: 1
+  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
+  cardImagePos: {x: 0, y: 16.8}
+  attackEffect: VFX_Primal_Slash
+  primaryCardType: 1
+  otherCardTypes: 
+  attunements: 03000000
+  subTypes: 05000000
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities:
+  - trigger: 02000000
+    duration: 0
+    triggerConstraints:
+      types: 04000000
+      owner: 0
+      primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 05000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 1
+    sourceConstraints:
+      types: 04000000
+      owner: 0
+      primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 05000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    effect: 1
+    abilityName: 
+    effectValue: 0
+    source: {fileID: 0}
+    targets: []
+    limitations:
+      types: 02000000
+      owner: 0
+      primaryType: 0100000006000000
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    ID: 0
+    abilityVFX: VFX_Heal_Gold
+    statAdjustments:
+    - stat: 4
+      value: 1
+      nonStacking: 0
+      temporary: 0
+      source: {fileID: 0}
+      uniqueID: -1
+    copyTargets: 0
+    spawnableTokenDataName: 
+    spawnTokenLocation: 0
+    spawnCardType: 0
+    numberOfSpawns: 0
+    targetZone: 0
+  multiTargetAbilities: []
+  attack: 2
+  size: 1
+  health: 3

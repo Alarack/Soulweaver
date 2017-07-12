@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class CreatureCardVisual : CardVisual {
 
 
@@ -23,6 +24,9 @@ public class CreatureCardVisual : CardVisual {
     public int attack;
     public int size;
     public int health;
+    [Header("VFX")]
+    public string damageVFX;
+    public CardVFX damageToken;
 
     private CardCreatureData _creatureData;
 
@@ -59,13 +63,41 @@ public class CreatureCardVisual : CardVisual {
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
     }
 
-    public override void AlterCardStats(Constants.CardStats stat, int value) {
-        base.AlterCardStats(stat, value);
+    public override void RestCardData() {
+        base.RestCardData();
+
+
+        int tempAtk = _creatureData.attack;
+        attack = tempAtk;
+
+        int tempSize = _creatureData.size;
+        size = tempSize;
+
+        int tempHealth = _creatureData.health;
+        health = tempHealth;
+
+
+        cardAttackText.text = _creatureData.attack.ToString();
+        cardSizeText.text = _creatureData.size.ToString();
+        cardHealthText.text = _creatureData.health.ToString();
+
+        TextTools.SetTextColor(cardAttackText, Color.white);
+        TextTools.SetTextColor(cardSizeText, Color.white);
+        TextTools.SetTextColor(cardHealthText, Color.white);
+
+        battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Attack, attack);
+        battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Size, size);
+        battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
+
+    }
+
+    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source) {
+        base.AlterCardStats(stat, value, source);
 
         //Debug.Log("creature card alter stat");
         switch (stat) {
             case Constants.CardStats.Attack:
-                TextTools.AlterTextColor(value, _creatureData.attack, cardAttackText);
+                
                 attack += value;
 
                 if (attack <= 0)
@@ -73,10 +105,11 @@ public class CreatureCardVisual : CardVisual {
 
                 cardAttackText.text = attack.ToString();
                 battleToken.UpdateBattleTokenTokenText(stat, attack);
+                TextTools.AlterTextColor(attack, _creatureData.attack, cardAttackText);
                 break;
 
             case Constants.CardStats.Size:
-                TextTools.AlterTextColor(value, _creatureData.size, cardSizeText);
+                
                 size += value;
 
                 if (size <= 0)
@@ -84,13 +117,29 @@ public class CreatureCardVisual : CardVisual {
 
                 cardSizeText.text = size.ToString();
                 battleToken.UpdateBattleTokenTokenText(stat, size);
+                TextTools.AlterTextColor(size, _creatureData.size, cardSizeText);
                 break;
 
             case Constants.CardStats.Health:
-                TextTools.AlterTextColor(value, _creatureData.health, cardHealthText);
+
+                
                 health += value;
+
+                if(health > _creatureData.health) {
+                    health = _creatureData.health;
+                }
+
+
                 cardHealthText.text = health.ToString();
                 battleToken.UpdateBattleTokenTokenText(stat, health);
+                TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
+
+
+                if(value < 0) {
+                    //RPCShowDamage(PhotonTargets.Others, value);
+                    ShowDamage(value);
+                }
+
                 break;
         }
     }
@@ -185,7 +234,32 @@ public class CreatureCardVisual : CardVisual {
 
     }
 
+    public void RPCShowDamage(PhotonTargets targets, int damage) {
+        //GameObject dmgVFX = PhotonNetwork.Instantiate(damageVFX, transform.position, Quaternion.identity, 0) as GameObject;
+        //CardVFX vfx = dmgVFX.GetComponent<CardVFX>();
+        //int id = dmgVFX.GetPhotonView().viewID;
 
+        photonView.RPC("ShowDamage", targets, damage);
+    }
+
+
+    [PunRPC]
+    public void ShowDamage(int value) {
+        //CardVFX vfx = Finder.FindEffectByID(vfxID).GetComponent<CardVFX>();
+
+        //vfx.transform.SetParent(battleToken.incomingEffectLocation, true);
+        //vfx.transform.localPosition = Vector3.zero;
+        //vfx.transform.SetParent(vfx.transform);
+
+        //vfx.SetText(value.ToString());
+
+        damageToken.SetText(value.ToString());
+        damageToken.PlayAnim();
+        damageToken.PlayParticles();
+
+
+
+    }
 
 
     #endregion

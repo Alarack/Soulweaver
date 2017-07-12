@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 using DeckType = Constants.DeckType;
 using CardID = CardIDs.CardID;
@@ -9,12 +10,120 @@ using Keywords = Constants.Keywords;
 using Subtypes = Constants.SubTypes;
 using CardType = Constants.CardType;
 using Attunements = Constants.Attunements;
+using CardStats = Constants.CardStats;
 
 public static class Finder {
 
 
+    //public static SpecialAbility FindSpecialAbilityByID(CardVisual source, int ID) {
+    //    SpecialAbility result = null;
+
+    //    for(int i = 0; i < source.userTargtedAbilities.Count; i++) {
+    //        if (source.userTargtedAbilities[i].ID == ID)
+    //            result = source.userTargtedAbilities[i];
+    //        break;
+    //    }
+
+    //    return result;
+    //}
 
 
+
+    public static Player FindPlayerByID(int id) {
+        Player[] allPlayers = Object.FindObjectsOfType<Player>();
+
+        for (int i = 0; i < allPlayers.Length; i++) {
+            if (allPlayers[i].photonView.viewID == id) {
+                return allPlayers[i];
+            }
+        }
+
+        return null;
+    }
+
+    public static List<CardVisual> FindAllDamagedOrUndamagedCreatures(bool damaged) {
+        List<CardVisual> results = new List<CardVisual>();
+
+        List<CardVisual> allCards = Deck._allCards.activeCards;
+
+        for (int i = 0; i < allCards.Count; i++) {
+            CreatureCardVisual soul = allCards[i] as CreatureCardVisual;
+            CardCreatureData soulData = soul.cardData as CardCreatureData;
+
+            if (soul.health < soulData.health && damaged) {
+                results.Add(soul);
+            }
+
+            if (soul.health >= soulData.health && !damaged) {
+                results.Add(soul);
+            }
+        }
+
+        return results;
+    }
+
+    public static List<CardVisual> FindCardsWithStatExtreme(CardStats stat, bool high) {
+        List<CardVisual> results = new List<CardVisual>();
+
+        Dictionary<int, int> cardsByStat = StatCollector(stat);
+        List<int> sortedStats = cardsByStat.Values.ToList();
+
+        int targetStat;
+        if (high)
+            targetStat = sortedStats.Max();
+        else {
+            targetStat = sortedStats.Min();
+        }
+
+        foreach (KeyValuePair<int, int> entry in cardsByStat) {
+            if (entry.Value == targetStat) {
+                results.Add(FindCardByID(entry.Key));
+            }
+        }
+
+        return results;
+    }
+
+    private static Dictionary<int, int> StatCollector(CardStats stat) {
+        Dictionary<int, int> results = new Dictionary<int, int>();
+
+        List<CardVisual> cardsToSearch = Deck._allCards.activeCards;
+
+        switch (stat) {
+            case CardStats.Cost:
+
+                for (int i = 0; i < cardsToSearch.Count; i++) {
+                    results.Add(cardsToSearch[i].photonView.viewID, cardsToSearch[i].essenceCost);
+                }
+                break;
+
+            case CardStats.Attack:
+                for (int i = 0; i < cardsToSearch.Count; i++) {
+                    CreatureCardVisual soul = cardsToSearch[i] as CreatureCardVisual;
+
+                    results.Add(soul.photonView.viewID, soul.attack);
+                }
+                break;
+
+            case CardStats.Size:
+                for (int i = 0; i < cardsToSearch.Count; i++) {
+                    CreatureCardVisual soul = cardsToSearch[i] as CreatureCardVisual;
+
+                    results.Add(soul.photonView.viewID, soul.size);
+                }
+                break;
+
+            case CardStats.Health:
+                for (int i = 0; i < cardsToSearch.Count; i++) {
+                    CreatureCardVisual soul = cardsToSearch[i] as CreatureCardVisual;
+
+                    results.Add(soul.photonView.viewID, soul.health);
+                }
+                break;
+        }
+
+        return results;
+    }
 
     public static CardVisual FindCardByID(int id) {
         CardVisual card = null;
@@ -32,8 +141,8 @@ public static class Finder {
     public static List<CardVisual> FindAllCardsInZone(DeckType zone) {
         List<CardVisual> cards = new List<CardVisual>();
 
-        for(int i = 0; i < Deck._allCards.activeCards.Count; i++) {
-            if(Deck._allCards.activeCards[i].currentDeck.decktype == zone) {
+        for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
+            if (Deck._allCards.activeCards[i].currentDeck.decktype == zone) {
                 cards.Add(Deck._allCards.activeCards[i]);
             }
         }
@@ -111,8 +220,8 @@ public static class Finder {
     public static bool CardHasMultipleKeywords(CardVisual card, List<Keywords> keywords) {
         bool result = true;
 
-        for(int i = 0; i < keywords.Count; i++) {
-            if(!CardHasKeyword(card, keywords[i])) {
+        for (int i = 0; i < keywords.Count; i++) {
+            if (!CardHasKeyword(card, keywords[i])) {
                 result = false;
                 break;
             }
@@ -128,7 +237,7 @@ public static class Finder {
     public static bool CardHasSubType(CardVisual card, Subtypes subType) {
         return card.subTypes.Contains(subType);
     }
-    
+
     public static bool CardHasAttunement(CardVisual card, Attunements attunement) {
         return card.attunements.Contains(attunement);
     }
@@ -146,34 +255,34 @@ public static class Finder {
         }
     }
 
-    public static bool CheckConstraints(CardVisual card, 
-        CardType primaryType = CardType.None, 
-        Subtypes subType = Subtypes.None,
-        Attunements attunement = Attunements.None,
-        Keywords keyword = Keywords.None,
-        OwnerConstraints ownerConstraint = OwnerConstraints.None) {
+    //public static bool CheckConstraints(CardVisual card,
+    //    CardType primaryType = CardType.None,
+    //    Subtypes subType = Subtypes.None,
+    //    Attunements attunement = Attunements.None,
+    //    Keywords keyword = Keywords.None,
+    //    OwnerConstraints ownerConstraint = OwnerConstraints.None) {
 
-        bool result = true;
+    //    bool result = true;
 
-        if (primaryType != CardType.None && result)
-            result = CardHasPrimaryType(card, primaryType);
+    //    if (primaryType != CardType.None && result)
+    //        result = CardHasPrimaryType(card, primaryType);
 
-        if (subType != Subtypes.None && result)
-            result = CardHasSubType(card, subType);
+    //    if (subType != Subtypes.None && result)
+    //        result = CardHasSubType(card, subType);
 
-        if (attunement != Attunements.None && result)
-            result = CardHasAttunement(card, attunement);
+    //    if (attunement != Attunements.None && result)
+    //        result = CardHasAttunement(card, attunement);
 
-        if (keyword != Keywords.None && result)
-            result = CardHasKeyword(card, keyword);
+    //    if (keyword != Keywords.None && result)
+    //        result = CardHasKeyword(card, keyword);
 
-        if (ownerConstraint != OwnerConstraints.None && result)
-            result = CardHasOwner(card, ownerConstraint);
+    //    if (ownerConstraint != OwnerConstraints.None && result)
+    //        result = CardHasOwner(card, ownerConstraint);
 
 
-        return result;
+    //    return result;
 
-    }
+    //}
 
 
     public static Deck FindDeckByID(int id) {
@@ -193,13 +302,27 @@ public static class Finder {
         CardData data = null;
 
         for (int i = 0; i < CardDB.cardDB.allCardData.Length; i++) {
-            if(CardDB.cardDB.allCardData[i].cardID == id) {
+            if (CardDB.cardDB.allCardData[i].cardID == id) {
                 data = CardDB.cardDB.allCardData[i];
                 break;
             }
         }
 
         return data;
+    }
+
+    public static GameObject FindEffectByID(int id) {
+        GameObject[] allEffects = GameObject.FindGameObjectsWithTag("VFX");
+
+        for(int i = 0; i < allEffects.Length; i++) {
+            if(allEffects[i].GetPhotonView().viewID == id) {
+                return allEffects[i];
+            }
+        }
+
+
+        return null;
+
     }
 
 

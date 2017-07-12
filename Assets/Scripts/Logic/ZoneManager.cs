@@ -5,12 +5,12 @@ using SoulWeaver;
 
 public class ZoneManager : MonoBehaviour {
 
-    private Player owner;
+    //private Player owner;
     private CombatManager combatManager;
     
 
     private void Start() {
-        owner = GetComponentInParent<Player>();
+        //owner = GetComponentInParent<Player>();
         combatManager = GetComponent<CombatManager>();
     }
 
@@ -43,11 +43,11 @@ public class ZoneManager : MonoBehaviour {
         switch (deck.decktype) {
             case Constants.DeckType.Battlefield:
 
-                Debug.Log(card.cardData.cardName + " has enterd the Battlefield");
+                //Debug.Log(card.cardData.cardName + " has enterd the Battlefield");
 
-                ActivateTargeting(card);
+                //ActivateTargeting(card);
 
-
+                //ActivateTargetedAbilities(card, card.userTargtedAbilities);
 
 
                 break;
@@ -59,36 +59,58 @@ public class ZoneManager : MonoBehaviour {
     } // End of Enter Zone
 
 
-    private void ActivateTargeting(CardVisual card) {
+    private void ActivateTargetedAbilities(CardVisual card, List<EffectOnTarget> effects) {
         if (!card.photonView.isMine)
             return;
 
-        //List<SpecialAbility> cardAbilities = card.specialAbilities;
-        List<EffectOnTarget> effects = new List<EffectOnTarget>();
-
-        for(int i = 0; i < card.specialAbilities.Count; i++) {
-            if(card.specialAbilities[i] is EffectOnTarget) {
-                effects.Add(card.specialAbilities[i]);
-            }
-        }
-
-        if(effects.Count < 1) {
+        if (effects.Count < 1)
             return;
-        }
-
-        Debug.Log(card.cardData.cardName + " is mine and has an effect on target");
 
         combatManager.isChoosingTarget = true;
         combatManager.ActivateSpellTargeting();
 
-        for(int i = 0; i < effects.Count; i++) {
-            combatManager.targetCallback += effects[i].Effect;
+        for (int i = 0; i < effects.Count; i++) {
+            //effects[i].source = card; //TODO: affecting the raw data. Don't like this.
+            //combatManager.sourceOfTargetingEffect = card;
+
+
+            combatManager.confirmedTargetCallback += effects[i].ProcessEffect;
         }
 
 
-
-
     }
+
+
+    //private void ActivateTargeting(CardVisual card) {
+    //    if (!card.photonView.isMine)
+    //        return;
+
+    //    //List<SpecialAbility> cardAbilities = card.specialAbilities;
+    //    List<EffectOnTarget> effects = new List<EffectOnTarget>();
+
+    //    for(int i = 0; i < card.userTargtedAbilities.Count; i++) {
+    //        if(card.userTargtedAbilities[i] is EffectOnTarget) {
+    //            effects.Add(card.userTargtedAbilities[i]);
+    //        }
+    //    }
+
+    //    if(effects.Count < 1) {
+    //        return;
+    //    }
+
+
+
+
+    //    Debug.Log(card.cardData.cardName + " is mine and has an effect on target");
+
+    //    combatManager.isChoosingTarget = true;
+    //    combatManager.ActivateSpellTargeting();
+
+    //    for(int i = 0; i < effects.Count; i++) {
+    //        combatManager.targetCallback += effects[i].ConstraintCheck;
+    //    }
+
+    //}
 
 
 }

@@ -11,7 +11,7 @@ using CardType = Constants.CardType;
 using Attunements = Constants.Attunements;
 using DeckType = Constants.DeckType;
 
-public class CombatManager : MonoBehaviour {
+public class CombatManager : Photon.MonoBehaviour {
 
 
     public enum TargetingMode {
@@ -21,6 +21,7 @@ public class CombatManager : MonoBehaviour {
 
 
     public static CombatManager combatManager;
+    public DrawLine lineDrawer;
     public TargetingMode targetingMode;
     public LayerMask whatIsCard;
     public bool isChoosingTarget;
@@ -30,24 +31,23 @@ public class CombatManager : MonoBehaviour {
     public CreatureCardVisual attacker;
     public CreatureCardVisual defender;
 
-    public Action<CardVisual> targetCallback;
+    //public Action<CardVisual> targetCallback;
+    public Func<CardVisual, bool> confirmedTargetCallback;
+    //public CardVisual sourceOfTargetingEffect;
 
-
-    private CreatureCardVisual tempAttacker;
-    private CreatureCardVisual tempDefender;
+    //private CreatureCardVisual tempAttacker;
+    //private CreatureCardVisual tempDefender;
 
     private Ray clickRay;
     private RaycastHit clickRayHit;
     private Player owner;
 
-    void Awake() {
+    void Start () {
         combatManager = this;
         owner = GetComponentInParent<Player>();
+        //Debug.Log(combatManager.gameObject.name + " is where combat manager is assigned");
+        //Grid.EventManager.RegisterListener(Constants.GameEvent.SpecialAbilityTriggered, OnSpecialAbilityTriggered);
     }
-
-    void Start () {
-		
-	}
 
 	void Update () {
         if (Camera.main != null)
@@ -59,8 +59,11 @@ public class CombatManager : MonoBehaviour {
         if(Input.GetMouseButtonDown(1) && isInCombat && owner.myTurn) {
             EndCombat();
         }
-        if (Input.GetKeyDown(KeyCode.T)) {
-            ActivateSpellTargeting();
+
+        if(isInCombat && attacker != null) {
+
+            lineDrawer.BeginDrawing(attacker.battleToken.incomingEffectLocation.position, Input.mousePosition);
+            //lineDrawer.RPCBeginDrawing(PhotonTargets.Others, attacker.battleToken.incomingEffectLocation.position, Input.mousePosition);
         }
 
 
@@ -83,22 +86,9 @@ public class CombatManager : MonoBehaviour {
 
     }
 
-    //public static IEnumerator SetTargetingMode(TargetingMode mode) {
-    //    Debug.Log("Targeting Set to: " + mode.ToString());
-
-    //    yield return new WaitForSeconds(0.2f);
-    //    combatManager.targetingMode = mode;
-    //    Debug.Log("Targeting Set to: " + mode.ToString() + " after delay");
-    //}
-
-    public static void StaticReset() {
-        combatManager.ResetTargeting();
-    }
 
     public void ActivateSpellTargeting() {
-        Debug.Log("Activating Spell Targeting");
         targetingMode = TargetingMode.SpellAbilityTargetng;
-
     }
 
     public void ResetTargeting() {
@@ -149,7 +139,14 @@ public class CombatManager : MonoBehaviour {
         attacker = currentTarget;
         isInCombat = true;
         selectingDefender = true;
-        Debug.Log(attacker.cardData.cardName + " is Attacking");
+        //Debug.Log(attacker.cardData.cardName + " is Attacking");
+
+
+        RPCBroadcastAttacker(PhotonTargets.All, attacker);
+
+        //EventData data = new EventData();
+        //data.AddMonoBehaviour("Card", attacker);
+        //Grid.EventManager.SendEvent(Constants.GameEvent.CharacterAttacked, data);
 
     }
 
@@ -242,7 +239,16 @@ public class CombatManager : MonoBehaviour {
 
     private void CombatHelper(CreatureCardVisual damageDealer, CreatureCardVisual damageTaker) {
 
-        damageTaker.RPCAlterStat(PhotonTargets.All, Constants.CardStats.Health, -damageDealer.attack);
+        SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -damageDealer.attack, false, false, damageDealer);
+
+        if(damageDealer.attackEffect != null) {
+            GameObject atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
+
+            damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker);
+        }
+       
+
+        damageTaker.RPCApplyCombatDamage(PhotonTargets.All, adj, attacker);
 
     }
 
@@ -291,24 +297,52 @@ public class CombatManager : MonoBehaviour {
         isInCombat = false;
         selectingDefender = false;
 
+        if (lineDrawer.lineRenderer.enabled) {
+            lineDrawer.RPCStopDrawing(PhotonTargets.All);
+        }
+
     }
 
     private void DoStuffOnTarget() {
         CardVisual currentTarget = CardClicked();
 
         if (!ConfirmCardClicked(currentTarget, DeckType.Battlefield))
-            return;
+            return ;
 
 
-        if (targetCallback != null)
-            targetCallback(currentTarget);
+        //TargetingHandler.CreateTargetInfoListing(sourceOfTargetingEffect, currentTarget);
 
-        Debug.Log(currentTarget.cardData.cardName + " has been clicked");
-        if (isChoosingTarget)
-            isChoosingTarget = false;
+        if(confirmedTargetCallback != null) {
 
-        StartCoroutine(Reset());
+            if (confirmedTargetCallback(currentTarget)) {
+
+                Debug.Log(currentTarget.cardData.cardName + " has been clicked");
+                if (isChoosingTarget)
+                    isChoosingTarget = false;
+
+                //sourceOfTargetingEffect = null;
+                StartCoroutine(Reset());
+
+
+            }
+
+        }
+        else {
+            Debug.LogError("[Combat Manager - DoStuffOnTarget] Callback was null");
+        }
+
     }
+
+    //private void OnSpecialAbilityTriggered(EventData data) {
+    //    CardVisual source = data.GetMonoBehaviour("Source") as CardVisual;
+    //    int abilityID = data.GetInt("ID");
+    //    SpecialAbility ability = Finder.FindSpecialAbilityByID(source, abilityID);
+
+    //    ability.targets.Add(DoStuffOnTarget());
+
+
+    //}
+
 
 
     public CardVisual CardClicked() {
@@ -322,6 +356,12 @@ public class CombatManager : MonoBehaviour {
 
             cardSelected = clickRayHit.collider.GetComponent<CardVisual>();
         }
+
+
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Card", cardSelected);
+        Grid.EventManager.SendEvent(Constants.GameEvent.CardClicked, data);
+
         return cardSelected;
     }
 
@@ -338,7 +378,7 @@ public class CombatManager : MonoBehaviour {
         }
 
         if (mineOnly && !card.photonView.isMine) {
-            //Debug.LogError("Card Clicked was not mine");
+            Debug.LogError("Card Clicked was not mine");
             return false;
         }
 
@@ -346,4 +386,20 @@ public class CombatManager : MonoBehaviour {
         return true;
 
     }
+
+
+    #region RPCs
+
+
+    public void RPCBroadcastAttacker(PhotonTargets targets, CardVisual attacker) {
+        int attackerID = attacker.photonView.viewID;
+
+       owner.photonView.RPC("BroadcastAttacker", targets, attackerID);
+    }
+
+
+
+
+    #endregion
+
 }

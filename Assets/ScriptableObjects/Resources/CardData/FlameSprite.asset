@@ -15,21 +15,91 @@ MonoBehaviour:
   cardName: Flame Sprite
   cardText: 'Inspire: Deal 1 Damage'
   cardCost: 1
-  cardImage: {fileID: 0}
-  primaryCardType: 0
+  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
+  cardImagePos: {x: 0, y: 36.7}
+  attackEffect: VFX_Primal_Slash
+  primaryCardType: 1
   otherCardTypes: 
-  attunements: 02000000
-  subTypes: 04000000
+  attunements: 03000000
+  subTypes: 05000000
   keywords: 
-  specialAbilities:
-  - type: 0
-    effect: 0
-    abilityName: Flame Sprite 30 Effect On Target
+  specialAbilityTypes: 
+  userTargtedAbilities:
+  - trigger: 02000000
+    duration: 0
+    triggerConstraints:
+      types: 04000000
+      owner: 0
+      primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 05000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 1
+    sourceConstraints:
+      types: 04000000
+      owner: 0
+      primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 05000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    effect: 1
+    abilityName: 
     effectValue: 0
     source: {fileID: 0}
+    targets: []
+    limitations:
+      types: 0200000004000000
+      owner: 0
+      primaryType: 01000000
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 05000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    ID: 0
+    abilityVFX: VFX_Primal_Slash
     statAdjustments:
-    - stat: 2
-      value: 1
+    - stat: 4
+      value: -1
+      nonStacking: 0
+      temporary: 0
+      source: {fileID: 0}
+      uniqueID: -1
+    keywordsToAddorRemove: 0900000010000000
+    copyTargets: 1
+    spawnableTokenDataName: 
+    spawnTokenLocation: 3
+    spawnCardType: 0
+    numberOfSpawns: 1
+    targetZone: 3
+    requireMultipleTriggers: 0
+    triggersRequired: 0
+    counter: 0
+  multiTargetAbilities: []
   attack: 1
   size: 1
-  health: 2
+  health: 3
