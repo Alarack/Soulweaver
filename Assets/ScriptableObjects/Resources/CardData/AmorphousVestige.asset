@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
+  m_Name: AmorphousVestige
+  m_EditorClassIdentifier: 
+  cardID: 1001
+  cardName: Amorphous Vestige
+  cardText: 
+  cardCost: 1
+  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImagePos: {x: 0, y: 16.8}
+  attackEffect: VFX_Primal_Slash
+  primaryCardType: 1
+  otherCardTypes: 
+  attunements: 0b000000
+  subTypes: 19000000
+  keywords: 17000000
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
+  attack: 1
+  size: 1
+  health: 1

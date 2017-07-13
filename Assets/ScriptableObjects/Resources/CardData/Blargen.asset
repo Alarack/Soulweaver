@@ -24,13 +24,30 @@ MonoBehaviour:
   subTypes: 04000000
   keywords: 
   specialAbilityTypes: 01000000
-  userTargtedAbilities:
-  - trigger: 01000000
+  userTargtedAbilities: []
+  multiTargetAbilities:
+  - trigger: 02000000
     duration: 0
     triggerConstraints:
-      types: 02000000
+      types: 0400000002000000
       owner: 0
       primaryType: 01000000
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 05000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 1
+    sourceConstraints:
+      types: 
+      owner: 0
+      primaryType: 
       additionalType: 
       subtype: 
       keyword: 
@@ -43,23 +60,7 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
-    sourceConstraints:
-      types: 04000000
-      owner: 0
-      primaryType: 
-      additionalType: 
-      subtype: 
-      keyword: 
-      attunement: 
-      currentZone: 05000000
-      previousZone: 
-      creatureStatus: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-    effect: 0
+    effect: 3
     abilityName: 
     effectValue: 0
     source: {fileID: 0}
@@ -83,13 +84,38 @@ MonoBehaviour:
     ID: 0
     abilityVFX: 
     statAdjustments: []
+    additionalRequirements: 01000000
+    cardsInZoneConstraints:
+      types: 020000000100000006000000
+      owner: 2
+      primaryType: 01000000
+      additionalType: 
+      subtype: 02000000
+      keyword: 
+      attunement: 
+      currentZone: 03000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    numberOfcardsInZone: 1
+    zoneToCheckForNumberOfCards: 3
+    moreOrLess: 0
+    keywordsToAddorRemove: 
     copyTargets: 0
-    spawnableTokenDataName: 
-    spawnTokenLocation: 0
-    spawnCardType: 0
-    numberOfSpawns: 0
+    spawnableTokenDataName: SparkSpawn
+    spawnTokenLocation: 5
+    spawnCardType: 1
+    numberOfSpawns: 1
     targetZone: 0
-  multiTargetAbilities: []
+    requireMultipleTriggers: 0
+    resetCountAtTurnEnd: 0
+    triggersRequired: 0
+    logicTargetingMethod: 0
+    numberofTargets: 0
   attack: 2
   size: 1
   health: 3

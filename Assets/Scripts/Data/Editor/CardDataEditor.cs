@@ -112,6 +112,7 @@ public class CardDataEditor : Editor {
         entry.requireMultipleTriggers = EditorGUILayout.Toggle("Require Multiple Triggers?", entry.requireMultipleTriggers);
         if (entry.requireMultipleTriggers) {
             entry.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggersRequired);
+            entry.resetCountAtTurnEnd = EditorGUILayout.Toggle("Reset Counter On Turn End?", entry.resetCountAtTurnEnd);
         }
         EditorGUILayout.Separator();
 
@@ -133,6 +134,39 @@ public class CardDataEditor : Editor {
         }
 
         EditorHelper.DrawInspectorSectionFooter();
+
+
+
+
+        EditorGUILayout.Separator();
+
+        EditorHelper.DrawInspectorSectionHeader("Additional Requirements:");
+
+        entry.additionalRequirements = EditorHelper.DrawList("Requirement", entry.additionalRequirements, true, Constants.AdditionalRequirement.None, true, DrawAdditionalRequirements);
+
+        for(int i = 0; i < entry.additionalRequirements.Count; i++) {
+            switch (entry.additionalRequirements[i]) {
+                case Constants.AdditionalRequirement.NumberofCardsInZone:
+                    entry.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.zoneToCheckForNumberOfCards);
+                    entry.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.numberOfcardsInZone);
+                    entry.moreOrLess = EditorHelper.EnumPopup("At Least Or Less Than?", entry.moreOrLess);
+                    //entry.greaterOrEqualCardsInZone = EditorGUILayout.Toggle("This many or more?", entry.greaterOrEqualCardsInZone);
+                    //entry.lessOrEqualCardsInZone = EditorGUILayout.Toggle("This many or less?", entry.lessOrEqualCardsInZone);
+
+                    EditorGUILayout.Separator();
+                    entry.cardsInZoneConstraints.types = EditorHelper.DrawList("Number of cards Constraint", entry.cardsInZoneConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
+
+                    for (int j = 0; j < entry.cardsInZoneConstraints.types.Count; j++) {
+                        ShowConstraintsOfType(entry.cardsInZoneConstraints.types[j], entry.cardsInZoneConstraints, "Extra Requirement");
+                    }
+
+                    break;
+            }
+        }
+
+
+        EditorHelper.DrawInspectorSectionFooter();
+
 
         EditorGUILayout.Separator();
 
@@ -285,6 +319,13 @@ public class CardDataEditor : Editor {
                 entry.maxStats = EditorHelper.DrawExtendedList("Maximum Stats", entry.maxStats, "Stat", DrawStatAdjustments);
                 break;
 
+            //case ConstraintType.NumberofCardsInZone:
+            //    EditorGUILayout.Separator();
+            //    EditorGUILayout.LabelField("How many cards must be in the specified zone?", EditorStyles.boldLabel);
+            //    entry.numberOfCardsInZone = EditorGUILayout.IntField("Requirement", entry.numberOfCardsInZone);
+
+            //    break;
+
             case ConstraintType.CreatureStatus:
                 entry.creatureStatus = EditorHelper.DrawList("Creature Status", entry.creatureStatus, true, Constants.CreatureStatus.None, true, DrawCreatureStatus);
                 EditorGUILayout.Separator();
@@ -371,9 +412,16 @@ public class CardDataEditor : Editor {
         return result;
     }
 
-    private Constants.SpecialAbilityTypes DrawAbilityTypes(List<Constants.SpecialAbilityTypes> list, int index) {
-        Constants.SpecialAbilityTypes result = (Constants.SpecialAbilityTypes)EditorGUILayout.EnumPopup("Specials", list[index]);
+    private Constants.AdditionalRequirement DrawAdditionalRequirements(List<Constants.AdditionalRequirement> list, int index) {
+        Constants.AdditionalRequirement result = EditorHelper.EnumPopup("Requirement", list[index]);
         return result;
     }
+
+
+
+    //private Constants.SpecialAbilityTypes DrawAbilityTypes(List<Constants.SpecialAbilityTypes> list, int index) {
+    //    Constants.SpecialAbilityTypes result = (Constants.SpecialAbilityTypes)EditorGUILayout.EnumPopup("Specials", list[index]);
+    //    return result;
+    //}
 
 }

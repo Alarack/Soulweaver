@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 7906ec932c90c7044a714b746d542e0d
-timeCreated: 1498450809
+guid: 4973dd5bf07814d4eb76da4499ff9056
+timeCreated: 1499824400
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
-  fontSize: 50
+  fontSize: 16
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Asimov
+  fontName: Alegreya Sans
   fontNames:
-  - Asimov
+  - Alegreya Sans
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

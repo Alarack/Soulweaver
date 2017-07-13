@@ -7929,7 +7929,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1509708692148110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -22.3, z: -2.3}
+  m_LocalPosition: {x: 0, y: -20.4, z: -2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4951298379993570}
@@ -8219,7 +8219,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1341306738509736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -32.79}
+  m_LocalPosition: {x: 0, y: 0, z: -36.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4230362993992184}
@@ -8418,7 +8418,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 18.33
   m_Depth: 0
   m_CullingMask:
@@ -10778,6 +10778,7 @@ MonoBehaviour:
   selectingDefender: 0
   attacker: {fileID: 0}
   defender: {fileID: 0}
+  selectedPos: {x: 0, y: 0, z: -1.5}
 --- !u!114 &114180662367406406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20544,7 +20545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daca3e9d445880447be48c2a17ba38cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 0
+  gameState: 3
   startingHandSize: 4
   myHand: {fileID: 0}
   p2HandRot: {fileID: 4544196762609838}

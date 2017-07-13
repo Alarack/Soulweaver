@@ -31,6 +31,8 @@ public class CombatManager : Photon.MonoBehaviour {
     public CreatureCardVisual attacker;
     public CreatureCardVisual defender;
 
+    public Vector3 selectedPos;
+
     //public Action<CardVisual> targetCallback;
     public Func<CardVisual, bool> confirmedTargetCallback;
     //public CardVisual sourceOfTargetingEffect;
@@ -46,7 +48,7 @@ public class CombatManager : Photon.MonoBehaviour {
         combatManager = this;
         owner = GetComponentInParent<Player>();
         //Debug.Log(combatManager.gameObject.name + " is where combat manager is assigned");
-        //Grid.EventManager.RegisterListener(Constants.GameEvent.SpecialAbilityTriggered, OnSpecialAbilityTriggered);
+        Grid.EventManager.RegisterListener(Constants.GameEvent.TurnStarted, OnTurnStart);
     }
 
 	void Update () {
@@ -143,6 +145,11 @@ public class CombatManager : Photon.MonoBehaviour {
 
 
         RPCBroadcastAttacker(PhotonTargets.All, attacker);
+
+        attacker.battlefieldPos.position += selectedPos;
+
+
+
 
         //EventData data = new EventData();
         //data.AddMonoBehaviour("Card", attacker);
@@ -276,9 +283,10 @@ public class CombatManager : Photon.MonoBehaviour {
 
     public void EndCombat() {
 
+        attacker.battlefieldPos.position -= selectedPos;
         //TODO: End of Combat Events
 
-        if(attacker != null && defender != null) {
+        if (attacker != null && defender != null) {
             attacker.RPCCheckDeath(PhotonTargets.All, defender);
             defender.RPCCheckDeath(PhotonTargets.All, attacker);
 
@@ -386,6 +394,84 @@ public class CombatManager : Photon.MonoBehaviour {
         return true;
 
     }
+
+
+
+    #region Events
+
+    public void OnTurnStart(EventData data) {
+        Player p = data.GetMonoBehaviour("Player") as Player;
+
+        if(p = owner) {
+            HandleFusion();
+        }
+
+    }
+
+
+
+    #endregion
+
+
+
+    #region Special Keywords
+
+
+    public void HandleFusion() {
+        List<CardVisual> targets = Finder.FindAllCardsInZone(DeckType.Battlefield, Keywords.Fusion, OwnerConstraints.Mine);
+
+        if(targets.Count < 2) {
+            return;
+        }
+
+        List<SpecialAbility.StatAdjustment> totalStats = new List<SpecialAbility.StatAdjustment>();
+
+        for (int i = 0; i < targets.Count; i++) {
+            totalStats.AddRange(SpecialAbility.StatAdjustment.CopyStats(targets[i] as CreatureCardVisual));
+            targets[i].currentDeck.RPCTransferCard(PhotonTargets.All, targets[i], Deck._void);
+        }
+
+        totalStats.AddRange(SpecialAbility.StatAdjustment.CreateStatSet(1, 1, 1));
+
+        int totalAtk = 0;
+        int totalSiz = 0;
+        int totalHth = 0;
+
+        for (int i = 0; i < totalStats.Count; i++) {
+
+            switch (totalStats[i].stat) {
+                case Constants.CardStats.Attack:
+                    totalAtk += totalStats[i].value;
+                    break;
+
+                case Constants.CardStats.Size:
+                    totalSiz += totalStats[i].value;
+                    break;
+
+                case Constants.CardStats.Health:
+
+                    totalHth += totalStats[i].value;
+
+                    break;
+            }
+        }
+
+        string cardDataName = "FusedSoul";
+
+        CardData tokenData = Resources.Load<CardData>("CardData/" + cardDataName) as CardData;
+        CardVisual newFusion = owner.activeGrimoire.GetComponent<Deck>().CardFactory(tokenData, GlobalSettings._globalSettings.creatureCard.name, owner.battlefield);
+
+        newFusion.RPCSetCardStats(PhotonTargets.All, totalStats.Count, totalAtk, totalSiz, totalHth);
+    }
+
+
+
+
+
+
+    #endregion
+
+
 
 
     #region RPCs

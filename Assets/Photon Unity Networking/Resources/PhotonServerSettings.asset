@@ -70,4 +70,6 @@ MonoBehaviour:
   - StopDrawing
   - SetVFXActiveState
   - ShowDamage
+  - ApplyMultipleStatAdjustments
+  - SetCardStats
   DisableAutoOpenWizard: 1

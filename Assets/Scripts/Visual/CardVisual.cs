@@ -201,22 +201,21 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
-    public virtual void AlterCardStats(Constants.CardStats stat, int value, CardVisual source) {
-        //Debug.Log("base card alter stat");
+    public virtual void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool sendEvent = true) {
 
-        if(animationManager != null) {
+        if (animationManager != null) {
             animationManager.BounceText(stat);
         }
 
-        if (photonView.isMine) {
 
+
+        if (sendEvent) {
             EventData data = new EventData();
 
             data.AddInt("Stat", (int)stat);
             data.AddInt("Value", value);
             data.AddGameObject("Target", gameObject);
             data.AddMonoBehaviour("Source", source);
-            //TODO: Send source of stat alterations.
 
             Grid.EventManager.SendEvent(Constants.GameEvent.CreatureStatAdjusted, data);
         }
@@ -269,7 +268,8 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
 
-        if (primaryCardType != Constants.CardType.Player && Input.GetMouseButtonUp(0) && photonView.isMine && Vector3.Distance(transform.position, handPos.position) > 10f && owner.myTurn) {
+        if (currentDeck.decktype == Constants.DeckType.Hand && primaryCardType != Constants.CardType.Player && Input.GetMouseButtonUp(0)
+            && photonView.isMine && Vector3.Distance(transform.position, handPos.position) > 10f && owner.myTurn) {
 
             if (owner.battleFieldManager.IsCollectionFull() && cardData.primaryCardType == Constants.CardType.Soul) {
                 Debug.Log("No place to put that");
@@ -291,7 +291,7 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Delete)){
+        if (Input.GetKeyDown(KeyCode.Delete)) {
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
         }
 
@@ -301,13 +301,13 @@ public class CardVisual : Photon.MonoBehaviour {
 
             RPCTargetCard(PhotonTargets.All, true);
 
-            if(this is CreatureCardVisual && combatManager.isInCombat) {
+            if (this is CreatureCardVisual && combatManager.isInCombat) {
                 CreatureCardVisual soul = this as CreatureCardVisual;
 
                 combatManager.lineDrawer.RPCBeginDrawing(PhotonTargets.Others, combatManager.attacker.battleToken.incomingEffectLocation.position, soul.battleToken.incomingEffectLocation.position);
             }
 
-            
+
 
         }
 
@@ -545,11 +545,83 @@ public class CardVisual : Photon.MonoBehaviour {
         SetupCardData();
     }
 
+
+
+    ////TODO: Make stat adjustments carry multiple stats?
+    //public virtual void RPCApplyStatAdjustments(PhotonTargets targets, List<SpecialAbility.StatAdjustment> statAdjs, CardVisual source) {
+
+    //    int sourceID;
+
+    //    if (source != null)
+    //        sourceID = source.photonView.viewID;
+    //    else {
+    //        sourceID = photonView.viewID;
+    //    }
+
+
+    //    int[] statEnums = new int[statAdjs.Count];
+    //    int[] values = new int[statAdjs.Count];
+
+    //    for(int i = 0; i < statAdjs.Count; i++) {
+    //        statEnums[i] = (int)statAdjs[i].stat;
+    //        values[i] = statAdjs[i].value;
+    //    }
+
+    //}
+
+
+    //[PunRPC]
+    //public void ApplyMultipleStatAdjustments(int[] statEnums, int[] statValues) {
+
+    //}
+
+    public void RPCSetCardStats(PhotonTargets targets, int cost, int attack, int size, int health) {
+
+
+        photonView.RPC("SetCardStats", targets, cost, attack, size, health);
+
+    }
+
+    [PunRPC]
+    public void SetCardStats(int cost, int attack, int size, int health) {
+
+        essenceCost = cost;
+        cardCostText.text = essenceCost.ToString();
+
+        if( this is CreatureCardVisual) {
+            CreatureCardVisual soul = this as CreatureCardVisual;
+
+            soul.attack = attack;
+            soul.cardAttackText.text = attack.ToString();
+            soul.battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Attack, attack);
+
+            soul.size = size;
+            soul.cardSizeText.text = size.ToString();
+            soul.battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Size, size);
+
+            soul.health = health;
+            soul.cardHealthText.text = health.ToString();
+            soul.battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
+
+
+        }
+
+
+    }
+
+
+    //This doesn't make sense. it isn't only for combat damage.
     public virtual void RPCApplyCombatDamage(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
         int statEnum = (int)adjustment.stat;
         int value = adjustment.value;
-        int sourceID = source.photonView.viewID;
 
+        int sourceID;
+
+        if (source != null)
+            sourceID = source.photonView.viewID;
+        else {
+            sourceID = photonView.viewID;
+        }
         photonView.RPC("ApplyCombatDamage", targets, statEnum, value, sourceID);
     }
 
@@ -561,8 +633,17 @@ public class CardVisual : Photon.MonoBehaviour {
         AlterCardStats(stat, value, source);
     }
 
+
+    //This only works for special abilities. change the name
     public virtual void RPCApplyStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
-        int sourceID = source.photonView.viewID;
+        int sourceID;
+
+        if (source != null)
+            sourceID = source.photonView.viewID;
+        else {
+            sourceID = photonView.viewID;
+            //Debug.Log("I'm the source of me!");
+        }
 
         photonView.RPC("ApplystatAdjustment", targets, sourceID, adjustment.uniqueID);
     }
@@ -572,13 +653,13 @@ public class CardVisual : Photon.MonoBehaviour {
         CardVisual source = Finder.FindCardByID(sourceID);
 
         //TODO: Make this search a single ability list
-        for(int i = 0; i < source.specialAbilities.Count; i++) {
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
             SpecialAbility special = source.specialAbilities[i];
 
             for (int j = 0; j < special.statAdjustments.Count; j++) {
                 SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
 
-                if(adj.uniqueID == adjID) {
+                if (adj.uniqueID == adjID) {
                     //Debug.Log("Match found : " +adj.source.gameObject.name + " and " + gameObject.name);
 
                     if (adj.nonStacking && statAdjustments.Contains(adj)) {
@@ -637,7 +718,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
                     AlterCardStats(adj.stat, -adj.value, adj.source);
                     statAdjustments.Remove(adj);
-                
+
                 }
             }
         }
@@ -721,9 +802,9 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     }
-    
-    
-    
+
+
+
     public virtual void RPCDeployAttackEffect(PhotonTargets targets, int effectId, CardVisual target) {
         int targetID = target.photonView.viewID;
 
@@ -735,7 +816,7 @@ public class CardVisual : Photon.MonoBehaviour {
         GameObject effect = Finder.FindEffectByID(effectID);
         CreatureCardVisual target = Finder.FindCardByID(targetID) as CreatureCardVisual;
 
-        if(target.battleToken.incomingEffectLocation != null) {
+        if (target.battleToken.incomingEffectLocation != null) {
             effect.transform.SetParent(target.battleToken.incomingEffectLocation, false);
             effect.transform.localPosition = Vector3.zero;
         }
@@ -743,11 +824,11 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
 
-    
-    
-    
-    
-    
+
+
+
+
+
     #endregion
 
 

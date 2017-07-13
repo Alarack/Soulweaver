@@ -26,6 +26,11 @@ public abstract class SpecialAbility {
     public EffectDuration duration;
     public ConstraintList triggerConstraints = new ConstraintList();
     public ConstraintList sourceConstraints = new ConstraintList();
+
+
+
+
+
     public EffectType effect;
     public string abilityName;
     public int effectValue;
@@ -36,6 +41,27 @@ public abstract class SpecialAbility {
     public string abilityVFX;
 
     public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
+
+
+    //Additional Requirements
+    public List<Constants.AdditionalRequirement> additionalRequirements = new List<Constants.AdditionalRequirement>();
+
+    //Cards In Zone
+    public ConstraintList cardsInZoneConstraints = new ConstraintList();
+    public int numberOfcardsInZone;
+
+    public enum MoreOrLess {
+        AtLeast,
+        NoMoreThan
+    }
+
+
+    //public bool lessOrEqualCardsInZone;
+    //public bool greaterOrEqualCardsInZone;
+
+    public DeckType zoneToCheckForNumberOfCards;
+    public MoreOrLess moreOrLess;
+
 
 
     //Keyword Fields
@@ -54,9 +80,12 @@ public abstract class SpecialAbility {
 
     //Count Toward Effect
     public bool requireMultipleTriggers;
+    public bool resetCountAtTurnEnd;
     public int triggersRequired;
+    private int counter;
 
-    public int counter;
+
+
 
 
     public virtual bool ProcessEffect(CardVisual card) {
@@ -94,10 +123,6 @@ public abstract class SpecialAbility {
     }
 
     protected virtual void Effect(CardVisual card) {
-
-
-
-
 
         if (!targets.Contains(card))
             targets.Add(card);
@@ -196,6 +221,11 @@ public abstract class SpecialAbility {
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZoneEndDuration);
         }
 
+        if (resetCountAtTurnEnd && requireMultipleTriggers)
+            Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEnd);
+
+
+
 
         if (trigger.Contains(AbilityActivationTrigger.EntersZone))
             Grid.EventManager.RegisterListener(GameEvent.CardEnteredZone, OnEnterZone);
@@ -241,6 +271,15 @@ public abstract class SpecialAbility {
     }
 
     protected void OnTurnEnd(EventData data) {
+        Player player = data.GetMonoBehaviour("Player") as Player;
+
+        if (!source.owner == player) {
+            return;
+        }
+
+        if (resetCountAtTurnEnd)
+            counter = 0;
+
 
 
     }
@@ -368,6 +407,12 @@ public abstract class SpecialAbility {
             //Debug.Log("Source is not in place for" + source.gameObject.name + "'s ability");
             //Debug.Log("Source is not in place");
             return false;
+        }
+
+
+        for(int i = 0; i < additionalRequirements.Count; i++) {
+            if (!CheckAdditionalRequirements(additionalRequirements[i], cardsInZoneConstraints))
+                return false;
         }
 
         return result;
@@ -671,6 +716,67 @@ public abstract class SpecialAbility {
 
 
 
+
+    protected bool CheckAdditionalRequirements(Constants.AdditionalRequirement typeOfRequirement, ConstraintList constraint) {
+        bool result = true;
+
+
+        switch (typeOfRequirement) {
+            case Constants.AdditionalRequirement.NumberofCardsInZone:
+
+                switch (moreOrLess) {
+                    case MoreOrLess.AtLeast:
+                        if (CheckNumberOfCardsInZone(zoneToCheckForNumberOfCards, cardsInZoneConstraints).Count < numberOfcardsInZone) {
+                            Debug.Log("Not enough " + cardsInZoneConstraints.subtype[0].ToString() + " in " + zoneToCheckForNumberOfCards.ToString());
+                            return false;
+                        }
+                            
+                            
+                        break;
+
+                    case MoreOrLess.NoMoreThan:
+                        if (CheckNumberOfCardsInZone(zoneToCheckForNumberOfCards, cardsInZoneConstraints).Count > numberOfcardsInZone) {
+                            Debug.Log("Too many " + cardsInZoneConstraints.subtype[0].ToString() + " in " + zoneToCheckForNumberOfCards.ToString());
+                            return false;
+                        }
+                            
+
+
+                        break;
+                }
+
+                break;
+        }
+
+
+
+
+
+
+        return result;
+    }
+
+
+
+
+    protected List<CardVisual> CheckNumberOfCardsInZone(DeckType zone, ConstraintList constraint) {
+        List<CardVisual> results = new List<CardVisual>();
+
+        List<CardVisual> allCardsInZone = Finder.FindAllCardsInZone(zone);
+
+        for(int i = 0; i < allCardsInZone.Count; i++) {
+            CardVisual applicant = CheckConstraints(constraint, allCardsInZone[i]);
+
+            if (applicant != null)
+                results.Add(applicant);
+        }
+
+
+
+
+        return results;
+    }
+
     #endregion
 
 
@@ -810,6 +916,39 @@ public abstract class SpecialAbility {
 
         }
 
+
+        public static List<StatAdjustment> CopyStats(CreatureCardVisual target) {
+            List<StatAdjustment> results = new List<StatAdjustment>();
+
+            StatAdjustment atk = new StatAdjustment(CardStats.Attack, target.attack, false, false, null);
+            StatAdjustment siz = new StatAdjustment(CardStats.Size, target.size, false, false, null);
+            StatAdjustment hth = new StatAdjustment(CardStats.Health, target.health, false, false, null);
+
+            results.Add(atk);
+            results.Add(siz);
+            results.Add(hth);
+
+
+            return results;
+        }
+
+        public static List<StatAdjustment> CreateStatSet(int atk, int siz, int hth) {
+            List<StatAdjustment> results = new List<StatAdjustment>();
+
+            StatAdjustment atka = new StatAdjustment(CardStats.Attack, atk, false, false, null);
+            StatAdjustment siza = new StatAdjustment(CardStats.Size, siz, false, false, null);
+            StatAdjustment htha = new StatAdjustment(CardStats.Health, hth, false, false, null);
+
+            results.Add(atka);
+            results.Add(siza);
+            results.Add(htha);
+
+            return results;
+        }
+
+
+
+
     }
 
     //[System.Serializable]
@@ -869,7 +1008,10 @@ public abstract class SpecialAbility {
         public CardStats mostStat;
         public CardStats leastStat;
         public bool thisCardOnly;
-
+        //public int numberOfCardsInZone;
+        //public DeckType zoneForCounting;
+        //public CardType cardTypeForCounting;
+        //public subt
 
 
 

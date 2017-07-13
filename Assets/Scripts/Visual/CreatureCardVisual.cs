@@ -91,7 +91,7 @@ public class CreatureCardVisual : CardVisual {
 
     }
 
-    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source) {
+    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool sendEvent = true) {
         base.AlterCardStats(stat, value, source);
 
         //Debug.Log("creature card alter stat");
