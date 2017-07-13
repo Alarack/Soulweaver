@@ -114,6 +114,22 @@ public class CardDataEditor : Editor {
             entry.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggersRequired);
             entry.resetCountAtTurnEnd = EditorGUILayout.Toggle("Reset Counter On Turn End?", entry.resetCountAtTurnEnd);
         }
+
+        for(int i = 0; i < entry.trigger.Count; i++) {
+            switch (entry.trigger[i]) {
+                case AbilityActivationTrigger.TakesDamage:
+                    entry.applyEffectToSourceOfAdjustment = EditorGUILayout.Toggle("Only Apply Effect to Source of Damage?", entry.applyEffectToSourceOfAdjustment);
+
+                    break;
+
+                case AbilityActivationTrigger.CreatureStatChanged:
+                    entry.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.statChanged);
+                    entry.gainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.gainedOrLost);
+
+                    break;
+            }
+        }
+
         EditorGUILayout.Separator();
 
         entry.triggerConstraints.thisCardOnly = EditorGUILayout.Toggle("Only this card can trigger this effect?", entry.triggerConstraints.thisCardOnly);
@@ -176,7 +192,7 @@ public class CardDataEditor : Editor {
 
         switch (entry.effect) {
             case EffectType.SpawnToken:
-                entry.copyTargets = EditorGUILayout.Toggle("Copy targets?", entry.copyTargets);
+                entry.copyTargets = EditorGUILayout.Toggle("Spawn a Copy of the target(s)?", entry.copyTargets);
 
                 if (!entry.copyTargets) {
                     entry.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.spawnableTokenDataName);

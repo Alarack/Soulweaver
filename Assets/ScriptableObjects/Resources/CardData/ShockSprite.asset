@@ -25,7 +25,98 @@ MonoBehaviour:
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
-  multiTargetAbilities: []
+  multiTargetAbilities:
+  - trigger: 02000000
+    duration: 0
+    triggerConstraints:
+      types: 04000000
+      owner: 0
+      primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 05000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 1
+    sourceConstraints:
+      types: 
+      owner: 0
+      primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    effect: 2
+    abilityName: 
+    effectValue: 0
+    source: {fileID: 0}
+    targets: []
+    limitations:
+      types: 02000000060000000400000001000000
+      owner: 2
+      primaryType: 01000000
+      additionalType: 
+      subtype: 02000000
+      keyword: 
+      attunement: 
+      currentZone: 01000000
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    ID: 0
+    abilityVFX: 
+    statAdjustments: []
+    additionalRequirements: 
+    cardsInZoneConstraints:
+      types: 
+      owner: 0
+      primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    numberOfcardsInZone: 0
+    zoneToCheckForNumberOfCards: 0
+    moreOrLess: 0
+    keywordsToAddorRemove: 
+    copyTargets: 0
+    spawnableTokenDataName: 
+    spawnTokenLocation: 0
+    spawnCardType: 0
+    numberOfSpawns: 0
+    targetZone: 3
+    requireMultipleTriggers: 0
+    resetCountAtTurnEnd: 0
+    triggersRequired: 0
+    applyEffectToSourceOfAdjustment: 0
+    logicTargetingMethod: 2
+    numberofTargets: 2
   attack: 2
   size: 1
   health: 3

@@ -26,7 +26,7 @@ MonoBehaviour:
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 02000000
+  - trigger: 01000000
     duration: 0
     triggerConstraints:
       types: 020000000400000005000000
@@ -114,6 +114,7 @@ MonoBehaviour:
     requireMultipleTriggers: 1
     resetCountAtTurnEnd: 1
     triggersRequired: 3
+    applyEffectToSourceOfAdjustment: 0
     logicTargetingMethod: 0
     numberofTargets: 0
   attack: 1

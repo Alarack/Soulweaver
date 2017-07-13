@@ -27,10 +27,6 @@ public abstract class SpecialAbility {
     public ConstraintList triggerConstraints = new ConstraintList();
     public ConstraintList sourceConstraints = new ConstraintList();
 
-
-
-
-
     public EffectType effect;
     public string abilityName;
     public int effectValue;
@@ -41,6 +37,16 @@ public abstract class SpecialAbility {
     public string abilityVFX;
 
     public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
+
+    public enum ApplyEffectToWhom {
+        TriggeringCard,
+        CauseOfTrigger
+    }
+
+    public enum GainedOrLost {
+        Gained,
+        Lost
+    }
 
 
     //Additional Requirements
@@ -62,8 +68,6 @@ public abstract class SpecialAbility {
     public DeckType zoneToCheckForNumberOfCards;
     public MoreOrLess moreOrLess;
 
-
-
     //Keyword Fields
     public List<Keywords> keywordsToAddorRemove = new List<Keywords>();
 
@@ -83,6 +87,12 @@ public abstract class SpecialAbility {
     public bool resetCountAtTurnEnd;
     public int triggersRequired;
     private int counter;
+
+    //Creature Stat Adjusted
+    public GainedOrLost gainedOrLost;
+    public CardStats statChanged;
+    public ApplyEffectToWhom applyEffectToWhom;
+    public bool applyEffectToSourceOfAdjustment;
 
 
 
@@ -344,35 +354,43 @@ public abstract class SpecialAbility {
         CardVisual target = data.GetGameObject("Target").GetComponent<CardVisual>();
         CardVisual sourceOfAdjustment = data.GetMonoBehaviour("Source") as CardVisual;
 
-        if (!ManageConstraints(target)) {
+        if (!ManageConstraints(target, sourceOfAdjustment)) {
             return;
         }
 
 
-        //if (limitations.currentZone.Count > 0 && !limitations.currentZone.Contains(source.currentDeck.decktype)) {
-        //    //Debug.Log(source.gameObject.name + " is not in the proper zone to detect a stat adjustment, but is still listening for one");
-        //    return;
-        //}
-
-
         if (trigger.Contains(AbilityActivationTrigger.TakesDamage)) {
             if (stat == CardStats.Health && value < 0) {
+
                 Debug.Log(target.gameObject.name + " has taken " + Mathf.Abs(value) + " point(s) of damage");
-                
+
                 if (requireMultipleTriggers) {
 
-                    if(counter < triggersRequired) {
+                    if (counter < triggersRequired) {
                         counter++;
                     }
 
-                    if(counter == triggersRequired) {
-                        ProcessEffect(target);
-                        counter = 0;
+                    if (counter == triggersRequired) {
+
+                        if (applyEffectToSourceOfAdjustment) {
+                            ProcessEffect(sourceOfAdjustment);
+                            counter = 0;
+
+                        }
+                        else {
+                            ProcessEffect(target);
+                            counter = 0;
+                        }
+
                     }
 
                 }
                 else {
-                    ProcessEffect(target);
+
+                    if (applyEffectToSourceOfAdjustment)
+                        ProcessEffect(sourceOfAdjustment);
+                    else
+                        ProcessEffect(target);
                 }
             }
 
@@ -390,15 +408,15 @@ public abstract class SpecialAbility {
     #region CONSTRAINT CHECKING
 
 
-    protected bool ManageConstraints(CardVisual target) {
+    protected bool ManageConstraints(CardVisual triggeringCard, CardVisual causeOfTrigger = null) {
         bool result = true;
 
-        if (triggerConstraints.thisCardOnly && target != source) {
+        if (triggerConstraints.thisCardOnly && triggeringCard != source) {
             //Debug.Log(source.gameObject.name + " can only trigger its own effect and " + target.gameObject.name + " has happened");
             return false;
         }
 
-        if (CheckConstraints(triggerConstraints, target) == null) {
+        if (CheckConstraints(triggerConstraints, triggeringCard) == null) {
             //Debug.Log("Trigger is not in place");
             return false;
         }
@@ -410,7 +428,7 @@ public abstract class SpecialAbility {
         }
 
 
-        for(int i = 0; i < additionalRequirements.Count; i++) {
+        for (int i = 0; i < additionalRequirements.Count; i++) {
             if (!CheckAdditionalRequirements(additionalRequirements[i], cardsInZoneConstraints))
                 return false;
         }
@@ -730,8 +748,8 @@ public abstract class SpecialAbility {
                             Debug.Log("Not enough " + cardsInZoneConstraints.subtype[0].ToString() + " in " + zoneToCheckForNumberOfCards.ToString());
                             return false;
                         }
-                            
-                            
+
+
                         break;
 
                     case MoreOrLess.NoMoreThan:
@@ -739,7 +757,7 @@ public abstract class SpecialAbility {
                             Debug.Log("Too many " + cardsInZoneConstraints.subtype[0].ToString() + " in " + zoneToCheckForNumberOfCards.ToString());
                             return false;
                         }
-                            
+
 
 
                         break;
@@ -764,7 +782,7 @@ public abstract class SpecialAbility {
 
         List<CardVisual> allCardsInZone = Finder.FindAllCardsInZone(zone);
 
-        for(int i = 0; i < allCardsInZone.Count; i++) {
+        for (int i = 0; i < allCardsInZone.Count; i++) {
             CardVisual applicant = CheckConstraints(constraint, allCardsInZone[i]);
 
             if (applicant != null)
@@ -846,6 +864,9 @@ public abstract class SpecialAbility {
         target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(zone, target));
 
     }
+
+
+
 
     public void GrantKeywords(CardVisual target, List<Keywords> keywords) {
 
@@ -1008,6 +1029,7 @@ public abstract class SpecialAbility {
         public CardStats mostStat;
         public CardStats leastStat;
         public bool thisCardOnly;
+        //public bool triggeringCardOnly;
         //public int numberOfCardsInZone;
         //public DeckType zoneForCounting;
         //public CardType cardTypeForCounting;

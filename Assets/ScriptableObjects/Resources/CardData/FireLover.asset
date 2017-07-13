@@ -25,7 +25,7 @@ MonoBehaviour:
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities:
-  - trigger: 02000000
+  - trigger: 0c000000
     duration: 0
     triggerConstraints:
       types: 04000000
@@ -89,12 +89,40 @@ MonoBehaviour:
       temporary: 0
       source: {fileID: 0}
       uniqueID: -1
+    additionalRequirements: 
+    cardsInZoneConstraints:
+      types: 
+      owner: 0
+      primaryType: 
+      additionalType: 
+      subtype: 
+      keyword: 
+      attunement: 
+      currentZone: 
+      previousZone: 
+      creatureStatus: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+    numberOfcardsInZone: 0
+    zoneToCheckForNumberOfCards: 0
+    moreOrLess: 0
+    keywordsToAddorRemove: 
     copyTargets: 0
     spawnableTokenDataName: 
     spawnTokenLocation: 0
     spawnCardType: 0
     numberOfSpawns: 0
     targetZone: 0
+    requireMultipleTriggers: 0
+    resetCountAtTurnEnd: 0
+    triggersRequired: 0
+    gainedOrLost: 1
+    statChanged: 4
+    applyEffectToWhom: 0
+    applyEffectToSourceOfAdjustment: 0
   multiTargetAbilities: []
   attack: 2
   size: 1

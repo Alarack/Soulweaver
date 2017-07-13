@@ -107,7 +107,9 @@ public class Constants {
         Healed,
         TurnStarts,
         TurnEnds,
-        Targted
+        Targted,
+        DealsDamage,
+        CreatureStatChanged
 
     }
 
