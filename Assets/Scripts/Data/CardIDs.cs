@@ -21,6 +21,11 @@ public class CardIDs {
         SparkSpawn_108 = 108,
         AngrySkeletons_109 = 109,
 
+
+        //Tokens
+        FusedSoul_1000 = 1000,
+        AmorphousVestige_1001,
+
     }
 
 

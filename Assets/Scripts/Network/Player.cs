@@ -112,7 +112,7 @@ public class Player : Photon.MonoBehaviour {
                     if(battlefield != null)
                         RefreshMySouls();
 
-                    RPCBroadcastTurnStart(PhotonTargets.All, this);
+                    StartCoroutine( RPCBroadcastTurnStart(PhotonTargets.All, this));
 
                     break;
 
@@ -132,7 +132,12 @@ public class Player : Photon.MonoBehaviour {
                     CheckEndOfTurnEffects();
 
                     myTurn = false;
-                    opponent.RPCResetState(PhotonTargets.All);
+
+                    if(opponent != null)
+                        opponent.RPCResetState(PhotonTargets.All);
+                    else {
+                        ResetState();
+                    }
 
                     break;
 
@@ -499,7 +504,9 @@ public class Player : Photon.MonoBehaviour {
 
     }
 
-    public void RPCBroadcastTurnStart(PhotonTargets targets, Player player) {
+    public IEnumerator RPCBroadcastTurnStart(PhotonTargets targets, Player player) {
+        yield return new WaitForSeconds(0.5f);
+
         int playerID = player.photonView.viewID;
         photonView.RPC("BroadcastTurnStart", targets, playerID);
     }

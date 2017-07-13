@@ -17,6 +17,7 @@ public class Deck : Photon.MonoBehaviour {
 
     //public static Deck _battlefield;
     public static Deck _allCards;
+    public static Deck _void;
     public static List<Deck> _allDecks = new List<Deck>();
 
 
@@ -26,6 +27,10 @@ public class Deck : Photon.MonoBehaviour {
 
         if (decktype == DeckType.AllCards) {
             _allCards = this;
+        }
+
+        if(decktype == DeckType.Void) {
+            _void = this;
         }
 
         RegisterDeck();
@@ -203,7 +208,35 @@ public class Deck : Photon.MonoBehaviour {
         cardVisual.RPCSetParentDeck(PhotonTargets.Others, decktype.ToString());
 
         if (targetDeck != null) {
-            RPCTransferCard(PhotonTargets.All, cardVisual, targetDeck);
+
+            switch (targetDeck.decktype) {
+                case DeckType.Battlefield:
+
+                    if (owner.battleFieldManager.IsCollectionFull()) {
+                        if (owner.handManager.IsCollectionFull()) {
+                            RPCTransferCard(PhotonTargets.All, cardVisual, owner.activeCrypt.GetComponent<Deck>());
+                        }
+                        else {
+                            RPCTransferCard(PhotonTargets.All, cardVisual, owner.myHand);
+                        }
+                    }
+                    else {
+                        RPCTransferCard(PhotonTargets.All, cardVisual, targetDeck);
+                    }
+
+                    break;
+
+                case DeckType.Hand:
+                    if (owner.handManager.IsCollectionFull()) {
+                        RPCTransferCard(PhotonTargets.All, cardVisual, owner.activeCrypt.GetComponent<Deck>());
+                    }
+                    else {
+                        RPCTransferCard(PhotonTargets.All, cardVisual, targetDeck);
+                    }
+
+                    break;
+            }
+
         }
 
         if (owner.player2) {
@@ -299,7 +332,7 @@ public class Deck : Photon.MonoBehaviour {
         CardVisual card = Finder.FindCardByID(cardID);
         Deck targetLocation = Finder.FindDeckByID(deckID);
 
-        if(owner == null) {
+        if (owner == null) {
             owner = card.owner;
         }
 
@@ -323,29 +356,22 @@ public class Deck : Photon.MonoBehaviour {
 
         switch (targetLocation.decktype) {
             case DeckType.Hand:
-
                 SendCardToHand(card);
+
                 break;
 
             case DeckType.Battlefield:
-                if (!owner.battleFieldManager.IsCollectionFull()) {
-                    SendCardToBattlefield(card);
-                }
-                else {
-                    //Debug.Log("Full");
-                    if (card.photonView.isMine) {
-                        RPCTransferCard(PhotonTargets.All, card, owner.myHand);
-                        return;
-                    }
-                }
+                SendCardToBattlefield(card);
+
                 break;
 
             case DeckType.SoulCrypt:
                 StartCoroutine(SendCardToSoulCrypt(card));
+
                 break;
 
             case DeckType.Void:
-
+                SendCardToVoid(card);
                 break;
 
             default:
@@ -416,6 +442,7 @@ public class Deck : Photon.MonoBehaviour {
             card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
             card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
             //Debug.Log(card.cardData.cardName + " is mine and is showing the card back to others");
+
         }
 
         card.handPos = owner.handManager.GetFirstEmptyCardPosition();
@@ -450,7 +477,7 @@ public class Deck : Photon.MonoBehaviour {
 
             case Constants.CardType.Soul:
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowBattleToken);
-                
+
                 if (card.photonView.isMine) {
                     card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition();
                 }
@@ -487,6 +514,26 @@ public class Deck : Photon.MonoBehaviour {
         //card.SetupCardData();
         if (card.photonView.isMine)
             card.transform.localPosition = new Vector3(-40f, 20f, 20f);
+
+
+    }
+
+    private void SendCardToVoid(CardVisual card) {
+        if (card.photonView.isMine) {
+            card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
+            card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
+        }
+
+        if (card is CreatureCardVisual) {
+            CreatureCardVisual creature = card as CreatureCardVisual;
+            creature.RPCToggleExhaust(PhotonTargets.All, false);
+        }
+
+        card.RestCardData();
+        //card.RPCSetUpCardData(PhotonTargets.All);
+        //card.SetupCardData();
+        if (card.photonView.isMine)
+            card.transform.localPosition = new Vector3(-40f, 20f, -40f);
 
 
     }

@@ -73,7 +73,7 @@ public class Constants {
         Guardian,
         Protection,
         Deathtouch,
-        Immunity,
+        //Immunity,
         Volatile,
         Regeneration,
         Tireless,
@@ -81,7 +81,7 @@ public class Constants {
         FirstStrike,
         Ephemeral,
         Invisible,
-        Untouchable,
+        //Untouchable,
         Pacifist,
         Defender,
         DamageVulnerable,
@@ -91,7 +91,9 @@ public class Constants {
         Corrupted,
         Terrify,
         Interceptor,
-        Exhausted
+        Exhausted,
+        Fusion,
+        Fission
     }
 
     public enum AbilityActivationTrigger {
@@ -121,7 +123,14 @@ public class Constants {
         Keyword,
         StatMinimum,
         StatMaximum,
-        CreatureStatus
+        CreatureStatus,
+        NumberofCardsInZone
+
+    }
+
+    public enum AdditionalRequirement {
+        None = 0,
+        NumberofCardsInZone,
 
     }
 

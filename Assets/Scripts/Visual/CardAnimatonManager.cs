@@ -11,7 +11,7 @@ public class CardAnimatonManager : MonoBehaviour {
 
     private CardVisual card;
 
-	void Start () {
+	void Awake () {
         card = GetComponentInParent<CardVisual>();
 	}
 
@@ -23,7 +23,7 @@ public class CardAnimatonManager : MonoBehaviour {
 
 
     public void BounceText(Constants.CardStats stat) {
-
+ 
         if (card.currentDeck.decktype != Constants.DeckType.Battlefield && card.currentDeck.decktype != Constants.DeckType.Hand)
             return;
 

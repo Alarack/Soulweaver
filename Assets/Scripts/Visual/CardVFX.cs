@@ -87,7 +87,7 @@ public class CardVFX : Photon.MonoBehaviour {
 
 
     public void CleanUp() {
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
     }
 
 
