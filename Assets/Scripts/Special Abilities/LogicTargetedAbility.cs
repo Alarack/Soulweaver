@@ -79,7 +79,7 @@ public class LogicTargetedAbility :  SpecialAbility {
         List<CardVisual> results = new List<CardVisual>();
 
         for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
-            if (CheckConstraints(limitations, Deck._allCards.activeCards[i])) {
+            if (CheckConstraints(targetConstraints, Deck._allCards.activeCards[i])) {
                 results.Add(Deck._allCards.activeCards[i]);
                 //Debug.Log("adding " + Deck._allCards.activeCards[i].gameObject.name + " to a list of valid multi targets");
             }

@@ -98,17 +98,17 @@ public class Constants {
 
     public enum AbilityActivationTrigger {
         None = 0,
-        TakesDamage,
+        //TakesDamage,
         EntersZone,
         LeavesZone,
         Attacks,
         Defends,
-        Dies,
-        Healed,
+        //Dies,
+        //Healed,
         TurnStarts,
         TurnEnds,
         Targted,
-        DealsDamage,
+        //DealsDamage,
         CreatureStatChanged
 
     }
@@ -126,7 +126,9 @@ public class Constants {
         StatMinimum,
         StatMaximum,
         CreatureStatus,
-        NumberofCardsInZone
+        CreatureStatAdjustment,
+        MultipleTrigger,
+        Spawn
 
     }
 

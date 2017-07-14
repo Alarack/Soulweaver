@@ -72,4 +72,5 @@ MonoBehaviour:
   - ShowDamage
   - ApplyMultipleStatAdjustments
   - SetCardStats
+  - SetupResources
   DisableAutoOpenWizard: 1

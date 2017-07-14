@@ -60,6 +60,11 @@ public class Player : Photon.MonoBehaviour {
     public GameObject activeCrypt;
     public Deck battlefield;
 
+
+    [Header("Resources")]
+    public List<GameResource> gameResources = new List<GameResource>();
+    public GameResourceDisplay gameResourceDisplay;
+
     //[Header("UI Stuff")]
     //public GameObject returnToMenuButton;
 
@@ -84,12 +89,14 @@ public class Player : Photon.MonoBehaviour {
     void Start() {
         combatManager = GetComponentInChildren<CombatManager>();
 
+        RPCSetupResources(PhotonTargets.AllBufferedViaServer);
+
         if (photonView.isMine) {
             gameObject.name = "Me";
             myCamera.SetActive(true);
             hud.SetActive(true);
             myHand = GetComponent<Deck>();
-            
+
             //GameObject.Find("Battlefield").GetComponent<Deck>().owner = this;
             //Timeline.timeline.owner = this;
         }
@@ -103,16 +110,16 @@ public class Player : Photon.MonoBehaviour {
     }
 
     void Update() {
-        if (myTurn && photonView.isMine) {
+        if (myTurn && photonView.isMine && gameHasStarted) {
             switch (gameState) {
                 case GameStates.Refresh:
                     endTurnButton.interactable = true;
                     //DrawFromDomain();
                     //RefreshAll();
-                    if(battlefield != null)
+                    if (battlefield != null)
                         RefreshMySouls();
 
-                    StartCoroutine( RPCBroadcastTurnStart(PhotonTargets.All, this));
+                    StartCoroutine(RPCBroadcastTurnStart(PhotonTargets.All, this));
 
                     break;
 
@@ -133,7 +140,7 @@ public class Player : Photon.MonoBehaviour {
 
                     myTurn = false;
 
-                    if(opponent != null)
+                    if (opponent != null)
                         opponent.RPCResetState(PhotonTargets.All);
                     else {
                         ResetState();
@@ -206,6 +213,8 @@ public class Player : Photon.MonoBehaviour {
         StartCoroutine(DrawStartingHand());
         //mulliganButton.SetActive(true);
 
+        gameHasStarted = true;
+
     }
 
     public void EndGame() {
@@ -222,8 +231,8 @@ public class Player : Photon.MonoBehaviour {
         //Deck._battlefield.RefreshAll(cardsOnField);
         battlefield.RefreshAll(cardsOnField);
 
-        for(int i = 0; i < cardsOnField.Count; i++) {
-            if(cardsOnField[i] is CreatureCardVisual) {
+        for (int i = 0; i < cardsOnField.Count; i++) {
+            if (cardsOnField[i] is CreatureCardVisual) {
                 CreatureCardVisual creature = cardsOnField[i] as CreatureCardVisual;
                 creature.hasAttacked = false;
             }
@@ -280,6 +289,14 @@ public class Player : Photon.MonoBehaviour {
     public void PlayerUpkeep() {
         AdjustMaxEssence(1);
         FillEssence();
+
+        for (int i = 0; i < gameResourceDisplay.resourceDisplayInfo.Count; i++) {
+            if (gameResourceDisplay.resourceDisplayInfo[i].addPerTurn) {
+                gameResourceDisplay.resourceDisplayInfo[i].resource.IncreaseMaximum(1);
+                gameResourceDisplay.resourceDisplayInfo[i].resource.AddResource(1);
+            }
+        }
+
         //RenewOncePerTurnCounters();
 
         //EventManager.EffectOnUpkeep();
@@ -535,6 +552,21 @@ public class Player : Photon.MonoBehaviour {
         data.AddMonoBehaviour("Player", p);
 
         Grid.EventManager.SendEvent(Constants.GameEvent.TurnEnded, data);
+    }
+
+    public void RPCSetupResources(PhotonTargets targets) {
+        photonView.RPC("SetupResources", targets);
+    }
+
+    [PunRPC]
+    public void SetupResources() {
+
+        GameResource essence = new GameResource(GameResource.ResourceType.Essence, 0, 0, gameResourceDisplay);
+
+        gameResources.Add(essence);
+
+        gameResourceDisplay.Initialize(this, essence);
+
     }
 
 

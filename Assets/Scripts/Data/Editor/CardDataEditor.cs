@@ -109,22 +109,29 @@ public class CardDataEditor : Editor {
         EditorHelper.DrawInspectorSectionHeader("Effect Triggers:");
 
         entry.trigger = EditorHelper.DrawList("Triggers", entry.trigger, true, AbilityActivationTrigger.None, true, DrawActivationTrigger);
-        entry.requireMultipleTriggers = EditorGUILayout.Toggle("Require Multiple Triggers?", entry.requireMultipleTriggers);
-        if (entry.requireMultipleTriggers) {
-            entry.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggersRequired);
-            entry.resetCountAtTurnEnd = EditorGUILayout.Toggle("Reset Counter On Turn End?", entry.resetCountAtTurnEnd);
+        entry.triggerConstraints.requireMultipleTriggers = EditorGUILayout.Toggle("Require Multiple Triggers?", entry.triggerConstraints.requireMultipleTriggers);
+        if (entry.triggerConstraints.requireMultipleTriggers) {
+            entry.triggerConstraints.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggerConstraints.triggersRequired);
+            entry.triggerConstraints.resetCountAtTurnEnd = EditorGUILayout.Toggle("Reset Counter On Turn End?", entry.triggerConstraints.resetCountAtTurnEnd);
         }
 
         for(int i = 0; i < entry.trigger.Count; i++) {
             switch (entry.trigger[i]) {
-                case AbilityActivationTrigger.TakesDamage:
-                    entry.applyEffectToSourceOfAdjustment = EditorGUILayout.Toggle("Only Apply Effect to Source of Damage?", entry.applyEffectToSourceOfAdjustment);
+                //case AbilityActivationTrigger.TakesDamage:
+                //    //entry.applyEffectToSourceOfAdjustment = EditorGUILayout.Toggle("Only Apply Effect to Source of Damage?", entry.applyEffectToSourceOfAdjustment);
+                //    entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
+
+                //    break;
+
+                case AbilityActivationTrigger.CreatureStatChanged:
+                    entry.triggerConstraints.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.triggerConstraints.statChanged);
+                    entry.triggerConstraints.gainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.triggerConstraints.gainedOrLost);
+                    entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
 
                     break;
 
-                case AbilityActivationTrigger.CreatureStatChanged:
-                    entry.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.statChanged);
-                    entry.gainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.gainedOrLost);
+                case AbilityActivationTrigger.Defends:
+                    entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
 
                     break;
             }
@@ -163,9 +170,9 @@ public class CardDataEditor : Editor {
         for(int i = 0; i < entry.additionalRequirements.Count; i++) {
             switch (entry.additionalRequirements[i]) {
                 case Constants.AdditionalRequirement.NumberofCardsInZone:
-                    entry.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.zoneToCheckForNumberOfCards);
-                    entry.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.numberOfcardsInZone);
-                    entry.moreOrLess = EditorHelper.EnumPopup("At Least Or Less Than?", entry.moreOrLess);
+                    entry.cardsInZoneConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.cardsInZoneConstraints.zoneToCheckForNumberOfCards);
+                    entry.cardsInZoneConstraints.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.cardsInZoneConstraints.numberOfcardsInZone);
+                    entry.cardsInZoneConstraints.moreOrLess = EditorHelper.EnumPopup("At Least Or Less Than?", entry.cardsInZoneConstraints.moreOrLess);
                     //entry.greaterOrEqualCardsInZone = EditorGUILayout.Toggle("This many or more?", entry.greaterOrEqualCardsInZone);
                     //entry.lessOrEqualCardsInZone = EditorGUILayout.Toggle("This many or less?", entry.lessOrEqualCardsInZone);
 
@@ -192,20 +199,20 @@ public class CardDataEditor : Editor {
 
         switch (entry.effect) {
             case EffectType.SpawnToken:
-                entry.copyTargets = EditorGUILayout.Toggle("Spawn a Copy of the target(s)?", entry.copyTargets);
+                entry.targetConstraints.copyTargets = EditorGUILayout.Toggle("Spawn a Copy of the target(s)?", entry.targetConstraints. copyTargets);
 
-                if (!entry.copyTargets) {
-                    entry.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.spawnableTokenDataName);
-                    entry.spawnCardType = EditorHelper.EnumPopup("Card Type", entry.spawnCardType);
+                if (!entry.targetConstraints.copyTargets) {
+                    entry.targetConstraints.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.targetConstraints. spawnableTokenDataName);
+                    entry.targetConstraints.spawnCardType = EditorHelper.EnumPopup("Card Type", entry.targetConstraints.spawnCardType);
                 }
 
-                entry.spawnTokenLocation = EditorHelper.EnumPopup("Send Token Where?", entry.spawnTokenLocation);
-                entry.numberOfSpawns = EditorGUILayout.IntField("Number of Spawns", entry.numberOfSpawns);
+                entry.targetConstraints.spawnTokenLocation = EditorHelper.EnumPopup("Send Token Where?", entry.targetConstraints.spawnTokenLocation);
+                entry.targetConstraints.numberOfSpawns = EditorGUILayout.IntField("Number of Spawns", entry.targetConstraints.numberOfSpawns);
 
                 break;
 
             case EffectType.ZoneChange:
-                entry.targetZone = EditorHelper.EnumPopup("Target Zone", entry.targetZone);
+                entry.targetConstraints.targetZone = EditorHelper.EnumPopup("Target Zone", entry.targetConstraints.targetZone);
                 break;
 
             case EffectType.GrantKeywordAbilities:
@@ -225,8 +232,8 @@ public class CardDataEditor : Editor {
 
         EditorGUILayout.Separator();
 
-        entry.limitations.thisCardOnly = EditorGUILayout.Toggle("This card only targets itself?", entry.limitations.thisCardOnly);
-        entry.limitations.types = EditorHelper.DrawList("Target Constraints", entry.limitations.types, true, ConstraintType.None, true, DrawConstraintTypes);
+        entry.targetConstraints.thisCardOnly = EditorGUILayout.Toggle("This card only targets itself?", entry.targetConstraints.thisCardOnly);
+        entry.targetConstraints.types = EditorHelper.DrawList("Target Constraints", entry.targetConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
 
         if (entry is LogicTargetedAbility) {
             LogicTargetedAbility logicTargeted = entry as LogicTargetedAbility;
@@ -240,8 +247,8 @@ public class CardDataEditor : Editor {
             //multi.onlyThisCard = EditorGUILayout.Toggle("Only This", multi.onlyThisCard);
         }
 
-        for (int i = 0; i < entry.limitations.types.Count; i++) {
-            ShowConstraintsOfType(entry.limitations.types[i], entry.limitations, "Target");
+        for (int i = 0; i < entry.targetConstraints.types.Count; i++) {
+            ShowConstraintsOfType(entry.targetConstraints.types[i], entry.targetConstraints, "Target");
         }
 
         EditorHelper.DrawInspectorSectionFooter();

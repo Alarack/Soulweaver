@@ -9,22 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: FireLover
+  m_Name: __TestSubject1
   m_EditorClassIdentifier: 
   cardID: 0
-  cardName: Fire Lover
-  cardText: 'Inspire: Give Fire Souls +1 ATK'
+  cardName: Test Subject 01
+  cardText: Many Things
   cardCost: 1
-  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
+  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 03000000
+  attunements: 0b000000
   subTypes: 05000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
+  userTargtedAbilities: []
+  multiTargetAbilities:
   - trigger: 08000000
     duration: 0
     triggerConstraints:
@@ -53,15 +54,20 @@ MonoBehaviour:
       spawnTokenLocation: 0
       spawnCardType: 0
       numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 1
+      triggersRequired: 2
+      counter: 0
     sourceConstraints:
-      types: 04000000
+      types: 
       owner: 0
       primaryType: 
       additionalType: 
       subtype: 
       keyword: 
       attunement: 
-      currentZone: 05000000
+      currentZone: 
       previousZone: 
       creatureStatus: 
       minStats: []
@@ -79,7 +85,12 @@ MonoBehaviour:
       spawnTokenLocation: 0
       spawnCardType: 0
       numberOfSpawns: 0
-    effect: 1
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+    effect: 3
     abilityName: 
     effectValue: 0
     source: {fileID: 0}
@@ -106,21 +117,17 @@ MonoBehaviour:
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
+      spawnableTokenDataName: SparkSpawn
+      spawnTokenLocation: 5
+      spawnCardType: 1
+      numberOfSpawns: 1
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
     ID: 0
     abilityVFX: VFX_Heal_Gold
-    additionalRequirements: 
-    statAdjustments:
-    - stat: 4
-      value: 1
-      nonStacking: 0
-      temporary: 0
-      source: {fileID: 0}
-      uniqueID: -1
-    applyEffectToWhom: 0
     cardsInZoneConstraints:
       types: 
       owner: 0
@@ -147,13 +154,18 @@ MonoBehaviour:
       spawnTokenLocation: 0
       spawnCardType: 0
       numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
     keywordsToAddorRemove: 
-    targetZone: 0
-    requireMultipleTriggers: 0
-    resetCountAtTurnEnd: 0
-    triggersRequired: 0
+    additionalRequirements: 
+    statAdjustments: []
+    applyEffectToWhom: 0
     applyEffectToSourceOfAdjustment: 0
-  multiTargetAbilities: []
+    logicTargetingMethod: 0
+    numberofTargets: 0
   attack: 2
   size: 1
   health: 3
