@@ -26,190 +26,25 @@ MonoBehaviour:
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 09000000
+  - trigger: 01000000
     duration: 0
     triggerConstraints:
       types: 04000000
       owner: 0
       primaryType: 
+      notPrimaryType: 0
       additionalType: 
+      notAdditionalType: 0
       subtype: 
+      notSubtype: 0
       keyword: 
+      notKeyword: 0
       attunement: 
+      notAttunement: 0
       currentZone: 05000000
+      notCurrentZone: 0
       previousZone: 
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 1
-      gainedOrLost: 1
-      statChanged: 4
-      zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
-      numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 1
-      triggersRequired: 2
-      counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
-      requiredResourceType: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
-    sourceConstraints:
-      types: 
-      owner: 0
-      primaryType: 
-      additionalType: 
-      subtype: 
-      keyword: 
-      attunement: 
-      currentZone: 
-      previousZone: 
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-      gainedOrLost: 0
-      statChanged: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
-      numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
-      requiredResourceType: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
-    effect: 5
-    abilityName: 
-    effectValue: 0
-    source: {fileID: 0}
-    targets: []
-    targetConstraints:
-      types: 
-      owner: 0
-      primaryType: 
-      additionalType: 
-      subtype: 
-      keyword: 
-      attunement: 
-      currentZone: 
-      previousZone: 
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-      gainedOrLost: 0
-      statChanged: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
-      numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: SparkSpawn
-      spawnTokenLocation: 5
-      spawnCardType: 1
-      numberOfSpawns: 1
-      targetZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      generatedResourceType: 3
-      amountOfResourceToGenerate: 1
-      generatedResouceCap: 0
-      generatedResourceName: Lost Souls
-      requiredResourceType: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
-    ID: 0
-    abilityVFX: VFX_Heal_Gold
-    additionalRequirementConstraints:
-      types: 
-      owner: 0
-      primaryType: 
-      additionalType: 
-      subtype: 
-      keyword: 
-      attunement: 
-      currentZone: 
-      previousZone: 
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-      gainedOrLost: 0
-      statChanged: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
-      numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
-      requiredResourceType: 1
-      amountOfResourceRequried: 3
-      consumeResource: 1
-    keywordsToAddorRemove: 
-    additionalRequirements: 
-    statAdjustments: []
-    applyEffectToWhom: 0
-    applyEffectToSourceOfAdjustment: 0
-    logicTargetingMethod: 0
-    numberofTargets: 0
-  - trigger: 09000000
-    duration: 0
-    triggerConstraints:
-      types: 04000000
-      owner: 0
-      primaryType: 
-      additionalType: 
-      subtype: 
-      keyword: 
-      attunement: 
-      currentZone: 05000000
-      previousZone: 
+      notPreviousZone: 0
       creatureStatus: 
       resources: 
       minStats: []
@@ -243,12 +78,19 @@ MonoBehaviour:
       types: 
       owner: 0
       primaryType: 
+      notPrimaryType: 0
       additionalType: 
+      notAdditionalType: 0
       subtype: 
+      notSubtype: 0
       keyword: 
+      notKeyword: 0
       attunement: 
+      notAttunement: 0
       currentZone: 
+      notCurrentZone: 0
       previousZone: 
+      notPreviousZone: 0
       creatureStatus: 
       resources: 
       minStats: []
@@ -278,28 +120,35 @@ MonoBehaviour:
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-    effect: 6
+    effect: 1
     abilityName: 
     effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
-      types: 
+      types: 04000000020000000b000000
       owner: 0
-      primaryType: 
+      primaryType: 01000000
+      notPrimaryType: 0
       additionalType: 
-      subtype: 
+      notAdditionalType: 0
+      subtype: 02000000
+      notSubtype: 0
       keyword: 
+      notKeyword: 0
       attunement: 
-      currentZone: 
+      notAttunement: 0
+      currentZone: 05000000
+      notCurrentZone: 0
       previousZone: 
-      creatureStatus: 
+      notPreviousZone: 0
+      creatureStatus: 03000000
       resources: 
       minStats: []
       maxStats: []
-      mostStat: 0
+      mostStat: 2
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -328,12 +177,19 @@ MonoBehaviour:
       types: 
       owner: 0
       primaryType: 
+      notPrimaryType: 0
       additionalType: 
+      notAdditionalType: 0
       subtype: 
+      notSubtype: 0
       keyword: 
+      notKeyword: 0
       attunement: 
+      notAttunement: 0
       currentZone: 
+      notCurrentZone: 0
       previousZone: 
+      notPreviousZone: 0
       creatureStatus: 
       resources: 
       minStats: []
@@ -365,11 +221,21 @@ MonoBehaviour:
       consumeResource: 0
     keywordsToAddorRemove: 16000000
     additionalRequirements: 
-    statAdjustments: []
+    statAdjustments:
+    - stat: 2
+      value: 0
+      nonStacking: 0
+      temporary: 0
+      source: {fileID: 0}
+      uniqueID: -1
+      valueSetBytargetStat: 1
+      deriveStatsFromWhom: 1
+      targetStat: 2
+      invertValue: 0
     applyEffectToWhom: 0
     applyEffectToSourceOfAdjustment: 0
-    logicTargetingMethod: 1
-    numberofTargets: 0
-  attack: 2
+    logicTargetingMethod: 2
+    numberofTargets: 1
+  attack: 4
   size: 1
-  health: 3
+  health: 2

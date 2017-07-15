@@ -51,7 +51,13 @@ public abstract class SpecialAbility {
 
     public enum ApplyEffectToWhom {
         TriggeringCard,
-        CauseOfTrigger
+        CauseOfTrigger,
+        Source
+    }
+
+    public enum DeriveStatsFromWhom {
+        TargetOFEffect,
+        SourceOfEffect
     }
 
     public ApplyEffectToWhom applyEffectToWhom;
@@ -182,7 +188,25 @@ public abstract class SpecialAbility {
 
     protected void ApplyStatAdjustments(CardVisual card) {
         for (int i = 0; i < statAdjustments.Count; i++) {
+
+            if (statAdjustments[i].valueSetBytargetStat) {
+
+                switch (statAdjustments[i].deriveStatsFromWhom) {
+                    case DeriveStatsFromWhom.SourceOfEffect:
+                        statAdjustments[i].AlterValueBasedOnTarget(source as CreatureCardVisual);
+                        break;
+
+                    case DeriveStatsFromWhom.TargetOFEffect:
+                        statAdjustments[i].AlterValueBasedOnTarget(card as CreatureCardVisual);
+                        break;
+                }
+            }
+
+
             card.RPCApplyStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
+
+
+
         }
     }
 
@@ -360,6 +384,10 @@ public abstract class SpecialAbility {
             case ApplyEffectToWhom.CauseOfTrigger:
                 effectTarget = sourceOfAdjustment;
                 break;
+
+            case ApplyEffectToWhom.Source:
+                effectTarget = source;
+                break;
         }
 
         if (this is LogicTargetedAbility && source.photonView.isMine) {
@@ -447,10 +475,16 @@ public abstract class SpecialAbility {
     public virtual CardVisual CheckConstraints(ConstraintList constraint, CardVisual target) {
         //CardVisual result = target;
 
+        if (constraint.thisCardOnly && target != source)
+            return null;
+
+
         for (int i = 0; i < constraint.types.Count; i++) {
             if (ConstraintHelper(constraint, constraint.types[i], target) == null) {
-                Debug.Log("Null Result");
                 return null;
+            }
+            else {
+                //Debug.Log(target.gameObject.name + " has passed contraints");
             }
         }
 
@@ -465,28 +499,21 @@ public abstract class SpecialAbility {
     protected CardVisual ConstraintHelper(ConstraintList constraint, ConstraintType type, CardVisual target) {
         //bool result = true;
 
-        if (targetConstraints.thisCardOnly) {
-            Debug.Log(source.gameObject.name + " has this card only marked");
-        }
-            
-
-        if (constraint.thisCardOnly && target != source) {
-            Debug.Log("Card is not source");
-            return null;
-        }
-            
-
         if (!constraint.types.Contains(type))
             return target;
 
 
-
-        //Debug.Log(target.gameObject.name);
-
         switch (type) {
             case ConstraintType.PrimaryType:
-                if (!constraint.primaryType.Contains(target.primaryCardType))
-                    return null;
+
+                if (constraint.notPrimaryType) {
+                    if (constraint.primaryType.Contains(target.primaryCardType))
+                        return null;
+                }
+                else {
+                    if (!constraint.primaryType.Contains(target.primaryCardType))
+                        return null;
+                }
 
                 break;
 
@@ -497,38 +524,76 @@ public abstract class SpecialAbility {
                 break;
 
             case ConstraintType.CurrentZone:
-                if (!constraint.currentZone.Contains(target.currentDeck.decktype))
-                    return null;
+
+                if (constraint.notCurrentZone) {
+                    if (constraint.currentZone.Contains(target.currentDeck.decktype))
+                        return null;
+                }
+                else {
+                    if (!constraint.currentZone.Contains(target.currentDeck.decktype))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.PreviousZone:
-                if (!constraint.previousZone.Contains(target.previousDeck.decktype))
-                    return null;
+
+                if (constraint.notPreviousZone) {
+                    if (constraint.previousZone.Contains(target.previousDeck.decktype))
+                        return null;
+                }
+                else {
+                    if (!constraint.previousZone.Contains(target.previousDeck.decktype))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.Subtype:
-                if (!DoesListContainAny<Subtypes>(constraint.subtype, target.subTypes))
-                    return null;
+                if (constraint.notSubtype) {
+                    if (DoesListContainAny<Subtypes>(constraint.subtype, target.subTypes))
+                        return null;
+                }
+                else {
+                    if (!DoesListContainAny<Subtypes>(constraint.subtype, target.subTypes))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.Attunement:
-                if (!DoesListContainAny<Attunements>(constraint.attunement, target.attunements))
-                    return null;
+                if (constraint.notAttunement) {
+                    if (DoesListContainAny<Attunements>(constraint.attunement, target.attunements))
+                        return null;
+                }
+                else {
+                    if (!DoesListContainAny<Attunements>(constraint.attunement, target.attunements))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.AdditionalType:
-                if (!DoesListContainAny<CardType>(constraint.additionalType, target.otherCardTypes))
-                    return null;
+                if (constraint.notAdditionalType) {
+                    if (DoesListContainAny<CardType>(constraint.additionalType, target.otherCardTypes))
+                        return null;
+                }
+                else {
+                    if (!DoesListContainAny<CardType>(constraint.additionalType, target.otherCardTypes))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.Keyword:
-                if (!DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
-                    return null;
+                if (constraint.notKeyword) {
+                    if (DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
+                        return null;
+                }
+                else {
+                    if (!DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
+                        return null;
+                }
 
                 break;
 
@@ -565,11 +630,7 @@ public abstract class SpecialAbility {
                 }
 
                 break;
-
-
         }
-
-
 
         return target;
     }
@@ -892,11 +953,6 @@ public abstract class SpecialAbility {
 
 
 
-
-
-
-
-
     #endregion
 
 
@@ -1039,6 +1095,10 @@ public abstract class SpecialAbility {
         public CardVisual source;
         public int uniqueID = -1;
 
+        public bool valueSetBytargetStat;
+        public DeriveStatsFromWhom deriveStatsFromWhom;
+        public CardStats targetStat;
+        public bool invertValue;
 
         public StatAdjustment() {
 
@@ -1049,11 +1109,49 @@ public abstract class SpecialAbility {
             this.value = value;
             this.nonStacking = nonStacking;
             this.source = source;
+            //this.invertValue = inverse;
             temporary = temp;
 
             uniqueID = IDFactory.GenerateID();
 
+
+
+
         }
+
+        public void AlterValueBasedOnTarget(CreatureCardVisual targetToBasevalueFrom) {
+            if (!valueSetBytargetStat)
+                return;
+
+
+            if (targetToBasevalueFrom != null) {
+                switch (targetStat) {
+                    case CardStats.Cost:
+                        value = targetToBasevalueFrom.essenceCost;
+                        break;
+
+                    case CardStats.Attack:
+                        value = targetToBasevalueFrom.attack;
+                        break;
+
+                    case CardStats.Size:
+                        value = targetToBasevalueFrom.size;
+                        break;
+
+                    case CardStats.Health:
+                        value = targetToBasevalueFrom.health;
+                        break;
+
+                }
+
+            }
+
+            if (invertValue) {
+                value = -value;
+            }
+
+        }
+
 
 
         public static List<StatAdjustment> CopyStats(CreatureCardVisual target) {
@@ -1133,12 +1231,19 @@ public abstract class SpecialAbility {
         //public List<OwnerConstraints> owner = new List<OwnerConstraints>();
         public OwnerConstraints owner;
         public List<CardType> primaryType = new List<CardType>();
+        public bool notPrimaryType;
         public List<CardType> additionalType = new List<CardType>();
+        public bool notAdditionalType;
         public List<Subtypes> subtype = new List<Subtypes>();
+        public bool notSubtype;
         public List<Keywords> keyword = new List<Keywords>();
+        public bool notKeyword;
         public List<Attunements> attunement = new List<Attunements>();
+        public bool notAttunement;
         public List<DeckType> currentZone = new List<DeckType>();
+        public bool notCurrentZone;
         public List<DeckType> previousZone = new List<DeckType>();
+        public bool notPreviousZone;
         public List<Constants.CreatureStatus> creatureStatus = new List<Constants.CreatureStatus>();
         public List<GameResource.ResourceType> resources = new List<GameResource.ResourceType>();
 
@@ -1186,6 +1291,9 @@ public abstract class SpecialAbility {
         public GameResource.ResourceType requiredResourceType;
         public int amountOfResourceRequried;
         public bool consumeResource;
+
+        //Stat Adjustment
+
     }
 
 }

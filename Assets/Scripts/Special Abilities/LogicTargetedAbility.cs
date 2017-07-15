@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class LogicTargetedAbility :  SpecialAbility {
+public class LogicTargetedAbility : SpecialAbility {
 
 
     public enum LogicTargeting {
@@ -48,11 +48,11 @@ public class LogicTargetedAbility :  SpecialAbility {
             case LogicTargeting.NumberOfValidTargets:
                 validTargets = GatherValidTargets();
 
-                if(numberofTargets > validTargets.Count) {
+                if (numberofTargets > validTargets.Count) {
                     numberofTargets = validTargets.Count;
                 }
 
-                for(int i = 0; i < numberofTargets; i++) {
+                for (int i = 0; i < numberofTargets; i++) {
                     Effect(validTargets[i]);
                 }
 
@@ -82,8 +82,7 @@ public class LogicTargetedAbility :  SpecialAbility {
 
         for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
             if (CheckConstraints(targetConstraints, Deck._allCards.activeCards[i]) != null) {
-                if(targetConstraints.thisCardOnly && Deck._allCards.activeCards[i] == source)
-                    results.Add(Deck._allCards.activeCards[i]);
+                results.Add(Deck._allCards.activeCards[i]);
                 //Debug.Log("adding " + Deck._allCards.activeCards[i].gameObject.name + " to a list of valid multi targets");
             }
         }

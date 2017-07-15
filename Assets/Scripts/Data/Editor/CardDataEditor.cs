@@ -33,7 +33,7 @@ public class CardDataEditor : Editor {
         _cardData.cardCost = EditorGUILayout.IntField("Card Cost", _cardData.cardCost);
 
         _cardData.cardImage = EditorHelper.ObjectField<Sprite>("Card Image", _cardData.cardImage);
-       // _cardData.cardImagePos = EditorHelper.Vector2Field(_cardData.cardImagePos);
+        // _cardData.cardImagePos = EditorHelper.Vector2Field(_cardData.cardImagePos);
         _cardData.cardImagePos = EditorGUILayout.Vector2Field("Card Image Position", _cardData.cardImagePos);
 
 
@@ -69,7 +69,7 @@ public class CardDataEditor : Editor {
         //PopulateSpecialAbilitiesList(_cardData.userTargtedAbilities);
         //PopulateSpecialAbilitiesList(_cardData.multiTargetAbilities);
 
-        if(GUI.changed)
+        if (GUI.changed)
             EditorUtility.SetDirty(target);
 
 
@@ -97,7 +97,7 @@ public class CardDataEditor : Editor {
     //    }
     //}
 
-    private T DrawAbilityList<T>(T ability ) where T : SpecialAbility {
+    private T DrawAbilityList<T>(T ability) where T : SpecialAbility {
 
         return (T)DrawSpecalAbilities(ability);
     }
@@ -105,7 +105,7 @@ public class CardDataEditor : Editor {
 
     private SpecialAbility DrawSpecalAbilities(SpecialAbility entry) {
 
-
+        //Trigger Logic
         EditorHelper.DrawInspectorSectionHeader("Effect Triggers:");
 
         entry.trigger = EditorHelper.DrawList("Triggers", entry.trigger, true, AbilityActivationTrigger.None, true, DrawActivationTrigger);
@@ -115,13 +115,8 @@ public class CardDataEditor : Editor {
             entry.triggerConstraints.resetCountAtTurnEnd = EditorGUILayout.Toggle("Reset Counter On Turn End?", entry.triggerConstraints.resetCountAtTurnEnd);
         }
 
-        for(int i = 0; i < entry.trigger.Count; i++) {
+        for (int i = 0; i < entry.trigger.Count; i++) {
             switch (entry.trigger[i]) {
-                //case AbilityActivationTrigger.TakesDamage:
-                //    //entry.applyEffectToSourceOfAdjustment = EditorGUILayout.Toggle("Only Apply Effect to Source of Damage?", entry.applyEffectToSourceOfAdjustment);
-                //    entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
-
-                //    break;
 
                 case AbilityActivationTrigger.CreatureStatChanged:
                     entry.triggerConstraints.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.triggerConstraints.statChanged);
@@ -150,6 +145,8 @@ public class CardDataEditor : Editor {
 
         EditorGUILayout.Separator();
 
+
+        //Source of Effect Logic
         EditorHelper.DrawInspectorSectionHeader("Source of Effect:");
         entry.sourceConstraints.types = EditorHelper.DrawList("Source Constraints", entry.sourceConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
         for (int i = 0; i < entry.sourceConstraints.types.Count; i++) {
@@ -159,15 +156,14 @@ public class CardDataEditor : Editor {
         EditorHelper.DrawInspectorSectionFooter();
 
 
-
-
         EditorGUILayout.Separator();
 
+        //Additional Requirements
         EditorHelper.DrawInspectorSectionHeader("Additional Requirements:");
 
         entry.additionalRequirements = EditorHelper.DrawList("Requirement", entry.additionalRequirements, true, Constants.AdditionalRequirement.None, true, DrawAdditionalRequirements);
 
-        for(int i = 0; i < entry.additionalRequirements.Count; i++) {
+        for (int i = 0; i < entry.additionalRequirements.Count; i++) {
             switch (entry.additionalRequirements[i]) {
                 case Constants.AdditionalRequirement.NumberofCardsInZone:
                     entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards);
@@ -201,16 +197,17 @@ public class CardDataEditor : Editor {
 
         EditorGUILayout.Separator();
 
+        //Effect Logic
         EditorHelper.DrawInspectorSectionHeader("Effect:");
         entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
 
         switch (entry.effect) {
             case EffectType.SpawnToken:
-                entry.targetConstraints.copyTargets = EditorGUILayout.Toggle("Spawn a Copy of the target(s)?", entry.targetConstraints. copyTargets);
+                entry.targetConstraints.copyTargets = EditorGUILayout.Toggle("Spawn a Copy of the target(s)?", entry.targetConstraints.copyTargets);
 
                 if (!entry.targetConstraints.copyTargets) {
-                    entry.targetConstraints.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.targetConstraints. spawnableTokenDataName);
+                    entry.targetConstraints.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.targetConstraints.spawnableTokenDataName);
                     entry.targetConstraints.spawnCardType = EditorHelper.EnumPopup("Card Type", entry.targetConstraints.spawnCardType);
                 }
 
@@ -237,14 +234,22 @@ public class CardDataEditor : Editor {
 
                 break;
 
+            case EffectType.StatAdjustment:
+                //entry.applyEffectToWhom = EditorHelper.EnumPopup("Apply Stat Adjustmet to whom?", entry.applyEffectToWhom);
 
-        }
+                break;
 
-
+        }//End of Effects
 
 
         entry.duration = EditorHelper.EnumPopup("Duration", entry.duration);
-        entry.statAdjustments = EditorHelper.DrawExtendedList("Stat Adjustments", entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);
+
+        EditorHelper.DrawInspectorSectionHeader("Stat Adjustments");
+        entry.statAdjustments = EditorHelper.DrawExtendedList(entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);
+
+
+        EditorHelper.DrawInspectorSectionFooter();
+
 
         EditorGUILayout.Separator();
 
@@ -256,11 +261,9 @@ public class CardDataEditor : Editor {
 
             logicTargeted.logicTargetingMethod = EditorHelper.EnumPopup("Targeting Method", logicTargeted.logicTargetingMethod);
 
-            if(logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
+            if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
                 logicTargeted.numberofTargets = EditorGUILayout.IntField("Number of Targets", logicTargeted.numberofTargets);
             }
-            
-            //multi.onlyThisCard = EditorGUILayout.Toggle("Only This", multi.onlyThisCard);
         }
 
         for (int i = 0; i < entry.targetConstraints.types.Count; i++) {
@@ -269,18 +272,26 @@ public class CardDataEditor : Editor {
 
         EditorHelper.DrawInspectorSectionFooter();
 
-        //if (!_cardData.allAbilities.Contains(entry)) {
-        //    _cardData.allAbilities.Add(entry);
-        //    Debug.Log("Adding an ability to a list of all");
-        //}
-            
 
         return entry;
     }
 
     private SpecialAbility.StatAdjustment DrawStatAdjustments(SpecialAbility.StatAdjustment entry) {
         entry.stat = (Constants.CardStats)EditorGUILayout.EnumPopup("Stat", entry.stat);
-        entry.value = EditorGUILayout.IntField("Value", entry.value);
+
+        entry.valueSetBytargetStat = EditorGUILayout.Toggle("Set Value By an Effect Target's Stat?", entry.valueSetBytargetStat);
+
+        if (entry.valueSetBytargetStat) {
+            entry.deriveStatsFromWhom = EditorHelper.EnumPopup("Derive Stats from Target or Source?", entry.deriveStatsFromWhom);
+
+            entry.targetStat = EditorHelper.EnumPopup("Target Stat", entry.targetStat);
+            entry.invertValue = EditorGUILayout.Toggle("Inverse Value?", entry.invertValue);
+        }
+        else {
+            entry.value = EditorGUILayout.IntField("Value", entry.value);
+        }
+
+
         entry.nonStacking = EditorGUILayout.Toggle("Non-Stacking?", entry.nonStacking);
         entry.temporary = EditorGUILayout.Toggle("Is this removable?", entry.temporary);
 
@@ -294,6 +305,13 @@ public class CardDataEditor : Editor {
 
     //private 
 
+    private string ShowNot(bool showNot) {
+        if (showNot)
+            return " NOT ";
+        else
+            return " ";
+    }
+
 
     private void ShowConstraintsOfType(ConstraintType type, SpecialAbility.ConstraintList entry, string constraintName = null) {
 
@@ -306,43 +324,71 @@ public class CardDataEditor : Editor {
 
             case Constants.ConstraintType.PrimaryType:
                 EditorGUILayout.Separator();
-                EditorGUILayout.LabelField("What Primary Type is valid for the " + constraintName + "?", EditorStyles.boldLabel);
+
+                entry.notPrimaryType = EditorGUILayout.Toggle("Not?", entry.notPrimaryType);
+
+                EditorGUILayout.LabelField("What Primary Type is" + ShowNot(entry.notPrimaryType) + "valid for the " + constraintName + "?", EditorStyles.boldLabel);
+
                 entry.primaryType = EditorHelper.DrawList("Primary Type", entry.primaryType, true, CardType.None, true, DrawCardTypes);
                 break;
 
             case Constants.ConstraintType.AdditionalType:
                 EditorGUILayout.Separator();
-                EditorGUILayout.LabelField("Which additional Card Types are valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
+                entry.notAdditionalType = EditorGUILayout.Toggle("Not?", entry.notAdditionalType);
+
+                EditorGUILayout.LabelField("Which additional Card Types are" + ShowNot(entry.notAdditionalType) + "valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
                 entry.additionalType = EditorHelper.DrawList("Additional Type", entry.additionalType, true, CardType.None, true, DrawCardTypes);
                 break;
 
             case Constants.ConstraintType.Subtype:
                 EditorGUILayout.Separator();
-                EditorGUILayout.LabelField("Which Subtypes are valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
+                entry.notSubtype = EditorGUILayout.Toggle("Not?", entry.notSubtype);
+
+                EditorGUILayout.LabelField("Which Subtypes are" + ShowNot(entry.notSubtype) + "valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
                 entry.subtype = EditorHelper.DrawList("Subtype", entry.subtype, true, Subtypes.None, true, DrawSubtypes);
                 break;
 
             case Constants.ConstraintType.Keyword:
                 EditorGUILayout.Separator();
-                EditorGUILayout.LabelField("Which Keywords are valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
+                entry.notKeyword = EditorGUILayout.Toggle("Not?", entry.notKeyword);
+
+                EditorGUILayout.LabelField("Which Keywords are" + ShowNot(entry.notKeyword) + "valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
                 entry.keyword = EditorHelper.DrawList("Keyword", entry.keyword, true, Keywords.None, true, DrawKeywords);
                 break;
 
             case Constants.ConstraintType.Attunement:
                 EditorGUILayout.Separator();
-                EditorGUILayout.LabelField("Which Attunements are valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
+                entry.notAttunement = EditorGUILayout.Toggle("Not?", entry.notAttunement);
+
+                EditorGUILayout.LabelField("Which Attunements are" + ShowNot(entry.notAttunement) + "valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
                 entry.attunement = EditorHelper.DrawList("Attunement", entry.attunement, true, Attunements.None, true, DrawAttunements);
                 break;
 
             case Constants.ConstraintType.CurrentZone:
                 EditorGUILayout.Separator();
-                EditorGUILayout.LabelField("What Zones can the "+ constraintName + " be in?", EditorStyles.boldLabel);
+
+                entry.notCurrentZone = EditorGUILayout.Toggle("Not?", entry.notCurrentZone);
+
+                EditorGUILayout.LabelField("What Zones can the " + constraintName + ShowNot(entry.notCurrentZone) + "be in?", EditorStyles.boldLabel);
+
                 entry.currentZone = EditorHelper.DrawList("Current Zone", entry.currentZone, true, DeckType.None, true, DrawDeckTypes);
                 break;
 
             case Constants.ConstraintType.PreviousZone:
                 EditorGUILayout.Separator();
-                EditorGUILayout.LabelField("What Previous Zones could the " + constraintName + " have previously occupid?", EditorStyles.boldLabel);
+
+                entry.notCurrentZone = EditorGUILayout.Toggle("Not?", entry.notPreviousZone);
+
+                EditorGUILayout.LabelField("What Previous Zones could the " + constraintName + ShowNot(entry.notPreviousZone) + "have previously occupid?", EditorStyles.boldLabel);
+
                 entry.previousZone = EditorHelper.DrawList("Previous Zone", entry.previousZone, true, DeckType.None, true, DrawDeckTypes);
                 break;
 
@@ -366,9 +412,11 @@ public class CardDataEditor : Editor {
             //    break;
 
             case ConstraintType.CreatureStatus:
-                entry.creatureStatus = EditorHelper.DrawList("Creature Status", entry.creatureStatus, true, Constants.CreatureStatus.None, true, DrawCreatureStatus);
                 EditorGUILayout.Separator();
-                EditorGUILayout.LabelField("Does the " + constraintName + " meed any special creature status requirements?", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Does the " + constraintName + " meet any special creature status requirements?", EditorStyles.boldLabel);
+                entry.creatureStatus = EditorHelper.DrawList("Creature Status", entry.creatureStatus, true, Constants.CreatureStatus.None, true, DrawCreatureStatus);
+                
+                
                 for (int i = 0; i < entry.creatureStatus.Count; i++) {
 
                     switch (entry.creatureStatus[i]) {

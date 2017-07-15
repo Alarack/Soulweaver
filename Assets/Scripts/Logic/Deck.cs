@@ -388,11 +388,9 @@ public class Deck : Photon.MonoBehaviour {
             owner.battleFieldManager.ReleaseCardPosition(card.battlefieldPos);
         }
 
-        //card.previousDeck = this;
 
         RemoveCard(card);
         targetLocation.AddCard(card);
-
     }
 
 
