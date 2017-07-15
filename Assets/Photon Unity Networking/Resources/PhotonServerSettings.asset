@@ -73,4 +73,12 @@ MonoBehaviour:
   - ApplyMultipleStatAdjustments
   - SetCardStats
   - SetupResources
+  - RegisterElement
+  - UpdateResources
+  - ConfirmPos
+  - FixRotation
+  - AddToResource
+  - AddResource
+  - RemoveResource
+  - UpdateResourceText
   DisableAutoOpenWizard: 1

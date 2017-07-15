@@ -284,6 +284,8 @@ public class CardVisual : Photon.MonoBehaviour {
             //    return;
             //}
 
+            owner.gameResourceDisplay.resourceDisplayInfo[0].resource.RemoveResource(essenceCost);
+
             //currentDeck.RPCTransferCard(PhotonTargets.All, this, Deck._battlefield);
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
 
@@ -306,26 +308,42 @@ public class CardVisual : Photon.MonoBehaviour {
 
                 combatManager.lineDrawer.RPCBeginDrawing(PhotonTargets.Others, combatManager.attacker.battleToken.incomingEffectLocation.position, soul.battleToken.incomingEffectLocation.position);
             }
-
-
-
         }
-
-
 
         if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
             RPCTargetCard(PhotonTargets.All, false);
         }
 
-        //if (GetComponent<ActivatedEffect>() != null && (Input.GetKeyDown(KeyCode.A) || Input.GetMouseButtonUp(1)) && photonView.isMine && parentDeck.decktype == Deck.DeckType.Battlefield && owner.myTurn) {
-        //    ActivateCardAbility();
-        //}
+        if (owner.myTurn && photonView.isMine && (Input.GetKeyDown(KeyCode.A) || Input.GetMouseButtonUp(1)) && !combatManager.isChoosingTarget && !combatManager.isInCombat) {
+            if (CheckForUserActivatedAbilities())
+                ActivateAbility();
+        }
 
         //if (Mulligan.choosingMulligan && photonView.isMine && isInHand && Input.GetMouseButtonDown(0)) {
         //    ToggleMulligan();
         //}
 
     }
+
+
+    protected bool CheckForUserActivatedAbilities() {
+        for (int i = 0; i < specialAbilities.Count; i++) {
+            if (specialAbilities[i].trigger.Contains(Constants.AbilityActivationTrigger.UserActivated))
+                return true;
+        }
+        return false;
+    }
+
+    protected void ActivateAbility() {
+
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Card", this);
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.UserActivatedAbilityInitiated, data);
+
+    }
+
+
 
     protected virtual void OnMouseExit() {
         if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {

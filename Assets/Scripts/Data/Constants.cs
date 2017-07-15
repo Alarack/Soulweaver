@@ -109,7 +109,8 @@ public class Constants {
         TurnEnds,
         Targted,
         //DealsDamage,
-        CreatureStatChanged
+        CreatureStatChanged,
+        UserActivated
 
     }
 
@@ -126,15 +127,15 @@ public class Constants {
         StatMinimum,
         StatMaximum,
         CreatureStatus,
-        CreatureStatAdjustment,
-        MultipleTrigger,
-        Spawn
+
+
 
     }
 
     public enum AdditionalRequirement {
         None = 0,
         NumberofCardsInZone,
+        RequireResource
 
     }
 
@@ -156,8 +157,8 @@ public class Constants {
         //SearchForCard,
         //LifeAdjustment,
         //SpawnMultipleTokens,
-        DrawCards,
-        SummonCopy,
+        //DrawCards,
+        //SummonCopy,
         Dispel,
         //ForceIntercept,
         //MindControl,
@@ -240,7 +241,8 @@ public class Constants {
         CreatureStatAdjusted = 300,
         CharacterAttacked = 301,
 
-        CardClicked = 400
+        CardClicked = 400,
+        UserActivatedAbilityInitiated = 401,
     }
 
 

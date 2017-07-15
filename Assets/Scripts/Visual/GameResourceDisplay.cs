@@ -15,22 +15,35 @@ public class GameResourceDisplay : Photon.MonoBehaviour {
     private Player owner;
 
 
-	public void Initialize (Player owner, GameResource essence) {
+	public void Initialize (Player owner, GameResource essence, Text newText) {
         this.owner = owner;
 
-        GameObject essenceTextGO = Instantiate(textTemplate) as GameObject;
-        essenceTextGO.transform.SetParent(canvas.transform, false);
-        Text essenceText = essenceTextGO.GetComponent<Text>();
-        essenceTextGO.SetActive(true);
+        //GameObject essenceTextGO = Instantiate(textTemplate) as GameObject;
+        //essenceTextGO.transform.SetParent(canvas.transform, false);
+        //Text essenceText = essenceTextGO.GetComponent<Text>();
+        //essenceTextGO.SetActive(true);
 
-        ResourceDisplayInfo firstResource = new ResourceDisplayInfo(essence, essenceText, true);
+        newText.transform.SetParent(canvas.transform, false);
+
+
+        ResourceDisplayInfo firstResource = new ResourceDisplayInfo(essence, newText, true);
         resourceDisplayInfo.Add(firstResource);
 
-	}
+    }
 
 	void Update () {
 		
 	}
+
+    public void AddNewResource(GameResource resource, Text textField, bool addPerTurn) {
+
+        textField.transform.SetParent(canvas.transform, false);
+
+        ResourceDisplayInfo newResource = new ResourceDisplayInfo(resource, textField, addPerTurn);
+        resourceDisplayInfo.Add(newResource);
+
+        UpdateResourceText(newResource.resource, newResource.resource.currentValue.ToString());
+    }
 
 
 
@@ -38,7 +51,7 @@ public class GameResourceDisplay : Photon.MonoBehaviour {
 
         for(int i = 0; i < resourceDisplayInfo.Count; i++) {
             if(resourceDisplayInfo[i].resource == resource) {
-                resourceDisplayInfo[i].resourceText.text = value;
+                resourceDisplayInfo[i].resourceText.text = resource.resourceName + " " + value;
                 break;
             }
         }
@@ -46,7 +59,74 @@ public class GameResourceDisplay : Photon.MonoBehaviour {
     }
 
 
+    #region RPCs
 
+
+
+    public void RPCAddResource(PhotonTargets targets, GameResource.ResourceType type, int value) {
+        int resourceTypeEnum = (int)type;
+        photonView.RPC("AddResource", targets, resourceTypeEnum, value);
+    }
+
+    [PunRPC]
+    public void AddResource(int resourceTypeEnum, int value) {
+
+        GameResource.ResourceType resourceType = (GameResource.ResourceType)resourceTypeEnum;
+
+        for (int i = 0; i < resourceDisplayInfo.Count; i++) {
+            if(resourceDisplayInfo[i].resource.resourceType == resourceType) {
+
+                resourceDisplayInfo[i].resource.AddResource(value);
+                break;
+            }
+        }
+    }
+
+    public void RPCRemoveResource(PhotonTargets targets, GameResource.ResourceType type, int value) {
+        int resourceTypeEnum = (int)type;
+        photonView.RPC("RemoveResource", targets, resourceTypeEnum, value);
+
+    }
+
+    [PunRPC]
+    public void RemoveResource(int resourceTypeEnum, int value) {
+
+        GameResource.ResourceType resourceType = (GameResource.ResourceType)resourceTypeEnum;
+
+        for (int i = 0; i < resourceDisplayInfo.Count; i++) {
+            if (resourceDisplayInfo[i].resource.resourceType == resourceType) {
+
+                resourceDisplayInfo[i].resource.RemoveResource(value);
+                break;
+            }
+        }
+    }
+    
+
+    public void RPCUpdateResourceText(PhotonTargets targets, GameResource.ResourceType resourceToUpdate) {
+        int resourceTypeEnum = (int)resourceToUpdate;
+        photonView.RPC("UpdateResourceText", targets, resourceTypeEnum);
+    }
+
+    [PunRPC]
+    public void UpdateResourceText(int resourceTypeEnum) {
+        GameResource.ResourceType resourceType = (GameResource.ResourceType)resourceTypeEnum;
+
+        for (int i = 0; i < resourceDisplayInfo.Count; i++) {
+            if (resourceDisplayInfo[i].resource.resourceType == resourceType) {
+
+                resourceDisplayInfo[i].resource.UpdateText();
+                break;
+            }
+        }
+
+
+
+    }
+
+
+
+    #endregion
 
 
 

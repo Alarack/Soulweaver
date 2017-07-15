@@ -170,18 +170,26 @@ public class CardDataEditor : Editor {
         for(int i = 0; i < entry.additionalRequirements.Count; i++) {
             switch (entry.additionalRequirements[i]) {
                 case Constants.AdditionalRequirement.NumberofCardsInZone:
-                    entry.cardsInZoneConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.cardsInZoneConstraints.zoneToCheckForNumberOfCards);
-                    entry.cardsInZoneConstraints.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.cardsInZoneConstraints.numberOfcardsInZone);
-                    entry.cardsInZoneConstraints.moreOrLess = EditorHelper.EnumPopup("At Least Or Less Than?", entry.cardsInZoneConstraints.moreOrLess);
+                    entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards);
+                    entry.additionalRequirementConstraints.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.additionalRequirementConstraints.numberOfcardsInZone);
+                    entry.additionalRequirementConstraints.moreOrLess = EditorHelper.EnumPopup("At Least Or Less Than?", entry.additionalRequirementConstraints.moreOrLess);
                     //entry.greaterOrEqualCardsInZone = EditorGUILayout.Toggle("This many or more?", entry.greaterOrEqualCardsInZone);
                     //entry.lessOrEqualCardsInZone = EditorGUILayout.Toggle("This many or less?", entry.lessOrEqualCardsInZone);
 
                     EditorGUILayout.Separator();
-                    entry.cardsInZoneConstraints.types = EditorHelper.DrawList("Number of cards Constraint", entry.cardsInZoneConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
+                    entry.additionalRequirementConstraints.types = EditorHelper.DrawList("Number of cards Constraint", entry.additionalRequirementConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
 
-                    for (int j = 0; j < entry.cardsInZoneConstraints.types.Count; j++) {
-                        ShowConstraintsOfType(entry.cardsInZoneConstraints.types[j], entry.cardsInZoneConstraints, "Extra Requirement");
+                    for (int j = 0; j < entry.additionalRequirementConstraints.types.Count; j++) {
+                        ShowConstraintsOfType(entry.additionalRequirementConstraints.types[j], entry.additionalRequirementConstraints, "Extra Requirement");
                     }
+
+                    break;
+
+                case Constants.AdditionalRequirement.RequireResource:
+                    entry.additionalRequirementConstraints.requiredResourceType = EditorHelper.EnumPopup("What kind of Resource?", entry.additionalRequirementConstraints.requiredResourceType);
+                    entry.additionalRequirementConstraints.amountOfResourceRequried = EditorGUILayout.IntField("How Much?", entry.additionalRequirementConstraints.amountOfResourceRequried);
+                    entry.additionalRequirementConstraints.consumeResource = EditorGUILayout.Toggle("Consume this resource?", entry.additionalRequirementConstraints.consumeResource);
+
 
                     break;
             }
@@ -219,6 +227,14 @@ public class CardDataEditor : Editor {
             case EffectType.RemoveKeywordAbilities:
                 entry.keywordsToAddorRemove = EditorHelper.DrawList("Keywords", entry.keywordsToAddorRemove, true, Keywords.None, true, DrawKeywords);
                 //entry.removeKeyword = EditorGUILayout.Toggle("Remove this Kewyord from Target?", entry.removeKeyword);
+                break;
+
+            case EffectType.GenerateResource:
+                entry.targetConstraints.generatedResourceType = EditorHelper.EnumPopup("What Kind of Resource?", entry.targetConstraints.generatedResourceType);
+                entry.targetConstraints.generatedResourceName = EditorGUILayout.TextField("Resource Name: ", entry.targetConstraints.generatedResourceName);
+                entry.targetConstraints.generatedResouceCap = EditorGUILayout.IntField("Resource Cap? Leave 0 if Inifnite", entry.targetConstraints.generatedResouceCap);
+                entry.targetConstraints.amountOfResourceToGenerate = EditorGUILayout.IntField("Generate How Much?", entry.targetConstraints.amountOfResourceToGenerate);
+
                 break;
 
 
@@ -422,6 +438,11 @@ public class CardDataEditor : Editor {
 
     private Constants.DeckType DrawDeckTypes(List<Constants.DeckType> list, int index) {
         Constants.DeckType result = (Constants.DeckType)EditorGUILayout.EnumPopup("Zones", list[index]);
+        return result;
+    }
+
+    private GameResource.ResourceType DrawResourceTypes(List<GameResource.ResourceType> list, int index) {
+        GameResource.ResourceType result = (GameResource.ResourceType)EditorGUILayout.EnumPopup("Resources", list[index]);
         return result;
     }
 

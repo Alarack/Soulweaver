@@ -34,6 +34,8 @@ public class LogicTargetedAbility :  SpecialAbility {
             case LogicTargeting.AllValidTargets:
                 validTargets = GatherValidTargets();
 
+                Debug.Log(validTargets.Count + " is the number of valid targets");
+
                 for (int i = 0; i < validTargets.Count; i++) {
                     //Debug.Log("doin' stuff to " + validTargets[i].gameObject.name);
                     Effect(validTargets[i]);
@@ -79,8 +81,9 @@ public class LogicTargetedAbility :  SpecialAbility {
         List<CardVisual> results = new List<CardVisual>();
 
         for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
-            if (CheckConstraints(targetConstraints, Deck._allCards.activeCards[i])) {
-                results.Add(Deck._allCards.activeCards[i]);
+            if (CheckConstraints(targetConstraints, Deck._allCards.activeCards[i]) != null) {
+                if(targetConstraints.thisCardOnly && Deck._allCards.activeCards[i] == source)
+                    results.Add(Deck._allCards.activeCards[i]);
                 //Debug.Log("adding " + Deck._allCards.activeCards[i].gameObject.name + " to a list of valid multi targets");
             }
         }
