@@ -249,9 +249,34 @@ public class CombatManager : Photon.MonoBehaviour {
         SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -damageDealer.attack, false, false, damageDealer);
 
         if(damageDealer.attackEffect != null) {
-            GameObject atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
+            GameObject atkVFX;
+            if (damageDealer.cardData.movingVFX) {
+                atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageDealer.transform.position, Quaternion.identity, 0) as GameObject;
+            }
+            else {
+                atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
+            }
+            
 
-            damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker);
+            CardVFX vfx = atkVFX.GetComponent<CardVFX>();
+
+            if (vfx.photonView.isMine) {
+                if (damageDealer.cardData.movingVFX) {
+                    atkVFX.transform.SetParent(damageDealer.transform, false);
+                    atkVFX.transform.localPosition = Vector3.zero;
+                    vfx.target = damageTaker.battleToken.incomingEffectLocation;
+                    vfx.beginMovement = true;
+                }
+                else {
+                    atkVFX.transform.SetParent(damageTaker.battleToken.incomingEffectLocation, false);
+                    atkVFX.transform.localPosition = Vector3.zero;
+                }
+            }
+
+            vfx.RPCSetVFXAciveState(PhotonTargets.Others, true);
+
+
+            //damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker, damageDealer.cardData.movingVFX);
         }
        
 
@@ -386,7 +411,7 @@ public class CombatManager : Photon.MonoBehaviour {
         }
 
         if (mineOnly && !card.photonView.isMine) {
-            Debug.LogError("Card Clicked was not mine");
+            //Debug.LogError("Card Clicked was not mine");
             return false;
         }
 

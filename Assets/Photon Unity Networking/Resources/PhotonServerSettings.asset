@@ -85,4 +85,5 @@ MonoBehaviour:
   - InitializeDomain
   - RotateTile
   - ExhaustTile
+  - UpdateStatAdjustment
   DisableAutoOpenWizard: 1

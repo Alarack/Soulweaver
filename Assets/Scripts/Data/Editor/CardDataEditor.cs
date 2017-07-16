@@ -38,6 +38,7 @@ public class CardDataEditor : Editor {
 
 
         _cardData.attackEffect = EditorGUILayout.TextField("Attack Effect Name", _cardData.attackEffect);
+        _cardData.movingVFX = EditorGUILayout.Toggle("Moving VFX?", _cardData.movingVFX);
 
 
         EditorGUILayout.Separator();
@@ -200,6 +201,7 @@ public class CardDataEditor : Editor {
         //Effect Logic
         EditorHelper.DrawInspectorSectionHeader("Effect:");
         entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
+        entry.moveingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.moveingVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
 
         switch (entry.effect) {

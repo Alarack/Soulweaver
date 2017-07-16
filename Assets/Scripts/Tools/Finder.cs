@@ -62,10 +62,10 @@ public static class Finder {
         return results;
     }
 
-    public static List<CardVisual> FindCardsWithStatExtreme(CardStats stat, bool high) {
+    public static List<CardVisual> FindCardsWithStatExtreme(CardStats stat, DeckType zone, bool high) {
         List<CardVisual> results = new List<CardVisual>();
 
-        Dictionary<int, int> cardsByStat = StatCollector(stat);
+        Dictionary<int, int> cardsByStat = StatCollector(stat, zone);
         List<int> sortedStats = cardsByStat.Values.ToList();
 
         int targetStat;
@@ -81,13 +81,17 @@ public static class Finder {
             }
         }
 
+        //foreach(CardVisual card in results) {
+        //    Debug.Log(card.gameObject.name + " has the highest " + stat.ToString());
+        //}
+
         return results;
     }
 
-    private static Dictionary<int, int> StatCollector(CardStats stat) {
+    private static Dictionary<int, int> StatCollector(CardStats stat, DeckType zone) {
         Dictionary<int, int> results = new Dictionary<int, int>();
 
-        List<CardVisual> cardsToSearch = Deck._allCards.activeCards;
+        List<CardVisual> cardsToSearch = FindAllCardOfType(CardType.Soul, zone);
 
         switch (stat) {
             case CardStats.Cost:
@@ -148,6 +152,25 @@ public static class Finder {
         }
 
         return cards;
+    }
+
+    public static List<CardVisual> FindAllCardOfType(CardType type, DeckType zone = DeckType.None) {
+        List<CardVisual> cardsToSearch = new List<CardVisual>();
+        if (zone == DeckType.None)
+            cardsToSearch = Deck._allCards.activeCards;
+        else {
+            cardsToSearch = FindAllCardsInZone(zone);
+        }
+
+        List<CardVisual> sortedcards = new List<CardVisual>();
+
+        for(int i = 0; i < cardsToSearch.Count; i++) {
+            if(cardsToSearch[i].primaryCardType == type) {
+                sortedcards.Add(cardsToSearch[i]);
+            }
+        }
+
+        return sortedcards;
     }
 
     public static List<CardVisual> FindAllCardsInZone(DeckType zone, OwnerConstraints ownerConstraints) {

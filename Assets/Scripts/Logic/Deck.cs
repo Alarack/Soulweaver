@@ -491,14 +491,15 @@ public class Deck : Photon.MonoBehaviour {
             case Constants.CardType.Domain:
                 //TODO: Domain Manager
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowFront);
-                if(decktype == DeckType.Domain) {
+                if(decktype == DeckType.Domain && photonView.isMine) {
                     DomainManager dm = GetComponent<DomainManager>();
                     dm.RPCActivateDomainTile(PhotonTargets.All);
+                    card.transform.localPosition = new Vector3(60f, 60f, -60f);
                 }
 
 
-                if (card.photonView.isMine)
-                    card.transform.localPosition = new Vector3(60f, 60f, -60f);
+                //if (card.photonView.isMine)
+                    
 
                 break;
 

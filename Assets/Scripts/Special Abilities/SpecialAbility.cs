@@ -35,6 +35,7 @@ public abstract class SpecialAbility {
     public ConstraintList targetConstraints = new ConstraintList();
     public int ID;
     public string abilityVFX;
+    public bool moveingVFX;
     //Cards In Zone
     public ConstraintList additionalRequirementConstraints = new ConstraintList();
 
@@ -117,6 +118,8 @@ public abstract class SpecialAbility {
     }
 
     protected virtual void Effect(CardVisual card) {
+
+        //Debug.Log("Effect");
 
         if (!targets.Contains(card))
             targets.Add(card);
@@ -202,6 +205,7 @@ public abstract class SpecialAbility {
                 }
             }
 
+            //Debug.Log("Applying stats");
 
             card.RPCApplyStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
 
@@ -478,9 +482,10 @@ public abstract class SpecialAbility {
         if (constraint.thisCardOnly && target != source)
             return null;
 
-
+        
         for (int i = 0; i < constraint.types.Count; i++) {
             if (ConstraintHelper(constraint, constraint.types[i], target) == null) {
+                //Debug.Log(target.gameObject.name + " has failed to pass");
                 return null;
             }
             else {
@@ -530,10 +535,15 @@ public abstract class SpecialAbility {
                         return null;
                 }
                 else {
-                    if (!constraint.currentZone.Contains(target.currentDeck.decktype))
+                    if (!constraint.currentZone.Contains(target.currentDeck.decktype)) {
+                        //Debug.Log("Invalid Zone");
                         return null;
+                    }
+                        
                 }
 
+                //if(source == target)
+                //    Debug.Log(source.gameObject.name +  " is in a Valid Zone");
                 break;
 
             case ConstraintType.PreviousZone:
@@ -608,12 +618,12 @@ public abstract class SpecialAbility {
                 for (int i = 0; i < constraint.creatureStatus.Count; i++) {
                     switch (constraint.creatureStatus[i]) {
                         case Constants.CreatureStatus.MostStat:
-                            if (HasHighOrLowStat(constraint.mostStat, target, true) == null)
+                            if (HasHighOrLowStat(constraint.mostStat, constraint.currentZone, target, true) == null)
                                 return null;
                             break;
 
                         case Constants.CreatureStatus.LeastStat:
-                            if (HasHighOrLowStat(constraint.leastStat, target, false) == null)
+                            if (HasHighOrLowStat(constraint.leastStat, constraint.currentZone, target, false) == null)
                                 return null;
                             break;
 
@@ -710,13 +720,20 @@ public abstract class SpecialAbility {
     }
 
 
-    private CardVisual HasHighOrLowStat(CardStats statToCompare, CardVisual target, bool highest) {
+    private CardVisual HasHighOrLowStat(CardStats statToCompare, List<DeckType> zones, CardVisual target, bool highest) {
         CardVisual result = null;
 
-        List<CardVisual> cardsToSearch = Finder.FindCardsWithStatExtreme(statToCompare, highest);
+        List<CardVisual> cardsToSearch = new List<CardVisual>();
+        for (int i = 0; i < zones.Count; i++) {
+            cardsToSearch.AddRange(Finder.FindCardsWithStatExtreme(statToCompare, zones[i], highest));
+        }
+
         if (cardsToSearch.Contains(target))
             return target;
 
+
+        //if(result != null)
+        //    Debug.Log(result.gameObject.name + " is being sent back");
 
         return result;
     }
@@ -732,43 +749,43 @@ public abstract class SpecialAbility {
         return result;
     }
 
-    protected CardVisual HasStatExtreme(Constants.CreatureStatus status, CardStats statToCompare, CardVisual target) {
+    //protected CardVisual HasStatExtreme(Constants.CreatureStatus status, CardStats statToCompare, CardVisual target) {
 
-        List<CardVisual> cardsToSearch = new List<CardVisual>();
+    //    List<CardVisual> cardsToSearch = new List<CardVisual>();
 
-        switch (status) {
-            case Constants.CreatureStatus.MostStat:
-                cardsToSearch = Finder.FindCardsWithStatExtreme(statToCompare, true);
-                if (cardsToSearch.Contains(target))
-                    return target;
+    //    switch (status) {
+    //        case Constants.CreatureStatus.MostStat:
+    //            cardsToSearch = Finder.FindCardsWithStatExtreme(statToCompare, true);
+    //            if (cardsToSearch.Contains(target))
+    //                return target;
 
-                break;
+    //            break;
 
-            case Constants.CreatureStatus.LeastStat:
-                cardsToSearch = Finder.FindCardsWithStatExtreme(statToCompare, false);
-                if (cardsToSearch.Contains(target))
-                    return target;
+    //        case Constants.CreatureStatus.LeastStat:
+    //            cardsToSearch = Finder.FindCardsWithStatExtreme(statToCompare, false);
+    //            if (cardsToSearch.Contains(target))
+    //                return target;
 
-                break;
+    //            break;
 
-            case Constants.CreatureStatus.Damaged:
-                cardsToSearch = Finder.FindAllDamagedOrUndamagedCreatures(true);
-                if (cardsToSearch.Contains(target))
-                    return target;
+    //        case Constants.CreatureStatus.Damaged:
+    //            cardsToSearch = Finder.FindAllDamagedOrUndamagedCreatures(true);
+    //            if (cardsToSearch.Contains(target))
+    //                return target;
 
-                break;
+    //            break;
 
-            case Constants.CreatureStatus.Undamaged:
-                cardsToSearch = Finder.FindAllDamagedOrUndamagedCreatures(false);
-                if (cardsToSearch.Contains(target))
-                    return target;
-                break;
+    //        case Constants.CreatureStatus.Undamaged:
+    //            cardsToSearch = Finder.FindAllDamagedOrUndamagedCreatures(false);
+    //            if (cardsToSearch.Contains(target))
+    //                return target;
+    //            break;
 
 
-        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
     protected bool DoesListContainAny<T>(List<T> list1, List<T> list2) where T : struct, IFormattable, IConvertible {
         bool result = false;
@@ -1072,7 +1089,7 @@ public abstract class SpecialAbility {
         for (int i = 0; i < targets.Count; i++) {
             GameObject atkVFX = PhotonNetwork.Instantiate(abilityVFX, targets[i].transform.position, Quaternion.identity, 0) as GameObject;
 
-            source.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, targets[i]);
+            source.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, targets[i], moveingVFX);
         }
     }
 
@@ -1113,16 +1130,11 @@ public abstract class SpecialAbility {
             temporary = temp;
 
             uniqueID = IDFactory.GenerateID();
-
-
-
-
         }
 
         public void AlterValueBasedOnTarget(CreatureCardVisual targetToBasevalueFrom) {
             if (!valueSetBytargetStat)
                 return;
-
 
             if (targetToBasevalueFrom != null) {
                 switch (targetStat) {
@@ -1141,18 +1153,17 @@ public abstract class SpecialAbility {
                     case CardStats.Health:
                         value = targetToBasevalueFrom.health;
                         break;
-
                 }
-
             }
 
             if (invertValue) {
                 value = -value;
             }
 
+
+            source.RPCUpdateStatAdjustment(PhotonTargets.Others, this, source, value);
+
         }
-
-
 
         public static List<StatAdjustment> CopyStats(CreatureCardVisual target) {
             List<StatAdjustment> results = new List<StatAdjustment>();

@@ -29,6 +29,7 @@ public class LogicTargetedAbility : SpecialAbility {
 
     public override bool ProcessEffect(CardVisual card) {
 
+        
 
         switch (logicTargetingMethod) {
             case LogicTargeting.AllValidTargets:
@@ -55,6 +56,8 @@ public class LogicTargetedAbility : SpecialAbility {
                 for (int i = 0; i < numberofTargets; i++) {
                     Effect(validTargets[i]);
                 }
+
+                //Debug.Log("Processing Valid");
 
                 validTargets.Clear();
 
