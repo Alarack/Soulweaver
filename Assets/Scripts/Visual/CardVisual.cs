@@ -343,6 +343,18 @@ public class CardVisual : Photon.MonoBehaviour {
 
     }
 
+    //public bool CheckAndActivateDomainAbility(DomainTile tile) {
+    //    if (CheckForUserActivatedAbilities()) {
+    //        ActivateAbility();
+    //        return true;
+    //    }
+    //    else {
+    //        return false;
+    //    }
+
+
+    //}
+
 
 
     protected virtual void OnMouseExit() {

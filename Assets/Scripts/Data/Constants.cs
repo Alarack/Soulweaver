@@ -243,6 +243,7 @@ public class Constants {
 
         CardClicked = 400,
         UserActivatedAbilityInitiated = 401,
+        UserActivatedDomainAbility = 402,
     }
 
 

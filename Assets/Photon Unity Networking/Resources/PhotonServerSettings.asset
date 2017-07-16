@@ -81,4 +81,8 @@ MonoBehaviour:
   - AddResource
   - RemoveResource
   - UpdateResourceText
+  - ActivateDomainTile
+  - InitializeDomain
+  - RotateTile
+  - ExhaustTile
   DisableAutoOpenWizard: 1

@@ -116,8 +116,10 @@ public class Player : Photon.MonoBehaviour {
                     endTurnButton.interactable = true;
                     //DrawFromDomain();
                     //RefreshAll();
-                    if (battlefield != null)
+                    if (battlefield != null) {
                         RefreshMySouls();
+                    }
+                        
 
                     StartCoroutine(RPCBroadcastTurnStart(PhotonTargets.All, this));
 
@@ -128,6 +130,7 @@ public class Player : Photon.MonoBehaviour {
                     break;
 
                 case GameStates.Draw:
+                    DrawFromDomain();
                     DrawFromGrimoire();
                     break;
 
@@ -203,6 +206,7 @@ public class Player : Photon.MonoBehaviour {
         yield return new WaitForSeconds(1f);
         //yield return null;
         //domainManager.gameObject.GetPhotonView().RPC("InitDomain", PhotonTargets.All);
+        activeDomain.GetComponent<DomainManager>().RPCInitializeDomain(PhotonTargets.All);
 
         RPCCheckOpponents(PhotonTargets.All);
 
@@ -324,6 +328,9 @@ public class Player : Photon.MonoBehaviour {
 
             gameState = GameStates.Main;
         }
+    }
+    public void DrawFromDomain() {
+        activeDomain.GetComponent<Deck>().DrawCard();
     }
 
     public IEnumerator DrawStartingHand() {
