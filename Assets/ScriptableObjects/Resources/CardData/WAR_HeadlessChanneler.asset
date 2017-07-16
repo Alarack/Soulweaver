@@ -1,0 +1,231 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
+  m_Name: WAR_HeadlessChanneler
+  m_EditorClassIdentifier: 
+  cardID: 107
+  cardName: Headless Channeler
+  cardText: 'Threshold 7: Protection 2'
+  cardCost: 4
+  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImagePos: {x: 0, y: 16.8}
+  attackEffect: VFX_Primal_Slash
+  primaryCardType: 1
+  otherCardTypes: 
+  attunements: 0800000007000000
+  subTypes: 04000000
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities:
+  - trigger: 01000000
+    duration: 4
+    triggerConstraints:
+      types: 04000000
+      owner: 0
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 05000000
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
+      spawnableTokenDataName: 
+      spawnTokenLocation: 0
+      spawnCardType: 0
+      numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+    sourceConstraints:
+      types: 
+      owner: 0
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 05000000
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
+      spawnableTokenDataName: 
+      spawnTokenLocation: 0
+      spawnCardType: 0
+      numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+    effect: 6
+    abilityName: 
+    effectValue: 0
+    source: {fileID: 0}
+    targets: []
+    targetConstraints:
+      types: 
+      owner: 0
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 1
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
+      spawnableTokenDataName: 
+      spawnTokenLocation: 0
+      spawnCardType: 0
+      numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+    ID: 0
+    abilityVFX: 
+    additionalRequirementConstraints:
+      types: 
+      owner: 0
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
+      spawnableTokenDataName: 
+      spawnTokenLocation: 0
+      spawnCardType: 0
+      numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 3
+      amountOfResourceRequried: 7
+      consumeResource: 0
+    keywordsToAddorRemove: 04000000
+    additionalRequirements: 02000000
+    statAdjustments: []
+    applyEffectToWhom: 0
+    applyEffectToSourceOfAdjustment: 0
+    logicTargetingMethod: 1
+    numberofTargets: 0
+  attack: 2
+  size: 3
+  health: 5
