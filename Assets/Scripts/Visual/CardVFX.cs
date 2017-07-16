@@ -42,7 +42,8 @@ public class CardVFX : Photon.MonoBehaviour {
                 if(MoveTowardsTarget(target, 0.2f)) {
                     if(impactParticle != null) {
                         PhotonNetwork.Instantiate(impactParticle.name, target.position, Quaternion.identity, 0);
-                        PhotonNetwork.Destroy(gameObject);
+                        Invoke("NetworkCleanup", 0.3f);
+                        //Destroy(gameObject, 0.5f);
                     }
                         
                     //impactParticle.transform.SetParent()
@@ -56,7 +57,7 @@ public class CardVFX : Photon.MonoBehaviour {
 
         if (!photonView.isMine) {
 
-            Debug.Log(position);
+            //Debug.Log(position);
 
             if (active) {
                 //transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * lerpSmoothing);
@@ -88,13 +89,8 @@ public class CardVFX : Photon.MonoBehaviour {
 
     public bool MoveTowardsTarget(Transform target, float minDistance) {
 
-        //Debug.Log("In Move method");
-
-        //Debug.Log("The distanve between myself and my target is " + Vector3.Distance(transform.position, target.position));
-
         if (Vector3.Distance(transform.position, target.transform.position) > minDistance){
             transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed);
-            Debug.Log("moving");
             return false;
         }
         else {
@@ -110,6 +106,10 @@ public class CardVFX : Photon.MonoBehaviour {
 
     public void CleanUp() {
         Destroy(gameObject);
+    }
+
+    public void NetworkCleanup() {
+        PhotonNetwork.Destroy(gameObject);
     }
 
 
