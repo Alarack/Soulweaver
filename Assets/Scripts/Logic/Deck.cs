@@ -152,6 +152,11 @@ public class Deck : Photon.MonoBehaviour {
                     CardFactory(card, GlobalSettings._globalSettings.playerCard.name, owner.battlefield, index);
 
                     break;
+
+                case Constants.CardType.Domain:
+                    CardFactory(card, GlobalSettings._globalSettings.domainCard.name, null, index);
+
+                    break;
             }
         }
 
@@ -388,11 +393,9 @@ public class Deck : Photon.MonoBehaviour {
             owner.battleFieldManager.ReleaseCardPosition(card.battlefieldPos);
         }
 
-        //card.previousDeck = this;
 
         RemoveCard(card);
         targetLocation.AddCard(card);
-
     }
 
 
@@ -487,6 +490,15 @@ public class Deck : Photon.MonoBehaviour {
 
             case Constants.CardType.Domain:
                 //TODO: Domain Manager
+                card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowFront);
+                if(decktype == DeckType.Domain) {
+                    DomainManager dm = GetComponent<DomainManager>();
+                    dm.RPCActivateDomainTile(PhotonTargets.All);
+                }
+
+
+                if (card.photonView.isMine)
+                    card.transform.localPosition = new Vector3(60f, 60f, -60f);
 
                 break;
 

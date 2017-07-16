@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class LogicTargetedAbility :  SpecialAbility {
+public class LogicTargetedAbility : SpecialAbility {
 
 
     public enum LogicTargeting {
@@ -34,6 +34,8 @@ public class LogicTargetedAbility :  SpecialAbility {
             case LogicTargeting.AllValidTargets:
                 validTargets = GatherValidTargets();
 
+                Debug.Log(validTargets.Count + " is the number of valid targets");
+
                 for (int i = 0; i < validTargets.Count; i++) {
                     //Debug.Log("doin' stuff to " + validTargets[i].gameObject.name);
                     Effect(validTargets[i]);
@@ -46,11 +48,11 @@ public class LogicTargetedAbility :  SpecialAbility {
             case LogicTargeting.NumberOfValidTargets:
                 validTargets = GatherValidTargets();
 
-                if(numberofTargets > validTargets.Count) {
+                if (numberofTargets > validTargets.Count) {
                     numberofTargets = validTargets.Count;
                 }
 
-                for(int i = 0; i < numberofTargets; i++) {
+                for (int i = 0; i < numberofTargets; i++) {
                     Effect(validTargets[i]);
                 }
 
@@ -79,7 +81,7 @@ public class LogicTargetedAbility :  SpecialAbility {
         List<CardVisual> results = new List<CardVisual>();
 
         for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
-            if (CheckConstraints(limitations, Deck._allCards.activeCards[i])) {
+            if (CheckConstraints(targetConstraints, Deck._allCards.activeCards[i]) != null) {
                 results.Add(Deck._allCards.activeCards[i]);
                 //Debug.Log("adding " + Deck._allCards.activeCards[i].gameObject.name + " to a list of valid multi targets");
             }

@@ -72,4 +72,17 @@ MonoBehaviour:
   - ShowDamage
   - ApplyMultipleStatAdjustments
   - SetCardStats
+  - SetupResources
+  - RegisterElement
+  - UpdateResources
+  - ConfirmPos
+  - FixRotation
+  - AddToResource
+  - AddResource
+  - RemoveResource
+  - UpdateResourceText
+  - ActivateDomainTile
+  - InitializeDomain
+  - RotateTile
+  - ExhaustTile
   DisableAutoOpenWizard: 1

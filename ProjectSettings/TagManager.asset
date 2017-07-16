@@ -6,6 +6,7 @@ TagManager:
   tags:
   - AllCards
   - VFX
+  - HUD
   layers:
   - Default
   - TransparentFX

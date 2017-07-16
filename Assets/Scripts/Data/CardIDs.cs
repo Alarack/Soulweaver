@@ -20,6 +20,7 @@ public class CardIDs {
         SparkSpawner_107 =107,
         SparkSpawn_108 = 108,
         AngrySkeletons_109 = 109,
+        Domain_TestDomain = 110,
 
 
         //Tokens

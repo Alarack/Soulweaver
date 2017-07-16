@@ -98,16 +98,19 @@ public class Constants {
 
     public enum AbilityActivationTrigger {
         None = 0,
-        TakesDamage,
+        //TakesDamage,
         EntersZone,
         LeavesZone,
         Attacks,
         Defends,
-        Dies,
-        Healed,
+        //Dies,
+        //Healed,
         TurnStarts,
         TurnEnds,
-        Targted
+        Targted,
+        //DealsDamage,
+        CreatureStatChanged,
+        UserActivated
 
     }
 
@@ -124,13 +127,15 @@ public class Constants {
         StatMinimum,
         StatMaximum,
         CreatureStatus,
-        NumberofCardsInZone
+
+
 
     }
 
     public enum AdditionalRequirement {
         None = 0,
         NumberofCardsInZone,
+        RequireResource
 
     }
 
@@ -152,8 +157,8 @@ public class Constants {
         //SearchForCard,
         //LifeAdjustment,
         //SpawnMultipleTokens,
-        DrawCards,
-        SummonCopy,
+        //DrawCards,
+        //SummonCopy,
         Dispel,
         //ForceIntercept,
         //MindControl,
@@ -236,7 +241,9 @@ public class Constants {
         CreatureStatAdjusted = 300,
         CharacterAttacked = 301,
 
-        CardClicked = 400
+        CardClicked = 400,
+        UserActivatedAbilityInitiated = 401,
+        UserActivatedDomainAbility = 402,
     }
 
 

@@ -27,28 +27,45 @@ public abstract class SpecialAbility {
     public ConstraintList triggerConstraints = new ConstraintList();
     public ConstraintList sourceConstraints = new ConstraintList();
 
-
-
-
-
     public EffectType effect;
     public string abilityName;
     public int effectValue;
     public CardVisual source;
     public List<CardVisual> targets = new List<CardVisual>();
-    public ConstraintList limitations = new ConstraintList();
+    public ConstraintList targetConstraints = new ConstraintList();
     public int ID;
     public string abilityVFX;
+    //Cards In Zone
+    public ConstraintList additionalRequirementConstraints = new ConstraintList();
 
-    public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
+    //Keyword Fields
+    public List<Keywords> keywordsToAddorRemove = new List<Keywords>();
 
 
     //Additional Requirements
     public List<Constants.AdditionalRequirement> additionalRequirements = new List<Constants.AdditionalRequirement>();
 
-    //Cards In Zone
-    public ConstraintList cardsInZoneConstraints = new ConstraintList();
-    public int numberOfcardsInZone;
+
+
+    public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
+
+    public enum ApplyEffectToWhom {
+        TriggeringCard,
+        CauseOfTrigger,
+        Source
+    }
+
+    public enum DeriveStatsFromWhom {
+        TargetOFEffect,
+        SourceOfEffect
+    }
+
+    public ApplyEffectToWhom applyEffectToWhom;
+
+    public enum GainedOrLost {
+        Gained,
+        Lost
+    }
 
     public enum MoreOrLess {
         AtLeast,
@@ -56,40 +73,17 @@ public abstract class SpecialAbility {
     }
 
 
-    //public bool lessOrEqualCardsInZone;
-    //public bool greaterOrEqualCardsInZone;
-
-    public DeckType zoneToCheckForNumberOfCards;
-    public MoreOrLess moreOrLess;
 
 
 
-    //Keyword Fields
-    public List<Keywords> keywordsToAddorRemove = new List<Keywords>();
-
-    //Spawn Token Fields
-    public bool copyTargets;
-    public string spawnableTokenDataName;
-    public DeckType spawnTokenLocation;
-    public CardType spawnCardType;
-    public int numberOfSpawns;
-
-    //Zone Change Fields
-    public DeckType targetZone;
-
-
-    //Count Toward Effect
-    public bool requireMultipleTriggers;
-    public bool resetCountAtTurnEnd;
-    public int triggersRequired;
-    private int counter;
+    public bool applyEffectToSourceOfAdjustment;
 
 
 
 
 
     public virtual bool ProcessEffect(CardVisual card) {
-        bool check = CheckConstraints(limitations, card);
+        bool check = CheckConstraints(targetConstraints, card);
 
         if (!check)
             return false;
@@ -139,22 +133,20 @@ public abstract class SpecialAbility {
                 ApplyStatAdjustments(card);
                 break;
 
-
             case EffectType.SpawnToken:
-
-                //for (int i = 0; i < numberOfSpawns; i++) {
-                SpawnToken(spawnableTokenDataName, spawnCardType, spawnTokenLocation);
-                //}
+                SpawnToken(targetConstraints);
                 break;
 
             case EffectType.ZoneChange:
-
-                ForcedZoneChange(card, targetZone);
-
+                ForcedZoneChange(card, targetConstraints);
                 break;
 
             case EffectType.GrantKeywordAbilities:
                 GrantKeywords(card, keywordsToAddorRemove);
+                break;
+
+            case EffectType.GenerateResource:
+                GenerateResource(targetConstraints);
                 break;
 
             case EffectType.None:
@@ -196,7 +188,25 @@ public abstract class SpecialAbility {
 
     protected void ApplyStatAdjustments(CardVisual card) {
         for (int i = 0; i < statAdjustments.Count; i++) {
+
+            if (statAdjustments[i].valueSetBytargetStat) {
+
+                switch (statAdjustments[i].deriveStatsFromWhom) {
+                    case DeriveStatsFromWhom.SourceOfEffect:
+                        statAdjustments[i].AlterValueBasedOnTarget(source as CreatureCardVisual);
+                        break;
+
+                    case DeriveStatsFromWhom.TargetOFEffect:
+                        statAdjustments[i].AlterValueBasedOnTarget(card as CreatureCardVisual);
+                        break;
+                }
+            }
+
+
             card.RPCApplyStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
+
+
+
         }
     }
 
@@ -221,7 +231,7 @@ public abstract class SpecialAbility {
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZoneEndDuration);
         }
 
-        if (resetCountAtTurnEnd && requireMultipleTriggers)
+        if (triggerConstraints.resetCountAtTurnEnd && triggerConstraints.requireMultipleTriggers)
             Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEnd);
 
 
@@ -230,11 +240,15 @@ public abstract class SpecialAbility {
         if (trigger.Contains(AbilityActivationTrigger.EntersZone))
             Grid.EventManager.RegisterListener(GameEvent.CardEnteredZone, OnEnterZone);
 
-        if (trigger.Contains(AbilityActivationTrigger.TakesDamage) || trigger.Contains(AbilityActivationTrigger.Healed))
+        if (trigger.Contains(AbilityActivationTrigger.CreatureStatChanged))
             Grid.EventManager.RegisterListener(GameEvent.CreatureStatAdjusted, OnCreatureStatAdjusted);
 
         if (trigger.Contains(AbilityActivationTrigger.Attacks))
             Grid.EventManager.RegisterListener(GameEvent.CharacterAttacked, OnAttack);
+
+        if (trigger.Contains(AbilityActivationTrigger.UserActivated))
+            Grid.EventManager.RegisterListener(GameEvent.UserActivatedAbilityInitiated, OnUserActivation);
+
     }
 
     #region EVENTS
@@ -264,6 +278,25 @@ public abstract class SpecialAbility {
 
     }
 
+
+    protected void OnUserActivation(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+        if (!ManageConstraints(card)) {
+            return;
+        }
+
+        if (this is LogicTargetedAbility) {
+            if (source.photonView.isMine) {
+
+                ProcessEffect(source);
+            }
+        }
+
+        ActivateTargeting();
+    }
+
+
     protected void OnTurnStart(EventData data) {
 
 
@@ -277,10 +310,8 @@ public abstract class SpecialAbility {
             return;
         }
 
-        if (resetCountAtTurnEnd)
-            counter = 0;
-
-
+        if (triggerConstraints.resetCountAtTurnEnd)
+            triggerConstraints.counter = 0;
 
     }
 
@@ -293,13 +324,9 @@ public abstract class SpecialAbility {
             return;
         }
 
-        //if(card == source)
-        //    Debug.Log(card.gameObject.name + " has entered " + deck.decktype.ToString());
-
 
         if (this is LogicTargetedAbility) {
             if (source.photonView.isMine) {
-                //Debug.Log("Processing a multi-target effect");
 
                 ProcessEffect(source);
             }
@@ -307,27 +334,23 @@ public abstract class SpecialAbility {
         }
 
 
-        //If a targted effect has no valid targets when it triggers, then get out of here.
+        ActivateTargeting();
 
-        if (source.photonView.isMine && this is EffectOnTarget) {
-            if (CheckValidTargets().Count < 1) {
-                Debug.Log("No Valid Targets for " + source.gameObject.name + "'s targeted ability");
-                return;
-            }
-            else {
+        ////If a targted effect has no valid targets when it triggers, then get out of here.
 
-                Debug.Log("Good to go");
-                CombatManager.combatManager.isChoosingTarget = true;
-                CombatManager.combatManager.ActivateSpellTargeting();
-                CombatManager.combatManager.confirmedTargetCallback += ProcessEffect;
+        //if (source.photonView.isMine && this is EffectOnTarget) {
+        //    if (CheckValidTargets().Count < 1) {
+        //        Debug.Log("No Valid Targets for " + source.gameObject.name + "'s targeted ability");
+        //        return;
+        //    }
+        //    else {
 
-            }
-
-        }
-
-
-
-
+        //        Debug.Log("Good to go");
+        //        CombatManager.combatManager.isChoosingTarget = true;
+        //        CombatManager.combatManager.ActivateSpellTargeting();
+        //        CombatManager.combatManager.confirmedTargetCallback += ProcessEffect;
+        //    }
+        //}
     }
 
 
@@ -344,41 +367,34 @@ public abstract class SpecialAbility {
         CardVisual target = data.GetGameObject("Target").GetComponent<CardVisual>();
         CardVisual sourceOfAdjustment = data.GetMonoBehaviour("Source") as CardVisual;
 
+        if (!CheckCreatureStatAltered(triggerConstraints, stat, value, target))
+            return;
+
         if (!ManageConstraints(target)) {
             return;
         }
 
+        CardVisual effectTarget = null;
 
-        //if (limitations.currentZone.Count > 0 && !limitations.currentZone.Contains(source.currentDeck.decktype)) {
-        //    //Debug.Log(source.gameObject.name + " is not in the proper zone to detect a stat adjustment, but is still listening for one");
-        //    return;
-        //}
+        switch (applyEffectToWhom) {
+            case ApplyEffectToWhom.TriggeringCard:
+                effectTarget = target;
+                break;
 
+            case ApplyEffectToWhom.CauseOfTrigger:
+                effectTarget = sourceOfAdjustment;
+                break;
 
-        if (trigger.Contains(AbilityActivationTrigger.TakesDamage)) {
-            if (stat == CardStats.Health && value < 0) {
-                Debug.Log(target.gameObject.name + " has taken " + Mathf.Abs(value) + " point(s) of damage");
-                
-                if (requireMultipleTriggers) {
-
-                    if(counter < triggersRequired) {
-                        counter++;
-                    }
-
-                    if(counter == triggersRequired) {
-                        ProcessEffect(target);
-                        counter = 0;
-                    }
-
-                }
-                else {
-                    ProcessEffect(target);
-                }
-            }
-
-
-
+            case ApplyEffectToWhom.Source:
+                effectTarget = source;
+                break;
         }
+
+        if (this is LogicTargetedAbility && source.photonView.isMine) {
+            ProcessEffect(effectTarget);
+        }
+
+        ActivateTargeting();
 
     }
 
@@ -386,19 +402,39 @@ public abstract class SpecialAbility {
     #endregion
 
 
+    private void ActivateTargeting() {
+        if (source.photonView.isMine && this is EffectOnTarget && source.owner.myTurn) {
+            if (CheckValidTargets().Count < 1) {
+                Debug.Log("No Valid Targets for " + source.gameObject.name + "'s targeted ability");
+                return;
+            }
+            else {
+                Debug.Log("Good to go");
+                CombatManager.combatManager.isChoosingTarget = true;
+                CombatManager.combatManager.ActivateSpellTargeting();
+                CombatManager.combatManager.confirmedTargetCallback += ProcessEffect;
+
+            }
+        }
+
+    }
+
 
     #region CONSTRAINT CHECKING
 
 
-    protected bool ManageConstraints(CardVisual target) {
+    protected bool ManageConstraints(CardVisual triggeringCard, CardVisual causeOfTrigger = null) {
         bool result = true;
 
-        if (triggerConstraints.thisCardOnly && target != source) {
+        if (triggerConstraints.thisCardOnly && triggeringCard != source) {
             //Debug.Log(source.gameObject.name + " can only trigger its own effect and " + target.gameObject.name + " has happened");
             return false;
         }
 
-        if (CheckConstraints(triggerConstraints, target) == null) {
+        //if (targetConstraints.thisCardOnly && triggeringCard != source)
+        //    return false;
+
+        if (CheckConstraints(triggerConstraints, triggeringCard) == null) {
             //Debug.Log("Trigger is not in place");
             return false;
         }
@@ -410,10 +446,15 @@ public abstract class SpecialAbility {
         }
 
 
-        for(int i = 0; i < additionalRequirements.Count; i++) {
-            if (!CheckAdditionalRequirements(additionalRequirements[i], cardsInZoneConstraints))
+        for (int i = 0; i < additionalRequirements.Count; i++) {
+            if (!CheckAdditionalRequirements(additionalRequirements[i], additionalRequirementConstraints))
                 return false;
         }
+
+        if (triggerConstraints.requireMultipleTriggers) {
+            result = CheckForMultipleTriggers(triggerConstraints);
+        }
+
 
         return result;
     }
@@ -422,7 +463,7 @@ public abstract class SpecialAbility {
         List<CardVisual> results = new List<CardVisual>();
 
         foreach (CardVisual target in Deck._allCards.activeCards) {
-            if (CheckConstraints(limitations, target) != null) {
+            if (CheckConstraints(targetConstraints, target) != null) {
                 results.Add(target);
                 //Debug.Log(target.gameObject.name + " is a valid target for " + source.gameObject.name + "'s targeted ability");
             }
@@ -434,9 +475,16 @@ public abstract class SpecialAbility {
     public virtual CardVisual CheckConstraints(ConstraintList constraint, CardVisual target) {
         //CardVisual result = target;
 
+        if (constraint.thisCardOnly && target != source)
+            return null;
+
+
         for (int i = 0; i < constraint.types.Count; i++) {
             if (ConstraintHelper(constraint, constraint.types[i], target) == null) {
                 return null;
+            }
+            else {
+                //Debug.Log(target.gameObject.name + " has passed contraints");
             }
         }
 
@@ -457,8 +505,15 @@ public abstract class SpecialAbility {
 
         switch (type) {
             case ConstraintType.PrimaryType:
-                if (!constraint.primaryType.Contains(target.primaryCardType))
-                    return null;
+
+                if (constraint.notPrimaryType) {
+                    if (constraint.primaryType.Contains(target.primaryCardType))
+                        return null;
+                }
+                else {
+                    if (!constraint.primaryType.Contains(target.primaryCardType))
+                        return null;
+                }
 
                 break;
 
@@ -469,38 +524,76 @@ public abstract class SpecialAbility {
                 break;
 
             case ConstraintType.CurrentZone:
-                if (!constraint.currentZone.Contains(target.currentDeck.decktype))
-                    return null;
+
+                if (constraint.notCurrentZone) {
+                    if (constraint.currentZone.Contains(target.currentDeck.decktype))
+                        return null;
+                }
+                else {
+                    if (!constraint.currentZone.Contains(target.currentDeck.decktype))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.PreviousZone:
-                if (!constraint.previousZone.Contains(target.previousDeck.decktype))
-                    return null;
+
+                if (constraint.notPreviousZone) {
+                    if (constraint.previousZone.Contains(target.previousDeck.decktype))
+                        return null;
+                }
+                else {
+                    if (!constraint.previousZone.Contains(target.previousDeck.decktype))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.Subtype:
-                if (!DoesListContainAny<Subtypes>(constraint.subtype, target.subTypes))
-                    return null;
+                if (constraint.notSubtype) {
+                    if (DoesListContainAny<Subtypes>(constraint.subtype, target.subTypes))
+                        return null;
+                }
+                else {
+                    if (!DoesListContainAny<Subtypes>(constraint.subtype, target.subTypes))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.Attunement:
-                if (!DoesListContainAny<Attunements>(constraint.attunement, target.attunements))
-                    return null;
+                if (constraint.notAttunement) {
+                    if (DoesListContainAny<Attunements>(constraint.attunement, target.attunements))
+                        return null;
+                }
+                else {
+                    if (!DoesListContainAny<Attunements>(constraint.attunement, target.attunements))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.AdditionalType:
-                if (!DoesListContainAny<CardType>(constraint.additionalType, target.otherCardTypes))
-                    return null;
+                if (constraint.notAdditionalType) {
+                    if (DoesListContainAny<CardType>(constraint.additionalType, target.otherCardTypes))
+                        return null;
+                }
+                else {
+                    if (!DoesListContainAny<CardType>(constraint.additionalType, target.otherCardTypes))
+                        return null;
+                }
 
                 break;
 
             case ConstraintType.Keyword:
-                if (!DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
-                    return null;
+                if (constraint.notKeyword) {
+                    if (DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
+                        return null;
+                }
+                else {
+                    if (!DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
+                        return null;
+                }
 
                 break;
 
@@ -539,9 +632,52 @@ public abstract class SpecialAbility {
                 break;
         }
 
-
-
         return target;
+    }
+
+    private bool CheckForMultipleTriggers(ConstraintList constraints) {
+
+        constraints.counter++;
+
+        if (constraints.counter >= constraints.triggersRequired) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    private bool CheckCreatureStatAltered(ConstraintList constraint, CardStats stat, int statChangeValue, CardVisual target = null) {
+        bool result = true;
+
+        if (stat != constraint.statChanged)
+            return false;
+
+
+        if (stat == CardStats.Health && statChangeValue < 0) {
+            Debug.Log(target.gameObject.name + " has taken " + Mathf.Abs(statChangeValue) + " point(s) of damage");
+        }
+
+        result = CheckStatGainedOrLost(constraint.gainedOrLost, statChangeValue);
+
+
+        return result;
+    }
+
+    private bool CheckStatGainedOrLost(GainedOrLost gainedorLost, int value) {
+
+        switch (gainedorLost) {
+            case GainedOrLost.Gained:
+                return value > 0;
+
+            case GainedOrLost.Lost:
+                return value < 0;
+
+            default:
+
+                return false;
+        }
     }
 
 
@@ -720,42 +856,80 @@ public abstract class SpecialAbility {
     protected bool CheckAdditionalRequirements(Constants.AdditionalRequirement typeOfRequirement, ConstraintList constraint) {
         bool result = true;
 
-
         switch (typeOfRequirement) {
             case Constants.AdditionalRequirement.NumberofCardsInZone:
 
-                switch (moreOrLess) {
+                switch (constraint.moreOrLess) {
                     case MoreOrLess.AtLeast:
-                        if (CheckNumberOfCardsInZone(zoneToCheckForNumberOfCards, cardsInZoneConstraints).Count < numberOfcardsInZone) {
-                            Debug.Log("Not enough " + cardsInZoneConstraints.subtype[0].ToString() + " in " + zoneToCheckForNumberOfCards.ToString());
+                        if (CheckNumberOfCardsInZone(constraint.zoneToCheckForNumberOfCards, additionalRequirementConstraints).Count < constraint.numberOfcardsInZone) {
+                            //Debug.Log("Not enough " + cardsInZoneConstraints.subtype[0].ToString() + " in " + zoneToCheckForNumberOfCards.ToString());
                             return false;
                         }
-                            
-                            
+
                         break;
 
                     case MoreOrLess.NoMoreThan:
-                        if (CheckNumberOfCardsInZone(zoneToCheckForNumberOfCards, cardsInZoneConstraints).Count > numberOfcardsInZone) {
-                            Debug.Log("Too many " + cardsInZoneConstraints.subtype[0].ToString() + " in " + zoneToCheckForNumberOfCards.ToString());
+                        if (CheckNumberOfCardsInZone(constraint.zoneToCheckForNumberOfCards, additionalRequirementConstraints).Count > constraint.numberOfcardsInZone) {
+                            //Debug.Log("Too many " + cardsInZoneConstraints.subtype[0].ToString() + " in " + zoneToCheckForNumberOfCards.ToString());
                             return false;
                         }
-                            
-
 
                         break;
                 }
 
                 break;
+
+            case Constants.AdditionalRequirement.RequireResource:
+                if (!CheckForRequiredResource(additionalRequirementConstraints)) {
+                    return false;
+                }
+
+                break;
         }
-
-
-
-
-
 
         return result;
     }
 
+    protected bool CheckForRequiredResource(ConstraintList constraint) {
+        bool result = false;
+
+        GameResource targetResource = null;
+
+        for (int i = 0; i < source.owner.gameResourceDisplay.resourceDisplayInfo.Count; i++) {
+            if (source.owner.gameResourceDisplay.resourceDisplayInfo[i].resource.resourceType == constraint.requiredResourceType) {
+                targetResource = source.owner.gameResourceDisplay.resourceDisplayInfo[i].resource;
+                //Debug.Log(targetResource.resourceType.ToString() + " exists in the list");
+                break;
+            }
+        }
+
+        if (targetResource == null)
+            return false;
+
+        if (constraint.consumeResource) {
+            result = targetResource.RemoveResource(constraint.amountOfResourceRequried);
+
+            //Debug.Log(result + " is the result of consuming resources");
+
+            for (int i = 0; i < source.owner.gameResourceDisplay.resourceDisplayInfo.Count; i++) {
+                if (source.owner.gameResourceDisplay.resourceDisplayInfo[i].resource == targetResource) {
+                    source.owner.gameResourceDisplay.RPCUpdateResourceText(PhotonTargets.All, targetResource.resourceType);
+                }
+            }
+        }
+
+        else {
+            if (targetResource.currentValue >= constraint.amountOfResourceRequried) {
+                //Debug.Log("I had enough");
+                result = true;
+            }
+            else {
+                //Debug.Log("Not enough");
+            }
+        }
+
+        return result;
+    }
 
 
 
@@ -764,7 +938,7 @@ public abstract class SpecialAbility {
 
         List<CardVisual> allCardsInZone = Finder.FindAllCardsInZone(zone);
 
-        for(int i = 0; i < allCardsInZone.Count; i++) {
+        for (int i = 0; i < allCardsInZone.Count; i++) {
             CardVisual applicant = CheckConstraints(constraint, allCardsInZone[i]);
 
             if (applicant != null)
@@ -777,6 +951,8 @@ public abstract class SpecialAbility {
         return results;
     }
 
+
+
     #endregion
 
 
@@ -785,28 +961,28 @@ public abstract class SpecialAbility {
     #region Effect Methods
 
 
-    public List<CardVisual> SpawnToken(string cardDataName, CardType primaryType, DeckType intendedLocation) {
+    public List<CardVisual> SpawnToken(ConstraintList spawnConstraints) {
 
         List<CardVisual> tokens = new List<CardVisual>();
-        int spawnIndex = numberOfSpawns;
+        int spawnIndex = targetConstraints.numberOfSpawns;
 
         if (spawnIndex > targets.Count)
             spawnIndex = targets.Count;
 
 
-        for (int i = 0; i < numberOfSpawns; i++) {
+        for (int i = 0; i < targetConstraints.numberOfSpawns; i++) {
 
-            CardData tokenData = Resources.Load<CardData>("CardData/" + cardDataName) as CardData;
+            CardData tokenData = Resources.Load<CardData>("CardData/" + spawnConstraints.spawnableTokenDataName) as CardData;
 
 
-            if (copyTargets) {
-                primaryType = targets[spawnIndex - 1].primaryCardType;
+            if (targetConstraints.copyTargets) {
+                spawnConstraints.spawnCardType = targets[spawnIndex - 1].primaryCardType;
                 tokenData = Resources.Load<CardData>("CardData/" + targets[spawnIndex - 1].cardData.name) as CardData;
             }
 
-            string prefabName = Deck._allCards.GetCardPrefabNameByType(primaryType);
+            string prefabName = Deck._allCards.GetCardPrefabNameByType(spawnConstraints.spawnCardType);
 
-            CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(tokenData, prefabName, GetDeckFromType(intendedLocation, source));
+            CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(tokenData, prefabName, GetDeckFromType(spawnConstraints.spawnTokenLocation, source));
             tokenCard.isToken = true;
 
             tokens.Add(tokenCard);
@@ -841,11 +1017,11 @@ public abstract class SpecialAbility {
     }
 
 
-    public void ForcedZoneChange(CardVisual target, DeckType zone) {
+    public void ForcedZoneChange(CardVisual target, ConstraintList zoneChangeConstraints) {
 
-        target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(zone, target));
-
+        target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(zoneChangeConstraints.targetZone, target));
     }
+
 
     public void GrantKeywords(CardVisual target, List<Keywords> keywords) {
 
@@ -865,6 +1041,25 @@ public abstract class SpecialAbility {
 
         //removedKeywords.Add(target.photonView.viewID, keywords);
 
+    }
+
+    public void GenerateResource(ConstraintList constraints) {
+
+        for (int i = 0; i < source.owner.gameResourceDisplay.resourceDisplayInfo.Count; i++) {
+            if (source.owner.gameResourceDisplay.resourceDisplayInfo[i].resource.resourceType == constraints.generatedResourceType) {
+                source.owner.gameResourceDisplay.RPCAddResource(PhotonTargets.All, constraints.generatedResourceType, constraints.amountOfResourceToGenerate);
+                return;
+            }
+
+        }
+
+
+        source.owner.RPCSetupResources(PhotonTargets.All, false,
+            constraints.generatedResourceType,
+            constraints.amountOfResourceToGenerate,
+            0,
+            constraints.generatedResourceName,
+            constraints.generatedResouceCap);
     }
 
 
@@ -900,6 +1095,10 @@ public abstract class SpecialAbility {
         public CardVisual source;
         public int uniqueID = -1;
 
+        public bool valueSetBytargetStat;
+        public DeriveStatsFromWhom deriveStatsFromWhom;
+        public CardStats targetStat;
+        public bool invertValue;
 
         public StatAdjustment() {
 
@@ -910,11 +1109,49 @@ public abstract class SpecialAbility {
             this.value = value;
             this.nonStacking = nonStacking;
             this.source = source;
+            //this.invertValue = inverse;
             temporary = temp;
 
             uniqueID = IDFactory.GenerateID();
 
+
+
+
         }
+
+        public void AlterValueBasedOnTarget(CreatureCardVisual targetToBasevalueFrom) {
+            if (!valueSetBytargetStat)
+                return;
+
+
+            if (targetToBasevalueFrom != null) {
+                switch (targetStat) {
+                    case CardStats.Cost:
+                        value = targetToBasevalueFrom.essenceCost;
+                        break;
+
+                    case CardStats.Attack:
+                        value = targetToBasevalueFrom.attack;
+                        break;
+
+                    case CardStats.Size:
+                        value = targetToBasevalueFrom.size;
+                        break;
+
+                    case CardStats.Health:
+                        value = targetToBasevalueFrom.health;
+                        break;
+
+                }
+
+            }
+
+            if (invertValue) {
+                value = -value;
+            }
+
+        }
+
 
 
         public static List<StatAdjustment> CopyStats(CreatureCardVisual target) {
@@ -994,13 +1231,21 @@ public abstract class SpecialAbility {
         //public List<OwnerConstraints> owner = new List<OwnerConstraints>();
         public OwnerConstraints owner;
         public List<CardType> primaryType = new List<CardType>();
+        public bool notPrimaryType;
         public List<CardType> additionalType = new List<CardType>();
+        public bool notAdditionalType;
         public List<Subtypes> subtype = new List<Subtypes>();
+        public bool notSubtype;
         public List<Keywords> keyword = new List<Keywords>();
+        public bool notKeyword;
         public List<Attunements> attunement = new List<Attunements>();
+        public bool notAttunement;
         public List<DeckType> currentZone = new List<DeckType>();
+        public bool notCurrentZone;
         public List<DeckType> previousZone = new List<DeckType>();
+        public bool notPreviousZone;
         public List<Constants.CreatureStatus> creatureStatus = new List<Constants.CreatureStatus>();
+        public List<GameResource.ResourceType> resources = new List<GameResource.ResourceType>();
 
         public List<StatAdjustment> minStats = new List<StatAdjustment>();
         public List<StatAdjustment> maxStats = new List<StatAdjustment>();
@@ -1008,13 +1253,46 @@ public abstract class SpecialAbility {
         public CardStats mostStat;
         public CardStats leastStat;
         public bool thisCardOnly;
-        //public int numberOfCardsInZone;
-        //public DeckType zoneForCounting;
-        //public CardType cardTypeForCounting;
-        //public subt
 
 
+        //Creature Stat Adjusted
+        public GainedOrLost gainedOrLost;
+        public CardStats statChanged;
 
+
+        //Cards In Zone
+        public DeckType zoneToCheckForNumberOfCards;
+        public MoreOrLess moreOrLess;
+        public int numberOfcardsInZone;
+
+
+        //Spawn Token
+        public bool copyTargets;
+        public string spawnableTokenDataName;
+        public DeckType spawnTokenLocation;
+        public CardType spawnCardType;
+        public int numberOfSpawns;
+
+        //Zone Change Fields
+        public DeckType targetZone;
+
+        //Count Toward Effect
+        public bool requireMultipleTriggers;
+        public bool resetCountAtTurnEnd;
+        public int triggersRequired;
+        public int counter;
+
+        //GenerateResource;
+        public GameResource.ResourceType generatedResourceType;
+        public int amountOfResourceToGenerate;
+        public int generatedResouceCap;
+        public string generatedResourceName;
+        //Require Resource
+        public GameResource.ResourceType requiredResourceType;
+        public int amountOfResourceRequried;
+        public bool consumeResource;
+
+        //Stat Adjustment
 
     }
 

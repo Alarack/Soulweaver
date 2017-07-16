@@ -60,6 +60,11 @@ public class Player : Photon.MonoBehaviour {
     public GameObject activeCrypt;
     public Deck battlefield;
 
+
+    [Header("Resources")]
+    public List<GameResource> gameResources = new List<GameResource>();
+    public GameResourceDisplay gameResourceDisplay;
+
     //[Header("UI Stuff")]
     //public GameObject returnToMenuButton;
 
@@ -84,12 +89,14 @@ public class Player : Photon.MonoBehaviour {
     void Start() {
         combatManager = GetComponentInChildren<CombatManager>();
 
+        RPCConfirmPos(PhotonTargets.AllBufferedViaServer);
+
         if (photonView.isMine) {
             gameObject.name = "Me";
             myCamera.SetActive(true);
             hud.SetActive(true);
             myHand = GetComponent<Deck>();
-            
+
             //GameObject.Find("Battlefield").GetComponent<Deck>().owner = this;
             //Timeline.timeline.owner = this;
         }
@@ -103,16 +110,18 @@ public class Player : Photon.MonoBehaviour {
     }
 
     void Update() {
-        if (myTurn && photonView.isMine) {
+        if (myTurn && photonView.isMine && gameHasStarted) {
             switch (gameState) {
                 case GameStates.Refresh:
                     endTurnButton.interactable = true;
                     //DrawFromDomain();
                     //RefreshAll();
-                    if(battlefield != null)
+                    if (battlefield != null) {
                         RefreshMySouls();
+                    }
+                        
 
-                    StartCoroutine( RPCBroadcastTurnStart(PhotonTargets.All, this));
+                    StartCoroutine(RPCBroadcastTurnStart(PhotonTargets.All, this));
 
                     break;
 
@@ -121,6 +130,7 @@ public class Player : Photon.MonoBehaviour {
                     break;
 
                 case GameStates.Draw:
+                    DrawFromDomain();
                     DrawFromGrimoire();
                     break;
 
@@ -133,7 +143,7 @@ public class Player : Photon.MonoBehaviour {
 
                     myTurn = false;
 
-                    if(opponent != null)
+                    if (opponent != null)
                         opponent.RPCResetState(PhotonTargets.All);
                     else {
                         ResetState();
@@ -190,11 +200,13 @@ public class Player : Photon.MonoBehaviour {
     //}
 
     public IEnumerator StartGame() {
-        //SetUpDecks();
         //domainManager = activeDomain.GetComponent<DomainManager>();
-        yield return new WaitForSeconds(1f);
 
+        RPCSetupResources(PhotonTargets.AllBufferedViaServer, true);
+        yield return new WaitForSeconds(1f);
+        //yield return null;
         //domainManager.gameObject.GetPhotonView().RPC("InitDomain", PhotonTargets.All);
+        activeDomain.GetComponent<DomainManager>().RPCInitializeDomain(PhotonTargets.All);
 
         RPCCheckOpponents(PhotonTargets.All);
 
@@ -205,6 +217,9 @@ public class Player : Photon.MonoBehaviour {
 
         StartCoroutine(DrawStartingHand());
         //mulliganButton.SetActive(true);
+
+
+        gameHasStarted = true;
 
     }
 
@@ -222,8 +237,8 @@ public class Player : Photon.MonoBehaviour {
         //Deck._battlefield.RefreshAll(cardsOnField);
         battlefield.RefreshAll(cardsOnField);
 
-        for(int i = 0; i < cardsOnField.Count; i++) {
-            if(cardsOnField[i] is CreatureCardVisual) {
+        for (int i = 0; i < cardsOnField.Count; i++) {
+            if (cardsOnField[i] is CreatureCardVisual) {
                 CreatureCardVisual creature = cardsOnField[i] as CreatureCardVisual;
                 creature.hasAttacked = false;
             }
@@ -280,57 +295,23 @@ public class Player : Photon.MonoBehaviour {
     public void PlayerUpkeep() {
         AdjustMaxEssence(1);
         FillEssence();
+
+        //for (int i = 0; i < gameResourceDisplay.resourceDisplayInfo.Count; i++) {
+        //    if (gameResourceDisplay.resourceDisplayInfo[i].addPerTurn) {
+        //        gameResourceDisplay.resourceDisplayInfo[i].resource.IncreaseMaximum(1);
+        //        gameResourceDisplay.resourceDisplayInfo[i].resource.AddResource(1);
+        //    }
+        //}
+
+
+        RPCUpdateResources(PhotonTargets.AllBufferedViaServer);
+
         //RenewOncePerTurnCounters();
 
         //EventManager.EffectOnUpkeep();
 
         gameState = GameStates.Draw;
     }
-
-    //public void RenewOncePerTurnCounters() {
-    //    foreach (CardModel card in TargetUtils.FindAllCardModelsOnBattlefield()) {
-    //        if (card.parentDeck.decktype == Deck.DeckType.Battlefield && card.gameObject.GetPhotonView().isMine) {
-    //            if (card.GetComponent<CardAbility>() != null) {
-    //                card.gameObject.GetPhotonView().RPC("RenewOncePerTurnEffects", PhotonTargets.All);
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public void EndOfTurnCleanUp() {
-    //    CardAbility[] allStatMods = FindObjectsOfType<CardAbility>();
-    //    //List<GameObject> battlefieldCards = GameObject.FindGameObjectWithTag("Battlefield").GetComponent<Deck>().activeCards;
-    //    List<GameObject> battlefieldCards = Deck._battlefield.activeCards;
-
-    //    foreach (CardAbility statMod in allStatMods) {
-    //        if (!statMod.GetComponent<CardModel>().visualOnly && statMod.myStatMods != null && /*statMod.GetComponent<CardModel>().parentDeck.decktype == Deck.DeckType.Battlefield &&*/ statMod.gameObject.GetPhotonView().isMine) {
-    //            if (statMod.myStatMods.UntilEndOfTurn) {
-    //                CardEntersZone.RemoveTempStatMods(statMod.gameObject);
-    //                CardEntersZone.EndOfTurnStatRemoval(statMod.gameObject);
-    //            }
-    //        }
-    //    }
-
-    //    List<GameObject> ephemeralCards = new List<GameObject>();
-    //    foreach (GameObject card in battlefieldCards) {
-    //        if (card.GetComponent<CardModel>().keywords.Contains(CardModel.Keywords.Ephemeral) && CardEntersZone.CheckForMyCardAndOnBattlefield(card)) {
-    //            ephemeralCards.Add(card);
-    //        }
-    //    }
-
-    //    if (ephemeralCards.Count > 0) {
-    //        foreach (GameObject eCard in ephemeralCards) {
-    //            eCard.GetComponent<CardModel>().SendCardToSoulCrypt();
-    //        }
-    //    }
-
-    //    if (targetUtils.isInCombat)
-    //        targetUtils.EndCombat();
-
-    //    if (targetUtils.isChoosingTarget)
-    //        targetUtils.isChoosingTarget = false;
-    //}
-
 
 
 
@@ -347,6 +328,9 @@ public class Player : Photon.MonoBehaviour {
 
             gameState = GameStates.Main;
         }
+    }
+    public void DrawFromDomain() {
+        activeDomain.GetComponent<Deck>().DrawCard();
     }
 
     public IEnumerator DrawStartingHand() {
@@ -378,25 +362,7 @@ public class Player : Photon.MonoBehaviour {
         //CreateOrActivateCardGlow();
     }
 
-    //public void CreateOrActivateCardGlow() {
-    //    foreach (GameObject cardInhand in myHand.activeCards) {
-    //        CardModel cardScript = cardInhand.GetComponent<CardModel>();
-    //        if (cardScript.cost <= curEssence) {
-    //            if (cardScript.glowEffect == null) {
-    //                cardInhand.GetComponent<CardModel>().CreateGlowEffect();
-    //            }
-    //            else if (!cardScript.glowEffect.activeSelf) {
-    //                cardScript.glowEffect.SetActive(true);
-    //            }
 
-    //        }
-    //        else {
-    //            if (cardScript.glowEffect != null && cardScript.glowEffect.activeSelf) {
-    //                cardScript.glowEffect.SetActive(false);
-    //            }
-    //        }
-    //    }
-    //}
 
 
 
@@ -537,6 +503,98 @@ public class Player : Photon.MonoBehaviour {
         Grid.EventManager.SendEvent(Constants.GameEvent.TurnEnded, data);
     }
 
+    public void RPCSetupResources(PhotonTargets targets, bool firstResource, 
+        GameResource.ResourceType resourceType = GameResource.ResourceType.None, 
+        int current = 0, 
+        int max = 0,
+        string resourceName = "",
+        int resourceCap = 0) {
+
+
+        int resourceTypeEnum = (int)resourceType;
+
+        GameObject resourceText = PhotonNetwork.Instantiate("ResourceText", transform.position, Quaternion.identity, 0) as GameObject;
+
+        //HUDRegistrar.AddHudElement(resourceText);
+        int textID = resourceText.GetPhotonView().viewID;
+
+
+        photonView.RPC("SetupResources", targets, textID, firstResource, resourceTypeEnum, current, max, resourceName, resourceCap);
+    }
+
+    [PunRPC]
+    public void SetupResources(int textID, bool firstResource, int resourceTypeEnum, int current, int max, string name, int cap) {
+
+        GameResource.ResourceType type = (GameResource.ResourceType)resourceTypeEnum;
+
+
+        //Debug.Log(textID + " is the view id Sent");
+
+        GameObject newTextGO = HUDRegistrar.FindHudElementByID(textID);
+
+        if(newTextGO == null) {
+
+            GameObject[] allHUD = GameObject.FindGameObjectsWithTag("HUD");
+
+            foreach(GameObject go in allHUD) {
+                if (go.GetPhotonView().viewID == textID) {
+                    newTextGO = go;
+                    break;
+                }
+            }
+        }
+
+        //Debug.Log(newTextGO);
+
+        Text newText = newTextGO.GetComponent<Text>();
+
+        if (firstResource) {
+
+            GameResource essence = new GameResource(GameResource.ResourceType.Essence, 0, 0, "Essence", gameResourceDisplay, 10);
+
+            gameResources.Add(essence);
+
+            gameResourceDisplay.Initialize(this, essence, newText);
+        }
+        else {
+
+            GameResource newResource = new GameResource(type, current, max, name, gameResourceDisplay, cap);
+
+            gameResources.Add(newResource);
+
+            gameResourceDisplay.AddNewResource(newResource, newText, false);
+
+        }
+
+    }
+
+
+    public void RPCUpdateResources(PhotonTargets targets) {
+
+        photonView.RPC("UpdateResources", targets);
+    }
+
+    [PunRPC]
+    public void UpdateResources() {
+        for (int i = 0; i < gameResourceDisplay.resourceDisplayInfo.Count; i++) {
+            if (gameResourceDisplay.resourceDisplayInfo[i].addPerTurn) {
+                gameResourceDisplay.resourceDisplayInfo[i].resource.IncreaseMaximum(1);
+                //gameResourceDisplay.resourceDisplayInfo[i].resource.AddResource(1);
+                gameResourceDisplay.resourceDisplayInfo[i].resource.RefreshResource();
+            }
+        }
+    }
+
+
+    public void RPCConfirmPos(PhotonTargets targets) {
+        photonView.RPC("ConfirmPos", targets);
+    }
+
+    [PunRPC]
+    public void ConfirmPos() {
+        transform.position = Vector3.zero;
+    }
+
 
     //[PunRPC]
     //public void ActivateEndGameButton() {
@@ -556,69 +614,7 @@ public class Player : Photon.MonoBehaviour {
 
 
 
-    //[PunRPC]
-    //public void SpawnToken(string token, bool sendToHand) {
-    //    StartCoroutine(RemoteSpawnTest(token, sendToHand));
-    //}
 
-
-    //public IEnumerator RemoteSpawnTest(string token, bool sendToHand) {
-    //    if (!battlefieldHolder.GetComponent<HandManager>().IsHandFull()) {
-    //        //Debug.Log("Battlefield has space");
-    //        //string cleanName = token.name.Replace("(Clone)", "").Trim();
-    //        yield return null;
-    //        GameObject activeCard = PhotonNetwork.Instantiate(token, transform.position, Quaternion.identity, 0) as GameObject;
-
-    //        CardModel tokenScript = activeCard.GetComponent<CardModel>();
-    //        tokenScript.isToken = true;
-
-    //        if (activeCard.GetPhotonView().isMine) {
-    //            tokenScript.owner = this;
-    //            activeGrimoire.GetComponent<Deck>().AddCard(activeCard);
-
-    //            if (sendToHand) {
-    //                tokenScript.parentDeck.TransferCard(activeCard, GetComponent<Deck>());
-    //            }
-    //            else {
-    //                tokenScript.parentDeck.TransferCard(activeCard, Deck._battlefield);
-    //            }
-
-    //            activeCard.transform.SetParent(GameObject.FindGameObjectWithTag("AllCards").transform, false);
-
-    //        }
-
-    //        if (tokenScript.cardTypes.Contains(CardModel.CardType.Soul) && !tokenScript.keywords.Contains(CardModel.Keywords.Vanguard)) {
-    //            tokenScript.GetComponent<CardCreature>().hasAttacked = true;
-    //        }
-
-    //        activeCard.GetPhotonView().RPC("SetOwner", PhotonTargets.Others);
-    //        activeCard.GetPhotonView().RPC("SetParentDeck", PhotonTargets.Others, "Grimoire");
-
-    //        if (sendToHand) {
-    //            activeCard.GetPhotonView().RPC("TransferSelf", PhotonTargets.Others, "Hand");
-    //        }
-    //        else {
-    //            //activeCard.GetPhotonView().RPC("SetParentDeck", PhotonTargets.Others, "Battlefield");
-    //            activeCard.GetPhotonView().RPC("TransferSelf", PhotonTargets.Others, "Battlefield");
-    //        }
-
-    //        activeCard.GetPhotonView().RPC("ActivateCard", PhotonTargets.All);
-
-    //        if (player2) {
-    //            activeCard.transform.localRotation = p2HandRot.localRotation;
-    //            //photonView.RPC("TransferTest", PhotonTargets.Others, "Player2 " + player2);
-    //            //Debug.Log("am player 2 " + player2);
-    //            //photonView.RPC("TransferTest", PhotonTargets.Others, "Rotating card for me");
-    //        }
-
-    //        if (!player2) {
-    //            activeCard.GetPhotonView().RPC("RotateCard", PhotonTargets.Others);
-    //            //photonView.RPC("TransferTest", PhotonTargets.Others, activeCard.transform.localRotation.y.ToString());
-    //            //Debug.Log("am player 2 " + player2);
-    //        }
-    //    }
-
-    //}
 
     //[PunRPC]
     //public void RemoteCombatEventLog(int firstCardID, int secondCardID) {

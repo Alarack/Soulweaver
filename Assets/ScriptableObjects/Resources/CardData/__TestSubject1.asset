@@ -9,19 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: AngrySkeletons
+  m_Name: __TestSubject1
   m_EditorClassIdentifier: 
-  cardID: 109
-  cardName: Angry Skeletons
-  cardText: 'Finale: Summon an Thing'
+  cardID: 0
+  cardName: Test Subject 01
+  cardText: Many Things
   cardCost: 1
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 08000000
-  subTypes: 02000000
+  attunements: 0b000000
+  subTypes: 05000000
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
@@ -29,9 +29,9 @@ MonoBehaviour:
   - trigger: 01000000
     duration: 0
     triggerConstraints:
-      types: 0400000002000000
+      types: 04000000
       owner: 0
-      primaryType: 0100000006000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 05000000
+      previousZone: 
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -51,7 +51,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 0
+      thisCardOnly: 1
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
       amountOfResourceRequried: 0
       consumeResource: 0
     sourceConstraints:
-      types: 04000000
+      types: 
       owner: 0
       primaryType: 
       notPrimaryType: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
       notKeyword: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -120,33 +120,33 @@ MonoBehaviour:
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-    effect: 3
+    effect: 1
     abilityName: 
     effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
-      types: 
+      types: 04000000020000000b000000
       owner: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
-      subtype: 
+      subtype: 02000000
       notSubtype: 0
       keyword: 
       notKeyword: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
-      creatureStatus: 
+      creatureStatus: 03000000
       resources: 
       minStats: []
       maxStats: []
-      mostStat: 0
+      mostStat: 2
       leastStat: 0
       thisCardOnly: 0
       gainedOrLost: 0
@@ -219,13 +219,23 @@ MonoBehaviour:
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-    keywordsToAddorRemove: 
+    keywordsToAddorRemove: 16000000
     additionalRequirements: 
-    statAdjustments: []
+    statAdjustments:
+    - stat: 2
+      value: 0
+      nonStacking: 0
+      temporary: 0
+      source: {fileID: 0}
+      uniqueID: -1
+      valueSetBytargetStat: 1
+      deriveStatsFromWhom: 1
+      targetStat: 2
+      invertValue: 0
     applyEffectToWhom: 0
     applyEffectToSourceOfAdjustment: 0
-    logicTargetingMethod: 0
-    numberofTargets: 0
-  attack: 3
+    logicTargetingMethod: 2
+    numberofTargets: 1
+  attack: 4
   size: 1
-  health: 1
+  health: 2

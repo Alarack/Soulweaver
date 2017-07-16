@@ -137,6 +137,10 @@ public class CreatureCardVisual : CardVisual {
 
                 if(value < 0) {
                     //RPCShowDamage(PhotonTargets.Others, value);
+
+                    CheckDeath(source.photonView.viewID, false);
+
+
                     ShowDamage(value);
                 }
 
