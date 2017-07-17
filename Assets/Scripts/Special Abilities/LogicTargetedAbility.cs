@@ -10,7 +10,8 @@ public class LogicTargetedAbility : SpecialAbility {
     public enum LogicTargeting {
         NoTargetsNeeded,
         AllValidTargets,
-        NumberOfValidTargets
+        NumberOfValidTargets,
+        OnlyTargetTriggeringCard
     }
 
 
@@ -29,13 +30,13 @@ public class LogicTargetedAbility : SpecialAbility {
 
     public override bool ProcessEffect(CardVisual card) {
 
-        
+
 
         switch (logicTargetingMethod) {
             case LogicTargeting.AllValidTargets:
                 validTargets = GatherValidTargets();
 
-                Debug.Log(validTargets.Count + " is the number of valid targets");
+                //Debug.Log(validTargets.Count + " is the number of valid targets");
 
                 for (int i = 0; i < validTargets.Count; i++) {
                     //Debug.Log("doin' stuff to " + validTargets[i].gameObject.name);
@@ -67,6 +68,12 @@ public class LogicTargetedAbility : SpecialAbility {
             case LogicTargeting.NoTargetsNeeded:
 
                 Effect(source);
+                break;
+
+            case LogicTargeting.OnlyTargetTriggeringCard:
+                if (CheckConstraints(targetConstraints, card) != null)
+                    Effect(card);
+
                 break;
 
 

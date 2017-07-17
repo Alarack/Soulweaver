@@ -32,6 +32,13 @@ public class CardDataEditor : Editor {
         _cardData.cardText = EditorGUILayout.TextField("Card Text", _cardData.cardText);
         _cardData.cardCost = EditorGUILayout.IntField("Card Cost", _cardData.cardCost);
 
+
+        EditorGUILayout.Separator();
+
+        _cardData.specialAttributes = EditorHelper.DrawExtendedList("Special Attributes", _cardData.specialAttributes, "Attribute", DrawSpecialAttributes);
+
+        EditorGUILayout.Separator();
+
         _cardData.cardImage = EditorHelper.ObjectField<Sprite>("Card Image", _cardData.cardImage);
         // _cardData.cardImagePos = EditorHelper.Vector2Field(_cardData.cardImagePos);
         _cardData.cardImagePos = EditorGUILayout.Vector2Field("Card Image Position", _cardData.cardImagePos);
@@ -79,24 +86,16 @@ public class CardDataEditor : Editor {
         //DrawDefaultInspector();
     }
 
-    //private void ShowSpecialAbility(Constants.SpecialAbilityTypes type) {
-    //    switch (type) {
-    //        case Constants.SpecialAbilityTypes.UserSingleTargeted:
-    //            _cardData.allAbilities = EditorHelper.DrawExtendedList("User Targted Abilities", _cardData.allAbilities, "Ability", DrawAbilityList);
-    //            break;
-    //    }
 
-    //}
+    private SpecialAttribute DrawSpecialAttributes(SpecialAttribute entry) {
+        entry.attributeType = EditorHelper.EnumPopup("Attribute Type", entry.attributeType);
+        entry.attributeValue = EditorGUILayout.IntField("Attribute Value", entry.attributeValue);
+
+        return entry;
+    }
 
 
-    //private void PopulateSpecialAbilitiesList<T>(List<T> abilities) where T : SpecialAbility {
 
-    //    foreach(SpecialAbility ability in abilities) {
-    //        if (!_cardData.allAbilities.Contains(ability)) {
-    //            Debug.Log("Adding an ability to a list of all");
-    //        }
-    //    }
-    //}
 
     private T DrawAbilityList<T>(T ability) where T : SpecialAbility {
 
@@ -106,10 +105,20 @@ public class CardDataEditor : Editor {
 
     private SpecialAbility DrawSpecalAbilities(SpecialAbility entry) {
 
+        GUIStyle boldRed = new GUIStyle(EditorStyles.boldLabel);
+        boldRed.normal.textColor = Color.red;
+
+
+
+        entry.abilityName = EditorGUILayout.TextField("Name of Ability (Optional) ", entry.abilityName);
+
+        EditorGUILayout.LabelField("Start of " + entry.abilityName + " section", boldRed);
+
         //Trigger Logic
         EditorHelper.DrawInspectorSectionHeader("Effect Triggers:");
 
         entry.trigger = EditorHelper.DrawList("Triggers", entry.trigger, true, AbilityActivationTrigger.None, true, DrawActivationTrigger);
+        entry.triggerConstraints.oncePerTurn = EditorGUILayout.Toggle("Can only trigger once per turn?", entry.triggerConstraints.oncePerTurn);
         entry.triggerConstraints.requireMultipleTriggers = EditorGUILayout.Toggle("Require Multiple Triggers?", entry.triggerConstraints.requireMultipleTriggers);
         if (entry.triggerConstraints.requireMultipleTriggers) {
             entry.triggerConstraints.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggerConstraints.triggersRequired);
@@ -127,7 +136,7 @@ public class CardDataEditor : Editor {
                     break;
 
                 case AbilityActivationTrigger.Defends:
-                    entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
+                    //entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
 
                     break;
             }
@@ -241,6 +250,12 @@ public class CardDataEditor : Editor {
 
                 break;
 
+            case EffectType.GrantSpecialAttribute:
+                entry.targetConstraints.grantedSpecialAttributeType = EditorHelper.EnumPopup("What Type?", entry.targetConstraints.grantedSpecialAttributeType);
+                entry.targetConstraints.grantedSpecialAttributeValue = EditorGUILayout.IntField("How much?", entry.targetConstraints.grantedSpecialAttributeValue);
+
+                break;
+
         }//End of Effects
 
 
@@ -255,7 +270,13 @@ public class CardDataEditor : Editor {
 
         EditorGUILayout.Separator();
 
-        entry.targetConstraints.thisCardOnly = EditorGUILayout.Toggle("This card only targets itself?", entry.targetConstraints.thisCardOnly);
+        if(!entry.targetConstraints.neverTargetSelf)
+            entry.targetConstraints.thisCardOnly = EditorGUILayout.Toggle("This card only targets itself?", entry.targetConstraints.thisCardOnly);
+
+        if (!entry.targetConstraints.thisCardOnly) 
+            entry.targetConstraints.neverTargetSelf = EditorGUILayout.Toggle("This card can't target itself?", entry.targetConstraints.neverTargetSelf);
+        
+
         entry.targetConstraints.types = EditorHelper.DrawList("Target Constraints", entry.targetConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
 
         if (entry is LogicTargetedAbility) {
@@ -274,6 +295,14 @@ public class CardDataEditor : Editor {
 
         EditorHelper.DrawInspectorSectionFooter();
 
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+
+        EditorGUILayout.LabelField("End of " + entry.abilityName + " section", boldRed);
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
 
         return entry;
     }
@@ -300,6 +329,7 @@ public class CardDataEditor : Editor {
         //if(entry.uniqueID == -1 || entry.uniqueID == 0) {
         //    entry.uniqueID = IDFactory.GenerateID();
         //}
+
 
         return entry;
     }

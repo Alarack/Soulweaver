@@ -9,30 +9,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: AngrySkeletons
+  m_Name: SEV_SpitefulSkulker
   m_EditorClassIdentifier: 
-  cardID: 109
-  cardName: Angry Skeletons
-  cardText: Be A big angry skelly.
-  cardCost: 1
+  cardID: 20005
+  cardName: Spiteful Skulker
+  cardText: Invisible. Whenever your General takes damage, gain +1 Attack.
+  cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
-  attackEffect: VFX_Primal_Slash
-  movingVFX: 0
+  attackEffect: VFX_Ball_Lightning
+  movingVFX: 1
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 08000000
-  subTypes: 02000000
-  keywords: 
+  attunements: 080000000e000000
+  subTypes: 06000000
+  keywords: 0c000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 01000000
+  - trigger: 08000000
     duration: 0
     triggerConstraints:
-      types: 0400000002000000
-      owner: 0
-      primaryType: 01000000
+      types: 020000000400000001000000
+      owner: 2
+      primaryType: 06000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -53,10 +53,11 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
-      oncePerTurn: 1
+      oncePerTurn: 0
       triggeredThisTurn: 0
-      gainedOrLost: 0
-      statChanged: 0
+      neverTargetSelf: 0
+      gainedOrLost: 1
+      statChanged: 4
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
@@ -105,6 +106,7 @@ MonoBehaviour:
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
+      neverTargetSelf: 0
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -130,7 +132,7 @@ MonoBehaviour:
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
     effect: 1
-    abilityName: 
+    abilityName: Rage
     effectValue: 0
     source: {fileID: 0}
     targets: []
@@ -160,6 +162,7 @@ MonoBehaviour:
       thisCardOnly: 1
       oncePerTurn: 0
       triggeredThisTurn: 0
+      neverTargetSelf: 0
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -213,6 +216,7 @@ MonoBehaviour:
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
+      neverTargetSelf: 0
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -240,7 +244,7 @@ MonoBehaviour:
     keywordsToAddorRemove: 
     additionalRequirements: 
     statAdjustments:
-    - stat: 3
+    - stat: 2
       value: 1
       nonStacking: 0
       temporary: 0
@@ -254,6 +258,6 @@ MonoBehaviour:
     logicTargetingMethod: 1
     numberofTargets: 0
   specialAttributes: []
-  attack: 0
+  attack: 1
   size: 3
-  health: 10
+  health: 4

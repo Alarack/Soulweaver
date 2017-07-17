@@ -86,4 +86,9 @@ MonoBehaviour:
   - RotateTile
   - ExhaustTile
   - UpdateStatAdjustment
+  - AddSpecialAtribute
+  - ReduceSpecialAtribute
+  - RemoveSpecialAtribute
+  - BroadcastCombat
+  - BroadcastDefender
   DisableAutoOpenWizard: 1

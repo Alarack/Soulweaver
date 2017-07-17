@@ -34,7 +34,7 @@ public class CardData : ScriptableObject {
     public List<EffectOnTarget> userTargtedAbilities = new List<EffectOnTarget>();
     public List<LogicTargetedAbility> multiTargetAbilities = new List<LogicTargetedAbility>();
 
-
+    public List<SpecialAttribute> specialAttributes = new List<SpecialAttribute>();
 
 
 }

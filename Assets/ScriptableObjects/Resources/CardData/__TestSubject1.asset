@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 0
   cardName: Test Subject 01
-  cardText: Many Things
+  cardText: test description
   cardCost: 1
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
@@ -25,8 +25,7 @@ MonoBehaviour:
   subTypes: 05000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities: []
-  multiTargetAbilities:
+  userTargtedAbilities:
   - trigger: 01000000
     duration: 0
     triggerConstraints:
@@ -53,6 +52,8 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 1
+      oncePerTurn: 0
+      triggeredThisTurn: 0
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -75,6 +76,8 @@ MonoBehaviour:
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
     sourceConstraints:
       types: 
       owner: 0
@@ -99,6 +102,8 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -121,35 +126,39 @@ MonoBehaviour:
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
     effect: 1
     abilityName: 
     effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
-      types: 04000000020000000b000000
+      types: 
       owner: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
-      subtype: 02000000
+      subtype: 
       notSubtype: 0
       keyword: 
       notKeyword: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
-      creatureStatus: 03000000
+      creatureStatus: 
       resources: 
       minStats: []
       maxStats: []
-      mostStat: 2
+      mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -172,6 +181,8 @@ MonoBehaviour:
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
     ID: 0
     abilityVFX: 
     moveingVFX: 0
@@ -199,6 +210,8 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -221,23 +234,35 @@ MonoBehaviour:
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-    keywordsToAddorRemove: 16000000
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
+    keywordsToAddorRemove: 
     additionalRequirements: 
     statAdjustments:
-    - stat: 2
-      value: 0
+    - stat: 4
+      value: -2
       nonStacking: 0
       temporary: 0
       source: {fileID: 0}
       uniqueID: -1
-      valueSetBytargetStat: 1
-      deriveStatsFromWhom: 1
-      targetStat: 2
+      valueSetBytargetStat: 0
+      deriveStatsFromWhom: 0
+      targetStat: 0
+      invertValue: 0
+    - stat: 2
+      value: 2
+      nonStacking: 0
+      temporary: 0
+      source: {fileID: 0}
+      uniqueID: -1
+      valueSetBytargetStat: 0
+      deriveStatsFromWhom: 0
+      targetStat: 0
       invertValue: 0
     applyEffectToWhom: 0
     applyEffectToSourceOfAdjustment: 0
-    logicTargetingMethod: 2
-    numberofTargets: 1
+  multiTargetAbilities: []
+  specialAttributes: []
   attack: 1
   size: 1
   health: 5

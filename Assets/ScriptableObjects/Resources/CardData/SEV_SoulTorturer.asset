@@ -9,30 +9,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: AngrySkeletons
+  m_Name: SEV_SoulTorturer
   m_EditorClassIdentifier: 
-  cardID: 109
-  cardName: Angry Skeletons
-  cardText: Be A big angry skelly.
-  cardCost: 1
+  cardID: 20000
+  cardName: Soul Torturer
+  cardText: Deal 2 damage to a Soul, then give it +2 Attack.
+  cardCost: 3
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
-  attackEffect: VFX_Primal_Slash
-  movingVFX: 0
+  attackEffect: VFX_Ball_Lightning
+  movingVFX: 1
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 08000000
-  subTypes: 02000000
+  attunements: 080000000e000000
+  subTypes: 17000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities: []
-  multiTargetAbilities:
+  userTargtedAbilities:
   - trigger: 01000000
     duration: 0
     triggerConstraints:
-      types: 0400000002000000
+      types: 04000000
       owner: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -44,7 +43,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 05000000
+      previousZone: 
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -52,8 +51,8 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 0
-      oncePerTurn: 1
+      thisCardOnly: 1
+      oncePerTurn: 0
       triggeredThisTurn: 0
       gainedOrLost: 0
       statChanged: 0
@@ -80,7 +79,7 @@ MonoBehaviour:
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
     sourceConstraints:
-      types: 04000000
+      types: 
       owner: 0
       primaryType: 
       notPrimaryType: 0
@@ -92,7 +91,7 @@ MonoBehaviour:
       notKeyword: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -135,9 +134,9 @@ MonoBehaviour:
     source: {fileID: 0}
     targets: []
     targetConstraints:
-      types: 
+      types: 0200000004000000
       owner: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -147,7 +146,7 @@ MonoBehaviour:
       notKeyword: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -157,7 +156,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       gainedOrLost: 0
@@ -240,8 +239,18 @@ MonoBehaviour:
     keywordsToAddorRemove: 
     additionalRequirements: 
     statAdjustments:
-    - stat: 3
-      value: 1
+    - stat: 4
+      value: -2
+      nonStacking: 0
+      temporary: 0
+      source: {fileID: 0}
+      uniqueID: -1
+      valueSetBytargetStat: 0
+      deriveStatsFromWhom: 0
+      targetStat: 0
+      invertValue: 0
+    - stat: 2
+      value: 2
       nonStacking: 0
       temporary: 0
       source: {fileID: 0}
@@ -251,9 +260,8 @@ MonoBehaviour:
       targetStat: 0
       invertValue: 0
     applyEffectToWhom: 0
-    logicTargetingMethod: 1
-    numberofTargets: 0
+  multiTargetAbilities: []
   specialAttributes: []
-  attack: 0
+  attack: 2
   size: 3
-  health: 10
+  health: 1

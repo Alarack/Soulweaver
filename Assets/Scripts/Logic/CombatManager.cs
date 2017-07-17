@@ -144,7 +144,7 @@ public class CombatManager : Photon.MonoBehaviour {
         //Debug.Log(attacker.cardData.cardName + " is Attacking");
 
 
-        RPCBroadcastAttacker(PhotonTargets.All, attacker);
+        
 
         attacker.battlefieldPos.position += selectedPos;
 
@@ -222,6 +222,9 @@ public class CombatManager : Photon.MonoBehaviour {
 
         //TODO: Combat Events happen first for stuff like OnAttack: Effect
 
+        RPCBroadcastAttacker(PhotonTargets.All, attacker);
+        RPCBroadcastDefender(PhotonTargets.All, defender);
+
         if (CheckForCombatEventDeaths()) {
             EndCombat();
             return;
@@ -280,7 +283,7 @@ public class CombatManager : Photon.MonoBehaviour {
         }
        
 
-        damageTaker.RPCApplyCombatDamage(PhotonTargets.All, adj, attacker);
+        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
 
     }
 
@@ -342,7 +345,6 @@ public class CombatManager : Photon.MonoBehaviour {
         if (!ConfirmCardClicked(currentTarget, DeckType.Battlefield))
             return ;
 
-
         //TargetingHandler.CreateTargetInfoListing(sourceOfTargetingEffect, currentTarget);
 
         if(confirmedTargetCallback != null) {
@@ -353,30 +355,15 @@ public class CombatManager : Photon.MonoBehaviour {
                 if (isChoosingTarget)
                     isChoosingTarget = false;
 
-                //sourceOfTargetingEffect = null;
+
                 StartCoroutine(Reset());
-
-
             }
-
         }
         else {
             Debug.LogError("[Combat Manager - DoStuffOnTarget] Callback was null");
         }
 
     }
-
-    //private void OnSpecialAbilityTriggered(EventData data) {
-    //    CardVisual source = data.GetMonoBehaviour("Source") as CardVisual;
-    //    int abilityID = data.GetInt("ID");
-    //    SpecialAbility ability = Finder.FindSpecialAbilityByID(source, abilityID);
-
-    //    ability.targets.Add(DoStuffOnTarget());
-
-
-    //}
-
-
 
     public CardVisual CardClicked() {
         CardVisual cardSelected = null;
@@ -506,6 +493,23 @@ public class CombatManager : Photon.MonoBehaviour {
         int attackerID = attacker.photonView.viewID;
 
        owner.photonView.RPC("BroadcastAttacker", targets, attackerID);
+    }
+
+    public void RPCBroadcastDefender(PhotonTargets targets, CardVisual defender) {
+        int defenderID = defender.photonView.viewID;
+
+        owner.photonView.RPC("BroadcastDefender", targets, defenderID);
+    }
+
+    //public void RPCBroadcastInterceptor(PhotonTargets targets, CardVisual interceptor) {
+
+    //}
+
+    public void RPCBroadcastCombat(PhotonTargets targets, CardVisual attacker, CardVisual defender) {
+        int attackerID = attacker.photonView.viewID;
+        int defenderID = defender.photonView.viewID;
+
+        owner.photonView.RPC("BroadcastCombat", targets, attackerID, defenderID);
     }
 
 

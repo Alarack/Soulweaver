@@ -59,7 +59,7 @@ public class CardVisual : Photon.MonoBehaviour {
     [Header("Special Abilities")]
 
     public List<SpecialAbility> specialAbilities = new List<SpecialAbility>();
-
+    public List<SpecialAttribute> specialAttributes = new List<SpecialAttribute>();
 
     public List<EffectOnTarget> userTargtedAbilities = new List<EffectOnTarget>();
     public List<LogicTargetedAbility> multiTargetAbiliies = new List<LogicTargetedAbility>();
@@ -146,6 +146,14 @@ public class CardVisual : Photon.MonoBehaviour {
         foreach (LogicTargetedAbility effect in tempMulti) {
             LogicTargetedAbility newEffect = ObjectCopier.Clone(effect) as LogicTargetedAbility;
             multiTargetAbiliies.Add(newEffect);
+        }
+
+
+        List<SpecialAttribute> tempAttributes = new List<SpecialAttribute>(cardData.specialAttributes);
+
+        foreach (SpecialAttribute att in tempAttributes) {
+            SpecialAttribute newAtt = ObjectCopier.Clone(att) as SpecialAttribute;
+            specialAttributes.Add(newAtt);
         }
 
         for (int i = 0; i < userTargtedAbilities.Count; i++) {
@@ -252,9 +260,12 @@ public class CardVisual : Photon.MonoBehaviour {
 
     protected virtual void OnMouseOver() {
 
+        if(photonView.isMine || currentDeck.decktype == Constants.DeckType.Battlefield)
+            CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
+
+
         if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) > 10f) {
             //mainHudText.text = "Play " + cardName + "?";
-            //Debug.Log("Play " + cardData.cardName + "?");
             if (Input.GetMouseButton(0)) {
                 ActivateGlow(Color.cyan);
             }
@@ -262,12 +273,12 @@ public class CardVisual : Photon.MonoBehaviour {
 
         if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) < 10f) {
             //mainHudText.text = "Play " + cardName + "?";
-            //Debug.Log("Play " + cardData.cardName + "?");
             if (Input.GetMouseButton(0)) {
                 ActivateGlow(Color.green);
             }
         }
 
+        //Playing Card from hand
         if (currentDeck.decktype == Constants.DeckType.Hand && primaryCardType != Constants.CardType.Player && Input.GetMouseButtonUp(0)
             && photonView.isMine && Vector3.Distance(transform.position, handPos.position) > 10f && owner.myTurn) {
 
@@ -279,47 +290,45 @@ public class CardVisual : Photon.MonoBehaviour {
             if (currentDeck.decktype != Constants.DeckType.Hand)
                 return;
 
-            //if (cost > owner.curEssence && FindObjectOfType<Options>().enforceManaCosts) {
-            //    Debug.Log("Not Enough Mana");
-            //    return;
-            //}
-
             owner.gameResourceDisplay.resourceDisplayInfo[0].resource.RemoveResource(essenceCost);
 
-            //currentDeck.RPCTransferCard(PhotonTargets.All, this, Deck._battlefield);
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
 
-            //owner.AdjustCurEssence(-cost);
         }
 
-
+        //Dev delete
         if (Input.GetKeyDown(KeyCode.Delete)) {
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
         }
 
-
+        //Targeting
         if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
-            //Debug.Log("Targeting");
 
             RPCTargetCard(PhotonTargets.All, true);
 
+            //Drawing Lines
             if (this is CreatureCardVisual && combatManager.isInCombat) {
                 CreatureCardVisual soul = this as CreatureCardVisual;
-
                 combatManager.lineDrawer.RPCBeginDrawing(PhotonTargets.Others, combatManager.attacker.battleToken.incomingEffectLocation.position, soul.battleToken.incomingEffectLocation.position);
             }
         }
 
+        //Intercepting
+        if (Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat && primaryCardType == Constants.CardType.Soul && currentDeck.decktype == Constants.DeckType.Battlefield) {
 
-        if(Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat) {
-            RPCToggleIntercept(PhotonTargets.All, true);
+            if (keywords.Contains(Constants.Keywords.Interceptor))
+                RPCToggleIntercept(PhotonTargets.All, false);
+            else {
+                RPCToggleIntercept(PhotonTargets.All, true);
+            }
         }
 
-
+        //Untargeting
         if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
             RPCTargetCard(PhotonTargets.All, false);
         }
 
+        //Activating Abilities
         if (owner.myTurn && photonView.isMine && (Input.GetKeyDown(KeyCode.A) || Input.GetMouseButtonUp(1)) && !combatManager.isChoosingTarget && !combatManager.isInCombat) {
             if (CheckForUserActivatedAbilities())
                 ActivateAbility();
@@ -349,34 +358,20 @@ public class CardVisual : Photon.MonoBehaviour {
 
     }
 
-    //public bool CheckAndActivateDomainAbility(DomainTile tile) {
-    //    if (CheckForUserActivatedAbilities()) {
-    //        ActivateAbility();
-    //        return true;
-    //    }
-    //    else {
-    //        return false;
-    //    }
-
-
-    //}
-
-
-
     protected virtual void OnMouseExit() {
+
+        if (CardTooltip.cardTooltip.tooltipContainer.activeInHierarchy)
+            CardTooltip.HideTooltip();
+
+
         if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
             RPCTargetCard(PhotonTargets.All, false);
 
-
             if (this is CreatureCardVisual) {
                 CreatureCardVisual soul = this as CreatureCardVisual;
-
                 combatManager.lineDrawer.RPCStopDrawing(PhotonTargets.Others);
             }
-
-
         }
-
     }
 
 
@@ -571,7 +566,6 @@ public class CardVisual : Photon.MonoBehaviour {
         Deck._allCards.activeCards.Add(this);
     }
 
-
     public void RPCSetUpCardData(PhotonTargets targets) {
         photonView.RPC("RemoteSetUpCardData", targets);
     }
@@ -581,41 +575,8 @@ public class CardVisual : Photon.MonoBehaviour {
         SetupCardData();
     }
 
-
-
-    ////TODO: Make stat adjustments carry multiple stats?
-    //public virtual void RPCApplyStatAdjustments(PhotonTargets targets, List<SpecialAbility.StatAdjustment> statAdjs, CardVisual source) {
-
-    //    int sourceID;
-
-    //    if (source != null)
-    //        sourceID = source.photonView.viewID;
-    //    else {
-    //        sourceID = photonView.viewID;
-    //    }
-
-
-    //    int[] statEnums = new int[statAdjs.Count];
-    //    int[] values = new int[statAdjs.Count];
-
-    //    for(int i = 0; i < statAdjs.Count; i++) {
-    //        statEnums[i] = (int)statAdjs[i].stat;
-    //        values[i] = statAdjs[i].value;
-    //    }
-
-    //}
-
-
-    //[PunRPC]
-    //public void ApplyMultipleStatAdjustments(int[] statEnums, int[] statValues) {
-
-    //}
-
     public void RPCSetCardStats(PhotonTargets targets, int cost, int attack, int size, int health) {
-
-
         photonView.RPC("SetCardStats", targets, cost, attack, size, health);
-
     }
 
     [PunRPC]
@@ -624,7 +585,7 @@ public class CardVisual : Photon.MonoBehaviour {
         essenceCost = cost;
         cardCostText.text = essenceCost.ToString();
 
-        if( this is CreatureCardVisual) {
+        if (this is CreatureCardVisual) {
             CreatureCardVisual soul = this as CreatureCardVisual;
 
             soul.attack = attack;
@@ -639,15 +600,10 @@ public class CardVisual : Photon.MonoBehaviour {
             soul.cardHealthText.text = health.ToString();
             soul.battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
 
-
         }
-
-
     }
 
-
-    //This doesn't make sense. it isn't only for combat damage.
-    public virtual void RPCApplyCombatDamage(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
+    public virtual void RPCApplyUntrackedStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
         int statEnum = (int)adjustment.stat;
         int value = adjustment.value;
 
@@ -669,9 +625,7 @@ public class CardVisual : Photon.MonoBehaviour {
         AlterCardStats(stat, value, source);
     }
 
-
-    //This only works for special abilities. change the name
-    public virtual void RPCApplyStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
+    public virtual void RPCApplySpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
         int sourceID;
 
         if (source != null)
@@ -763,7 +717,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public void RPCUpdateStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, int updatedValue) {
         int sourceID;
-        int statEnum =  (int)adjustment.stat;
+        int statEnum = (int)adjustment.stat;
 
         if (source != null)
             sourceID = source.photonView.viewID;
@@ -835,6 +789,12 @@ public class CardVisual : Photon.MonoBehaviour {
 
         switch (add) {
             case true:
+                if (newKeyword == Constants.Keywords.Interceptor) {
+                    if (keywords.Contains(Constants.Keywords.Exhausted) || keywords.Contains(Constants.Keywords.NoIntercept)) {
+                        return;
+                    }
+                }
+
                 AddKeyword(newKeyword);
                 break;
 
@@ -907,23 +867,83 @@ public class CardVisual : Photon.MonoBehaviour {
         //        effect.transform.localPosition = Vector3.zero;
         //    }
         //}
+    }
 
 
+    public void RPCAddSpecialAttribute(PhotonTargets targets, SpecialAttribute.AttributeType type, int value) {
+        int attributeTypeEnum = (int)type;
+
+        photonView.RPC("AddSpecialAtribute", targets, attributeTypeEnum, value);
+    }
 
 
+    [PunRPC]
+    public void AddSpecialAtribute(int type, int value) {
+        SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
 
-        //if (target.battleToken.incomingEffectLocation != null && !moveingEffect) {
+        SpecialAttribute existingAttribute = null;
 
-        //}
+        for (int i = 0; i < specialAttributes.Count; i++) {
+            if (specialAttributes[i].attributeType == newType) {
+                existingAttribute = specialAttributes[i];
 
-        //if(target.battleToken.incomingEffectLocation != null && moveingEffect) {
+                if (existingAttribute.attributeValue < value) {
+                    existingAttribute.attributeValue = value;
+                    break;
+                }
+            }
+        }
 
-
-        //}
+        if (existingAttribute == null) {
+            SpecialAttribute newAtt = new SpecialAttribute(newType, value);
+            specialAttributes.Add(newAtt);
+        }
 
     }
 
 
+    public void RPCReduceSpecialAttribute(PhotonTargets targets, SpecialAttribute.AttributeType type, int value) {
+        int attributeTypeEnum = (int)type;
+
+        photonView.RPC("ReduceSpecialAtribute", targets, attributeTypeEnum, value);
+    }
+
+
+    [PunRPC]
+    public void ReduceSpecialAtribute(int type, int value) {
+        SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
+
+        SpecialAttribute existingAttribute = null;
+
+        for (int i = 0; i < specialAttributes.Count; i++) {
+            if (specialAttributes[i].attributeType == newType) {
+                existingAttribute = specialAttributes[i];
+                existingAttribute.attributeValue -= value;
+            }
+        }
+    }
+
+    public void RPCToggleSpecialAttributeSuspension(PhotonTargets targets, SpecialAttribute.AttributeType type, bool suspend) {
+        int attributeTypeEnum = (int)type;
+        photonView.RPC("RemoveSpecialAtribute", targets, attributeTypeEnum, suspend);
+    }
+
+
+    [PunRPC]
+    public void RemoveSpecialAtribute(int type, bool suspend) {
+        SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
+
+        SpecialAttribute existingAttribute = null;
+
+        for (int i = 0; i < specialAttributes.Count; i++) {
+            if (specialAttributes[i].attributeType == newType) {
+                existingAttribute = specialAttributes[i];
+
+                existingAttribute.suspended = suspend;
+
+            }
+        }
+    }
 
 
 

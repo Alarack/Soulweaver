@@ -470,6 +470,34 @@ public class Player : Photon.MonoBehaviour {
 
     }
 
+    //The call for this is in Combat Manager
+    [PunRPC]
+    public void BroadcastDefender(int id) {
+        CardVisual defender = Finder.FindCardByID(id);
+
+        //Debug.Log("Sending Defence Event");
+
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Card", defender);
+        Grid.EventManager.SendEvent(Constants.GameEvent.CharacterDefends, data);
+
+    }
+
+    //The call for this is in Combat Manager
+    [PunRPC]
+    public void BroadcastCombat(int attackerID, int defenderID) {
+        CardVisual attacker = Finder.FindCardByID(attackerID);
+        CardVisual defender = Finder.FindCardByID(defenderID);
+
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Attacker", attacker);
+        data.AddMonoBehaviour("Defender", defender);
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.Combat, data);
+
+
+    }
+
     public IEnumerator RPCBroadcastTurnStart(PhotonTargets targets, Player player) {
         yield return new WaitForSeconds(0.5f);
 
