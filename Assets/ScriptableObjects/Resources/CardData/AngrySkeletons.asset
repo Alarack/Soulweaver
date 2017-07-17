@@ -18,6 +18,7 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
+  movingVFX: 0
   primaryCardType: 1
   otherCardTypes: 
   attunements: 08000000
@@ -173,6 +174,7 @@ MonoBehaviour:
       consumeResource: 0
     ID: 0
     abilityVFX: 
+    moveingVFX: 0
     additionalRequirementConstraints:
       types: 
       owner: 0
@@ -226,6 +228,6 @@ MonoBehaviour:
     applyEffectToSourceOfAdjustment: 0
     logicTargetingMethod: 0
     numberofTargets: 0
-  attack: 3
+  attack: 0
   size: 1
-  health: 1
+  health: 10

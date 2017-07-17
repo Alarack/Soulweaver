@@ -115,10 +115,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 5
-  moveSpeed: 1
+  moveSpeed: 0
   lerpSmoothing: 10
   active: 0
   beginMovement: 0
+  impactParticle: {fileID: 0}
   target: {fileID: 0}
   optionalText: {fileID: 0}
   animMain: {fileID: 0}

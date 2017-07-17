@@ -16,6 +16,7 @@ public class CardData : ScriptableObject {
     public Vector2 cardImagePos;
 
     public string attackEffect;
+    public bool movingVFX;
 
     [Header("Types and Attunements")]
     public Constants.CardType primaryCardType;

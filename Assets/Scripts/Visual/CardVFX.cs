@@ -11,6 +11,7 @@ public class CardVFX : Photon.MonoBehaviour {
     public bool active;
 
     public bool beginMovement;
+    public GameObject impactParticle;
     public Transform target;
     public Text optionalText;
     [Header("Animation Stuff")]
@@ -29,22 +30,38 @@ public class CardVFX : Photon.MonoBehaviour {
         if (playAnimOnStart)
             animMain.SetTrigger("Bounce");
 
-        active = false;
+        //active = false;
 	}
 
 	void Update () {
 
 
         if(beginMovement && target != null) {
-            MoveTowardsTarget(target, 0.2f);
+
+            if (photonView.isMine) {
+                if(MoveTowardsTarget(target, 0.2f)) {
+                    if(impactParticle != null) {
+                        PhotonNetwork.Instantiate(impactParticle.name, target.position, Quaternion.identity, 0);
+                        Invoke("NetworkCleanup", 0.3f);
+                        //Destroy(gameObject, 0.5f);
+                    }
+                        
+                    //impactParticle.transform.SetParent()
+                }
+            }
+
         }
 
 
 
 
         if (!photonView.isMine) {
+
+            //Debug.Log(position);
+
             if (active) {
-                transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * lerpSmoothing);
+                //transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * lerpSmoothing);
+                transform.position = Vector3.MoveTowards(transform.position, position, moveSpeed);
             }
         }
 
@@ -72,11 +89,12 @@ public class CardVFX : Photon.MonoBehaviour {
 
     public bool MoveTowardsTarget(Transform target, float minDistance) {
 
-        if(Vector3.Distance(transform.position, target.transform.position) < minDistance){
+        if (Vector3.Distance(transform.position, target.transform.position) > minDistance){
             transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed);
             return false;
         }
         else {
+            beginMovement = false;
             return true;
         }
 
@@ -90,12 +108,16 @@ public class CardVFX : Photon.MonoBehaviour {
         Destroy(gameObject);
     }
 
+    public void NetworkCleanup() {
+        PhotonNetwork.Destroy(gameObject);
+    }
+
 
 
     #region RPCs
 
     public void RPCSetVFXAciveState(PhotonTargets targets, bool activate) {
-        photonView.RPC("SetCardActiveState", targets, activate);
+        photonView.RPC("SetVFXActiveState", targets, activate);
     }
 
     [PunRPC]

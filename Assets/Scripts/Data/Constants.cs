@@ -42,7 +42,14 @@ public class Constants {
         Devourer,
         Nightmare,
         Cultist,
-        Token
+        Token,
+        Guardian,
+        Ferryman,
+        LivingFortress,
+        Mage,
+        Archer,
+        Rifleman,
+
     }
 
     public enum Attunements {
@@ -93,7 +100,9 @@ public class Constants {
         Interceptor,
         Exhausted,
         Fusion,
-        Fission
+        Fission,
+        Inspire,
+        Finale
     }
 
     public enum AbilityActivationTrigger {

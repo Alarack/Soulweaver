@@ -310,6 +310,12 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
 
+
+        if(Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat) {
+            RPCToggleIntercept(PhotonTargets.All, true);
+        }
+
+
         if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
             RPCTargetCard(PhotonTargets.All, false);
         }
@@ -754,6 +760,42 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
+
+    public void RPCUpdateStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, int updatedValue) {
+        int sourceID;
+        int statEnum =  (int)adjustment.stat;
+
+        if (source != null)
+            sourceID = source.photonView.viewID;
+        else {
+            sourceID = photonView.viewID;
+        }
+
+        photonView.RPC("UpdateStatAdjustment", targets, adjustment.uniqueID, sourceID, statEnum, updatedValue);
+    }
+
+    [PunRPC]
+    public void UpdateStatAdjustment(int adjID, int sourceID, int statEnum, int updatedValue) {
+        CardVisual source = Finder.FindCardByID(sourceID);
+
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
+            SpecialAbility special = source.specialAbilities[i];
+
+            for (int j = 0; j < special.statAdjustments.Count; j++) {
+                SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
+
+                if (adj.uniqueID == adjID) {
+                    //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
+                    adj.value = updatedValue;
+
+                }
+            }
+        }
+
+
+    }
+
+
     public virtual void RPCTargetCard(PhotonTargets targets, bool target) {
         if (target)
             photonView.RPC("TargetCard", targets);
@@ -835,21 +877,50 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
 
-    public virtual void RPCDeployAttackEffect(PhotonTargets targets, int effectId, CardVisual target) {
+    public virtual void RPCDeployAttackEffect(PhotonTargets targets, int effectId, CardVisual target, bool moveingEffect = false) {
         int targetID = target.photonView.viewID;
 
-        photonView.RPC("DeployAttackEffect", targets, effectId, targetID);
+        photonView.RPC("DeployAttackEffect", targets, effectId, targetID, moveingEffect);
     }
 
     [PunRPC]
-    public void DeployAttackEffect(int effectID, int targetID) {
+    public void DeployAttackEffect(int effectID, int targetID, bool moveingEffect) {
         GameObject effect = Finder.FindEffectByID(effectID);
         CreatureCardVisual target = Finder.FindCardByID(targetID) as CreatureCardVisual;
 
-        if (target.battleToken.incomingEffectLocation != null) {
-            effect.transform.SetParent(target.battleToken.incomingEffectLocation, false);
-            effect.transform.localPosition = Vector3.zero;
-        }
+        //Debug.Log(effect);
+        //Debug.Log(effect.GetComponent<CardVFX>());
+
+        CardVFX vfx = effect.GetComponent<CardVFX>();
+
+        vfx.active = true;
+
+        //if (vfx.photonView.isMine) {
+        //    if (moveingEffect) {
+        //        effect.transform.SetParent(transform, false);
+        //        effect.transform.localPosition = Vector3.zero;
+        //        vfx.target = target.battleToken.incomingEffectLocation;
+        //        vfx.beginMovement = true;
+        //    }
+        //    else {
+        //        effect.transform.SetParent(target.battleToken.incomingEffectLocation, false);
+        //        effect.transform.localPosition = Vector3.zero;
+        //    }
+        //}
+
+
+
+
+
+        //if (target.battleToken.incomingEffectLocation != null && !moveingEffect) {
+
+        //}
+
+        //if(target.battleToken.incomingEffectLocation != null && moveingEffect) {
+
+
+        //}
+
     }
 
 
