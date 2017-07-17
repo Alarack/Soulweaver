@@ -16,6 +16,7 @@ public class CreatureCardVisual : CardVisual {
     [Header("Status Info")]
     public Color32 exhaustedColor;
     public Color32 interceptingColor;
+    public Vector3 interceptPos;
     public Image battleFrame;
     //public bool isExhausted;
     //public bool isIntercepting;
@@ -61,6 +62,11 @@ public class CreatureCardVisual : CardVisual {
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Attack, attack);
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Size, size);
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
+
+        if (owner.player2) {
+            interceptPos = new Vector3(interceptPos.x, -interceptPos.y, interceptPos.z);
+        }
+
     }
 
     public override void RestCardData() {
@@ -122,7 +128,18 @@ public class CreatureCardVisual : CardVisual {
 
             case Constants.CardStats.Health:
 
-                
+                int prot = CheckSpecialAttributes(SpecialAttribute.AttributeType.Protection);
+
+                if (prot > 0) {
+
+                    if(value < 0) {
+                        value += prot;
+
+                        if (value > 0)
+                            value = 0;
+                    }
+                }
+
                 health += value;
 
                 if(health > _creatureData.health) {
@@ -138,6 +155,9 @@ public class CreatureCardVisual : CardVisual {
                 if(value < 0) {
                     //RPCShowDamage(PhotonTargets.Others, value);
 
+
+
+
                     CheckDeath(source.photonView.viewID, false);
 
 
@@ -147,6 +167,8 @@ public class CreatureCardVisual : CardVisual {
                 break;
         }
     }
+
+
 
 
     public override void ActivateGlow(Color32 color) {
@@ -178,6 +200,20 @@ public class CreatureCardVisual : CardVisual {
 
 
     #region Private Methods
+
+    private int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
+
+        for(int i =  0; i < specialAttributes.Count; i++) {
+            if (specialAttributes[i].attributeType == attribute && !specialAttributes[i].suspended) {
+                return specialAttributes[i].attributeValue;
+            }
+        }
+
+        return 0;
+    }
+
+
+
     protected override void KeywordHelper(Constants.Keywords keyword, bool add) {
         base.KeywordHelper(keyword, add);
         //Debug.Log("creature visual keyword helper");
@@ -197,10 +233,14 @@ public class CreatureCardVisual : CardVisual {
                 if (add) {
                     cardImage.color = interceptingColor;
                     battleFrame.color = interceptingColor;
+                    if(photonView.isMine)
+                        battlefieldPos.position += interceptPos;
                 }
                 else {
                     cardImage.color = Color.white;
                     battleFrame.color = Color.white;
+                    if(photonView.isMine)
+                        battlefieldPos.position -= interceptPos;
                 }
                 break;
         }

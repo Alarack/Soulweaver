@@ -22,11 +22,20 @@ public class CardIDs {
         AngrySkeletons_109 = 109,
         Domain_TestDomain = 110,
 
-
         //Tokens
         FusedSoul_1000 = 1000,
-        AmorphousVestige_1001,
+        AmorphousVestige = 1001,
 
+        //Cult of Rillock
+        COR_DesolateWaste = 10000,
+
+        //The Severed
+        SEV_SoulTorturer = 20000,
+        SEV_SubverterOfIntentions = 20001,
+        SEV_GrishamTwistedReveler = 20002,
+        SEV_VicariousDevourer = 20003,
+        SEV_NashkaThirstyAbom = 20004,
+        SEV_SpitefulSkulker = 20005,
     }
 
 

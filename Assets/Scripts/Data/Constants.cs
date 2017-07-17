@@ -102,8 +102,11 @@ public class Constants {
         Fusion,
         Fission,
         Inspire,
-        Finale
+        Finale,
+        Threshold
     }
+
+
 
     public enum AbilityActivationTrigger {
         None = 0,
@@ -119,7 +122,9 @@ public class Constants {
         Targted,
         //DealsDamage,
         CreatureStatChanged,
-        UserActivated
+        UserActivated,
+        //Combat
+        SecondaryEffect
 
     }
 
@@ -160,8 +165,7 @@ public class Constants {
         RemoveKeywordAbilities,
         //FetchCard,
         //Exhaust,
-        GrantSpecialAbility,
-
+        GrantSpecialAttribute,
         //Destroy,
         //SearchForCard,
         //LifeAdjustment,
@@ -249,10 +253,14 @@ public class Constants {
 
         CreatureStatAdjusted = 300,
         CharacterAttacked = 301,
+        CharacterDefends = 302,
+        Combat = 303,
 
         CardClicked = 400,
         UserActivatedAbilityInitiated = 401,
         UserActivatedDomainAbility = 402,
+
+        TriggerSecondaryEffect = 500,
     }
 
 

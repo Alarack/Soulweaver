@@ -46,9 +46,15 @@ public abstract class SpecialAbility {
     //Additional Requirements
     public List<Constants.AdditionalRequirement> additionalRequirements = new List<Constants.AdditionalRequirement>();
 
-
-
     public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
+
+
+
+    //Secondary Effect
+    //public List<EffectOnTarget> secondaryEffectOnTarget = new List<EffectOnTarget>();
+    //public List<LogicTargetedAbility> secondaryLogicTargtedAbility = new List<LogicTargetedAbility>();
+
+
 
     public enum ApplyEffectToWhom {
         TriggeringCard,
@@ -72,15 +78,6 @@ public abstract class SpecialAbility {
         AtLeast,
         NoMoreThan
     }
-
-
-
-
-
-    public bool applyEffectToSourceOfAdjustment;
-
-
-
 
 
     public virtual bool ProcessEffect(CardVisual card) {
@@ -129,6 +126,9 @@ public abstract class SpecialAbility {
             CreateVFX();
         }
 
+        if (triggerConstraints.oncePerTurn)
+            triggerConstraints.triggeredThisTurn = true;
+
         //Debug.Log("[Special Ability] Applying effect");
 
         switch (effect) {
@@ -152,11 +152,26 @@ public abstract class SpecialAbility {
                 GenerateResource(targetConstraints);
                 break;
 
+            case EffectType.GrantSpecialAttribute:
+                AddSpecialAttribute(card, targetConstraints);
+                break;
+
             case EffectType.None:
                 Debug.Log("No effect is set to happen for " + source.gameObject.name);
                 break;
 
         }
+
+
+        if (!trigger.Contains(AbilityActivationTrigger.SecondaryEffect)){
+            EventData data = new EventData();
+
+            data.AddMonoBehaviour("Source", source);
+
+            Grid.EventManager.SendEvent(GameEvent.TriggerSecondaryEffect, data);
+        }
+
+
     }
 
     protected virtual void RemoveEffect(List<CardVisual> cards) {
@@ -179,6 +194,16 @@ public abstract class SpecialAbility {
 
                 case EffectType.GrantKeywordAbilities:
                     RemoveKeywords(cards[i], keywordsToAddorRemove);
+                    break;
+
+                case EffectType.GenerateResource:
+
+                    RemoveResource(targetConstraints);
+                    break;
+
+                case EffectType.GrantSpecialAttribute:
+                    Debug.Log("Find a good way to remove granted attributes");
+                    //ToggleSpecialAttributeSuspension(cards[i], targetConstraints, true);
                     break;
 
             }
@@ -207,10 +232,7 @@ public abstract class SpecialAbility {
 
             //Debug.Log("Applying stats");
 
-            card.RPCApplyStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
-
-
-
+            card.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
         }
     }
 
@@ -238,6 +260,8 @@ public abstract class SpecialAbility {
         if (triggerConstraints.resetCountAtTurnEnd && triggerConstraints.requireMultipleTriggers)
             Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEnd);
 
+        if (triggerConstraints.oncePerTurn)
+            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStart);
 
 
 
@@ -250,8 +274,18 @@ public abstract class SpecialAbility {
         if (trigger.Contains(AbilityActivationTrigger.Attacks))
             Grid.EventManager.RegisterListener(GameEvent.CharacterAttacked, OnAttack);
 
+        if (trigger.Contains(AbilityActivationTrigger.Defends))
+            Grid.EventManager.RegisterListener(GameEvent.CharacterDefends, OnCombatDefense);
+
         if (trigger.Contains(AbilityActivationTrigger.UserActivated))
             Grid.EventManager.RegisterListener(GameEvent.UserActivatedAbilityInitiated, OnUserActivation);
+
+        if (trigger.Contains(AbilityActivationTrigger.SecondaryEffect))
+            Grid.EventManager.RegisterListener(GameEvent.TriggerSecondaryEffect, OnEffectComplete);
+
+        if (trigger.Contains(AbilityActivationTrigger.TurnEnds))
+            Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEnd);
+
 
     }
 
@@ -282,6 +316,24 @@ public abstract class SpecialAbility {
 
     }
 
+    protected void OnEffectComplete(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Source") as CardVisual;
+
+        if (card != source)
+            return;
+
+
+        if (this is LogicTargetedAbility) {
+            if (source.photonView.isMine) {
+
+                ProcessEffect(source);
+            }
+        }
+
+        ActivateTargeting();
+
+    }
+
 
     protected void OnUserActivation(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
@@ -302,7 +354,15 @@ public abstract class SpecialAbility {
 
 
     protected void OnTurnStart(EventData data) {
+        Player player = data.GetMonoBehaviour("Player") as Player;
 
+        if (!source.owner == player) {
+            return;
+        }
+
+        if (triggerConstraints.oncePerTurn) {
+            triggerConstraints.triggeredThisTurn = false;
+        }
 
 
     }
@@ -316,6 +376,21 @@ public abstract class SpecialAbility {
 
         if (triggerConstraints.resetCountAtTurnEnd)
             triggerConstraints.counter = 0;
+
+
+        if (!ManageConstraints(source)) {
+            return;
+        }
+
+
+        if (this is LogicTargetedAbility) {
+            if (source.photonView.isMine) {
+
+                ProcessEffect(source);
+            }
+
+        }
+
 
     }
 
@@ -339,30 +414,67 @@ public abstract class SpecialAbility {
 
 
         ActivateTargeting();
-
-        ////If a targted effect has no valid targets when it triggers, then get out of here.
-
-        //if (source.photonView.isMine && this is EffectOnTarget) {
-        //    if (CheckValidTargets().Count < 1) {
-        //        Debug.Log("No Valid Targets for " + source.gameObject.name + "'s targeted ability");
-        //        return;
-        //    }
-        //    else {
-
-        //        Debug.Log("Good to go");
-        //        CombatManager.combatManager.isChoosingTarget = true;
-        //        CombatManager.combatManager.ActivateSpellTargeting();
-        //        CombatManager.combatManager.confirmedTargetCallback += ProcessEffect;
-        //    }
-        //}
     }
 
 
     protected void OnAttack(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
 
-        Debug.Log(card.gameObject.name + " is attacking");
+        //Debug.Log(card.gameObject.name + " is attacking");
+
+        if (!ManageConstraints(card)) {
+            return;
+        }
+
+        if (this is LogicTargetedAbility && source.photonView.isMine) {
+            ProcessEffect(card);
+        }
+
+        ActivateTargeting();
+
+
     }
+
+    protected void OnCombatDefense(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+        //Debug.Log(card.cardData.cardName + " is defending");
+
+
+        if (!ManageConstraints(card)) {
+            return;
+        }
+
+        //Debug.Log("A defence trigger has happened");
+
+        if (this is LogicTargetedAbility && source.photonView.isMine) {
+            ProcessEffect(card);
+        }
+
+        ActivateTargeting();
+
+
+    }
+
+
+    protected void OnCombat(EventData data) {
+        CardVisual attacker = data.GetMonoBehaviour("Attacker") as CardVisual;
+        CardVisual defender = data.GetMonoBehaviour("Defender") as CardVisual;
+
+
+        //if (!ManageConstraints(card)) {
+        //    return;
+        //}
+
+        //if (this is LogicTargetedAbility && source.photonView.isMine) {
+        //    ProcessEffect(card);
+        //}
+
+        //ActivateTargeting();
+
+
+    }
+
 
 
     protected void OnCreatureStatAdjusted(EventData data) {
@@ -435,7 +547,11 @@ public abstract class SpecialAbility {
             return false;
         }
 
-        //if (targetConstraints.thisCardOnly && triggeringCard != source)
+        if (triggerConstraints.oncePerTurn && triggerConstraints.triggeredThisTurn)
+            return false;
+
+
+        //if (targetConstraints.neverTargetSelf && triggeringCard == source)
         //    return false;
 
         if (CheckConstraints(triggerConstraints, triggeringCard) == null) {
@@ -482,7 +598,10 @@ public abstract class SpecialAbility {
         if (constraint.thisCardOnly && target != source)
             return null;
 
-        
+        if (constraint.neverTargetSelf && target == source)
+            return null;
+
+
         for (int i = 0; i < constraint.types.Count; i++) {
             if (ConstraintHelper(constraint, constraint.types[i], target) == null) {
                 //Debug.Log(target.gameObject.name + " has failed to pass");
@@ -748,44 +867,6 @@ public abstract class SpecialAbility {
 
         return result;
     }
-
-    //protected CardVisual HasStatExtreme(Constants.CreatureStatus status, CardStats statToCompare, CardVisual target) {
-
-    //    List<CardVisual> cardsToSearch = new List<CardVisual>();
-
-    //    switch (status) {
-    //        case Constants.CreatureStatus.MostStat:
-    //            cardsToSearch = Finder.FindCardsWithStatExtreme(statToCompare, true);
-    //            if (cardsToSearch.Contains(target))
-    //                return target;
-
-    //            break;
-
-    //        case Constants.CreatureStatus.LeastStat:
-    //            cardsToSearch = Finder.FindCardsWithStatExtreme(statToCompare, false);
-    //            if (cardsToSearch.Contains(target))
-    //                return target;
-
-    //            break;
-
-    //        case Constants.CreatureStatus.Damaged:
-    //            cardsToSearch = Finder.FindAllDamagedOrUndamagedCreatures(true);
-    //            if (cardsToSearch.Contains(target))
-    //                return target;
-
-    //            break;
-
-    //        case Constants.CreatureStatus.Undamaged:
-    //            cardsToSearch = Finder.FindAllDamagedOrUndamagedCreatures(false);
-    //            if (cardsToSearch.Contains(target))
-    //                return target;
-    //            break;
-
-
-    //    }
-
-    //    return null;
-    //}
 
     protected bool DoesListContainAny<T>(List<T> list1, List<T> list2) where T : struct, IFormattable, IConvertible {
         bool result = false;
@@ -1060,6 +1141,16 @@ public abstract class SpecialAbility {
 
     }
 
+    public void AddSpecialAttribute(CardVisual target, ConstraintList constraints) {
+        target.RPCAddSpecialAttribute(PhotonTargets.All, constraints.grantedSpecialAttributeType, constraints.grantedSpecialAttributeValue);
+    }
+
+    public void ToggleSpecialAttributeSuspension(CardVisual target, ConstraintList constraints, bool suspend) {
+        target.RPCToggleSpecialAttributeSuspension(PhotonTargets.All, constraints.grantedSpecialAttributeType, suspend);
+    }
+
+
+
     public void GenerateResource(ConstraintList constraints) {
 
         for (int i = 0; i < source.owner.gameResourceDisplay.resourceDisplayInfo.Count; i++) {
@@ -1067,9 +1158,7 @@ public abstract class SpecialAbility {
                 source.owner.gameResourceDisplay.RPCAddResource(PhotonTargets.All, constraints.generatedResourceType, constraints.amountOfResourceToGenerate);
                 return;
             }
-
         }
-
 
         source.owner.RPCSetupResources(PhotonTargets.All, false,
             constraints.generatedResourceType,
@@ -1077,6 +1166,17 @@ public abstract class SpecialAbility {
             0,
             constraints.generatedResourceName,
             constraints.generatedResouceCap);
+    }
+
+    public void RemoveResource(ConstraintList constraints) {
+
+        for (int i = 0; i < source.owner.gameResourceDisplay.resourceDisplayInfo.Count; i++) {
+            if (source.owner.gameResourceDisplay.resourceDisplayInfo[i].resource.resourceType == constraints.generatedResourceType) {
+                source.owner.gameResourceDisplay.RPCRemoveResource(PhotonTargets.All, constraints.generatedResourceType, constraints.amountOfResourceToGenerate);
+                return;
+            }
+        }
+
     }
 
 
@@ -1264,6 +1364,12 @@ public abstract class SpecialAbility {
         public CardStats mostStat;
         public CardStats leastStat;
         public bool thisCardOnly;
+        public bool oncePerTurn;
+        public bool triggeredThisTurn;
+        public bool neverTargetSelf;
+
+        ////OnCombat
+        //public AttackerOrDefender targetAttackerOrDefender;
 
 
         //Creature Stat Adjusted
@@ -1303,7 +1409,10 @@ public abstract class SpecialAbility {
         public int amountOfResourceRequried;
         public bool consumeResource;
 
-        //Stat Adjustment
+        //Special Attribute
+        public SpecialAttribute.AttributeType grantedSpecialAttributeType;
+        public int grantedSpecialAttributeValue;
+        
 
     }
 

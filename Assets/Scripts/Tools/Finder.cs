@@ -44,7 +44,7 @@ public static class Finder {
     public static List<CardVisual> FindAllDamagedOrUndamagedCreatures(bool damaged) {
         List<CardVisual> results = new List<CardVisual>();
 
-        List<CardVisual> allCards = Deck._allCards.activeCards;
+        List<CardVisual> allCards = FindAllCardOfType(CardType.Soul);
 
         for (int i = 0; i < allCards.Count; i++) {
             CreatureCardVisual soul = allCards[i] as CreatureCardVisual;
