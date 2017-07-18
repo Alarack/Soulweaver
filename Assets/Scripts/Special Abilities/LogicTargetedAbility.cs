@@ -21,6 +21,7 @@ public class LogicTargetedAbility : SpecialAbility {
 
 
     public int numberofTargets;
+    public bool processEffectOnPrimaryEffectTargets;
     //public bool onlyThisCard;
 
 
@@ -83,6 +84,18 @@ public class LogicTargetedAbility : SpecialAbility {
         return true;
 
         //return base.ProcessEffect(card);
+    }
+
+    public void ProcessEffect(List<CardVisual> targets) {
+
+        for(int i = 0; i < targets.Count; i++) {
+            if(CheckConstraints(targetConstraints, targets[i])) {
+                Effect(targets[i]);
+            }
+
+
+        }
+
     }
 
 

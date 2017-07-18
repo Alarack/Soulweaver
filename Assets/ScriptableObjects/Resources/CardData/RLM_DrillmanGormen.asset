@@ -56,6 +56,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -107,6 +109,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -132,7 +136,7 @@ MonoBehaviour:
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
     effect: 6
-    abilityName: gwegre
+    abilityName: Give Slivers
     effectValue: 0
     source: {fileID: 0}
     targets: []
@@ -163,6 +167,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 1
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -217,6 +223,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -275,6 +283,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 1
+      triggerablePrimaryAbilityName: Give Slivers
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -326,6 +336,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -382,6 +394,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -436,6 +450,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -495,6 +511,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -546,6 +564,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -602,6 +622,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -656,6 +678,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -715,6 +739,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -766,6 +792,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -822,6 +850,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -876,6 +906,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0

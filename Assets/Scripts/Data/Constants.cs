@@ -49,6 +49,26 @@ public class Constants {
         Mage,
         Archer,
         Rifleman,
+        Structure,
+        Arbiter,
+        Dullahan,
+        Canine,
+        Abomination,
+        Cavalry,
+        Golem,
+        Knight,
+        Shaper,
+        Unique,
+        Illusion,
+        Tower,
+        Seige,
+        Keeper,
+        Strider,
+        Other,
+        Fated,
+        Scheme,
+        Bureau
+
 
     }
 
@@ -105,7 +125,9 @@ public class Constants {
         Finale,
         Threshold,
         Phalanx,
-        Deathwatch
+        Deathwatch,
+        Berserk,
+        Bloodthirst
     }
 
 
@@ -194,7 +216,7 @@ public class Constants {
         None = 0,
         UserSingleTargeted,
         LogicMultiTarget,
-        
+
     }
 
     public enum EffectDuration {

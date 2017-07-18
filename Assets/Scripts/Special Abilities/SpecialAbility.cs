@@ -167,6 +167,7 @@ public abstract class SpecialAbility {
             EventData data = new EventData();
 
             data.AddMonoBehaviour("Source", source);
+            data.AddString("AbilityName", abilityName);
 
             Grid.EventManager.SendEvent(GameEvent.TriggerSecondaryEffect, data);
         }
@@ -318,14 +319,29 @@ public abstract class SpecialAbility {
 
     protected void OnEffectComplete(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Source") as CardVisual;
+        string triggeringAbilityName = data.GetString("AbilityName");
 
         if (card != source)
             return;
 
+        List<CardVisual> primaryTargets = Finder.FindSpecialAbilityOnCardByName(card, triggeringAbilityName).targets;
+
+
+        if (triggerConstraints.triggerbySpecificAbility && triggerConstraints.triggerablePrimaryAbilityName != triggeringAbilityName)
+            return;
+
+
+        if (!source.photonView.isMine)
+            return;
+
 
         if (this is LogicTargetedAbility) {
-            if (source.photonView.isMine) {
+            LogicTargetedAbility lta = this as LogicTargetedAbility;
 
+            if (lta.processEffectOnPrimaryEffectTargets) {
+                lta.ProcessEffect(primaryTargets);
+            }
+            else {
                 ProcessEffect(source);
             }
         }
@@ -1078,12 +1094,27 @@ public abstract class SpecialAbility {
                 tokenData = Resources.Load<CardData>("CardData/" + targets[spawnIndex - 1].cardData.name) as CardData;
             }
 
+            if (targetConstraints.copyTargetsStatsOnly) {
+
+
+
+            }
+
             string prefabName = Deck._allCards.GetCardPrefabNameByType(spawnConstraints.spawnCardType);
 
             CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(tokenData, prefabName, GetDeckFromType(spawnConstraints.spawnTokenLocation, source));
             tokenCard.isToken = true;
 
             tokens.Add(tokenCard);
+
+            if (targetConstraints.copyTargetsStatsOnly) {
+                if(targets[spawnIndex -1] is CreatureCardVisual) {
+                    CreatureCardVisual soul = targets[spawnIndex - 1] as CreatureCardVisual;
+
+                    tokenCard.RPCSetCardStats(PhotonTargets.All, soul.essenceCost, soul.attack, soul.size, soul.health);
+                }
+            }
+
 
             spawnIndex++;
         }
@@ -1371,6 +1402,11 @@ public abstract class SpecialAbility {
         ////OnCombat
         //public AttackerOrDefender targetAttackerOrDefender;
 
+        //Secondary Effect
+        public bool triggerbySpecificAbility;
+        public string triggerablePrimaryAbilityName;
+
+
 
         //Creature Stat Adjusted
         public GainedOrLost gainedOrLost;
@@ -1385,6 +1421,7 @@ public abstract class SpecialAbility {
 
         //Spawn Token
         public bool copyTargets;
+        public bool copyTargetsStatsOnly;
         public string spawnableTokenDataName;
         public DeckType spawnTokenLocation;
         public CardType spawnCardType;

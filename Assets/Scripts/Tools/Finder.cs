@@ -348,5 +348,20 @@ public static class Finder {
 
     }
 
+    public static SpecialAbility FindSpecialAbilityOnCardByName(CardVisual source, string abilityName) {
+        SpecialAbility result = null;
+
+        for(int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == abilityName) {
+                result = source.specialAbilities[i];
+                break;
+            }
+                
+        }
+
+
+        return result;
+    }
+
 
 }
