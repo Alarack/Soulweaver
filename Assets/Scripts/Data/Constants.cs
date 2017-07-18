@@ -67,7 +67,8 @@ public class Constants {
         Other,
         Fated,
         Scheme,
-        Bureau
+        Bureau,
+        Giant
 
 
     }
@@ -127,7 +128,10 @@ public class Constants {
         Phalanx,
         Deathwatch,
         Berserk,
-        Bloodthirst
+        Bloodthirst,
+        Tortured,
+        Rush,
+        Reach
     }
 
 

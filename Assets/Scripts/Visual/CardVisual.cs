@@ -173,6 +173,10 @@ public class CardVisual : Photon.MonoBehaviour {
     public virtual void RestCardData() {
         statAdjustments.Clear();
 
+        List<Constants.Keywords> tempKeywords = new List<Constants.Keywords>(cardData.keywords);
+        keywords = tempKeywords;
+
+
     }
 
     //public void InitializeSpecialAbilities(int id) {

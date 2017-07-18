@@ -176,6 +176,12 @@ public class CombatManager : Photon.MonoBehaviour {
             return;
         }
 
+        if(attacker.keywords.Contains(Keywords.Rush) && currentTarget.primaryCardType == CardType.Player) {
+            Debug.Log("Rush Souls cannot attack Generals the turn they're played");
+            return;
+        }
+
+
         List<CardVisual> potentialInterceptors = Finder.FindAllCardsInZone(DeckType.Battlefield, Keywords.Interceptor, OwnerConstraints.Theirs);
 
         List<CardVisual> resultingInterceptors = SortInterceptors(potentialInterceptors);
@@ -211,7 +217,7 @@ public class CombatManager : Photon.MonoBehaviour {
                 results.Remove(interceptor);
             }
 
-            if (Finder.CardHasKeyword(attacker, Keywords.Flight) && !Finder.CardHasKeyword(interceptor, Keywords.Flight))
+            if (Finder.CardHasKeyword(attacker, Keywords.Flight) && (!Finder.CardHasKeyword(interceptor, Keywords.Flight) || !Finder.CardHasKeyword(interceptor, Keywords.Reach )))
                 results.Remove(interceptor);
         }
 

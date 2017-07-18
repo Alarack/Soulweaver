@@ -38,6 +38,10 @@ public class CardIDs {
         SEV_SpitefulSkulker = 20005,
         SEV_TwistVisage = 20006,
         SEV_TKN_CorruptedSoul = 20007,
+        SEV_AnguishedGiant = 20008,
+        SEV_TormentedButcher = 20009,
+        SEV_CagedSpecimen = 20010,
+        SEV_PainChanneler = 20011,
 
         //The Realm Keepers
         RLM_DrillmanGorman = 30000,

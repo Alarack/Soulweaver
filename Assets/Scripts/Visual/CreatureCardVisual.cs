@@ -152,16 +152,13 @@ public class CreatureCardVisual : CardVisual {
                 TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
 
 
-                if(value < 0) {
+                if(value < 1) {
                     //RPCShowDamage(PhotonTargets.Others, value);
-
-
-
-
-                    CheckDeath(source.photonView.viewID, false);
-
-
                     ShowDamage(value);
+                }
+
+                if(value < 0) {
+                    CheckDeath(source.photonView.viewID, false);
                 }
 
                 break;
@@ -222,6 +219,11 @@ public class CreatureCardVisual : CardVisual {
                 if (add) {
                     cardImage.color = exhaustedColor;
                     battleFrame.color = exhaustedColor;
+
+                    if (keywords.Contains(Constants.Keywords.Interceptor)) {
+                        ToggleKeyword(false, (int)Constants.Keywords.Interceptor);
+                    }
+
                 }
                 else {
                     cardImage.color = Color.white;
