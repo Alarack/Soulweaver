@@ -103,7 +103,9 @@ public class Constants {
         Fission,
         Inspire,
         Finale,
-        Threshold
+        Threshold,
+        Phalanx,
+        Deathwatch
     }
 
 

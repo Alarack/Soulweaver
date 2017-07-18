@@ -36,6 +36,13 @@ public class CardIDs {
         SEV_VicariousDevourer = 20003,
         SEV_NashkaThirstyAbom = 20004,
         SEV_SpitefulSkulker = 20005,
+
+        //The Realm Keepers
+        RLM_DrillmanGorman = 30000,
+
+        //The Others
+        OTH_CorpseFeeder,
+        OTH_TKN_DistendedRipper
     }
 
 
