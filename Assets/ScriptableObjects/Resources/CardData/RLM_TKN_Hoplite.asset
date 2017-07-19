@@ -9,84 +9,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: AngrySkeletons
+  m_Name: RLM_TKN_Hoplite
   m_EditorClassIdentifier: 
-  cardID: 109
-  cardName: Angry Skeletons
-  cardText: Be A big angry skelly.
-  cardCost: 1
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
+  cardID: 0
+  cardName: Hoplite
+  cardText: 'Phalanx: +1 Health.'
+  cardCost: 0
+  cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 08000000
-  subTypes: 02000000
-  keywords: 00000000
+  attunements: 0f000000
+  subTypes: 1c000000
+  keywords: 1c000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
   - trigger: 01000000
-    duration: 0
+    duration: 4
     triggerConstraints:
-      types: 0400000002000000
-      owner: 0
+      types: 040000000200000001000000
+      owner: 2
       primaryType: 01000000
-      notPrimaryType: 0
-      additionalType: 
-      notAdditionalType: 0
-      subtype: 
-      notSubtype: 0
-      keyword: 
-      notKeyword: 0
-      attunement: 
-      notAttunement: 0
-      currentZone: 05000000
-      notCurrentZone: 0
-      previousZone: 05000000
-      notPreviousZone: 0
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-      oncePerTurn: 1
-      triggeredThisTurn: 0
-      neverTargetSelf: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
-      gainedOrLost: 0
-      statChanged: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
-      numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
-      requiredResourceType: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
-    sourceConstraints:
-      types: 04000000
-      owner: 0
-      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -110,15 +56,12 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
-      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -137,12 +80,7 @@ MonoBehaviour:
       consumeResource: 0
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
-    effect: 1
-    abilityName: 
-    effectValue: 0
-    source: {fileID: 0}
-    targets: []
-    targetConstraints:
+    sourceConstraints:
       types: 
       owner: 0
       primaryType: 
@@ -165,19 +103,72 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
-      copyTargetsStatsOnly: 0
+      spawnableTokenDataName: 
+      spawnTokenLocation: 0
+      spawnCardType: 0
+      numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
+    effect: 1
+    abilityName: Phalanx
+    effectValue: 0
+    source: {fileID: 0}
+    targets: []
+    targetConstraints:
+      types: 02000000040000000100000008000000
+      owner: 2
+      primaryType: 01000000
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 1c000000
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 05000000
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -226,15 +217,12 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
-      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -256,8 +244,8 @@ MonoBehaviour:
     keywordsToAddorRemove: 
     additionalRequirements: 
     statAdjustments:
-    - stat: 3
-      value: 1
+    - stat: 4
+      value: 2
       nonStacking: 0
       temporary: 0
       source: {fileID: 0}
@@ -266,11 +254,10 @@ MonoBehaviour:
       deriveStatsFromWhom: 0
       targetStat: 0
       invertValue: 0
-    processTriggerOnWhom: 0
+    applyEffectToWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
-    processEffectOnPrimaryEffectTargets: 0
   specialAttributes: []
-  attack: 0
+  attack: 1
   size: 3
-  health: 5
+  health: 3

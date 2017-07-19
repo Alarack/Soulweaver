@@ -28,6 +28,8 @@ public class DomainManager : Photon.MonoBehaviour {
 
             CardDomainData data = domainTiles[i].myDomainCard.cardData as CardDomainData;
 
+            domainTiles[i].myDomainCard.domainTile = domainTiles[i];
+
             domainTiles[i].domainImage.sprite = data.domainIcon;
         }
     }

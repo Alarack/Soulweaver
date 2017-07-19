@@ -485,6 +485,14 @@ public class Deck : Photon.MonoBehaviour {
                     card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition();
                 }
 
+                break;
+
+
+            case Constants.CardType.Spell:
+
+                if (card.photonView.isMine) {
+                    StartCoroutine(SendSpellAway(card));
+                }
 
                 break;
 
@@ -507,6 +515,13 @@ public class Deck : Photon.MonoBehaviour {
 
                 break;
         }
+    }
+
+    private IEnumerator SendSpellAway(CardVisual card) {
+        yield return new WaitForSeconds(1f);
+
+        card.transform.position = new Vector3(25f, 25f, -55f);
+
     }
 
     private IEnumerator SendCardToSoulCrypt(CardVisual card) {

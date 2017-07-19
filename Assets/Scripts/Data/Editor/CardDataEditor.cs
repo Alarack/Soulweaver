@@ -65,17 +65,6 @@ public class CardDataEditor : Editor {
         _cardData.multiTargetAbilities = EditorHelper.DrawExtendedList("Logic Target Effects", _cardData.multiTargetAbilities, "Ability", DrawAbilityList);
 
 
-        //_cardData.specialAbilityTypes = EditorHelper.DrawList("Special Abilitiy Type", _cardData.specialAbilityTypes, true, Constants.SpecialAbilityTypes.None, true, DrawAbilityTypes);
-
-        //for (int i = 0; i < _cardData.specialAbilityTypes.Count; i++) {
-        //    ShowSpecialAbility(_cardData.specialAbilityTypes[i]);
-        //}
-
-
-        //_cardData.allAbilities = EditorHelper.DrawExtendedList("Special Abilities", _cardData.allAbilities, "Ability", DrawAbilityList);
-
-        //PopulateSpecialAbilitiesList(_cardData.userTargtedAbilities);
-        //PopulateSpecialAbilitiesList(_cardData.multiTargetAbilities);
 
         if (GUI.changed)
             EditorUtility.SetDirty(target);
@@ -131,12 +120,34 @@ public class CardDataEditor : Editor {
                 case AbilityActivationTrigger.CreatureStatChanged:
                     entry.triggerConstraints.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.triggerConstraints.statChanged);
                     entry.triggerConstraints.gainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.triggerConstraints.gainedOrLost);
-                    entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
+                    entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
 
                     break;
 
                 case AbilityActivationTrigger.Defends:
                     //entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
+
+                    break;
+
+                case AbilityActivationTrigger.SecondaryEffect:
+                    EditorGUILayout.Separator();
+                    entry.triggerConstraints.triggerbySpecificAbility = EditorGUILayout.Toggle("Trigger from specific ability?", entry.triggerConstraints.triggerbySpecificAbility);
+
+                    if (entry.triggerConstraints.triggerbySpecificAbility) {
+                        entry.triggerConstraints.triggerablePrimaryAbilityName = EditorGUILayout.TextField("Ability Name", entry.triggerConstraints.triggerablePrimaryAbilityName);
+                    }
+
+                    if(entry is LogicTargetedAbility) {
+                        LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+                        lta.processEffectOnPrimaryEffectTargets = EditorGUILayout.Toggle("Target the same targets as primary ability?", lta.processEffectOnPrimaryEffectTargets);
+                    }
+
+
+                    break;
+
+                case AbilityActivationTrigger.Slain:
+                    entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
 
                     break;
             }
@@ -210,13 +221,13 @@ public class CardDataEditor : Editor {
         //Effect Logic
         EditorHelper.DrawInspectorSectionHeader("Effect:");
         entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
-        entry.moveingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.moveingVFX);
+        entry.movingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.movingVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
 
         switch (entry.effect) {
             case EffectType.SpawnToken:
                 entry.targetConstraints.copyTargets = EditorGUILayout.Toggle("Spawn a Copy of the target(s)?", entry.targetConstraints.copyTargets);
-
+                entry.targetConstraints.copyTargetsStatsOnly = EditorGUILayout.Toggle("Set the token's stats to the target's stats?", entry.targetConstraints.copyTargetsStatsOnly);
                 if (!entry.targetConstraints.copyTargets) {
                     entry.targetConstraints.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.targetConstraints.spawnableTokenDataName);
                     entry.targetConstraints.spawnCardType = EditorHelper.EnumPopup("Card Type", entry.targetConstraints.spawnCardType);
@@ -325,6 +336,7 @@ public class CardDataEditor : Editor {
 
         entry.nonStacking = EditorGUILayout.Toggle("Non-Stacking?", entry.nonStacking);
         entry.temporary = EditorGUILayout.Toggle("Is this removable?", entry.temporary);
+        entry.spellDamage = EditorGUILayout.Toggle("Is this Spell Damage?", entry.spellDamage);
 
         //if(entry.uniqueID == -1 || entry.uniqueID == 0) {
         //    entry.uniqueID = IDFactory.GenerateID();
@@ -352,6 +364,13 @@ public class CardDataEditor : Editor {
                 EditorGUILayout.Separator();
                 EditorGUILayout.LabelField("Which Owners are Valid for the " + constraintName + "?", EditorStyles.boldLabel);
                 entry.owner = EditorHelper.EnumPopup("Owner", entry.owner); //EditorHelper.DrawList("Owner", entry.owner, true, OwnerConstraints.None, true, DrawOwnerTypes);
+                break;
+
+            case ConstraintType.WhosTurn:
+                EditorGUILayout.Separator();
+                EditorGUILayout.LabelField("On whos turn can the " + constraintName + " occur?", EditorStyles.boldLabel);
+                entry.whosTurn = EditorHelper.EnumPopup("Who's Turn?", entry.whosTurn);
+
                 break;
 
             case Constants.ConstraintType.PrimaryType:

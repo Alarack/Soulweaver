@@ -49,6 +49,27 @@ public class Constants {
         Mage,
         Archer,
         Rifleman,
+        Structure,
+        Arbiter,
+        Dullahan,
+        Canine,
+        Abomination,
+        Cavalry,
+        Golem,
+        Knight,
+        Shaper,
+        Unique,
+        Illusion,
+        Tower,
+        Seige,
+        Keeper,
+        Strider,
+        Other,
+        Fated,
+        Scheme,
+        Bureau,
+        Giant
+
 
     }
 
@@ -103,7 +124,14 @@ public class Constants {
         Fission,
         Inspire,
         Finale,
-        Threshold
+        Threshold,
+        Phalanx,
+        Deathwatch,
+        Berserk,
+        Bloodthirst,
+        Tortured,
+        Rush,
+        Reach
     }
 
 
@@ -124,7 +152,8 @@ public class Constants {
         CreatureStatChanged,
         UserActivated,
         //Combat
-        SecondaryEffect
+        SecondaryEffect,
+        Slain
 
     }
 
@@ -141,6 +170,7 @@ public class Constants {
         StatMinimum,
         StatMaximum,
         CreatureStatus,
+        WhosTurn
 
 
 
@@ -192,7 +222,7 @@ public class Constants {
         None = 0,
         UserSingleTargeted,
         LogicMultiTarget,
-        
+
     }
 
     public enum EffectDuration {

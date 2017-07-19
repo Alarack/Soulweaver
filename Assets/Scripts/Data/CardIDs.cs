@@ -36,6 +36,24 @@ public class CardIDs {
         SEV_VicariousDevourer = 20003,
         SEV_NashkaThirstyAbom = 20004,
         SEV_SpitefulSkulker = 20005,
+        SEV_TwistVisage = 20006,
+        SEV_TKN_CorruptedSoul = 20007,
+        SEV_AnguishedGiant = 20008,
+        SEV_TormentedButcher = 20009,
+        SEV_CagedSpecimen = 20010,
+        SEV_PainChanneler = 20011,
+        SEV_DOM_SadisticGlee = 20012,
+        SEV_DOM_CollectSpecimen = 20013,
+        SEV_DOM_Agonize = 20014,
+        SEV_TNK_CapturedVictim = 20015,
+
+        //The Realm Keepers
+        RLM_DrillmanGorman = 30000,
+        RLM_TKN_Firebolt = 30001,
+
+        //The Others
+        OTH_CorpseFeeder = 40000,
+        OTH_TKN_DistendedRipper = 40001,
     }
 
 

@@ -293,26 +293,57 @@ public class Player : Photon.MonoBehaviour {
     //}
 
     public void PlayerUpkeep() {
-        AdjustMaxEssence(1);
-        FillEssence();
-
-        //for (int i = 0; i < gameResourceDisplay.resourceDisplayInfo.Count; i++) {
-        //    if (gameResourceDisplay.resourceDisplayInfo[i].addPerTurn) {
-        //        gameResourceDisplay.resourceDisplayInfo[i].resource.IncreaseMaximum(1);
-        //        gameResourceDisplay.resourceDisplayInfo[i].resource.AddResource(1);
-        //    }
-        //}
-
 
         RPCUpdateResources(PhotonTargets.AllBufferedViaServer);
 
         //RenewOncePerTurnCounters();
 
-        //EventManager.EffectOnUpkeep();
+        UpkeepKeywordTriggerHandler();
+
+
 
         gameState = GameStates.Draw;
     }
 
+    public void UpkeepKeywordTriggerHandler() {
+
+        //Torture
+        List<CardVisual> torturedSouls = Finder.FindAllCardsInZone(Constants.DeckType.Battlefield, Constants.Keywords.Tortured, Constants.OwnerConstraints.Mine, Constants.CardType.Soul);
+
+        for(int i = 0; i < torturedSouls.Count; i++) {
+
+            SpecialAbility.StatAdjustment torture = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -1, false, false, torturedSouls[i]);
+
+            torturedSouls[i].RPCApplyUntrackedStatAdjustment(PhotonTargets.All, torture, torturedSouls[i]);
+        }
+
+
+        //Rush
+        List<CardVisual> rushSouls = Finder.FindAllCardsInZone(Constants.DeckType.Battlefield, Constants.Keywords.Rush, Constants.OwnerConstraints.Mine, Constants.CardType.Soul);
+
+        for (int i = 0; i < rushSouls.Count; i++) {
+            rushSouls[i].RPCAddKeyword(PhotonTargets.All, Constants.Keywords.Rush, false);
+        }
+
+        //Regenerators
+        List<CardVisual> regeneratorSouls = Finder.FindAllCardsOfType(Constants.CardType.Soul, Constants.DeckType.Battlefield, Constants.OwnerConstraints.Mine);
+
+        for (int i = 0; i < regeneratorSouls.Count; i++) {
+
+            for(int j = 0; j < regeneratorSouls[i].specialAttributes.Count; j++) {
+                if(regeneratorSouls[i].specialAttributes[j].attributeType == SpecialAttribute.AttributeType.Regeneration) {
+                    SpecialAbility.StatAdjustment regen = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, regeneratorSouls[i].specialAttributes[j].attributeValue, false, false, regeneratorSouls[i]);
+                    regeneratorSouls[i].RPCApplyUntrackedStatAdjustment(PhotonTargets.All, regen, regeneratorSouls[i]);
+                }
+            }
+        }
+
+
+
+
+
+
+    }
 
 
     public void DrawFromGrimoire() {
