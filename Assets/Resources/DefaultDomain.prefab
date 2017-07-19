@@ -135,7 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   decktype: 2
   cards:
-  - {fileID: 11400000, guid: 63c5310a13ed84e4889794c51d1905f8, type: 2}
+  - {fileID: 11400000, guid: f9595fcdac1370046a1d2f16f44075c2, type: 2}
+  - {fileID: 11400000, guid: e17318220c8125b4caed8526cb2ca1ee, type: 2}
+  - {fileID: 11400000, guid: fb6466e457c6e7d409ffa27ba702a614, type: 2}
   activeCards: []
   owner: {fileID: 0}
 --- !u!114 &114126457312744794
@@ -252,6 +254,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   domainTiles:
   - {fileID: 114342991233052586}
+  - {fileID: 114476932729353004}
+  - {fileID: 114293641228282094}
 --- !u!114 &114459499786379214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.47794116, g: 0.47794116, b: 0.47794116, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -421,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.47794116, g: 0.47794116, b: 0.47794116, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -448,7 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.47794116, g: 0.47794116, b: 0.47794116, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

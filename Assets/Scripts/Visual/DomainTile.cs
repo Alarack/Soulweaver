@@ -39,20 +39,22 @@ public class DomainTile : Photon.MonoBehaviour {
 
     public void OnMouseOver() {
         if (myDomainCard != null) {
-            Debug.Log(myDomainCard.cardNameText.text + " " + myDomainCard.cardDescriptionText.text);
+            //Debug.Log(myDomainCard.cardNameText.text + " " + myDomainCard.cardDescriptionText.text);
+            CardTooltip.ShowTooltip(myDomainCard.cardData.cardName + "\n" + myDomainCard.cardData.cardText);
         }
 
     }
 
     public void OnMouseExit() {
         if (myDomainCard != null) {
-            Debug.Log("mouse out");
+            //Debug.Log("mouse out");
+            CardTooltip.HideTooltip();
         }
 
     }
 
     public void ActivateTile() {
-        domainImage.color = Color.blue;
+        domainImage.color = Color.white;
         active = true;
     }
 
@@ -85,7 +87,7 @@ public class DomainTile : Photon.MonoBehaviour {
             domainImage.color = Color.grey;
         }
         else {
-            domainImage.color = Color.blue;
+            domainImage.color = Color.white;
         }
     }
 

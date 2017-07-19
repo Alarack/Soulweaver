@@ -8,31 +8,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: AngrySkeletons
+  m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
+  m_Name: SEV_DOM_CollectSpecimen
   m_EditorClassIdentifier: 
-  cardID: 109
-  cardName: Angry Skeletons
-  cardText: Be A big angry skelly.
-  cardCost: 1
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
-  attackEffect: VFX_Primal_Slash
+  cardID: 20013
+  cardName: Collect Specimen
+  cardText: ' Whenever Dimitry kills a Soul, summon a 2/2/3 Tortured Victim'
+  cardCost: 0
+  cardImage: {fileID: 0}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
   movingVFX: 0
-  primaryCardType: 1
+  primaryCardType: 5
   otherCardTypes: 
-  attunements: 08000000
-  subTypes: 02000000
-  keywords: 00000000
+  attunements: 
+  subTypes: 
+  keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 01000000
-    duration: 0
+  - trigger: 0b000000
+    duration: 1
     triggerConstraints:
-      types: 0400000002000000
-      owner: 0
-      primaryType: 01000000
+      types: 020000000100000004000000
+      owner: 2
+      primaryType: 06000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 05000000
+      previousZone: 
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -53,13 +53,13 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
-      oncePerTurn: 1
+      oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      gainedOrLost: 0
-      statChanged: 0
+      gainedOrLost: 1
+      statChanged: 4
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
@@ -137,15 +137,15 @@ MonoBehaviour:
       consumeResource: 0
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
-    effect: 1
+    effect: 3
     abilityName: 
     effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
-      types: 
-      owner: 0
-      primaryType: 
+      types: 0200000001000000
+      owner: 2
+      primaryType: 06000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -178,10 +178,10 @@ MonoBehaviour:
       numberOfcardsInZone: 0
       copyTargets: 0
       copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
+      spawnableTokenDataName: SEV_TKN_CapturedVictim
+      spawnTokenLocation: 5
+      spawnCardType: 1
+      numberOfSpawns: 1
       targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
@@ -255,22 +255,11 @@ MonoBehaviour:
       grantedSpecialAttributeValue: 0
     keywordsToAddorRemove: 
     additionalRequirements: 
-    statAdjustments:
-    - stat: 3
-      value: 1
-      nonStacking: 0
-      temporary: 0
-      source: {fileID: 0}
-      uniqueID: -1
-      valueSetBytargetStat: 0
-      deriveStatsFromWhom: 0
-      targetStat: 0
-      invertValue: 0
-    processTriggerOnWhom: 0
-    logicTargetingMethod: 1
+    statAdjustments: []
+    activeStatAdjustments: []
+    processTriggerOnWhom: 1
+    logicTargetingMethod: 0
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
   specialAttributes: []
-  attack: 0
-  size: 3
-  health: 5
+  domainIcon: {fileID: 21300072, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

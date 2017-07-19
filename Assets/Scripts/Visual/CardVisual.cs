@@ -65,6 +65,9 @@ public class CardVisual : Photon.MonoBehaviour {
     public List<LogicTargetedAbility> multiTargetAbiliies = new List<LogicTargetedAbility>();
 
 
+    public DomainTile domainTile;
+
+
     protected float lerpSmoothing = 10f;
     protected CardVisualState _visualState;
     protected Vector3 position;
@@ -219,7 +222,10 @@ public class CardVisual : Photon.MonoBehaviour {
             animationManager.BounceText(stat);
         }
 
-
+        if(this is CreatureCardVisual) {
+            CreatureCardVisual soul = this as CreatureCardVisual;
+            value = soul.CalcProtection(value);
+        }
 
         if (sendEvent) {
             EventData data = new EventData();
@@ -258,9 +264,11 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-
-
     #region Private Methods
+
+
+
+
 
     protected virtual void OnMouseOver() {
 
@@ -304,6 +312,16 @@ public class CardVisual : Photon.MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Delete)) {
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
         }
+
+        //Dev Damage
+        if (Input.GetKeyDown(KeyCode.K)) {
+            SpecialAbility.StatAdjustment damage = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -1, false, false, this);
+
+            RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this);
+
+        }
+
+
 
         //Targeting
         if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
@@ -811,6 +829,27 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
     protected virtual void KeywordHelper(Constants.Keywords keyword, bool add) {
+
+        if(cardData is CardDomainData) {
+
+            if (add) {
+                if (keyword == Constants.Keywords.Exhausted) {
+
+                    if (domainTile != null) {
+                        domainTile.RPCExhaustTile(PhotonTargets.All, true);
+                    }
+                }
+            }
+            else {
+                if (keyword == Constants.Keywords.Exhausted) {
+
+                    if (domainTile != null) {
+                        domainTile.RPCExhaustTile(PhotonTargets.All, false);
+                    }
+                }
+            }
+        }
+
 
         //switch (keyword) {
         //    case Constants.Keywords.Exhausted:

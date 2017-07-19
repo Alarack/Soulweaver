@@ -152,7 +152,8 @@ public class Constants {
         CreatureStatChanged,
         UserActivated,
         //Combat
-        SecondaryEffect
+        SecondaryEffect,
+        Slain
 
     }
 
@@ -169,6 +170,7 @@ public class Constants {
         StatMinimum,
         StatMaximum,
         CreatureStatus,
+        WhosTurn
 
 
 

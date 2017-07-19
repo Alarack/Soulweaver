@@ -257,7 +257,7 @@ public class CombatManager : Photon.MonoBehaviour {
 
         SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -damageDealer.attack, false, false, damageDealer);
 
-        if(damageDealer.attackEffect != null) {
+        if(damageDealer.attackEffect != null && damageDealer.attackEffect != "") {
             GameObject atkVFX;
             if (damageDealer.cardData.movingVFX) {
                 atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageDealer.transform.position, Quaternion.identity, 0) as GameObject;

@@ -120,7 +120,7 @@ public class CardDataEditor : Editor {
                 case AbilityActivationTrigger.CreatureStatChanged:
                     entry.triggerConstraints.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.triggerConstraints.statChanged);
                     entry.triggerConstraints.gainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.triggerConstraints.gainedOrLost);
-                    entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
+                    entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
 
                     break;
 
@@ -143,6 +143,11 @@ public class CardDataEditor : Editor {
                         lta.processEffectOnPrimaryEffectTargets = EditorGUILayout.Toggle("Target the same targets as primary ability?", lta.processEffectOnPrimaryEffectTargets);
                     }
 
+
+                    break;
+
+                case AbilityActivationTrigger.Slain:
+                    entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
 
                     break;
             }
@@ -358,6 +363,13 @@ public class CardDataEditor : Editor {
                 EditorGUILayout.Separator();
                 EditorGUILayout.LabelField("Which Owners are Valid for the " + constraintName + "?", EditorStyles.boldLabel);
                 entry.owner = EditorHelper.EnumPopup("Owner", entry.owner); //EditorHelper.DrawList("Owner", entry.owner, true, OwnerConstraints.None, true, DrawOwnerTypes);
+                break;
+
+            case ConstraintType.WhosTurn:
+                EditorGUILayout.Separator();
+                EditorGUILayout.LabelField("On whos turn can the " + constraintName + " occur?", EditorStyles.boldLabel);
+                entry.whosTurn = EditorHelper.EnumPopup("Who's Turn?", entry.whosTurn);
+
                 break;
 
             case Constants.ConstraintType.PrimaryType:

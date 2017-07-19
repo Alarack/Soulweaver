@@ -42,6 +42,10 @@ public class CardIDs {
         SEV_TormentedButcher = 20009,
         SEV_CagedSpecimen = 20010,
         SEV_PainChanneler = 20011,
+        SEV_DOM_SadisticGlee = 20012,
+        SEV_DOM_CollectSpecimen = 20013,
+        SEV_DOM_Agonize = 20014,
+        SEV_TNK_CapturedVictim = 20015,
 
         //The Realm Keepers
         RLM_DrillmanGorman = 30000,
