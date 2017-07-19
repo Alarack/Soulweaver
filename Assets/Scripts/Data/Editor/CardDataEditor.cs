@@ -221,7 +221,7 @@ public class CardDataEditor : Editor {
         //Effect Logic
         EditorHelper.DrawInspectorSectionHeader("Effect:");
         entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
-        entry.moveingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.moveingVFX);
+        entry.movingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.movingVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
 
         switch (entry.effect) {
@@ -336,6 +336,7 @@ public class CardDataEditor : Editor {
 
         entry.nonStacking = EditorGUILayout.Toggle("Non-Stacking?", entry.nonStacking);
         entry.temporary = EditorGUILayout.Toggle("Is this removable?", entry.temporary);
+        entry.spellDamage = EditorGUILayout.Toggle("Is this Spell Damage?", entry.spellDamage);
 
         //if(entry.uniqueID == -1 || entry.uniqueID == 0) {
         //    entry.uniqueID = IDFactory.GenerateID();

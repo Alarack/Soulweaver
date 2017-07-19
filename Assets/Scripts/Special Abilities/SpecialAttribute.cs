@@ -8,7 +8,8 @@ public class SpecialAttribute {
     public enum AttributeType {
         Protection,
         Regeneration,
-        Volatile
+        Volatile,
+        SpellDamage
     }
 
     public AttributeType attributeType;

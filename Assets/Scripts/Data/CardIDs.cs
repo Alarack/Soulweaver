@@ -49,6 +49,7 @@ public class CardIDs {
 
         //The Realm Keepers
         RLM_DrillmanGorman = 30000,
+        RLM_TKN_Firebolt = 30001,
 
         //The Others
         OTH_CorpseFeeder = 40000,

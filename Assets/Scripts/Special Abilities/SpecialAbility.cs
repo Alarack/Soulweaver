@@ -35,7 +35,7 @@ public abstract class SpecialAbility {
     public ConstraintList targetConstraints = new ConstraintList();
     public int ID;
     public string abilityVFX;
-    public bool moveingVFX;
+    public bool movingVFX;
     //Cards In Zone
     public ConstraintList additionalRequirementConstraints = new ConstraintList();
 
@@ -164,7 +164,7 @@ public abstract class SpecialAbility {
         }
 
 
-        if (!trigger.Contains(AbilityActivationTrigger.SecondaryEffect)){
+        if (!trigger.Contains(AbilityActivationTrigger.SecondaryEffect)) {
             EventData data = new EventData();
 
             data.AddMonoBehaviour("Source", source);
@@ -233,6 +233,12 @@ public abstract class SpecialAbility {
             }
 
             //Debug.Log("Applying stats");
+            int spelldamage = Finder.FindTotalSpellDamage();
+
+            if (statAdjustments[i].spellDamage) {
+                ApplySpellDamge(statAdjustments[i], -spelldamage);
+            }
+
 
             card.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
 
@@ -240,11 +246,17 @@ public abstract class SpecialAbility {
         }
     }
 
+    private void ApplySpellDamge(StatAdjustment adjustment, int spellDamage) {
+
+        adjustment.ModifyValue(spellDamage);
+
+    }
+
     protected void RemoveStatAdjustments(CardVisual card) {
         for (int i = 0; i < activeStatAdjustments.Count; i++) {
             card.RPCRemoveStatAdjustment(PhotonTargets.All, activeStatAdjustments[i].uniqueID, source);
             //Debug.Log("Removing stat adjustment with ID " + activeStatAdjustments[i].uniqueID);
-            
+
         }
         activeStatAdjustments.Clear();
 
@@ -258,7 +270,7 @@ public abstract class SpecialAbility {
             return;
 
 
-        if(source.primaryCardType == CardType.Domain) {
+        if (source.primaryCardType == CardType.Domain) {
             Grid.EventManager.RegisterListener(GameEvent.UserActivatedDomainAbility, OnUserActivation);
         }
 
@@ -757,7 +769,7 @@ public abstract class SpecialAbility {
                         //Debug.Log("Invalid Zone");
                         return null;
                     }
-                        
+
                 }
 
                 //if(source == target)
@@ -1217,7 +1229,7 @@ public abstract class SpecialAbility {
             tokens.Add(tokenCard);
 
             if (targetConstraints.copyTargetsStatsOnly) {
-                if(targets[spawnIndex -1] is CreatureCardVisual) {
+                if (targets[spawnIndex - 1] is CreatureCardVisual) {
                     CreatureCardVisual soul = targets[spawnIndex - 1] as CreatureCardVisual;
 
                     tokenCard.RPCSetCardStats(PhotonTargets.All, soul.essenceCost, soul.attack, soul.size, soul.health);
@@ -1327,9 +1339,39 @@ public abstract class SpecialAbility {
     public void CreateVFX() {
 
         for (int i = 0; i < targets.Count; i++) {
-            GameObject atkVFX = PhotonNetwork.Instantiate(abilityVFX, targets[i].transform.position, Quaternion.identity, 0) as GameObject;
+            GameObject atkVFX;
 
-            source.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, targets[i], moveingVFX);
+            if (movingVFX) {
+                atkVFX = PhotonNetwork.Instantiate(abilityVFX, source.transform.position, Quaternion.identity, 0) as GameObject;
+            }
+            else {
+                atkVFX = PhotonNetwork.Instantiate(abilityVFX, targets[i].transform.position, Quaternion.identity, 0) as GameObject;
+            }
+
+
+            CardVFX vfx = atkVFX.GetComponent<CardVFX>();
+
+            if (targets[i] is CreatureCardVisual) {
+                CreatureCardVisual soul = targets[i] as CreatureCardVisual;
+
+                if (vfx.photonView.isMine) {
+                    if (movingVFX) {
+                        atkVFX.transform.SetParent(source.transform, false);
+                        atkVFX.transform.localPosition = Vector3.zero;
+                        vfx.target = soul.battleToken.incomingEffectLocation;
+                        vfx.beginMovement = true;
+                    }
+                    else {
+                        atkVFX.transform.SetParent(soul.battleToken.incomingEffectLocation, false);
+                        atkVFX.transform.localPosition = Vector3.zero;
+                    }
+                }
+            }
+
+            vfx.RPCSetVFXAciveState(PhotonTargets.Others, true);
+
+
+            //source.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, targets[i], moveingVFX);
         }
     }
 
@@ -1356,6 +1398,7 @@ public abstract class SpecialAbility {
         public DeriveStatsFromWhom deriveStatsFromWhom;
         public CardStats targetStat;
         public bool invertValue;
+        public bool spellDamage;
 
         public StatAdjustment() {
 
@@ -1403,6 +1446,13 @@ public abstract class SpecialAbility {
 
             source.RPCUpdateStatAdjustment(PhotonTargets.Others, this, source, value);
 
+        }
+
+        public void ModifyValue(int modifierValue) {
+
+            value += modifierValue;
+
+            source.RPCUpdateStatAdjustment(PhotonTargets.Others, this, source, value);
         }
 
         public static List<StatAdjustment> CopyStats(CreatureCardVisual target) {
@@ -1559,7 +1609,7 @@ public abstract class SpecialAbility {
         //Special Attribute
         public SpecialAttribute.AttributeType grantedSpecialAttributeType;
         public int grantedSpecialAttributeValue;
-        
+
 
     }
 

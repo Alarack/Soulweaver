@@ -190,16 +190,16 @@ public class CreatureCardVisual : CardVisual {
         }
     }
 
-    public int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
+    //public int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
 
-        for (int i = 0; i < specialAttributes.Count; i++) {
-            if (specialAttributes[i].attributeType == attribute && !specialAttributes[i].suspended) {
-                return specialAttributes[i].attributeValue;
-            }
-        }
+    //    for (int i = 0; i < specialAttributes.Count; i++) {
+    //        if (specialAttributes[i].attributeType == attribute && !specialAttributes[i].suspended) {
+    //            return specialAttributes[i].attributeValue;
+    //        }
+    //    }
 
-        return 0;
-    }
+    //    return 0;
+    //}
 
     public int CalcProtection(int value) {
 

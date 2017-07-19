@@ -387,6 +387,19 @@ public static class Finder {
                 
         }
 
+        return result;
+    }
+
+    public static int FindTotalSpellDamage() {
+        int result = 0;
+
+        List<CardVisual> cards = FindAllCardsInZone(DeckType.Battlefield, OwnerConstraints.Mine);
+
+        for (int i = 0; i < cards.Count; i++) {
+            result += cards[i].CheckSpecialAttributes(SpecialAttribute.AttributeType.SpellDamage);
+        }
+
+
 
         return result;
     }

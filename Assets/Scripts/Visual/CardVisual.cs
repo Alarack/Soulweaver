@@ -264,6 +264,17 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
+    public int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
+
+        for (int i = 0; i < specialAttributes.Count; i++) {
+            if (specialAttributes[i].attributeType == attribute && !specialAttributes[i].suspended) {
+                return specialAttributes[i].attributeValue;
+            }
+        }
+
+        return 0;
+    }
+
     #region Private Methods
 
 
