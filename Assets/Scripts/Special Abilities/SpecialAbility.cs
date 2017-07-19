@@ -48,7 +48,8 @@ public abstract class SpecialAbility {
 
     public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
 
-
+    [SerializeField]
+    private List<StatAdjustment> activeStatAdjustments = new List<StatAdjustment>();
 
     //Secondary Effect
     //public List<EffectOnTarget> secondaryEffectOnTarget = new List<EffectOnTarget>();
@@ -67,7 +68,7 @@ public abstract class SpecialAbility {
         SourceOfEffect
     }
 
-    public ApplyEffectToWhom applyEffectToWhom;
+    public ApplyEffectToWhom processTriggerOnWhom;
 
     public enum GainedOrLost {
         Gained,
@@ -167,6 +168,7 @@ public abstract class SpecialAbility {
             EventData data = new EventData();
 
             data.AddMonoBehaviour("Source", source);
+            data.AddString("AbilityName", abilityName);
 
             Grid.EventManager.SendEvent(GameEvent.TriggerSecondaryEffect, data);
         }
@@ -233,19 +235,33 @@ public abstract class SpecialAbility {
             //Debug.Log("Applying stats");
 
             card.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
+
+            activeStatAdjustments.Add(statAdjustments[i]);
         }
     }
 
     protected void RemoveStatAdjustments(CardVisual card) {
-        for (int i = 0; i < statAdjustments.Count; i++) {
-            card.RPCRemoveStatAdjustment(PhotonTargets.All, statAdjustments[i].uniqueID, source);
+        for (int i = 0; i < activeStatAdjustments.Count; i++) {
+            card.RPCRemoveStatAdjustment(PhotonTargets.All, activeStatAdjustments[i].uniqueID, source);
+            //Debug.Log("Removing stat adjustment with ID " + activeStatAdjustments[i].uniqueID);
+            
         }
+        activeStatAdjustments.Clear();
 
     }
 
 
 
     public virtual void RegisterListeners() {
+
+        if (!source.photonView.isMine)
+            return;
+
+
+        if(source.primaryCardType == CardType.Domain) {
+            Grid.EventManager.RegisterListener(GameEvent.UserActivatedDomainAbility, OnUserActivation);
+        }
+
 
 
         if (duration == EffectDuration.EndOfTurn && source.photonView.isMine) {
@@ -286,6 +302,8 @@ public abstract class SpecialAbility {
         if (trigger.Contains(AbilityActivationTrigger.TurnEnds))
             Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEnd);
 
+        if (trigger.Contains(AbilityActivationTrigger.Slain))
+            Grid.EventManager.RegisterListener(GameEvent.CreatureDied, OnCreatureSlain);
 
     }
 
@@ -300,6 +318,9 @@ public abstract class SpecialAbility {
         if (!source.owner == player) {
             return;
         }
+
+        if (!source.photonView.isMine)
+            return;
 
         Debug.Log("End of turn effect is triggering");
         RemoveEffect(targets);
@@ -316,12 +337,93 @@ public abstract class SpecialAbility {
 
     }
 
+    protected void OnCreatureSlain(EventData data) {
+        CardVisual deadCard = data.GetMonoBehaviour("DeadCard") as CardVisual;
+        CardVisual causeOfdeath = data.GetMonoBehaviour("CauseOfDeath") as CardVisual;
+
+
+        if (!source.photonView.isMine)
+            return;
+
+
+        CardVisual effectTarget = null;
+
+        switch (processTriggerOnWhom) {
+            case ApplyEffectToWhom.TriggeringCard:
+                effectTarget = deadCard;
+                break;
+
+            case ApplyEffectToWhom.CauseOfTrigger:
+                effectTarget = causeOfdeath;
+                break;
+
+            case ApplyEffectToWhom.Source:
+                effectTarget = source;
+                break;
+        }
+
+
+        if (!ManageConstraints(effectTarget)) {
+            return;
+        }
+
+
+        if (this is LogicTargetedAbility && source.photonView.isMine) {
+            ProcessEffect(effectTarget);
+        }
+
+        ActivateTargeting();
+
+
+    }
+
+
+
     protected void OnEffectComplete(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Source") as CardVisual;
+        string triggeringAbilityName = data.GetString("AbilityName");
 
         if (card != source)
             return;
 
+        List<CardVisual> primaryTargets = Finder.FindSpecialAbilityOnCardByName(card, triggeringAbilityName).targets;
+
+
+        if (triggerConstraints.triggerbySpecificAbility && triggerConstraints.triggerablePrimaryAbilityName != triggeringAbilityName)
+            return;
+
+
+        if (!source.photonView.isMine)
+            return;
+
+
+        if (this is LogicTargetedAbility) {
+            LogicTargetedAbility lta = this as LogicTargetedAbility;
+
+            if (lta.processEffectOnPrimaryEffectTargets) {
+                lta.ProcessEffect(primaryTargets);
+            }
+            else {
+                ProcessEffect(source);
+            }
+        }
+
+        ActivateTargeting();
+
+    }
+
+
+    protected void OnUserActiveDomainAbility(EventData data) {
+        if (!source.photonView.isMine)
+            return;
+
+        DomainTile tile = data.GetMonoBehaviour("Tile") as DomainTile;
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+
+        if (!ManageConstraints(card)) {
+            return;
+        }
 
         if (this is LogicTargetedAbility) {
             if (source.photonView.isMine) {
@@ -332,11 +434,16 @@ public abstract class SpecialAbility {
 
         ActivateTargeting();
 
+
     }
+
 
 
     protected void OnUserActivation(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+        if (!source.photonView.isMine)
+            return;
 
         if (!ManageConstraints(card)) {
             return;
@@ -457,24 +564,6 @@ public abstract class SpecialAbility {
     }
 
 
-    protected void OnCombat(EventData data) {
-        CardVisual attacker = data.GetMonoBehaviour("Attacker") as CardVisual;
-        CardVisual defender = data.GetMonoBehaviour("Defender") as CardVisual;
-
-
-        //if (!ManageConstraints(card)) {
-        //    return;
-        //}
-
-        //if (this is LogicTargetedAbility && source.photonView.isMine) {
-        //    ProcessEffect(card);
-        //}
-
-        //ActivateTargeting();
-
-
-    }
-
 
 
     protected void OnCreatureStatAdjusted(EventData data) {
@@ -483,16 +572,19 @@ public abstract class SpecialAbility {
         CardVisual target = data.GetGameObject("Target").GetComponent<CardVisual>();
         CardVisual sourceOfAdjustment = data.GetMonoBehaviour("Source") as CardVisual;
 
+
+        if (!source.photonView.isMine)
+            return;
+
+
         if (!CheckCreatureStatAltered(triggerConstraints, stat, value, target))
             return;
 
-        if (!ManageConstraints(target)) {
-            return;
-        }
+
 
         CardVisual effectTarget = null;
 
-        switch (applyEffectToWhom) {
+        switch (processTriggerOnWhom) {
             case ApplyEffectToWhom.TriggeringCard:
                 effectTarget = target;
                 break;
@@ -505,6 +597,13 @@ public abstract class SpecialAbility {
                 effectTarget = source;
                 break;
         }
+
+
+        if (!ManageConstraints(effectTarget)) {
+            return;
+        }
+
+
 
         if (this is LogicTargetedAbility && source.photonView.isMine) {
             ProcessEffect(effectTarget);
@@ -726,6 +825,12 @@ public abstract class SpecialAbility {
 
                 break;
 
+            case ConstraintType.WhosTurn:
+                if (!CheckForPlayersTurn(constraint.whosTurn))
+                    return null;
+
+                break;
+
             case ConstraintType.StatMaximum:
                 return CreatureStatConstraint(constraint.maxStats, false, target);
 
@@ -774,6 +879,30 @@ public abstract class SpecialAbility {
         else {
             return false;
         }
+
+    }
+
+    private bool CheckForPlayersTurn(OwnerConstraints playersTurn) {
+
+        switch (playersTurn) {
+            case OwnerConstraints.Mine:
+                if (source.owner.myTurn)
+                    return true;
+                else
+                    return false;
+
+
+            case OwnerConstraints.Theirs:
+                if (!source.owner.myTurn)
+                    return true;
+                else
+                    return false;
+
+            default:
+
+                return false;
+        }
+
 
     }
 
@@ -1080,10 +1209,21 @@ public abstract class SpecialAbility {
 
             string prefabName = Deck._allCards.GetCardPrefabNameByType(spawnConstraints.spawnCardType);
 
+            Debug.Log(prefabName);
+
             CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(tokenData, prefabName, GetDeckFromType(spawnConstraints.spawnTokenLocation, source));
             tokenCard.isToken = true;
 
             tokens.Add(tokenCard);
+
+            if (targetConstraints.copyTargetsStatsOnly) {
+                if(targets[spawnIndex -1] is CreatureCardVisual) {
+                    CreatureCardVisual soul = targets[spawnIndex - 1] as CreatureCardVisual;
+
+                    tokenCard.RPCSetCardStats(PhotonTargets.All, soul.essenceCost, soul.attack, soul.size, soul.health);
+                }
+            }
+
 
             spawnIndex++;
         }
@@ -1341,6 +1481,7 @@ public abstract class SpecialAbility {
 
         //public List<OwnerConstraints> owner = new List<OwnerConstraints>();
         public OwnerConstraints owner;
+        public OwnerConstraints whosTurn;
         public List<CardType> primaryType = new List<CardType>();
         public bool notPrimaryType;
         public List<CardType> additionalType = new List<CardType>();
@@ -1371,6 +1512,11 @@ public abstract class SpecialAbility {
         ////OnCombat
         //public AttackerOrDefender targetAttackerOrDefender;
 
+        //Secondary Effect
+        public bool triggerbySpecificAbility;
+        public string triggerablePrimaryAbilityName;
+
+
 
         //Creature Stat Adjusted
         public GainedOrLost gainedOrLost;
@@ -1385,6 +1531,7 @@ public abstract class SpecialAbility {
 
         //Spawn Token
         public bool copyTargets;
+        public bool copyTargetsStatsOnly;
         public string spawnableTokenDataName;
         public DeckType spawnTokenLocation;
         public CardType spawnCardType;

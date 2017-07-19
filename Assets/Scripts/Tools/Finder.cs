@@ -44,7 +44,7 @@ public static class Finder {
     public static List<CardVisual> FindAllDamagedOrUndamagedCreatures(bool damaged) {
         List<CardVisual> results = new List<CardVisual>();
 
-        List<CardVisual> allCards = FindAllCardOfType(CardType.Soul);
+        List<CardVisual> allCards = FindAllCardsOfType(CardType.Soul);
 
         for (int i = 0; i < allCards.Count; i++) {
             CreatureCardVisual soul = allCards[i] as CreatureCardVisual;
@@ -91,7 +91,7 @@ public static class Finder {
     private static Dictionary<int, int> StatCollector(CardStats stat, DeckType zone) {
         Dictionary<int, int> results = new Dictionary<int, int>();
 
-        List<CardVisual> cardsToSearch = FindAllCardOfType(CardType.Soul, zone);
+        List<CardVisual> cardsToSearch = FindAllCardsOfType(CardType.Soul, zone);
 
         switch (stat) {
             case CardStats.Cost:
@@ -154,7 +154,7 @@ public static class Finder {
         return cards;
     }
 
-    public static List<CardVisual> FindAllCardOfType(CardType type, DeckType zone = DeckType.None) {
+    public static List<CardVisual> FindAllCardsOfType(CardType type, DeckType zone = DeckType.None) {
         List<CardVisual> cardsToSearch = new List<CardVisual>();
         if (zone == DeckType.None)
             cardsToSearch = Deck._allCards.activeCards;
@@ -171,6 +171,26 @@ public static class Finder {
         }
 
         return sortedcards;
+    }
+
+    public static List<CardVisual> FindAllCardsOfType(CardType type, DeckType zone, OwnerConstraints ownerConstraints) {
+        List<CardVisual> cards = FindAllCardsOfType(type, zone);
+
+        List<CardVisual> sortedcards = SortCardsByOwner(cards, ownerConstraints);
+
+        return sortedcards;
+    }
+
+
+    public static List<CardVisual> FindAllCardsOfType(List<CardVisual> cardsToSearch, CardType type) {
+        List<CardVisual> results = new List<CardVisual>();
+
+        for (int i = 0; i <cardsToSearch.Count; i++) {
+            if (cardsToSearch[i].primaryCardType == type)
+                results.Add(cardsToSearch[i]);
+        }
+
+        return results;
     }
 
     public static List<CardVisual> FindAllCardsInZone(DeckType zone, OwnerConstraints ownerConstraints) {
@@ -196,6 +216,14 @@ public static class Finder {
         List<CardVisual> sortedCards2 = SortCardsByOwner(sortedCards1, ownerConstraints);
 
         return sortedCards2;
+    }
+
+    public static List<CardVisual> FindAllCardsInZone(DeckType zone, Keywords keyWord, OwnerConstraints ownerConstraints, CardType cardType) {
+        List<CardVisual> cards = FindAllCardsInZone(zone, keyWord, ownerConstraints);
+
+        List<CardVisual> sortedCards = FindAllCardsOfType(cards, cardType);
+
+        return sortedCards;
     }
 
     public static List<CardVisual> FindAllCardsWithKeyword(Keywords keyword, List<CardVisual> cardsToSort = null) {
@@ -346,6 +374,21 @@ public static class Finder {
 
         return null;
 
+    }
+
+    public static SpecialAbility FindSpecialAbilityOnCardByName(CardVisual source, string abilityName) {
+        SpecialAbility result = null;
+
+        for(int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == abilityName) {
+                result = source.specialAbilities[i];
+                break;
+            }
+                
+        }
+
+
+        return result;
     }
 
 

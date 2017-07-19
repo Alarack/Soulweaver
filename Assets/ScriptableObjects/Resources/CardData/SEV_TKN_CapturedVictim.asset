@@ -9,25 +9,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: __TestSubject1
+  m_Name: SEV_TKN_CapturedVictim
   m_EditorClassIdentifier: 
-  cardID: 0
-  cardName: Test Subject 01
-  cardText: test description
-  cardCost: 1
+  cardID: 20015
+  cardName: Captured Victim
+  cardText: 
+  cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
-  attackEffect: 
+  attackEffect: VFX_Ball_Lightning
   movingVFX: 1
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 0b000000
-  subTypes: 05000000
-  keywords: 
+  attunements: 
+  subTypes: 06000000
+  keywords: 20000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes: []
-  attack: 1
-  size: 0
-  health: 5
+  attack: 2
+  size: 2
+  health: 3

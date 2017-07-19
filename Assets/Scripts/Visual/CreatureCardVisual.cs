@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SoulWeaver;
 
 [System.Serializable]
 public class CreatureCardVisual : CardVisual {
@@ -128,17 +129,17 @@ public class CreatureCardVisual : CardVisual {
 
             case Constants.CardStats.Health:
 
-                int prot = CheckSpecialAttributes(SpecialAttribute.AttributeType.Protection);
+                //int prot = CheckSpecialAttributes(SpecialAttribute.AttributeType.Protection);
 
-                if (prot > 0) {
+                //if (prot > 0) {
 
-                    if(value < 0) {
-                        value += prot;
+                //    if(value < 0) {
+                //        value += prot;
 
-                        if (value > 0)
-                            value = 0;
-                    }
-                }
+                //        if (value > 0)
+                //            value = 0;
+                //    }
+                //}
 
                 health += value;
 
@@ -152,24 +153,18 @@ public class CreatureCardVisual : CardVisual {
                 TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
 
 
-                if(value < 0) {
+                if(value < 1) {
                     //RPCShowDamage(PhotonTargets.Others, value);
-
-
-
-
-                    CheckDeath(source.photonView.viewID, false);
-
-
                     ShowDamage(value);
+                }
+
+                if(value < 0) {
+                    CheckDeath(source.photonView.viewID, false);
                 }
 
                 break;
         }
     }
-
-
-
 
     public override void ActivateGlow(Color32 color) {
         if(currentDeck.decktype == Constants.DeckType.Hand)
@@ -195,15 +190,9 @@ public class CreatureCardVisual : CardVisual {
         }
     }
 
+    public int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
 
-
-
-
-    #region Private Methods
-
-    private int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
-
-        for(int i =  0; i < specialAttributes.Count; i++) {
+        for (int i = 0; i < specialAttributes.Count; i++) {
             if (specialAttributes[i].attributeType == attribute && !specialAttributes[i].suspended) {
                 return specialAttributes[i].attributeValue;
             }
@@ -212,6 +201,25 @@ public class CreatureCardVisual : CardVisual {
         return 0;
     }
 
+    public int CalcProtection(int value) {
+
+        int prot = CheckSpecialAttributes(SpecialAttribute.AttributeType.Protection);
+
+        if (prot > 0) {
+
+            if (value < 0) {
+                value += prot;
+
+                if (value > 0)
+                    value = 0;
+            }
+        }
+
+        return value;
+    }
+
+
+    #region Private Methods
 
 
     protected override void KeywordHelper(Constants.Keywords keyword, bool add) {
@@ -222,6 +230,11 @@ public class CreatureCardVisual : CardVisual {
                 if (add) {
                     cardImage.color = exhaustedColor;
                     battleFrame.color = exhaustedColor;
+
+                    if (keywords.Contains(Constants.Keywords.Interceptor)) {
+                        ToggleKeyword(false, (int)Constants.Keywords.Interceptor);
+                    }
+
                 }
                 else {
                     cardImage.color = Color.white;
@@ -274,6 +287,13 @@ public class CreatureCardVisual : CardVisual {
             Debug.Log(causeOfDeath.cardData.cardName + " has killed " + cardData.cardName);
             //currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
             currentDeck.TransferCard(photonView.viewID, owner.activeCrypt.GetComponent<Deck>().photonView.viewID);
+
+            EventData data = new EventData();
+
+            data.AddMonoBehaviour("DeadCard", this);
+            data.AddMonoBehaviour("CauseOfDeath", causeOfDeath);
+
+            Grid.EventManager.SendEvent(Constants.GameEvent.CreatureDied, data);
         }
 
     }
