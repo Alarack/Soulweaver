@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: OTH_CorpseFeeder
+  m_Name: OTH_TKN_DistendedRipper
   m_EditorClassIdentifier: 
-  cardID: 30001
-  cardName: Corpse Feeder
-  cardText: Deathwatch [+0/+1/+1]. Transform [When Corpse Feeder reaches size 4 become
-    a Distended Ripper]
-  cardCost: 2
+  cardID: 30002
+  cardName: Distended Ripper
+  cardText: Volatile [3]. Bloodthisrt [Gain +0/+1/+1]  Transform [When Distended Ripper
+    reaches size 8 become a Bloated Horror]
+  cardCost: 0
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
@@ -24,14 +24,14 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 0b00000010000000
   subTypes: 18000000
-  keywords: 1d00000000000000
+  keywords: 00000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 01000000
+  - trigger: 08000000
     duration: 1
     triggerConstraints:
-      types: 0400000005000000
+      types: 0b000000
       owner: 0
       primaryType: 
       notPrimaryType: 0
@@ -43,11 +43,11 @@ MonoBehaviour:
       notKeyword: 0
       attunement: 
       notAttunement: 0
-      currentZone: 04000000
+      currentZone: 
       notCurrentZone: 0
-      previousZone: 05000000
+      previousZone: 
       notPreviousZone: 0
-      creatureStatus: 
+      creatureStatus: 01000000
       resources: 
       minStats: []
       maxStats: []
@@ -57,8 +57,8 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
-      gainedOrLost: 0
-      statChanged: 0
+      gainedOrLost: 1
+      statChanged: 4
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
     effect: 1
-    abilityName: Deathwatch
+    abilityName: Bloodthirst
     effectValue: 0
     source: {fileID: 0}
     targets: []
@@ -271,7 +271,7 @@ MonoBehaviour:
   - trigger: 08000000
     duration: 1
     triggerConstraints:
-      types: 0400000009000000
+      types: 040000000a000000
       owner: 0
       primaryType: 
       notPrimaryType: 0
@@ -289,9 +289,10 @@ MonoBehaviour:
       notPreviousZone: 0
       creatureStatus: 
       resources: 
-      minStats:
+      minStats: []
+      maxStats:
       - stat: 3
-        value: 4
+        value: 8
         nonStacking: 0
         temporary: 0
         source: {fileID: 0}
@@ -300,7 +301,6 @@ MonoBehaviour:
         deriveStatsFromWhom: 0
         targetStat: 0
         invertValue: 0
-      maxStats: []
       mostStat: 0
       leastStat: 0
       thisCardOnly: 1
@@ -420,7 +420,7 @@ MonoBehaviour:
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
-      spawnableTokenDataName: OTH_TKN_DistendedRipper
+      spawnableTokenDataName: Bloated Horror
       spawnTokenLocation: 5
       spawnCardType: 1
       numberOfSpawns: 1
@@ -718,7 +718,10 @@ MonoBehaviour:
     applyEffectToWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
-  specialAttributes: []
-  attack: 1
-  size: 1
-  health: 2
+  specialAttributes:
+  - attributeType: 2
+    attributeValue: 3
+    suspended: 0
+  attack: 3
+  size: 4
+  health: 5
