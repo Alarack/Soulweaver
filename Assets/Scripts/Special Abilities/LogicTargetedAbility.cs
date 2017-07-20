@@ -59,27 +59,14 @@ public class LogicTargetedAbility : SpecialAbility {
             case LogicTargeting.NumberOfValidTargets:
                 validTargets = GatherValidTargets();
 
-
-
-                if (abilityName == "RoundBlaze") {
-                    Debug.Log("Valid Targets: " + validTargets.Count);
-
-                    Debug.Log(numberofTargets + " before constraint");
-                }
-
                 int tempTargetNum = numberofTargets;
 
                 if (tempTargetNum > validTargets.Count) {
                     tempTargetNum = validTargets.Count;
                 }
 
-                if (abilityName == "RoundBlaze")
-                    Debug.Log(numberofTargets + " after constraint");
-
                 for (int i = 0; i < tempTargetNum; i++) {
 
-                    if (abilityName == "RoundBlaze")
-                        Debug.Log("Valid Targets: " + validTargets[i].cardData.cardName);
 
                     Effect(validTargets[i]);
                 }
@@ -99,9 +86,6 @@ public class LogicTargetedAbility : SpecialAbility {
             case LogicTargeting.OnlyTargetTriggeringCard:
                 if (CheckConstraints(targetConstraints, card) != null) {
                     Effect(card);
-                    if (abilityName == "RapidNecro") {
-                        Debug.Log("Effect processed");
-                    }
 
                 }
                     

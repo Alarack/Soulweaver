@@ -113,6 +113,8 @@ public abstract class SpecialAbility {
         //ID = IDFactory.GenerateID();
 
         //Debug.Log(source.gameObject.name + " has a special ability with ID " + ID);
+
+
     }
 
     protected virtual void Effect(CardVisual card) {
@@ -889,7 +891,6 @@ public abstract class SpecialAbility {
             case ConstraintType.Keyword:
                 if (constraint.notKeyword) {
                     if (DoesListContainAny<Keywords>(constraint.keyword, target.keywords)) {
-                        Debug.Log(target.cardData.cardName + " has " + constraint.keyword[0].ToString());
                         return null;
                     }
 
@@ -1305,8 +1306,6 @@ public abstract class SpecialAbility {
 
             tokens.Add(tokenCard);
 
-            Debug.Log("spawning " + tokenData.cardName + "From " + abilityName);
-
             if (targetConstraints.copyTargetsStatsOnly) {
                 if (targets[spawnIndex - 1] is CreatureCardVisual) {
                     CreatureCardVisual soul = targets[spawnIndex - 1] as CreatureCardVisual;
@@ -1358,8 +1357,6 @@ public abstract class SpecialAbility {
     public void GrantKeywords(CardVisual target, List<Keywords> keywords) {
 
         for (int i = 0; i < keywords.Count; i++) {
-
-            Debug.Log("Granting " + keywords[i] + " to " + target.cardData.cardName);
 
             target.RPCAddKeyword(PhotonTargets.All, keywords[i], true);
         }
