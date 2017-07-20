@@ -270,8 +270,8 @@ public abstract class SpecialAbility {
             return;
 
 
-        if (source.primaryCardType == CardType.Domain) {
-            Grid.EventManager.RegisterListener(GameEvent.UserActivatedDomainAbility, OnUserActivation);
+        if (source.primaryCardType == CardType.Domain && trigger.Contains(AbilityActivationTrigger.UserActivated)) {
+            Grid.EventManager.RegisterListener(GameEvent.UserActivatedDomainAbility, OnUserActiveDomainAbility);
         }
 
 
@@ -286,10 +286,10 @@ public abstract class SpecialAbility {
         }
 
         if (triggerConstraints.resetCountAtTurnEnd && triggerConstraints.requireMultipleTriggers)
-            Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEnd);
+            Grid.EventManager.RegisterListener(GameEvent.TurnEnded, ResetCounterOnTurnEnd);
 
         if (triggerConstraints.oncePerTurn)
-            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStart);
+            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, RefreshOncePerTurnCounter);
 
 
 
@@ -313,6 +313,9 @@ public abstract class SpecialAbility {
 
         if (trigger.Contains(AbilityActivationTrigger.TurnEnds))
             Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEnd);
+
+        if (trigger.Contains(AbilityActivationTrigger.TurnStarts))
+            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStart);
 
         if (trigger.Contains(AbilityActivationTrigger.Slain))
             Grid.EventManager.RegisterListener(GameEvent.CreatureDied, OnCreatureSlain);
@@ -398,12 +401,17 @@ public abstract class SpecialAbility {
         if (card != source)
             return;
 
+
+
+
         List<CardVisual> primaryTargets = Finder.FindSpecialAbilityOnCardByName(card, triggeringAbilityName).targets;
 
 
         if (triggerConstraints.triggerbySpecificAbility && triggerConstraints.triggerablePrimaryAbilityName != triggeringAbilityName)
             return;
 
+
+        //Debug.Log("triggering a secondary effect from " + source.cardData.cardName);
 
         if (!source.photonView.isMine)
             return;
@@ -433,6 +441,9 @@ public abstract class SpecialAbility {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
 
 
+        if (card != source)
+            return;
+
         if (!ManageConstraints(card)) {
             return;
         }
@@ -440,7 +451,7 @@ public abstract class SpecialAbility {
         if (this is LogicTargetedAbility) {
             if (source.photonView.isMine) {
 
-                ProcessEffect(source);
+                ProcessEffect(card);
             }
         }
 
@@ -464,16 +475,19 @@ public abstract class SpecialAbility {
         if (this is LogicTargetedAbility) {
             if (source.photonView.isMine) {
 
-                ProcessEffect(source);
+                ProcessEffect(card);
             }
         }
 
         ActivateTargeting();
     }
 
-
-    protected void OnTurnStart(EventData data) {
+    protected void RefreshOncePerTurnCounter(EventData data) {
         Player player = data.GetMonoBehaviour("Player") as Player;
+
+        if (!source.photonView.isMine)
+            return;
+
 
         if (!source.owner == player) {
             return;
@@ -483,11 +497,59 @@ public abstract class SpecialAbility {
             triggerConstraints.triggeredThisTurn = false;
         }
 
+    }
+
+
+    protected void OnTurnStart(EventData data) {
+        Player player = data.GetMonoBehaviour("Player") as Player;
+
+        if (!source.photonView.isMine)
+            return;
+
+
+        if (!source.owner == player) {
+            return;
+        }
+
+        if (triggerConstraints.oncePerTurn) {
+            triggerConstraints.triggeredThisTurn = false;
+        }
+
+        if (!ManageConstraints(source)) {
+            return;
+        }
+
+        if (this is LogicTargetedAbility) {
+            if (source.photonView.isMine) {
+                ProcessEffect(source);
+            }
+        }
+
+
+    }
+
+    protected void ResetCounterOnTurnEnd(EventData data) {
+        Player player = data.GetMonoBehaviour("Player") as Player;
+
+        if (!source.photonView.isMine)
+            return;
+
+
+        if (!source.owner == player) {
+            return;
+        }
+
+        if (triggerConstraints.resetCountAtTurnEnd)
+            triggerConstraints.counter = 0;
 
     }
 
     protected void OnTurnEnd(EventData data) {
         Player player = data.GetMonoBehaviour("Player") as Player;
+
+        if (!source.photonView.isMine)
+            return;
+
 
         if (!source.owner == player) {
             return;
@@ -504,10 +566,8 @@ public abstract class SpecialAbility {
 
         if (this is LogicTargetedAbility) {
             if (source.photonView.isMine) {
-
                 ProcessEffect(source);
             }
-
         }
 
 
@@ -526,7 +586,7 @@ public abstract class SpecialAbility {
         if (this is LogicTargetedAbility) {
             if (source.photonView.isMine) {
 
-                ProcessEffect(source);
+                ProcessEffect(card);
             }
 
         }
@@ -667,6 +727,7 @@ public abstract class SpecialAbility {
 
         if (CheckConstraints(triggerConstraints, triggeringCard) == null) {
             //Debug.Log("Trigger is not in place");
+
             return false;
         }
 
@@ -827,8 +888,12 @@ public abstract class SpecialAbility {
 
             case ConstraintType.Keyword:
                 if (constraint.notKeyword) {
-                    if (DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
+                    if (DoesListContainAny<Keywords>(constraint.keyword, target.keywords)) {
+                        Debug.Log(target.cardData.cardName + " has " + constraint.keyword[0].ToString());
                         return null;
+                    }
+
+                        
                 }
                 else {
                     if (!DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
@@ -886,6 +951,7 @@ public abstract class SpecialAbility {
         constraints.counter++;
 
         if (constraints.counter >= constraints.triggersRequired) {
+            constraints.counter = 0;
             return true;
         }
         else {
@@ -1050,6 +1116,13 @@ public abstract class SpecialAbility {
                         }
 
                         break;
+
+                    case CardStats.Cost:
+                        if (soul.essenceCost < stat.value) {
+                            return null;
+                        }
+
+                        break;
                 }
             }
         }
@@ -1077,14 +1150,18 @@ public abstract class SpecialAbility {
                         }
 
                         break;
+
+                    case CardStats.Cost:
+                        if (soul.essenceCost > stat.value) {
+                            return null;
+                        }
+
+                        break;
                 }
             }
 
 
         }
-
-
-
 
         return result;
     }
@@ -1221,12 +1298,14 @@ public abstract class SpecialAbility {
 
             string prefabName = Deck._allCards.GetCardPrefabNameByType(spawnConstraints.spawnCardType);
 
-            Debug.Log(prefabName);
+            //Debug.Log(prefabName);
 
             CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(tokenData, prefabName, GetDeckFromType(spawnConstraints.spawnTokenLocation, source));
             tokenCard.isToken = true;
 
             tokens.Add(tokenCard);
+
+            Debug.Log("spawning " + tokenData.cardName + "From " + abilityName);
 
             if (targetConstraints.copyTargetsStatsOnly) {
                 if (targets[spawnIndex - 1] is CreatureCardVisual) {
@@ -1258,6 +1337,9 @@ public abstract class SpecialAbility {
             case DeckType.SoulCrypt:
                 return card.owner.activeCrypt.GetComponent<Deck>();
 
+            case DeckType.Void:
+                return Deck._void;
+
             case DeckType.None:
                 return null;
 
@@ -1276,6 +1358,9 @@ public abstract class SpecialAbility {
     public void GrantKeywords(CardVisual target, List<Keywords> keywords) {
 
         for (int i = 0; i < keywords.Count; i++) {
+
+            Debug.Log("Granting " + keywords[i] + " to " + target.cardData.cardName);
+
             target.RPCAddKeyword(PhotonTargets.All, keywords[i], true);
         }
 

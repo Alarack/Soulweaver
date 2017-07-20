@@ -26,10 +26,22 @@ public class CardIDs {
         FusedSoul_1000 = 1000,
         AmorphousVestige = 1001,
 
-        //Cult of Rillock
+        //Cult of Rillock 10000
         COR_DesolateWaste = 10000,
+        COR_DOM_EssenceBurn = 10001,
+        COR_DOM_Remnants = 10002,
+        COR_DOM_GraveKindling = 10003,
+        COR_TNK_Ashling = 10004,
+        COR_TNK_Ember = 10005,
+        COR_DOM_RapidNecromancy = 10006,
+        COR_DOM_Boneyard = 10007,
+        COR_DOM_Reanimate = 10008,
+        COR_TKN_Bonegolem = 10009,
+        COR_DOM_BlazeGoRound = 10010,
+        COR_DOM_RecklessBlaze = 10011,
+        COR_DOM_Churn = 10012,
 
-        //The Severed
+        //The Severed 20000
         SEV_SoulTorturer = 20000,
         SEV_SubverterOfIntentions = 20001,
         SEV_GrishamTwistedReveler = 20002,
@@ -47,13 +59,31 @@ public class CardIDs {
         SEV_DOM_Agonize = 20014,
         SEV_TNK_CapturedVictim = 20015,
 
-        //The Realm Keepers
+        //The Realm Keepers 30000
         RLM_DrillmanGorman = 30000,
         RLM_TKN_Firebolt = 30001,
 
-        //The Others
+        //The Others 40000
         OTH_CorpseFeeder = 40000,
         OTH_TKN_DistendedRipper = 40001,
+
+        //Children of Illia 50000
+
+
+
+
+        //Blood of Nok 60000
+
+
+        //The Wardens 70000
+
+
+
+
+
+        //Neutral 80000
+        NEU_SkeletalMinions = 80000,
+
     }
 
 

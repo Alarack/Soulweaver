@@ -29,6 +29,14 @@ public class LogicTargetedAbility : SpecialAbility {
 
 
 
+    public override void Initialize(CardVisual owner) {
+        base.Initialize(owner);
+
+        if (abilityName == "RoundBlaze")
+            Debug.Log(numberofTargets + " during init");
+    }
+
+
     public override bool ProcessEffect(CardVisual card) {
 
 
@@ -51,11 +59,28 @@ public class LogicTargetedAbility : SpecialAbility {
             case LogicTargeting.NumberOfValidTargets:
                 validTargets = GatherValidTargets();
 
-                if (numberofTargets > validTargets.Count) {
-                    numberofTargets = validTargets.Count;
+
+
+                if (abilityName == "RoundBlaze") {
+                    Debug.Log("Valid Targets: " + validTargets.Count);
+
+                    Debug.Log(numberofTargets + " before constraint");
                 }
 
-                for (int i = 0; i < numberofTargets; i++) {
+                int tempTargetNum = numberofTargets;
+
+                if (tempTargetNum > validTargets.Count) {
+                    tempTargetNum = validTargets.Count;
+                }
+
+                if (abilityName == "RoundBlaze")
+                    Debug.Log(numberofTargets + " after constraint");
+
+                for (int i = 0; i < tempTargetNum; i++) {
+
+                    if (abilityName == "RoundBlaze")
+                        Debug.Log("Valid Targets: " + validTargets[i].cardData.cardName);
+
                     Effect(validTargets[i]);
                 }
 
@@ -72,8 +97,14 @@ public class LogicTargetedAbility : SpecialAbility {
                 break;
 
             case LogicTargeting.OnlyTargetTriggeringCard:
-                if (CheckConstraints(targetConstraints, card) != null)
+                if (CheckConstraints(targetConstraints, card) != null) {
                     Effect(card);
+                    if (abilityName == "RapidNecro") {
+                        Debug.Log("Effect processed");
+                    }
+
+                }
+                    
 
                 break;
 

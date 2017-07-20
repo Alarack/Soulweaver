@@ -240,6 +240,13 @@ public class Deck : Photon.MonoBehaviour {
                     }
 
                     break;
+
+                case DeckType.SoulCrypt:
+
+                    RPCTransferCard(PhotonTargets.All, cardVisual, targetDeck);
+
+
+                    break;
             }
 
         }
@@ -497,7 +504,7 @@ public class Deck : Photon.MonoBehaviour {
                 break;
 
             case Constants.CardType.Domain:
-                //TODO: Domain Manager
+
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowFront);
                 if(decktype == DeckType.Domain && photonView.isMine) {
                     DomainManager dm = GetComponent<DomainManager>();
@@ -505,9 +512,6 @@ public class Deck : Photon.MonoBehaviour {
                     card.transform.localPosition = new Vector3(60f, 60f, -60f);
                 }
 
-
-                //if (card.photonView.isMine)
-                    
 
                 break;
 
