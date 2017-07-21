@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Name: RLM_TKN_Firebolt
   m_EditorClassIdentifier: 
   cardID: 30001
-  cardName: 
-  cardText: 
-  cardCost: 0
+  cardName: Fire Bolt
+  cardText: Deal 2 damage
+  cardCost: 2
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
+  deathVFX: 
   primaryCardType: 2
   otherCardTypes: 
   attunements: 03000000
@@ -58,6 +59,7 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -113,6 +115,7 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -173,6 +176,7 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -231,6 +235,7 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0

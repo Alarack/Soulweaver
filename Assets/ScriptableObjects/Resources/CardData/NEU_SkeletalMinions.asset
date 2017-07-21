@@ -19,6 +19,7 @@ MonoBehaviour:
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Ball_Lightning
   movingVFX: 1
+  deathVFX: VFX_NecroticFlash
   primaryCardType: 1
   otherCardTypes: 
   attunements: 08000000

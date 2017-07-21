@@ -46,7 +46,8 @@ public class CardDataEditor : Editor {
 
         _cardData.attackEffect = EditorGUILayout.TextField("Attack Effect Name", _cardData.attackEffect);
         _cardData.movingVFX = EditorGUILayout.Toggle("Moving VFX?", _cardData.movingVFX);
-
+        EditorGUILayout.Separator();
+        _cardData.deathVFX = EditorGUILayout.TextField("Death Effect Name", _cardData.deathVFX);
 
         EditorGUILayout.Separator();
         EditorGUILayout.Separator();
@@ -265,6 +266,10 @@ public class CardDataEditor : Editor {
                 entry.targetConstraints.grantedSpecialAttributeType = EditorHelper.EnumPopup("What Type?", entry.targetConstraints.grantedSpecialAttributeType);
                 entry.targetConstraints.grantedSpecialAttributeValue = EditorGUILayout.IntField("How much?", entry.targetConstraints.grantedSpecialAttributeValue);
 
+                break;
+
+            case EffectType.RemoveOtherEffect:
+                entry.targetConstraints.abilityToRemove = EditorGUILayout.TextField("Name of Ability to Remove", entry.targetConstraints.abilityToRemove);
                 break;
 
         }//End of Effects

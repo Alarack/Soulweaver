@@ -17,6 +17,7 @@ public class CardData : ScriptableObject {
 
     public string attackEffect;
     public bool movingVFX;
+    public string deathVFX;
 
     [Header("Types and Attunements")]
     public Constants.CardType primaryCardType;

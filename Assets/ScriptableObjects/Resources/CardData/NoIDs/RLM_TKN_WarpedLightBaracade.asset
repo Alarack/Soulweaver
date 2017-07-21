@@ -19,6 +19,7 @@ MonoBehaviour:
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
+  deathVFX: 
   primaryCardType: 0
   otherCardTypes: 
   attunements: 

@@ -135,7 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   decktype: 2
   cards:
-  - {fileID: 11400000, guid: efcf6c7402e90b94eb200ac1f5c3a316, type: 2}
+  - {fileID: 11400000, guid: 8d31205f9c3f1df40811e06070d26947, type: 2}
   - {fileID: 11400000, guid: 6eaa8739e9deb0e47a3769e5742a1aea, type: 2}
   - {fileID: 11400000, guid: 2d8895d77d3caa94088dfec53d4f89df, type: 2}
   activeCards: []

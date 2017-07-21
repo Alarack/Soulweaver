@@ -9,46 +9,47 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: __TestSubject1
+  m_Name: OTH_TKN_DistendedRipper
   m_EditorClassIdentifier: 
-  cardID: 111
-  cardName: Test Subject 01
-  cardText: test description
-  cardCost: 1
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
-  attackEffect: 
-  movingVFX: 1
+  cardID: 40000
+  cardName: Distended Ripper
+  cardText: Volatile [3]. Bloodthisrt [Gain +0/+1/+1]  Transform [When Distended Ripper
+    reaches size 8 become a Bloated Horror]
+  cardCost: 0
+  cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  cardImagePos: {x: 0, y: 36.7}
+  attackEffect: VFX_Primal_Slash
+  movingVFX: 0
   deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 0b000000
-  subTypes: 05000000
-  keywords: 
+  attunements: 0b00000010000000
+  subTypes: 18000000
+  keywords: 00000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 01000000
-    duration: 0
+  - trigger: 08000000
+    duration: 1
     triggerConstraints:
-      types: 01000000020000000400000006000000
-      owner: 2
+      types: 0b000000
+      owner: 0
       whosTurn: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
-      subtype: 02000000
+      subtype: 
       notSubtype: 0
       keyword: 
       notKeyword: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
-      creatureStatus: 
+      creatureStatus: 01000000
       resources: 
       minStats: []
       maxStats: []
@@ -60,9 +61,8 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      abilityToRemove: 
-      gainedOrLost: 0
-      statChanged: 0
+      gainedOrLost: 1
+      statChanged: 4
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
@@ -116,7 +116,6 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -143,7 +142,7 @@ MonoBehaviour:
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
     effect: 1
-    abilityName: BuffDeath
+    abilityName: Bloodthirst
     effectValue: 0
     source: {fileID: 0}
     targets: []
@@ -177,7 +176,6 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -236,7 +234,6 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -265,10 +262,21 @@ MonoBehaviour:
     keywordsToAddorRemove: 
     additionalRequirements: 
     statAdjustments:
-    - stat: 2
+    - stat: 3
       value: 1
-      nonStacking: 1
-      temporary: 1
+      nonStacking: 0
+      temporary: 0
+      source: {fileID: 0}
+      uniqueID: -1
+      valueSetBytargetStat: 0
+      deriveStatsFromWhom: 0
+      targetStat: 0
+      invertValue: 0
+      spellDamage: 0
+    - stat: 4
+      value: 1
+      nonStacking: 0
+      temporary: 0
       source: {fileID: 0}
       uniqueID: -1
       valueSetBytargetStat: 0
@@ -281,17 +289,17 @@ MonoBehaviour:
     logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
-  - trigger: 02000000
-    duration: 0
+  - trigger: 08000000
+    duration: 1
     triggerConstraints:
-      types: 05000000
-      owner: 2
+      types: 040000000a000000
+      owner: 0
       whosTurn: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
-      subtype: 02000000
+      subtype: 
       notSubtype: 0
       keyword: 
       notKeyword: 0
@@ -299,23 +307,33 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 05000000
+      previousZone: 
       notPreviousZone: 0
       creatureStatus: 
       resources: 
       minStats: []
-      maxStats: []
+      maxStats:
+      - stat: 3
+        value: 8
+        nonStacking: 0
+        temporary: 0
+        source: {fileID: 0}
+        uniqueID: -1
+        valueSetBytargetStat: 0
+        deriveStatsFromWhom: 0
+        targetStat: 0
+        invertValue: 0
+        spellDamage: 0
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 0
+      thisCardOnly: 1
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      abilityToRemove: 
       gainedOrLost: 0
-      statChanged: 0
+      statChanged: 3
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
@@ -369,7 +387,6 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -395,8 +412,8 @@ MonoBehaviour:
       consumeResource: 0
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
-    effect: 14
-    abilityName: 
+    effect: 3
+    abilityName: Transformation
     effectValue: 0
     source: {fileID: 0}
     targets: []
@@ -430,7 +447,64 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      abilityToRemove: BuffDeath
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
+      copyTargetsStatsOnly: 0
+      spawnableTokenDataName: Bloated Horror
+      spawnTokenLocation: 5
+      spawnCardType: 1
+      numberOfSpawns: 1
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
+    ID: 0
+    abilityVFX: 
+    movingVFX: 0
+    additionalRequirementConstraints:
+      types: 
+      owner: 0
+      whosTurn: 0
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
@@ -456,18 +530,25 @@ MonoBehaviour:
       consumeResource: 0
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
-    ID: 0
-    abilityVFX: 
-    movingVFX: 0
-    additionalRequirementConstraints:
-      types: 06000000
+    keywordsToAddorRemove: 
+    additionalRequirements: 
+    statAdjustments: []
+    activeStatAdjustments: []
+    processTriggerOnWhom: 0
+    logicTargetingMethod: 0
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+  - trigger: 0a000000
+    duration: 1
+    triggerConstraints:
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
-      subtype: 02000000
+      subtype: 
       notSubtype: 0
       keyword: 
       notKeyword: 0
@@ -489,11 +570,183 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
-      abilityToRemove: 
       gainedOrLost: 0
       statChanged: 0
-      zoneToCheckForNumberOfCards: 5
-      moreOrLess: 1
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
+      copyTargetsStatsOnly: 0
+      spawnableTokenDataName: 
+      spawnTokenLocation: 0
+      spawnCardType: 0
+      numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
+    sourceConstraints:
+      types: 
+      owner: 0
+      whosTurn: 0
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
+      copyTargetsStatsOnly: 0
+      spawnableTokenDataName: 
+      spawnTokenLocation: 0
+      spawnCardType: 0
+      numberOfSpawns: 0
+      targetZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
+    effect: 2
+    abilityName: Transformation Triggered
+    effectValue: 0
+    source: {fileID: 0}
+    targets: []
+    targetConstraints:
+      types: 
+      owner: 0
+      whosTurn: 0
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 1
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
+      numberOfcardsInZone: 0
+      copyTargets: 0
+      copyTargetsStatsOnly: 0
+      spawnableTokenDataName: 
+      spawnTokenLocation: 0
+      spawnCardType: 0
+      numberOfSpawns: 0
+      targetZone: 6
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      generatedResourceType: 0
+      amountOfResourceToGenerate: 0
+      generatedResouceCap: 0
+      generatedResourceName: 
+      requiredResourceType: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+      grantedSpecialAttributeType: 0
+      grantedSpecialAttributeValue: 0
+    ID: 0
+    abilityVFX: 
+    movingVFX: 0
+    additionalRequirementConstraints:
+      types: 
+      owner: 0
+      whosTurn: 0
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      gainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
       copyTargetsStatsOnly: 0
@@ -516,17 +769,17 @@ MonoBehaviour:
       grantedSpecialAttributeType: 0
       grantedSpecialAttributeValue: 0
     keywordsToAddorRemove: 
-    additionalRequirements: 01000000
+    additionalRequirements: 
     statAdjustments: []
     activeStatAdjustments: []
     processTriggerOnWhom: 0
-    logicTargetingMethod: 0
+    logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
   specialAttributes:
-  - attributeType: 3
-    attributeValue: 1
+  - attributeType: 2
+    attributeValue: 3
     suspended: 0
-  attack: 1
-  size: 0
+  attack: 3
+  size: 4
   health: 5

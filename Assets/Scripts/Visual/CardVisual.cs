@@ -28,6 +28,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public GameObject cardBack;
     [Header("Particle Info")]
     public string attackEffect;
+    public string deathEffect;
 
     [Header("Colors Info")]
     public Color32 activeColor;
@@ -117,6 +118,7 @@ public class CardVisual : Photon.MonoBehaviour {
         cardImage.sprite = cardData.cardImage;
         cardImage.transform.localPosition = cardData.cardImagePos;
         attackEffect = cardData.attackEffect;
+        deathEffect = cardData.deathVFX;
 
         // Initalizing Current Data
         int tempCost = cardData.cardCost;
@@ -243,6 +245,7 @@ public class CardVisual : Photon.MonoBehaviour {
         switch (stat) {
             case Constants.CardStats.Cost:
                 TextTools.AlterTextColor(value, cardData.cardCost, cardCostText);
+                Debug.Log("altering cost " + value);
                 essenceCost += value;
                 cardCostText.text = essenceCost.ToString();
                 break;
@@ -661,6 +664,8 @@ public class CardVisual : Photon.MonoBehaviour {
     public virtual void RPCApplySpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
         int sourceID;
 
+        //adjustment.uniqueID = IDFactory.GenerateID();
+
         if (source != null)
             sourceID = source.photonView.viewID;
         else {
@@ -671,9 +676,13 @@ public class CardVisual : Photon.MonoBehaviour {
         photonView.RPC("ApplystatAdjustment", targets, sourceID, adjustment.uniqueID);
     }
 
+
     [PunRPC]
     public void ApplystatAdjustment(int sourceID, int adjID) {
         CardVisual source = Finder.FindCardByID(sourceID);
+
+
+        //Debug.Log(source.gameObject.name + " is trying to apply a stat adjustment with ID " + adjID);
 
         //TODO: Make this search a single ability list
         for (int i = 0; i < source.specialAbilities.Count; i++) {
@@ -689,6 +698,8 @@ public class CardVisual : Photon.MonoBehaviour {
                         //Debug.Log("Non Stacking effect found, aborting");
                         return;
                     }
+
+                   // Debug.Log(adj.stat.ToString() + " is being adjusted by " + adj.value + " on " + gameObject.name);
 
                     AlterCardStats(adj.stat, adj.value, adj.source);
                     statAdjustments.Add(adj);
@@ -723,7 +734,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public void RemoveStatAdjustment(int adjID, int sourceID) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        //Debug.Log(adjID + " is the ID I'm searching for");
+        Debug.Log(adjID + " is the ID I'm searching for");
 
         for (int i = 0; i < source.specialAbilities.Count; i++) {
             SpecialAbility special = source.specialAbilities[i];
@@ -732,10 +743,10 @@ public class CardVisual : Photon.MonoBehaviour {
                 SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
 
                 if (adj.uniqueID == adjID) {
-                    //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
+                    Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
 
                     if (!adj.temporary) {
-                        //Debug.Log("This adjustment is not temporary, aborting");
+                        Debug.Log("This adjustment is not temporary, aborting");
                         return;
                     }
 

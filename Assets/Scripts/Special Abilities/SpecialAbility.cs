@@ -159,6 +159,10 @@ public abstract class SpecialAbility {
                 AddSpecialAttribute(card, targetConstraints);
                 break;
 
+            case EffectType.RemoveOtherEffect:
+                RemoveOtherEffect(targetConstraints);
+                break;
+
             case EffectType.None:
                 Debug.Log("No effect is set to happen for " + source.gameObject.name);
                 break;
@@ -207,7 +211,7 @@ public abstract class SpecialAbility {
 
                 case EffectType.GrantSpecialAttribute:
                     Debug.Log("Find a good way to remove granted attributes");
-                    //ToggleSpecialAttributeSuspension(cards[i], targetConstraints, true);
+                    ToggleSpecialAttributeSuspension(cards[i], targetConstraints, true);
                     break;
 
             }
@@ -237,14 +241,22 @@ public abstract class SpecialAbility {
             //Debug.Log("Applying stats");
             int spelldamage = Finder.FindTotalSpellDamage();
 
+            //Debug.Log(statAdjustments[i].value + " is the value before spelldamage");
+
             if (statAdjustments[i].spellDamage) {
                 ApplySpellDamge(statAdjustments[i], -spelldamage);
             }
 
+            //Debug.Log(statAdjustments[i].value + " is the value after spelldamage");
+
 
             card.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
 
-            activeStatAdjustments.Add(statAdjustments[i]);
+            if(statAdjustments[i].nonStacking && !activeStatAdjustments.Contains(statAdjustments[i]))
+                activeStatAdjustments.Add(statAdjustments[i]);
+            else if (!statAdjustments[i].nonStacking) {
+                activeStatAdjustments.Add(statAdjustments[i]);
+            }
         }
     }
 
@@ -254,6 +266,10 @@ public abstract class SpecialAbility {
 
     }
 
+    //Non stacking adjustment only add to the active list once, but need to be removed more than once.
+    // if non stacking adjustments get added more than once, they will be removed mutiple times instead of once.
+
+
     protected void RemoveStatAdjustments(CardVisual card) {
         for (int i = 0; i < activeStatAdjustments.Count; i++) {
             card.RPCRemoveStatAdjustment(PhotonTargets.All, activeStatAdjustments[i].uniqueID, source);
@@ -261,6 +277,25 @@ public abstract class SpecialAbility {
 
         }
         activeStatAdjustments.Clear();
+
+    }
+
+    protected void RemoveOtherEffect(ConstraintList constraint) {
+        SpecialAbility target = null;
+
+
+        Debug.Log("removing other thing");
+
+        for(int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == constraint.abilityToRemove)
+                target = source.specialAbilities[i];
+        }
+
+        if (target != null) {
+            target.RemoveEffect(target.targets);
+            Debug.Log("success");
+        }
+
 
     }
 
@@ -283,6 +318,9 @@ public abstract class SpecialAbility {
             Debug.Log("Registering an end of turn duration event");
         }
 
+        if (duration == EffectDuration.StartOfTurn)
+            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStartEndDuration);
+
         if (duration == EffectDuration.WhileInZone && source.photonView.isMine) {
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZoneEndDuration);
         }
@@ -297,6 +335,9 @@ public abstract class SpecialAbility {
 
         if (trigger.Contains(AbilityActivationTrigger.EntersZone))
             Grid.EventManager.RegisterListener(GameEvent.CardEnteredZone, OnEnterZone);
+
+        if (trigger.Contains(AbilityActivationTrigger.LeavesZone))
+            Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZone);
 
         if (trigger.Contains(AbilityActivationTrigger.CreatureStatChanged))
             Grid.EventManager.RegisterListener(GameEvent.CreatureStatAdjusted, OnCreatureStatAdjusted);
@@ -339,8 +380,28 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
-        Debug.Log("End of turn effect is triggering");
+        Debug.Log("End of turn duration is ending");
         RemoveEffect(targets);
+    }
+
+    protected void OnTurnStartEndDuration(EventData data) {
+        if (targets.Count < 1)
+            return;
+
+        Player player = data.GetMonoBehaviour("Player") as Player;
+
+        if (!source.owner == player) {
+            return;
+        }
+
+        if (!source.photonView.isMine)
+            return;
+
+        Debug.Log("start of turn duration  is ending");
+        RemoveEffect(targets);
+
+
+
     }
 
     protected void OnLeavesZoneEndDuration(EventData data) {
@@ -513,6 +574,8 @@ public abstract class SpecialAbility {
             return;
         }
 
+
+
         if (triggerConstraints.oncePerTurn) {
             triggerConstraints.triggeredThisTurn = false;
         }
@@ -526,6 +589,9 @@ public abstract class SpecialAbility {
                 ProcessEffect(source);
             }
         }
+
+        //if (abilityName == "RoundBlaze")
+        //    Debug.Log(source.gameObject.name + " is triggering an on turn start event");
 
 
     }
@@ -596,6 +662,34 @@ public abstract class SpecialAbility {
 
         ActivateTargeting();
     }
+
+    protected void OnLeavesZone(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+        Deck deck = data.GetMonoBehaviour("Deck") as Deck;
+
+        //if (card == source)
+            //Debug.Log(card.gameObject.name + " has left " + deck.decktype.ToString());
+
+        if (!ManageConstraints(card)) {
+            return;
+        }
+
+
+        if (this is LogicTargetedAbility) {
+            if (source.photonView.isMine) {
+
+                ProcessEffect(card);
+            }
+
+        }
+
+        //if (card == source)
+            Debug.Log(card.gameObject.name + " has passed constraint testing ");
+
+
+        ActivateTargeting();
+    }
+
 
 
     protected void OnAttack(EventData data) {
@@ -1253,18 +1347,27 @@ public abstract class SpecialAbility {
     protected List<CardVisual> CheckNumberOfCardsInZone(DeckType zone, ConstraintList constraint) {
         List<CardVisual> results = new List<CardVisual>();
 
+
+        Debug.Log("Checking to see if there are " + constraint.numberOfcardsInZone + " " + constraint.subtype[0].ToString() +  " in " + zone.ToString());
+
         List<CardVisual> allCardsInZone = Finder.FindAllCardsInZone(zone);
 
+       
+
         for (int i = 0; i < allCardsInZone.Count; i++) {
+
+            //Debug.Log(allCardsInZone[i].gameObject.name + " is in " + zone.ToString());
+
+
             CardVisual applicant = CheckConstraints(constraint, allCardsInZone[i]);
 
             if (applicant != null)
                 results.Add(applicant);
         }
 
-
-
-
+        //for (int i = 0; i < results.Count; i++) {
+        //    Debug.Log(results[i].gameObject.name + " is in " + zone.ToString());
+        //}
         return results;
     }
 
@@ -1483,7 +1586,7 @@ public abstract class SpecialAbility {
         public bool spellDamage;
 
         public StatAdjustment() {
-
+            //uniqueID = IDFactory.GenerateID();
         }
 
         public StatAdjustment(CardStats stat, int value, bool nonStacking, bool temp, CardVisual source) {
@@ -1647,7 +1750,7 @@ public abstract class SpecialAbility {
         //Secondary Effect
         public bool triggerbySpecificAbility;
         public string triggerablePrimaryAbilityName;
-
+        public string abilityToRemove;
 
 
         //Creature Stat Adjusted

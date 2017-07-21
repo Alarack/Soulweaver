@@ -32,8 +32,8 @@ public class LogicTargetedAbility : SpecialAbility {
     public override void Initialize(CardVisual owner) {
         base.Initialize(owner);
 
-        if (abilityName == "RoundBlaze")
-            Debug.Log(numberofTargets + " during init");
+        //if (abilityName == "RoundBlaze")
+        //    Debug.Log(numberofTargets + " during init");
     }
 
 

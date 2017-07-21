@@ -29,7 +29,7 @@ public class Deck : Photon.MonoBehaviour {
             _allCards = this;
         }
 
-        if(decktype == DeckType.Void) {
+        if (decktype == DeckType.Void) {
             _void = this;
         }
 
@@ -54,7 +54,7 @@ public class Deck : Photon.MonoBehaviour {
 
     public void AddCard(CardVisual card) {
         activeCards.Add(card);
-        card.currentDeck = this;
+        //card.currentDeck = this;
 
         EventData data = new EventData();
 
@@ -67,9 +67,19 @@ public class Deck : Photon.MonoBehaviour {
 
     public void RemoveCard(CardVisual card) {
         if (activeCards.Contains(card)) {
-            card.previousDeck = this;
+            //card.currentDeck = null;
+            //card.previousDeck = this;
             activeCards.Remove(card);
+            //Debug.Log(card.gameObject.name + " has been removed from " + decktype.ToString());
         }
+
+
+        //List<CardVisual> cardsOnboard = Finder.FindAllCardsInZone(DeckType.Battlefield);
+
+        //foreach (CardVisual c in cardsOnboard) {
+        //    Debug.Log(c.gameObject.name + " is on the battlefield");
+        //}
+
 
         EventData data = new EventData();
 
@@ -77,8 +87,11 @@ public class Deck : Photon.MonoBehaviour {
         data.AddMonoBehaviour("Deck", this);
 
         Grid.EventManager.SendEvent(Constants.GameEvent.CardLeftZone, data);
-    }
 
+
+
+
+    }
 
     public void DrawCard() {
         if (photonView.isMine && activeCards.Count > 0 && owner.GetComponent<Deck>().activeCards.Count < owner.handManager.cardPositions.Count) {
@@ -136,6 +149,9 @@ public class Deck : Photon.MonoBehaviour {
         int index = 0;
         foreach (CardData card in cards) {
             yield return null;
+
+            //Debug.Log(card.cardName);
+
             index++;
             switch (card.primaryCardType) {
                 case Constants.CardType.Soul:
@@ -378,7 +394,12 @@ public class Deck : Photon.MonoBehaviour {
                 break;
 
             case DeckType.SoulCrypt:
-                StartCoroutine(SendCardToSoulCrypt(card));
+
+                //Debug.Log("sending " + card.gameObject.name + " to the soulcrypt");
+
+                SendCardToSoulCrypt(card);
+
+                //StartCoroutine(SendCardToSoulCrypt(card));
 
                 break;
 
@@ -400,6 +421,9 @@ public class Deck : Photon.MonoBehaviour {
             owner.battleFieldManager.ReleaseCardPosition(card.battlefieldPos);
         }
 
+
+        card.previousDeck = this;
+        card.currentDeck = targetLocation;
 
         RemoveCard(card);
         targetLocation.AddCard(card);
@@ -444,9 +468,13 @@ public class Deck : Photon.MonoBehaviour {
 
         if (owner.handManager.IsCollectionFull()) {
             Debug.LogWarning("Hand is Full");
-            StartCoroutine(SendCardToSoulCrypt(card));
+            //StartCoroutine(SendCardToSoulCrypt(card));
+            SendCardToSoulCrypt(card);
             return;
         }
+
+
+
 
         if (card.photonView.isMine) {
             card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
@@ -506,7 +534,7 @@ public class Deck : Photon.MonoBehaviour {
             case Constants.CardType.Domain:
 
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowFront);
-                if(decktype == DeckType.Domain && photonView.isMine) {
+                if (decktype == DeckType.Domain && photonView.isMine) {
                     DomainManager dm = GetComponent<DomainManager>();
                     dm.RPCActivateDomainTile(PhotonTargets.All);
                     card.transform.localPosition = new Vector3(60f, 60f, -60f);
@@ -528,8 +556,8 @@ public class Deck : Photon.MonoBehaviour {
 
     }
 
-    private IEnumerator SendCardToSoulCrypt(CardVisual card) {
-        yield return new WaitForSeconds(0.4f);
+    private void SendCardToSoulCrypt(CardVisual card) {
+        //yield return new WaitForSeconds(0.4f);
 
         if (card.photonView.isMine) {
             card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
@@ -544,8 +572,8 @@ public class Deck : Photon.MonoBehaviour {
         card.RestCardData();
         //card.RPCSetUpCardData(PhotonTargets.All);
         //card.SetupCardData();
-        if (card.photonView.isMine)
-            card.transform.localPosition = new Vector3(-40f, 20f, 20f);
+        //if (card.photonView.isMine)
+        card.transform.localPosition = new Vector3(-40f, 20f, 20f);
 
 
     }

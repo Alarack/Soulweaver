@@ -21,6 +21,8 @@ public class CardIDs {
         SparkSpawn_108 = 108,
         AngrySkeletons_109 = 109,
         Domain_TestDomain = 110,
+        TestSubject1 = 111,
+        TestSubject2 = 112,
 
         //Tokens
         FusedSoul_1000 = 1000,
@@ -62,6 +64,7 @@ public class CardIDs {
         //The Realm Keepers 30000
         RLM_DrillmanGorman = 30000,
         RLM_TKN_Firebolt = 30001,
+        RLM_DOM_Efficiency = 30002,
 
         //The Others 40000
         OTH_CorpseFeeder = 40000,

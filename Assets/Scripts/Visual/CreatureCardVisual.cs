@@ -270,20 +270,41 @@ public class CreatureCardVisual : CardVisual {
     public void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath = false) {
         int cardID = source.photonView.viewID;
 
+        
+        if(health < 0 && deathEffect != "") {
+            Debug.Log(cardData.cardName + " is showing a death effect");
+            
+        }
+            
+
+
         photonView.RPC("CheckDeath", targets, cardID, forceDeath);
     }
 
     [PunRPC]
     public void CheckDeath(int source, bool forceDeath) {
+        GameObject deathVFX;
 
-        if(currentDeck.decktype == Constants.DeckType.SoulCrypt) {
+        if (currentDeck.decktype == Constants.DeckType.SoulCrypt) {
             Debug.LogError(cardData.cardName + " is already dead, and was told to go to the soulcypt");
             return;
         }
 
         CardVisual causeOfDeath = Finder.FindCardByID(source);
+        
+        if (health <=0 || forceDeath) {
 
-        if(health <=0 || forceDeath) {
+            if (photonView.isMine) {
+                if (deathEffect != "")
+                    deathVFX = PhotonNetwork.Instantiate(deathEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+                else {
+                    deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+                }
+            }
+
+
+
+
             Debug.Log(causeOfDeath.cardData.cardName + " has killed " + cardData.cardName);
             //currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
             currentDeck.TransferCard(photonView.viewID, owner.activeCrypt.GetComponent<Deck>().photonView.viewID);

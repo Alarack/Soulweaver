@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
   m_Name: OTH_TKN_BloatedHorror[not done]
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 40000
   cardName: Bloated Horror
   cardText: Volatile [5]. Bloodthisrt [Gain +0/+0/+1] [2E][E] Target soul takes 2
     Damage and gain Defender for a turn
@@ -20,6 +20,7 @@ MonoBehaviour:
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
+  deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0b00000010000000
@@ -32,6 +33,7 @@ MonoBehaviour:
     triggerConstraints:
       types: 04000000
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -56,12 +58,15 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
+      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -83,6 +88,7 @@ MonoBehaviour:
     sourceConstraints:
       types: 0800000004000000
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -107,12 +113,15 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
+      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -139,6 +148,7 @@ MonoBehaviour:
     targetConstraints:
       types: 04000000
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -163,12 +173,15 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 1
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
+      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -189,10 +202,11 @@ MonoBehaviour:
       grantedSpecialAttributeValue: 0
     ID: 0
     abilityVFX: 
-    moveingVFX: 1
+    movingVFX: 0
     additionalRequirementConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -217,12 +231,15 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
+      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -254,13 +271,16 @@ MonoBehaviour:
       deriveStatsFromWhom: 0
       targetStat: 0
       invertValue: 0
-    applyEffectToWhom: 0
+      spellDamage: 0
+    activeStatAdjustments: []
+    processTriggerOnWhom: 0
   multiTargetAbilities:
   - trigger: 08000000
     duration: 0
     triggerConstraints:
       types: 04000000
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -285,12 +305,15 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 1
       statChanged: 4
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
+      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -312,6 +335,7 @@ MonoBehaviour:
     sourceConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -336,12 +360,15 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
+      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -368,6 +395,7 @@ MonoBehaviour:
     targetConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -392,12 +420,15 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
+      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -418,10 +449,11 @@ MonoBehaviour:
       grantedSpecialAttributeValue: 0
     ID: 0
     abilityVFX: 
-    moveingVFX: 0
+    movingVFX: 0
     additionalRequirementConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -446,12 +478,15 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
       copyTargets: 0
+      copyTargetsStatsOnly: 0
       spawnableTokenDataName: 
       spawnTokenLocation: 0
       spawnCardType: 0
@@ -473,9 +508,11 @@ MonoBehaviour:
     keywordsToAddorRemove: 
     additionalRequirements: 
     statAdjustments: []
-    applyEffectToWhom: 0
+    activeStatAdjustments: []
+    processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
   specialAttributes:
   - attributeType: 2
     attributeValue: 5
