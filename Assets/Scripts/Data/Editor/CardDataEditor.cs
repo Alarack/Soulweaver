@@ -272,6 +272,11 @@ public class CardDataEditor : Editor {
                 entry.targetConstraints.abilityToRemove = EditorGUILayout.TextField("Name of Ability to Remove", entry.targetConstraints.abilityToRemove);
                 break;
 
+            case EffectType.RetriggerOtherEffect:
+                entry.targetConstraints.abilityToRetrigger = EditorGUILayout.TextField("Name of Ability to Trigger", entry.targetConstraints.abilityToRetrigger);
+
+                break;
+
         }//End of Effects
 
 

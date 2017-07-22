@@ -215,7 +215,8 @@ public class Constants {
         //ModifyDomainStackCount,
         //AffectInterceptor,
         //SpawnTokenSet
-        RemoveOtherEffect
+        RemoveOtherEffect,
+        RetriggerOtherEffect
     }
 
 

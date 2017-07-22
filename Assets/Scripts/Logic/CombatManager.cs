@@ -348,7 +348,7 @@ public class CombatManager : Photon.MonoBehaviour {
     private void DoStuffOnTarget() {
         CardVisual currentTarget = CardClicked();
 
-        if (!ConfirmCardClicked(currentTarget, DeckType.Battlefield))
+        if (!ConfirmCardClicked(currentTarget))
             return ;
 
         //TargetingHandler.CreateTargetInfoListing(sourceOfTargetingEffect, currentTarget);
@@ -391,14 +391,14 @@ public class CombatManager : Photon.MonoBehaviour {
         return cardSelected;
     }
 
-    private bool ConfirmCardClicked(CardVisual card, DeckType location, bool mineOnly = false) {
+    private bool ConfirmCardClicked(CardVisual card, DeckType location = DeckType.None, bool mineOnly = false) {
 
         if (card == null) {
             //Debug.LogError("Card Clicked was Null");
             return false;
         }
 
-        if (card.currentDeck.decktype != location) {
+        if (location != DeckType.None && card.currentDeck.decktype != location) {
             //Debug.LogError("Card Clicked was not in " + location.ToString());
             return false;
         }

@@ -45,7 +45,7 @@ public class LogicTargetedAbility : SpecialAbility {
             case LogicTargeting.AllValidTargets:
                 validTargets = GatherValidTargets();
 
-                //Debug.Log(validTargets.Count + " is the number of valid targets");
+                Debug.Log(validTargets.Count + " is the number of valid targets");
 
                 for (int i = 0; i < validTargets.Count; i++) {
                     //Debug.Log("doin' stuff to " + validTargets[i].gameObject.name);
@@ -102,6 +102,8 @@ public class LogicTargetedAbility : SpecialAbility {
     }
 
     public void ProcessEffect(List<CardVisual> targets) {
+
+        Debug.Log(targets.Count);
 
         for(int i = 0; i < targets.Count; i++) {
             if(CheckConstraints(targetConstraints, targets[i])) {

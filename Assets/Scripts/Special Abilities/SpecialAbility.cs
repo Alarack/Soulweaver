@@ -42,19 +42,10 @@ public abstract class SpecialAbility {
     //Keyword Fields
     public List<Keywords> keywordsToAddorRemove = new List<Keywords>();
 
-
     //Additional Requirements
     public List<Constants.AdditionalRequirement> additionalRequirements = new List<Constants.AdditionalRequirement>();
 
     public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
-
-    [SerializeField]
-    private List<StatAdjustment> activeStatAdjustments = new List<StatAdjustment>();
-
-    //Secondary Effect
-    //public List<EffectOnTarget> secondaryEffectOnTarget = new List<EffectOnTarget>();
-    //public List<LogicTargetedAbility> secondaryLogicTargtedAbility = new List<LogicTargetedAbility>();
-
 
 
     public enum ApplyEffectToWhom {
@@ -109,20 +100,47 @@ public abstract class SpecialAbility {
         InitializeStatAdjusments();
 
         source.specialAbilities.Add(this);
-        //combatManager = owner.owner.combatManager;
-        //ID = IDFactory.GenerateID();
-
-        //Debug.Log(source.gameObject.name + " has a special ability with ID " + ID);
-
 
     }
 
     protected virtual void Effect(CardVisual card) {
 
-        //Debug.Log("Effect");
+        Debug.Log(abilityName + " is firing");
 
-        if (!targets.Contains(card))
-            targets.Add(card);
+        
+        if(effect != EffectType.RetriggerOtherEffect && effect != EffectType.RemoveOtherEffect) {
+            if (!targets.Contains(card))
+                targets.Add(card);
+
+            Debug.Log(abilityName + " is adding " + card.gameObject.name + " to its target list");
+        }
+
+        if (effect == EffectType.RetriggerOtherEffect) {
+            SpecialAbility target = null;
+
+            for (int i = 0; i < source.specialAbilities.Count; i++) {
+                if (source.specialAbilities[i].abilityName == targetConstraints.abilityToRetrigger) {
+                    target = source.specialAbilities[i];
+                    break;
+                }
+                    
+            }
+
+            if(target != null) {
+                if (!target.targets.Contains(card)) {
+                    target.targets.Add(card);
+                    Debug.Log(abilityName + " is adding " + card.gameObject.name + " to " + target.abilityName + "'s target list");
+                }
+                    
+            }
+
+
+
+        }
+
+
+
+        Debug.Log(targets.Count + " is the number of targets held in " + abilityName);
 
 
         if (abilityVFX != null && abilityVFX != "") {
@@ -163,6 +181,10 @@ public abstract class SpecialAbility {
                 RemoveOtherEffect(targetConstraints);
                 break;
 
+            case EffectType.RetriggerOtherEffect:
+                RetriggerEffect(targetConstraints);
+                break;
+
             case EffectType.None:
                 Debug.Log("No effect is set to happen for " + source.gameObject.name);
                 break;
@@ -179,12 +201,18 @@ public abstract class SpecialAbility {
             Grid.EventManager.SendEvent(GameEvent.TriggerSecondaryEffect, data);
         }
 
+        //if(effect == EffectType.RetriggerOtherEffect) {
+        //    targets.Add(card);
+        //}
+
 
     }
 
     protected virtual void RemoveEffect(List<CardVisual> cards) {
 
-        Debug.Log("Removeing Effect");
+        Debug.Log(abilityName + " has " + targets.Count + " targets");
+
+        //Debug.Log("Removeing Effect");
         for (int i = 0; i < cards.Count; i++) {
             switch (effect) {
 
@@ -238,25 +266,14 @@ public abstract class SpecialAbility {
                 }
             }
 
-            //Debug.Log("Applying stats");
             int spelldamage = Finder.FindTotalSpellDamage();
-
-            //Debug.Log(statAdjustments[i].value + " is the value before spelldamage");
 
             if (statAdjustments[i].spellDamage) {
                 ApplySpellDamge(statAdjustments[i], -spelldamage);
             }
 
-            //Debug.Log(statAdjustments[i].value + " is the value after spelldamage");
-
-
             card.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
 
-            if(statAdjustments[i].nonStacking && !activeStatAdjustments.Contains(statAdjustments[i]))
-                activeStatAdjustments.Add(statAdjustments[i]);
-            else if (!statAdjustments[i].nonStacking) {
-                activeStatAdjustments.Add(statAdjustments[i]);
-            }
         }
     }
 
@@ -266,17 +283,30 @@ public abstract class SpecialAbility {
 
     }
 
-    //Non stacking adjustment only add to the active list once, but need to be removed more than once.
-    // if non stacking adjustments get added more than once, they will be removed mutiple times instead of once.
-
 
     protected void RemoveStatAdjustments(CardVisual card) {
-        for (int i = 0; i < activeStatAdjustments.Count; i++) {
-            card.RPCRemoveStatAdjustment(PhotonTargets.All, activeStatAdjustments[i].uniqueID, source);
-            //Debug.Log("Removing stat adjustment with ID " + activeStatAdjustments[i].uniqueID);
+        //for (int i = 0; i < activeStatAdjustments.Count; i++) {
+        //    card.RPCRemoveStatAdjustment(PhotonTargets.All, activeStatAdjustments[i].uniqueID, source);
+        //    //Debug.Log("Removing stat adjustment with ID " + activeStatAdjustments[i].uniqueID);
+
+        //}
+
+        List<StatAdjustment> targetAdjustments = new List<StatAdjustment>();
+
+        for(int i = 0; i < card.statAdjustments.Count; i++) {
+            for(int j = 0; j < statAdjustments.Count; j++) {
+                if(card.statAdjustments[i].uniqueID == statAdjustments[j].uniqueID) {
+                    targetAdjustments.Add(card.statAdjustments[i]);
+                    //card.RPCRemoveStatAdjustment(PhotonTargets.All, card.statAdjustments[i].uniqueID, source);
+                }
+            }
 
         }
-        activeStatAdjustments.Clear();
+
+        for(int i = 0; i < targetAdjustments.Count; i++) {
+            card.RPCRemoveStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source);
+        }
+
 
     }
 
@@ -284,7 +314,7 @@ public abstract class SpecialAbility {
         SpecialAbility target = null;
 
 
-        Debug.Log("removing other thing");
+        //Debug.Log("removing other thing");
 
         for(int i = 0; i < source.specialAbilities.Count; i++) {
             if (source.specialAbilities[i].abilityName == constraint.abilityToRemove)
@@ -293,9 +323,38 @@ public abstract class SpecialAbility {
 
         if (target != null) {
             target.RemoveEffect(target.targets);
-            Debug.Log("success");
+            //Debug.Log("success");
         }
 
+
+    }
+
+    protected void RetriggerEffect(ConstraintList constraint) {
+
+        if (!source.photonView.isMine)
+            return;
+
+        SpecialAbility target = null;
+
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == constraint.abilityToRetrigger)
+                target = source.specialAbilities[i];
+        }
+
+        if (target != null) {
+
+            Debug.Log("retriggering");
+
+            if(target is LogicTargetedAbility) {
+                LogicTargetedAbility lta = target as LogicTargetedAbility;
+                lta.ProcessEffect(lta.source);
+            }
+
+
+            target.ActivateTargeting();
+
+
+        }
 
     }
 
@@ -1348,7 +1407,7 @@ public abstract class SpecialAbility {
         List<CardVisual> results = new List<CardVisual>();
 
 
-        Debug.Log("Checking to see if there are " + constraint.numberOfcardsInZone + " " + constraint.subtype[0].ToString() +  " in " + zone.ToString());
+        //Debug.Log("Checking to see if there are " + constraint.numberOfcardsInZone + " " + constraint.subtype[0].ToString() +  " in " + zone.ToString());
 
         List<CardVisual> allCardsInZone = Finder.FindAllCardsInZone(zone);
 
@@ -1750,7 +1809,12 @@ public abstract class SpecialAbility {
         //Secondary Effect
         public bool triggerbySpecificAbility;
         public string triggerablePrimaryAbilityName;
+
+        //Remove other effect
         public string abilityToRemove;
+
+        //RetriggerEffect
+        public string abilityToRetrigger;
 
 
         //Creature Stat Adjusted

@@ -71,7 +71,7 @@ public class CardIDs {
         OTH_TKN_DistendedRipper = 40001,
 
         //Children of Illia 50000
-
+        COI_DOM_Sentinel = 50000,
 
 
 
