@@ -13,8 +13,6 @@ public class DomainTile : Photon.MonoBehaviour {
 
 	void Start () {
 
-
-
         if (photonView.isMine) {
             RPCRotateTile(PhotonTargets.OthersBuffered);
         }

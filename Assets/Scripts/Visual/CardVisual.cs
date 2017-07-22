@@ -51,6 +51,7 @@ public class CardVisual : Photon.MonoBehaviour {
     [Header("Types and Attunements")]
     public int essenceCost;
     public bool isToken;
+    public bool isMulligand;
     public Constants.CardType primaryCardType;
     public List<Constants.CardType> otherCardTypes = new List<Constants.CardType>();
     public List<Constants.Attunements> attunements = new List<Constants.Attunements>();
@@ -244,7 +245,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         switch (stat) {
             case Constants.CardStats.Cost:
-                TextTools.AlterTextColor(value, cardData.cardCost, cardCostText);
+                TextTools.AlterTextColor(value, cardData.cardCost, cardCostText, true);
                 //Debug.Log("altering cost " + value);
                 essenceCost += value;
                 cardCostText.text = essenceCost.ToString();
@@ -290,14 +291,14 @@ public class CardVisual : Photon.MonoBehaviour {
             CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
 
 
-        if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) > 10f) {
+        if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) > 10f && !Mulligan.choosingMulligan) {
             //mainHudText.text = "Play " + cardName + "?";
             if (Input.GetMouseButton(0)) {
                 ActivateGlow(Color.cyan);
             }
         }
 
-        if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) < 10f) {
+        if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) < 10f && !Mulligan.choosingMulligan) {
             //mainHudText.text = "Play " + cardName + "?";
             if (Input.GetMouseButton(0)) {
                 ActivateGlow(Color.green);
@@ -370,11 +371,24 @@ public class CardVisual : Photon.MonoBehaviour {
                 ActivateAbility();
         }
 
-        //if (Mulligan.choosingMulligan && photonView.isMine && isInHand && Input.GetMouseButtonDown(0)) {
-        //    ToggleMulligan();
-        //}
+        if (Mulligan.choosingMulligan && photonView.isMine && currentDeck.decktype == Constants.DeckType.Hand && Input.GetMouseButtonDown(0)) {
+            ToggleMulligan();
+        }
 
     }
+
+    protected void ToggleMulligan() {
+
+        isMulligand = !isMulligand;
+        if (isMulligand) {
+            ActivateGlow(Color.red);
+        }
+        else {
+            ActivateGlow(Color.green);
+        }
+
+    }
+
 
 
     protected bool CheckForUserActivatedAbilities() {

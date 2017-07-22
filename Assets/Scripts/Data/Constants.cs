@@ -216,7 +216,8 @@ public class Constants {
         //AffectInterceptor,
         //SpawnTokenSet
         RemoveOtherEffect,
-        RetriggerOtherEffect
+        RetriggerOtherEffect,
+        SpawnTokenSeries
     }
 
 
@@ -261,6 +262,7 @@ public class Constants {
         Attack,
         Size,
         Health,
+        MaxHealth
 
     }
 

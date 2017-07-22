@@ -129,18 +129,6 @@ public class CreatureCardVisual : CardVisual {
 
             case Constants.CardStats.Health:
 
-                //int prot = CheckSpecialAttributes(SpecialAttribute.AttributeType.Protection);
-
-                //if (prot > 0) {
-
-                //    if(value < 0) {
-                //        value += prot;
-
-                //        if (value > 0)
-                //            value = 0;
-                //    }
-                //}
-
                 health += value;
 
                 if(health > _creatureData.health) {
@@ -161,6 +149,20 @@ public class CreatureCardVisual : CardVisual {
                 if(value < 0) {
                     CheckDeath(source.photonView.viewID, false);
                 }
+
+                break;
+
+            case Constants.CardStats.MaxHealth:
+
+                health += value;
+
+                if (value < 0) {
+                    CheckDeath(source.photonView.viewID, false);
+                }
+
+                cardHealthText.text = health.ToString();
+                battleToken.UpdateBattleTokenTokenText(stat, health);
+                TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
 
                 break;
         }

@@ -105,14 +105,14 @@ public abstract class SpecialAbility {
 
     protected virtual void Effect(CardVisual card) {
 
-        Debug.Log(abilityName + " is firing");
+        //Debug.Log(abilityName + " is firing");
 
         
         if(effect != EffectType.RetriggerOtherEffect && effect != EffectType.RemoveOtherEffect) {
             if (!targets.Contains(card))
                 targets.Add(card);
 
-            Debug.Log(abilityName + " is adding " + card.gameObject.name + " to its target list");
+            //Debug.Log(abilityName + " is adding " + card.gameObject.name + " to its target list");
         }
 
         if (effect == EffectType.RetriggerOtherEffect) {
@@ -129,7 +129,7 @@ public abstract class SpecialAbility {
             if(target != null) {
                 if (!target.targets.Contains(card)) {
                     target.targets.Add(card);
-                    Debug.Log(abilityName + " is adding " + card.gameObject.name + " to " + target.abilityName + "'s target list");
+                    //Debug.Log(abilityName + " is adding " + card.gameObject.name + " to " + target.abilityName + "'s target list");
                 }
                     
             }
@@ -140,7 +140,7 @@ public abstract class SpecialAbility {
 
 
 
-        Debug.Log(targets.Count + " is the number of targets held in " + abilityName);
+        //Debug.Log(targets.Count + " is the number of targets held in " + abilityName);
 
 
         if (abilityVFX != null && abilityVFX != "") {
@@ -743,7 +743,7 @@ public abstract class SpecialAbility {
         }
 
         //if (card == source)
-            Debug.Log(card.gameObject.name + " has passed constraint testing ");
+            //Debug.Log(card.gameObject.name + " has passed constraint testing ");
 
 
         ActivateTargeting();
@@ -1450,8 +1450,14 @@ public abstract class SpecialAbility {
 
 
         for (int i = 0; i < targetConstraints.numberOfSpawns; i++) {
+            CardData tokenData;
 
-            CardData tokenData = Resources.Load<CardData>("CardData/" + spawnConstraints.spawnableTokenDataName) as CardData;
+            if (spawnConstraints.spawnSeriesOfTokens) {
+                tokenData = Resources.Load<CardData>("CardData/" + spawnConstraints.tokenSeriesNames[spawnConstraints.seriesTokenSpawnIndex]) as CardData;
+            }
+            else {
+                tokenData = Resources.Load<CardData>("CardData/" + spawnConstraints.spawnableTokenDataName) as CardData;
+            }
 
 
             if (targetConstraints.copyTargets) {
@@ -1478,6 +1484,13 @@ public abstract class SpecialAbility {
 
 
             spawnIndex++;
+        }
+
+        if (spawnConstraints.spawnSeriesOfTokens) {
+            spawnConstraints.seriesTokenSpawnIndex++;
+            if(spawnConstraints.seriesTokenSpawnIndex == spawnConstraints.tokenSeriesNames.Count) {
+                spawnConstraints.seriesTokenSpawnIndex = 0;
+            }
         }
 
         return tokens;
@@ -1835,6 +1848,11 @@ public abstract class SpecialAbility {
         public DeckType spawnTokenLocation;
         public CardType spawnCardType;
         public int numberOfSpawns;
+        //Spawn Token Series
+        public bool spawnSeriesOfTokens;
+        public List<string> tokenSeriesNames;
+        public int seriesTokenSpawnIndex;
+ 
 
         //Zone Change Fields
         public DeckType targetZone;

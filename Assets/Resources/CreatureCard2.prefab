@@ -1800,6 +1800,7 @@ MonoBehaviour:
   cardFront: {fileID: 1644053581096578}
   cardBack: {fileID: 1006906498764646}
   attackEffect: 
+  deathEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -1828,6 +1829,7 @@ MonoBehaviour:
   specialAttributes: []
   userTargtedAbilities: []
   multiTargetAbiliies: []
+  domainTile: {fileID: 0}
   cardAttackText: {fileID: 114474504567409362}
   cardSizeText: {fileID: 114774234906744346}
   cardHealthText: {fileID: 114434131785231492}
@@ -2190,6 +2192,10 @@ MonoBehaviour:
     stat: 3
   - rect: {fileID: 224897208202335668}
     stat: 4
+  - rect: {fileID: 224108906279204332}
+    stat: 5
+  - rect: {fileID: 224897208202335668}
+    stat: 5
 --- !u!198 &198159329099057874
 ParticleSystem:
   m_ObjectHideFlags: 1

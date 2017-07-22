@@ -65,6 +65,10 @@ public class CardIDs {
         RLM_DrillmanGorman = 30000,
         RLM_TKN_Firebolt = 30001,
         RLM_DOM_Efficiency = 30002,
+        RLM_DOM_Spellbook = 30003,
+        RLM_TKN_Renew = 30004,
+        RLM_TKN_StoneGolem = 30005,
+        RLM_TKN_SecondWind = 30006,
 
         //The Others 40000
         OTH_CorpseFeeder = 40000,

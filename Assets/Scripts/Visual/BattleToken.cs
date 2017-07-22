@@ -48,6 +48,11 @@ public class BattleToken : MonoBehaviour {
                 TextTools.AlterTextColor(value, _creatureData.health, health);
                 health.text = value.ToString();
                 break;
+
+            case Constants.CardStats.MaxHealth:
+                TextTools.AlterTextColor(value, _creatureData.health, health);
+                health.text = value.ToString();
+                break;
         }
 
     }

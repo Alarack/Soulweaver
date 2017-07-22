@@ -230,7 +230,17 @@ public class CardDataEditor : Editor {
                 entry.targetConstraints.copyTargets = EditorGUILayout.Toggle("Spawn a Copy of the target(s)?", entry.targetConstraints.copyTargets);
                 entry.targetConstraints.copyTargetsStatsOnly = EditorGUILayout.Toggle("Set the token's stats to the target's stats?", entry.targetConstraints.copyTargetsStatsOnly);
                 if (!entry.targetConstraints.copyTargets) {
-                    entry.targetConstraints.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.targetConstraints.spawnableTokenDataName);
+
+                    entry.targetConstraints.spawnSeriesOfTokens = EditorGUILayout.Toggle("Spawn a Series of Tokens?", entry.targetConstraints.spawnSeriesOfTokens);
+
+                    if(!entry.targetConstraints.spawnSeriesOfTokens)
+                        entry.targetConstraints.spawnableTokenDataName = EditorGUILayout.TextField("CardData Name", entry.targetConstraints.spawnableTokenDataName);
+
+                    if (entry.targetConstraints.spawnSeriesOfTokens) {
+                        entry.targetConstraints.tokenSeriesNames = EditorHelper.DrawList("TokenDataNames", entry.targetConstraints.tokenSeriesNames, true, "", true, DrawListOfStrings);
+                    }
+
+
                     entry.targetConstraints.spawnCardType = EditorHelper.EnumPopup("Card Type", entry.targetConstraints.spawnCardType);
                 }
 
@@ -567,6 +577,11 @@ public class CardDataEditor : Editor {
 
     private Constants.AdditionalRequirement DrawAdditionalRequirements(List<Constants.AdditionalRequirement> list, int index) {
         Constants.AdditionalRequirement result = EditorHelper.EnumPopup("Requirement", list[index]);
+        return result;
+    }
+
+    private string DrawListOfStrings(List<string> list, int index) {
+        string result = EditorGUILayout.TextField("Entry", list[index]);
         return result;
     }
 

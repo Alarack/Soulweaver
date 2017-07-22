@@ -380,7 +380,9 @@ public class Deck : Photon.MonoBehaviour {
             return;
         }
 
-        CheckAndActivateCard(card);
+
+
+        //CheckAndActivateCard(card);
 
         switch (targetLocation.decktype) {
             case DeckType.Hand:
@@ -405,6 +407,11 @@ public class Deck : Photon.MonoBehaviour {
 
             case DeckType.Void:
                 SendCardToVoid(card);
+                break;
+
+            case DeckType.Grimoire:
+                SendCardToGrimoire(card);
+
                 break;
 
             default:
@@ -462,6 +469,21 @@ public class Deck : Photon.MonoBehaviour {
 
     #region Transfer Card Helpers
 
+
+    private void SendCardToGrimoire(CardVisual card) {
+
+        if (card.photonView.isMine) {
+
+            card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
+            card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
+            //Debug.Log(card.cardData.cardName + " is mine and is showing the card back to others");
+            card.transform.position = new Vector3(0f, 0f, -60f);
+        }
+
+
+    }
+
+
     private void SendCardToHand(CardVisual card) {
 
         //Debug.Log(card.gameObject.name + " is being sent to the hand");
@@ -473,17 +495,23 @@ public class Deck : Photon.MonoBehaviour {
             return;
         }
 
-
-
-
         if (card.photonView.isMine) {
+
             card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
             card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
             //Debug.Log(card.cardData.cardName + " is mine and is showing the card back to others");
-
         }
 
-        card.handPos = owner.handManager.GetFirstEmptyCardPosition();
+        if (!Mulligan.choosingMulligan) {
+            CheckAndActivateCard(card);
+            card.handPos = owner.handManager.GetFirstEmptyCardPosition();
+        }
+        else {
+            card.RPCSetCardAciveState(PhotonTargets.All, false);
+            card.handPos = owner.mulliganManager.GetFirstEmptyCardPosition();
+        }
+
+
 
     }
 
@@ -503,6 +531,7 @@ public class Deck : Photon.MonoBehaviour {
         }
 
         //Debug.Log(card.gameObject.name + " is going to the battlefield");
+        CheckAndActivateCard(card);
 
         switch (card.cardData.primaryCardType) {
             case Constants.CardType.Player:

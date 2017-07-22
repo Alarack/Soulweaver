@@ -25,10 +25,11 @@ public class Player : Photon.MonoBehaviour {
     public Deck myHand;
     public Transform p2HandRot;
     //public GameObject mulliganLocations;
-    //public GameObject mulliganButton;
+    public GameObject mulliganButton;
     [Header("Card Position Managers")]
     public CardPositionManager handManager;
     public CardPositionManager battleFieldManager;
+    public CardPositionManager mulliganManager;
     [Header("Decks to Load")]
     //public GameObject grimoire;
     //public GameObject domain;
@@ -72,7 +73,7 @@ public class Player : Photon.MonoBehaviour {
     public Player opponent;
     //public Deck myHand;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool gameHasStarted = false;
 
     public ClickMoveDrop dragger;
@@ -211,15 +212,17 @@ public class Player : Photon.MonoBehaviour {
         RPCCheckOpponents(PhotonTargets.All);
 
         if (myTurn) {
+            
             gameState = GameStates.Refresh;
+            Debug.Log("My turn " + gameState.ToString());
         }
 
 
         StartCoroutine(DrawStartingHand());
-        //mulliganButton.SetActive(true);
+        mulliganButton.SetActive(true);
 
 
-        gameHasStarted = true;
+        //gameHasStarted = true;
 
     }
 

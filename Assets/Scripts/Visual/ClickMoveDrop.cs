@@ -34,7 +34,7 @@ public class ClickMoveDrop : MonoBehaviour {
         }
 
 
-        if (Input.GetMouseButtonDown(0) /*&& !targetUtils.isChoosingTarget && !targetUtils.isInCombat*/) {
+        if (Input.GetMouseButtonDown(0) && !Mulligan.choosingMulligan /*&& !targetUtils.isChoosingTarget && !targetUtils.isInCombat*/) {
             FindAndGrab();
         }
 
