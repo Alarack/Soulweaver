@@ -1654,8 +1654,13 @@ public abstract class SpecialAbility {
         public bool valueSetBytargetStat;
         public DeriveStatsFromWhom deriveStatsFromWhom;
         public CardStats targetStat;
+
         public bool invertValue;
         public bool spellDamage;
+
+        //public bool deriveStatFromConstraint;
+        //public Constants.ConstraintType typeOfConstraintToDeriveFrom;
+        //public CardStats targetStatForConstraintDerivsion;
 
         public StatAdjustment() {
             //uniqueID = IDFactory.GenerateID();
@@ -1702,6 +1707,14 @@ public abstract class SpecialAbility {
 
 
             source.RPCUpdateStatAdjustment(PhotonTargets.Others, this, source, value);
+
+        }
+
+        public void AlterValueBasedOnConstraint(ConstraintList constraint) {
+
+            
+
+
 
         }
 
