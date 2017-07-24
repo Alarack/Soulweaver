@@ -225,7 +225,7 @@ public class CardVisual : Photon.MonoBehaviour {
             animationManager.BounceText(stat);
         }
 
-        if(this is CreatureCardVisual) {
+        if (this is CreatureCardVisual) {
             CreatureCardVisual soul = this as CreatureCardVisual;
             value = soul.CalcProtection(value);
         }
@@ -279,6 +279,16 @@ public class CardVisual : Photon.MonoBehaviour {
         return 0;
     }
 
+    public List<SpecialAbility.StatAdjustment> GatherAllSpecialAbilityStatAdjustments() {
+        List<SpecialAbility.StatAdjustment> results = new List<SpecialAbility.StatAdjustment>();
+
+        for (int i = 0; i < specialAbilities.Count; i++) {
+            results.AddRange(specialAbilities[i].GetAllStatAdjustments());
+        }
+
+        return results;
+    }
+
     #region Private Methods
 
 
@@ -287,7 +297,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     protected virtual void OnMouseOver() {
 
-        if(photonView.isMine || currentDeck.decktype == Constants.DeckType.Battlefield)
+        if (photonView.isMine || currentDeck.decktype == Constants.DeckType.Battlefield)
             CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
 
 
@@ -687,14 +697,13 @@ public class CardVisual : Photon.MonoBehaviour {
             //Debug.Log("I'm the source of me!");
         }
 
-        photonView.RPC("ApplystatAdjustment", targets, sourceID, adjustment.uniqueID);
+        photonView.RPC("ApplySpecialAbilityStatAdjustment", targets, sourceID, adjustment.uniqueID);
     }
 
 
     [PunRPC]
     public void ApplystatAdjustment(int sourceID, int adjID) {
         CardVisual source = Finder.FindCardByID(sourceID);
-
 
         //Debug.Log(source.gameObject.name + " is trying to apply a stat adjustment with ID " + adjID);
 
@@ -713,7 +722,7 @@ public class CardVisual : Photon.MonoBehaviour {
                         return;
                     }
 
-                   // Debug.Log(adj.stat.ToString() + " is being adjusted by " + adj.value + " on " + gameObject.name);
+                    // Debug.Log(adj.stat.ToString() + " is being adjusted by " + adj.value + " on " + gameObject.name);
 
                     AlterCardStats(adj.stat, adj.value, adj.source);
                     statAdjustments.Add(adj);
@@ -722,26 +731,33 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
-    //public virtual void RPCRemoveStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
-    //    int statEnum = (int)adjustment.stat;
-    //    int value = adjustment.value;
-    //    int sourceID = source.photonView.viewID;
-    //    bool stacks = adjustment.nonStacking;
-    //    bool temp = adjustment.temporary;
+    [PunRPC]
+    public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID) {
+        CardVisual source = Finder.FindCardByID(sourceID);
 
-    //    //if (removeStat) {
-    //    //    value = -value;
-    //    //}
+        List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
-    //    photonView.RPC("RemoveStatAdjustment", targets, statEnum, value, sourceID, stacks, temp);
-    //}
+        for (int i = 0; i < allAdjustments.Count; i++) {
+            if (allAdjustments[i].uniqueID == adjID) {
+                if (allAdjustments[i].nonStacking && statAdjustments.Contains(allAdjustments[i])) {
+                    return;
+                }
 
-    public virtual void RPCRemoveStatAdjustment(PhotonTargets targets, int adjID, CardVisual source) {
+                AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source);
+                statAdjustments.Add(allAdjustments[i]);
+            }
+        }
+
+
+    }
+
+
+    public virtual void RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets targets, int adjID, CardVisual source) {
         int sourceID = source.photonView.viewID;
 
         //Debug.Log(adjID + " is the ID I'm Sending");
 
-        photonView.RPC("RemoveStatAdjustment", targets, adjID, sourceID);
+        photonView.RPC("RemoveSpecialAbilityStatAdjustment", targets, adjID, sourceID);
     }
 
     [PunRPC]
@@ -772,8 +788,31 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
+    [PunRPC]
+    public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID) {
+        CardVisual source = Finder.FindCardByID(sourceID);
 
-    public void RPCUpdateStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, int updatedValue) {
+        //Debug.Log(source.gameObject.name + " is removeing stat adjustments");
+
+        List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
+
+        //Debug.Log(allAdjustments.Count + " is the number of adjustments found on " + gameObject.name);
+
+        for (int i = 0; i < allAdjustments.Count; i++) {
+            if (allAdjustments[i].uniqueID == adjID) {
+                if (!allAdjustments[i].temporary) {
+                    return;
+                }
+
+                AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source);
+                statAdjustments.Remove(allAdjustments[i]);
+            }
+        }
+
+    }
+
+
+    public void RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, int updatedValue) {
         int sourceID;
         int statEnum = (int)adjustment.stat;
 
@@ -783,7 +822,7 @@ public class CardVisual : Photon.MonoBehaviour {
             sourceID = photonView.viewID;
         }
 
-        photonView.RPC("UpdateStatAdjustment", targets, adjustment.uniqueID, sourceID, statEnum, updatedValue);
+        photonView.RPC("UpdateSpecialAbilityStatAdjustment", targets, adjustment.uniqueID, sourceID, statEnum, updatedValue);
     }
 
     [PunRPC]
@@ -801,6 +840,21 @@ public class CardVisual : Photon.MonoBehaviour {
                     adj.value = updatedValue;
 
                 }
+            }
+        }
+    }
+
+    [PunRPC]
+    public void UpdateSpecialAbilityStatAdjustment(int adjID, int sourceID, int updatedValue) {
+        CardVisual source = Finder.FindCardByID(sourceID);
+
+        List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
+
+        for (int i = 0; i < allAdjustments.Count; i++) {
+            if (allAdjustments[i].uniqueID == adjID) {
+
+                allAdjustments[i].value = updatedValue;
+                break;
             }
         }
 
@@ -866,7 +920,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     protected virtual void KeywordHelper(Constants.Keywords keyword, bool add) {
 
-        if(cardData is CardDomainData) {
+        if (cardData is CardDomainData) {
 
             if (add) {
                 if (keyword == Constants.Keywords.Exhausted) {

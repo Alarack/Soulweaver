@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using DeckType = Constants.DeckType;
 
+[System.Serializable]
 public abstract class Effect {
 
     public Constants.EffectType effectType;
     public CardVisual source;
+    public SpecialAbility parentAbility;
+
+
+    public virtual void Initialize(CardVisual source, SpecialAbility parent) {
+        this.source = source;
+        parentAbility = parent;
+    }
 
     public abstract void Apply(CardVisual target);
 
+    public virtual void Remove(CardVisual target) {
+
+    }
 
 
     protected Deck GetDeckFromType(DeckType type, CardVisual card) {

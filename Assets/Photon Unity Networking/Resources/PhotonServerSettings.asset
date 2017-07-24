@@ -91,4 +91,7 @@ MonoBehaviour:
   - RemoveSpecialAtribute
   - BroadcastCombat
   - BroadcastDefender
+  - ApplySpecialAbilityStatAdjustment
+  - RemoveSpecialAbilityStatAdjustment
+  - UpdateSpecialAbilityStatAdjustment
   DisableAutoOpenWizard: 1

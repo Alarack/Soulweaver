@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class EffectGenerateResource : Effect {
 
     public GameResource.ResourceType resourceType;
@@ -13,9 +14,8 @@ public class EffectGenerateResource : Effect {
 
     public override void Apply(CardVisual target) {
 
+        GenerateResource();
     }
-
-
 
 
     public void GenerateResource() {

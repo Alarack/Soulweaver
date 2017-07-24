@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Keywords = Constants.Keywords;
 
+[System.Serializable]
 public class EffectAddorRemoveKeywords : Effect {
 
     public enum AddOrRemove {

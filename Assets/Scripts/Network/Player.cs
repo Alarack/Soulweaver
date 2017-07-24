@@ -214,7 +214,7 @@ public class Player : Photon.MonoBehaviour {
         if (myTurn) {
             
             gameState = GameStates.Refresh;
-            Debug.Log("My turn " + gameState.ToString());
+            //Debug.Log("My turn " + gameState.ToString());
         }
 
 

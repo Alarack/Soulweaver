@@ -46,7 +46,19 @@ public abstract class SpecialAbility {
     public List<Constants.AdditionalRequirement> additionalRequirements = new List<Constants.AdditionalRequirement>();
 
     public List<StatAdjustment> statAdjustments = new List<StatAdjustment>();
+    public EffectHolder effectHolder = new EffectHolder();
 
+    [System.Serializable]
+    public class EffectHolder {
+        public List<EffectZoneChange> zoneChanges = new List<EffectZoneChange>();
+        public List<EffectSpawnToken> tokenSpanws = new List<EffectSpawnToken>();
+        public List<EffectStatAdjustment> statAdjustments = new List<EffectStatAdjustment>();
+    }
+
+
+
+
+    //public Effect abilityEffect;
 
     public enum ApplyEffectToWhom {
         TriggeringCard,
@@ -98,10 +110,42 @@ public abstract class SpecialAbility {
 
         RegisterListeners();
         InitializeStatAdjusments();
-
+        InitializeEffects();
         source.specialAbilities.Add(this);
 
     }
+
+    public virtual void InitializeEffects() {
+
+        for(int i = 0; i < effectHolder.statAdjustments.Count; i++) {
+            effectHolder.statAdjustments[i].Initialize(source, this);
+        }
+
+        for (int i = 0; i < effectHolder.zoneChanges.Count; i++) {
+            effectHolder.zoneChanges[i].Initialize(source, this);
+        }
+
+        for (int i = 0; i < effectHolder.tokenSpanws.Count; i++) {
+            effectHolder.tokenSpanws[i].Initialize(source, this);
+        }
+
+
+    }
+
+    public List<StatAdjustment> GetAllStatAdjustments() {
+        List<StatAdjustment> results = new List<StatAdjustment>();
+        for(int i = 0; i < effectHolder.statAdjustments.Count; i++) {
+            for(int j = 0; j < effectHolder.statAdjustments[i].adjustments.Count; j++) {
+                results.Add(effectHolder.statAdjustments[i].adjustments[j]);
+            }
+        }
+
+
+
+        return results;
+    }
+
+
 
     protected virtual void Effect(CardVisual card) {
 
@@ -131,16 +175,10 @@ public abstract class SpecialAbility {
                     target.targets.Add(card);
                     //Debug.Log(abilityName + " is adding " + card.gameObject.name + " to " + target.abilityName + "'s target list");
                 }
-                    
             }
-
-
-
         }
 
 
-
-        //Debug.Log(targets.Count + " is the number of targets held in " + abilityName);
 
 
         if (abilityVFX != null && abilityVFX != "") {
@@ -150,19 +188,31 @@ public abstract class SpecialAbility {
         if (triggerConstraints.oncePerTurn)
             triggerConstraints.triggeredThisTurn = true;
 
-        //Debug.Log("[Special Ability] Applying effect");
+
 
         switch (effect) {
             case EffectType.StatAdjustment:
-                ApplyStatAdjustments(card);
+                //ApplyStatAdjustments(card);
+                for (int i = 0; i < effectHolder.statAdjustments.Count; i++) {
+                    effectHolder.statAdjustments[i].Apply(card);
+                }
+
                 break;
 
             case EffectType.SpawnToken:
-                SpawnToken(targetConstraints);
+                //SpawnToken(targetConstraints);
+                for (int i = 0; i < effectHolder.tokenSpanws.Count; i++) {
+                    effectHolder.tokenSpanws[i].Apply(card);
+                }
+
                 break;
 
             case EffectType.ZoneChange:
-                ForcedZoneChange(card, targetConstraints);
+                //ForcedZoneChange(card, targetConstraints);
+                for(int i = 0; i < effectHolder.zoneChanges.Count; i++) {
+                    effectHolder.zoneChanges[i].Apply(card);
+                }
+
                 break;
 
             case EffectType.GrantKeywordAbilities:
@@ -201,23 +251,26 @@ public abstract class SpecialAbility {
             Grid.EventManager.SendEvent(GameEvent.TriggerSecondaryEffect, data);
         }
 
-        //if(effect == EffectType.RetriggerOtherEffect) {
-        //    targets.Add(card);
-        //}
+
 
 
     }
 
     protected virtual void RemoveEffect(List<CardVisual> cards) {
 
-        Debug.Log(abilityName + " has " + targets.Count + " targets");
+        //Debug.Log(abilityName + " has " + targets.Count + " targets");
 
         //Debug.Log("Removeing Effect");
         for (int i = 0; i < cards.Count; i++) {
             switch (effect) {
 
                 case EffectType.StatAdjustment:
-                    RemoveStatAdjustments(cards[i]);
+                    //RemoveStatAdjustments(cards[i]);
+
+                    for(int j = 0; j < effectHolder.statAdjustments.Count; j++) {
+                        effectHolder.statAdjustments[j].Remove(cards[i]);
+                    }
+
                     break;
 
                 case EffectType.SpawnToken:
@@ -304,7 +357,7 @@ public abstract class SpecialAbility {
         }
 
         for(int i = 0; i < targetAdjustments.Count; i++) {
-            card.RPCRemoveStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source);
+            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source);
         }
 
 
@@ -1403,7 +1456,7 @@ public abstract class SpecialAbility {
 
 
 
-    protected List<CardVisual> CheckNumberOfCardsInZone(DeckType zone, ConstraintList constraint) {
+    public List<CardVisual> CheckNumberOfCardsInZone(DeckType zone, ConstraintList constraint) {
         List<CardVisual> results = new List<CardVisual>();
 
 
@@ -1640,6 +1693,16 @@ public abstract class SpecialAbility {
             statAdjustments[i].uniqueID = IDFactory.GenerateID();
             statAdjustments[i].source = source;
         }
+
+        //for(int i = 0; i < effectHolder.statAdjustments.Count; i++) {
+        //    for(int j = 0; j < effectHolder.statAdjustments[i].adjustments.Count; j++) {
+        //        effectHolder.statAdjustments[i].adjustments[j].uniqueID = IDFactory.GenerateID();
+        //        effectHolder.statAdjustments[i].adjustments[j].source = source;
+        //    }
+
+        //}
+
+
     }
 
     [System.Serializable]
@@ -1706,7 +1769,7 @@ public abstract class SpecialAbility {
             }
 
 
-            source.RPCUpdateStatAdjustment(PhotonTargets.Others, this, source, value);
+            source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, this, source, value);
 
         }
 
@@ -1722,7 +1785,7 @@ public abstract class SpecialAbility {
 
             value += modifierValue;
 
-            source.RPCUpdateStatAdjustment(PhotonTargets.Others, this, source, value);
+            source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, this, source, value);
         }
 
         public static List<StatAdjustment> CopyStats(CreatureCardVisual target) {

@@ -5,6 +5,7 @@ using UnityEngine;
 using DeckType = Constants.DeckType;
 using CardType = Constants.CardType;
 
+[System.Serializable]
 public class EffectSpawnToken : Effect {
 
 
@@ -23,7 +24,9 @@ public class EffectSpawnToken : Effect {
 
     //Spawn Token Series
     public List<string> tokenSeriesNames;
-    public int seriesTokenSpawnIndex;
+
+
+    private int seriesTokenSpawnIndex;
 
     //public bool spawnSeriesOfTokens;
     //public bool copyTarget;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DeckType = Constants.DeckType;
 
+[System.Serializable]
 public class EffectZoneChange : Effect {
 
 
@@ -12,6 +13,8 @@ public class EffectZoneChange : Effect {
 
 
     public override void Apply(CardVisual target) {
+        Debug.Log(targetLocation.ToString());
+
         target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(targetLocation, target));
     }
 
