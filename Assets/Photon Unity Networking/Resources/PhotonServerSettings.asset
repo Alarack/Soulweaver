@@ -94,4 +94,5 @@ MonoBehaviour:
   - ApplySpecialAbilityStatAdjustment
   - RemoveSpecialAbilityStatAdjustment
   - UpdateSpecialAbilityStatAdjustment
+  - ModifySpecialAtribute
   DisableAutoOpenWizard: 1

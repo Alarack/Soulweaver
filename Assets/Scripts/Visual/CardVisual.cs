@@ -271,7 +271,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
 
         for (int i = 0; i < specialAttributes.Count; i++) {
-            if (specialAttributes[i].attributeType == attribute && !specialAttributes[i].suspended) {
+            if (specialAttributes[i].attributeType == attribute) {
                 return specialAttributes[i].attributeValue;
             }
         }
@@ -701,35 +701,35 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    [PunRPC]
-    public void ApplystatAdjustment(int sourceID, int adjID) {
-        CardVisual source = Finder.FindCardByID(sourceID);
+    //[PunRPC]
+    //public void ApplystatAdjustment(int sourceID, int adjID) {
+    //    CardVisual source = Finder.FindCardByID(sourceID);
 
-        //Debug.Log(source.gameObject.name + " is trying to apply a stat adjustment with ID " + adjID);
+    //    //Debug.Log(source.gameObject.name + " is trying to apply a stat adjustment with ID " + adjID);
 
-        //TODO: Make this search a single ability list
-        for (int i = 0; i < source.specialAbilities.Count; i++) {
-            SpecialAbility special = source.specialAbilities[i];
+    //    //TODO: Make this search a single ability list
+    //    for (int i = 0; i < source.specialAbilities.Count; i++) {
+    //        SpecialAbility special = source.specialAbilities[i];
 
-            for (int j = 0; j < special.statAdjustments.Count; j++) {
-                SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
+    //        for (int j = 0; j < special.statAdjustments.Count; j++) {
+    //            SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
 
-                if (adj.uniqueID == adjID) {
-                    //Debug.Log("Match found : " +adj.source.gameObject.name + " and " + gameObject.name);
+    //            if (adj.uniqueID == adjID) {
+    //                //Debug.Log("Match found : " +adj.source.gameObject.name + " and " + gameObject.name);
 
-                    if (adj.nonStacking && statAdjustments.Contains(adj)) {
-                        //Debug.Log("Non Stacking effect found, aborting");
-                        return;
-                    }
+    //                if (adj.nonStacking && statAdjustments.Contains(adj)) {
+    //                    //Debug.Log("Non Stacking effect found, aborting");
+    //                    return;
+    //                }
 
-                    // Debug.Log(adj.stat.ToString() + " is being adjusted by " + adj.value + " on " + gameObject.name);
+    //                // Debug.Log(adj.stat.ToString() + " is being adjusted by " + adj.value + " on " + gameObject.name);
 
-                    AlterCardStats(adj.stat, adj.value, adj.source);
-                    statAdjustments.Add(adj);
-                }
-            }
-        }
-    }
+    //                AlterCardStats(adj.stat, adj.value, adj.source);
+    //                statAdjustments.Add(adj);
+    //            }
+    //        }
+    //    }
+    //}
 
     [PunRPC]
     public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID) {
@@ -760,33 +760,33 @@ public class CardVisual : Photon.MonoBehaviour {
         photonView.RPC("RemoveSpecialAbilityStatAdjustment", targets, adjID, sourceID);
     }
 
-    [PunRPC]
-    public void RemoveStatAdjustment(int adjID, int sourceID) {
-        CardVisual source = Finder.FindCardByID(sourceID);
+    //[PunRPC]
+    //public void RemoveStatAdjustment(int adjID, int sourceID) {
+    //    CardVisual source = Finder.FindCardByID(sourceID);
 
-        //Debug.Log(adjID + " is the ID I'm searching for");
+    //    //Debug.Log(adjID + " is the ID I'm searching for");
 
-        for (int i = 0; i < source.specialAbilities.Count; i++) {
-            SpecialAbility special = source.specialAbilities[i];
+    //    for (int i = 0; i < source.specialAbilities.Count; i++) {
+    //        SpecialAbility special = source.specialAbilities[i];
 
-            for (int j = 0; j < special.statAdjustments.Count; j++) {
-                SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
+    //        for (int j = 0; j < special.statAdjustments.Count; j++) {
+    //            SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
 
-                if (adj.uniqueID == adjID) {
-                    //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
+    //            if (adj.uniqueID == adjID) {
+    //                //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
 
-                    if (!adj.temporary) {
-                        //Debug.Log("This adjustment is not temporary, aborting");
-                        return;
-                    }
+    //                if (!adj.temporary) {
+    //                    //Debug.Log("This adjustment is not temporary, aborting");
+    //                    return;
+    //                }
 
-                    AlterCardStats(adj.stat, -adj.value, adj.source);
-                    statAdjustments.Remove(adj);
+    //                AlterCardStats(adj.stat, -adj.value, adj.source);
+    //                statAdjustments.Remove(adj);
 
-                }
-            }
-        }
-    }
+    //            }
+    //        }
+    //    }
+    //}
 
     [PunRPC]
     public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID) {
@@ -825,24 +825,24 @@ public class CardVisual : Photon.MonoBehaviour {
         photonView.RPC("UpdateSpecialAbilityStatAdjustment", targets, adjustment.uniqueID, sourceID, statEnum, updatedValue);
     }
 
-    [PunRPC]
-    public void UpdateStatAdjustment(int adjID, int sourceID, int statEnum, int updatedValue) {
-        CardVisual source = Finder.FindCardByID(sourceID);
+    //[PunRPC]
+    //public void UpdateStatAdjustment(int adjID, int sourceID, int statEnum, int updatedValue) {
+    //    CardVisual source = Finder.FindCardByID(sourceID);
 
-        for (int i = 0; i < source.specialAbilities.Count; i++) {
-            SpecialAbility special = source.specialAbilities[i];
+    //    for (int i = 0; i < source.specialAbilities.Count; i++) {
+    //        SpecialAbility special = source.specialAbilities[i];
 
-            for (int j = 0; j < special.statAdjustments.Count; j++) {
-                SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
+    //        for (int j = 0; j < special.statAdjustments.Count; j++) {
+    //            SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
 
-                if (adj.uniqueID == adjID) {
-                    //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
-                    adj.value = updatedValue;
+    //            if (adj.uniqueID == adjID) {
+    //                //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
+    //                adj.value = updatedValue;
 
-                }
-            }
-        }
-    }
+    //            }
+    //        }
+    //    }
+    //}
 
     [PunRPC]
     public void UpdateSpecialAbilityStatAdjustment(int adjID, int sourceID, int updatedValue) {
@@ -939,33 +939,6 @@ public class CardVisual : Photon.MonoBehaviour {
                 }
             }
         }
-
-
-        //switch (keyword) {
-        //    case Constants.Keywords.Exhausted:
-        //        if (add) {
-        //            cardImage.color = exhaustedColor;
-        //            battleFrame.color = exhaustedColor;
-        //        }
-        //        else {
-        //            cardImage.color = Color.white;
-        //            battleFrame.color = Color.white;
-        //        }
-        //        break;
-
-        //    case Constants.Keywords.Interceptor:
-        //        if (add) {
-        //            cardImage.color = interceptingColor;
-        //            battleFrame.color = interceptingColor;
-        //        }
-        //        else {
-        //            cardImage.color = Color.white;
-        //            battleFrame.color = Color.white;
-        //        }
-        //        break;
-        //}
-
-
     }
 
 
@@ -1035,7 +1008,7 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    public void RPCReduceSpecialAttribute(PhotonTargets targets, SpecialAttribute.AttributeType type, int value) {
+    public void RPCModifySpecialAttribute(PhotonTargets targets, SpecialAttribute.AttributeType type, int value) {
         int attributeTypeEnum = (int)type;
 
         photonView.RPC("ReduceSpecialAtribute", targets, attributeTypeEnum, value);
@@ -1043,7 +1016,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     [PunRPC]
-    public void ReduceSpecialAtribute(int type, int value) {
+    public void ModifySpecialAtribute(int type, int value) {
         SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
 
         SpecialAttribute existingAttribute = null;
@@ -1051,19 +1024,20 @@ public class CardVisual : Photon.MonoBehaviour {
         for (int i = 0; i < specialAttributes.Count; i++) {
             if (specialAttributes[i].attributeType == newType) {
                 existingAttribute = specialAttributes[i];
-                existingAttribute.attributeValue -= value;
+                existingAttribute.attributeValue += value;
+                break;
             }
         }
     }
 
-    public void RPCToggleSpecialAttributeSuspension(PhotonTargets targets, SpecialAttribute.AttributeType type, bool suspend) {
+    public void RPCRemoveSpecialAttributeSuspension(PhotonTargets targets, SpecialAttribute.AttributeType type) {
         int attributeTypeEnum = (int)type;
-        photonView.RPC("RemoveSpecialAtribute", targets, attributeTypeEnum, suspend);
+        photonView.RPC("RemoveSpecialAtribute", targets, attributeTypeEnum);
     }
 
 
     [PunRPC]
-    public void RemoveSpecialAtribute(int type, bool suspend) {
+    public void RemoveSpecialAtribute(int type) {
         SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
 
         SpecialAttribute existingAttribute = null;
@@ -1071,10 +1045,12 @@ public class CardVisual : Photon.MonoBehaviour {
         for (int i = 0; i < specialAttributes.Count; i++) {
             if (specialAttributes[i].attributeType == newType) {
                 existingAttribute = specialAttributes[i];
-
-                existingAttribute.suspended = suspend;
-
+                break;
             }
+        }
+
+        if(existingAttribute != null) {
+            specialAttributes.Remove(existingAttribute);
         }
     }
 

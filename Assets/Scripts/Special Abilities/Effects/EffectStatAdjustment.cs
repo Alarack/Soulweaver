@@ -15,11 +15,16 @@ public class EffectStatAdjustment : Effect {
         DeriveValueFromCardsInZone
     }
 
+    public enum DeriveStatsFromWhom {
+        TargetOFEffect,
+        SourceOfEffect
+    }
+
     public ValueSetMethod valueSetmethod;
     public List<StatAdjustment> adjustments = new List<StatAdjustment>();
 
     //Derive Stats From Target
-    public SpecialAbility.DeriveStatsFromWhom deriveStatsFromWhom;
+    public DeriveStatsFromWhom deriveStatsFromWhom;
     public CardStats targetStat;
 
     //Derive Stats from Cards in Zone
@@ -76,7 +81,7 @@ public class EffectStatAdjustment : Effect {
     private void ApplyStatAdjustment(CardVisual target) {
         for(int i = 0; i < adjustments.Count; i++) {
 
-            Debug.Log("Applying " + adjustments[i].stat.ToString() + " adjustment of value " + adjustments[i].value.ToString() + " to " + target.cardData.name);
+            //Debug.Log("Applying " + adjustments[i].stat.ToString() + " adjustment of value " + adjustments[i].value.ToString() + " to " + target.cardData.name);
 
             target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source);
         }
@@ -86,12 +91,12 @@ public class EffectStatAdjustment : Effect {
     //When a stat adjustment is based on the value of another target's stat. Determine which target to derive that stat from.
     private void DetermineSourceOfTargetStat() {
         switch (deriveStatsFromWhom) {
-            case SpecialAbility.DeriveStatsFromWhom.SourceOfEffect:
+            case DeriveStatsFromWhom.SourceOfEffect:
 
                 SetAdjustmentValuesByTargetStat(source);
                 break;
 
-            case SpecialAbility.DeriveStatsFromWhom.TargetOFEffect:
+            case DeriveStatsFromWhom.TargetOFEffect:
                 SetAdjustmentValuesByTargetStat(parentAbility.targets[0]);
                 break;
         }

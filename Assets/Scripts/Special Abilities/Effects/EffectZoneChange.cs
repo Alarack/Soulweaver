@@ -18,6 +18,10 @@ public class EffectZoneChange : Effect {
         target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(targetLocation, target));
     }
 
+    public override void Remove(CardVisual target) {
+        target.currentDeck.RPCTransferCard(PhotonTargets.All, target, target.previousDeck);
+    }
+
 
 
 

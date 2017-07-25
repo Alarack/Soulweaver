@@ -28,6 +28,18 @@ public class EffectAddorRemoveKeywords : Effect {
         }
     }
 
+    public override void Remove(CardVisual target) {
+        switch (addOrRemove) {
+            case AddOrRemove.Remove:
+                AddKeywords(target);
+                break;
+
+            case AddOrRemove.Add:
+                RemoveKeywords(target);
+                break;
+        }
+    }
+
 
     private void AddKeywords(CardVisual target) {
         for (int i = 0; i < keywords.Count; i++) {

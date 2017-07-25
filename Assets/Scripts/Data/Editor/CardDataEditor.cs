@@ -133,7 +133,7 @@ public class CardDataEditor : Editor {
                 default:
                     break;
             }
-        }
+        }//End of Spawn Token
 
         //Stat Adjustments
         if(entry is EffectStatAdjustment) {
@@ -171,10 +171,43 @@ public class CardDataEditor : Editor {
                 default:
                     break;
             }
+        }//End of Stat Adjustments
+
+        //Generate Resource
+        if(entry is EffectGenerateResource) {
+            EffectGenerateResource generateResource = entry as EffectGenerateResource;
+
+            generateResource.resourceType = EditorHelper.EnumPopup("What Kind of Resource?", generateResource.resourceType);
+            generateResource.resourceName = EditorGUILayout.TextField("Resource Name: ", generateResource.resourceName);
+            generateResource.cap = EditorGUILayout.IntField("Resource Cap? Leave 0 if Inifnite", generateResource.cap);
+            generateResource.amount = EditorGUILayout.IntField("Generate How Much?", generateResource.amount);
         }
 
+        //Add or Remove Keywords
+        if(entry is EffectAddorRemoveKeywords) {
+            EffectAddorRemoveKeywords keywords = entry as EffectAddorRemoveKeywords;
+            keywords.addOrRemove = EditorHelper.EnumPopup("Add or Remove?", keywords.addOrRemove);
+            keywords.keywords = EditorHelper.DrawList("Keywords", keywords.keywords, true, Keywords.None, true, DrawKeywords);
 
+        }
 
+        //Add or Remove Special Attributes
+        if(entry is EffectAddorRemoveSpecialAttribute) {
+            EffectAddorRemoveSpecialAttribute specialAttribute = entry as EffectAddorRemoveSpecialAttribute;
+            specialAttribute.attributeType = EditorHelper.EnumPopup("Attribute Type", specialAttribute.attributeType);
+
+            switch (specialAttribute.attributeAction) {
+                case EffectAddorRemoveSpecialAttribute.AttributeAction.Add:
+                    specialAttribute.value = EditorGUILayout.IntField("Value", specialAttribute.value);
+                    break;
+
+                case EffectAddorRemoveSpecialAttribute.AttributeAction.Modify:
+                    specialAttribute.modificationValue = EditorGUILayout.IntField("Modifier Value", specialAttribute.modificationValue);
+                    break;
+
+            }
+
+        }
 
         return entry;
     }
@@ -188,7 +221,6 @@ public class CardDataEditor : Editor {
         entry.temporary = EditorGUILayout.Toggle("Is this removable?", entry.temporary);
         entry.spellDamage = EditorGUILayout.Toggle("Is this Spell Damage?", entry.spellDamage);
 
-
         return entry;
     }
 
@@ -200,20 +232,12 @@ public class CardDataEditor : Editor {
         entry.temporary = EditorGUILayout.Toggle("Is this removable?", entry.temporary);
         entry.spellDamage = EditorGUILayout.Toggle("Is this Spell Damage?", entry.spellDamage);
 
-        //     entry.stat = (Constants.CardStats)EditorGUILayout.EnumPopup("Stat", entry.stat);
+        return entry;
+    }
 
-        //entry.valueSetBytargetStat = EditorGUILayout.Toggle("Set Value By an Effect Target's Stat?", entry.valueSetBytargetStat);
-
-        //if (entry.valueSetBytargetStat) {
-        //    entry.deriveStatsFromWhom = EditorHelper.EnumPopup("Derive Stats from Target or Source?", entry.deriveStatsFromWhom);
-
-        //    entry.targetStat = EditorHelper.EnumPopup("Target Stat", entry.targetStat);
-        //    entry.invertValue = EditorGUILayout.Toggle("Inverse Value?", entry.invertValue);
-        //}
-        //else {
-        //    entry.value = EditorGUILayout.IntField("Value", entry.value);
-        //}
-
+    private SpecialAbility.StatAdjustment DrawStatInformation(SpecialAbility.StatAdjustment entry) {
+        entry.stat = EditorHelper.EnumPopup("Stat", entry.stat);
+        entry.value = EditorGUILayout.IntField("Value", entry.value);
 
         return entry;
     }
@@ -223,11 +247,6 @@ public class CardDataEditor : Editor {
 
         GUIStyle boldRed = new GUIStyle(EditorStyles.boldLabel);
         boldRed.normal.textColor = Color.red;
-
-        GUIStyle boldBlue = new GUIStyle(EditorStyles.boldLabel);
-        boldBlue.normal.textColor = Color.cyan;
-
-
 
 
         entry.abilityName = EditorGUILayout.TextField("Name of Ability (Optional) ", entry.abilityName);
@@ -255,11 +274,6 @@ public class CardDataEditor : Editor {
 
                     break;
 
-                case AbilityActivationTrigger.Defends:
-                    //entry.applyEffectToWhom = EditorHelper.EnumPopup("Target Triggering Card or Cause of Trigger?", entry.applyEffectToWhom);
-
-                    break;
-
                 case AbilityActivationTrigger.SecondaryEffect:
                     EditorGUILayout.Separator();
                     entry.triggerConstraints.triggerbySpecificAbility = EditorGUILayout.Toggle("Trigger from specific ability?", entry.triggerConstraints.triggerbySpecificAbility);
@@ -273,7 +287,6 @@ public class CardDataEditor : Editor {
 
                         lta.processEffectOnPrimaryEffectTargets = EditorGUILayout.Toggle("Target the same targets as primary ability?", lta.processEffectOnPrimaryEffectTargets);
                     }
-
 
                     break;
 
@@ -321,8 +334,6 @@ public class CardDataEditor : Editor {
                     entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards);
                     entry.additionalRequirementConstraints.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.additionalRequirementConstraints.numberOfcardsInZone);
                     entry.additionalRequirementConstraints.moreOrLess = EditorHelper.EnumPopup("At Least Or Less Than?", entry.additionalRequirementConstraints.moreOrLess);
-                    //entry.greaterOrEqualCardsInZone = EditorGUILayout.Toggle("This many or more?", entry.greaterOrEqualCardsInZone);
-                    //entry.lessOrEqualCardsInZone = EditorGUILayout.Toggle("This many or less?", entry.lessOrEqualCardsInZone);
 
                     EditorGUILayout.Separator();
                     entry.additionalRequirementConstraints.types = EditorHelper.DrawList("Number of cards Constraint", entry.additionalRequirementConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
@@ -367,17 +378,18 @@ public class CardDataEditor : Editor {
                 //entry.targetConstraints.targetZone = EditorHelper.EnumPopup("Target Zone", entry.targetConstraints.targetZone);
                 break;
 
-            case EffectType.GrantKeywordAbilities:
+            case EffectType.AddOrRemoveKeywordAbilities:
             case EffectType.RemoveKeywordAbilities:
-                entry.keywordsToAddorRemove = EditorHelper.DrawList("Keywords", entry.keywordsToAddorRemove, true, Keywords.None, true, DrawKeywords);
-                //entry.removeKeyword = EditorGUILayout.Toggle("Remove this Kewyord from Target?", entry.removeKeyword);
+                //entry.keywordsToAddorRemove = EditorHelper.DrawList("Keywords", entry.keywordsToAddorRemove, true, Keywords.None, true, DrawKeywords);
+
+                entry.effectHolder.addOrRemoveKeywords = EditorHelper.DrawExtendedList("Add or Remove Keyword Effect", entry.effectHolder.addOrRemoveKeywords, "Keyword", DrawEffectList);
+
+
                 break;
 
             case EffectType.GenerateResource:
-                entry.targetConstraints.generatedResourceType = EditorHelper.EnumPopup("What Kind of Resource?", entry.targetConstraints.generatedResourceType);
-                entry.targetConstraints.generatedResourceName = EditorGUILayout.TextField("Resource Name: ", entry.targetConstraints.generatedResourceName);
-                entry.targetConstraints.generatedResouceCap = EditorGUILayout.IntField("Resource Cap? Leave 0 if Inifnite", entry.targetConstraints.generatedResouceCap);
-                entry.targetConstraints.amountOfResourceToGenerate = EditorGUILayout.IntField("Generate How Much?", entry.targetConstraints.amountOfResourceToGenerate);
+
+                entry.effectHolder.generateResources = EditorHelper.DrawExtendedList("Resource Generation Effect", entry.effectHolder.generateResources, "Generate Resource", DrawEffectList);
 
                 break;
 
@@ -387,8 +399,12 @@ public class CardDataEditor : Editor {
                 break;
 
             case EffectType.GrantSpecialAttribute:
-                entry.targetConstraints.grantedSpecialAttributeType = EditorHelper.EnumPopup("What Type?", entry.targetConstraints.grantedSpecialAttributeType);
-                entry.targetConstraints.grantedSpecialAttributeValue = EditorGUILayout.IntField("How much?", entry.targetConstraints.grantedSpecialAttributeValue);
+
+
+                entry.effectHolder.addOrRemoveSpecialAttribute = EditorHelper.DrawExtendedList("Special Attribute Effects", entry.effectHolder.addOrRemoveSpecialAttribute, "Special Attribute", DrawEffectList);
+
+
+
 
                 break;
 
@@ -406,11 +422,11 @@ public class CardDataEditor : Editor {
 
         entry.duration = EditorHelper.EnumPopup("Duration", entry.duration);
 
-        EditorHelper.DrawInspectorSectionHeader("Stat Adjustments");
-        entry.statAdjustments = EditorHelper.DrawExtendedList(entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);
+        //EditorHelper.DrawInspectorSectionHeader("Stat Adjustments");
+        //entry.statAdjustments = EditorHelper.DrawExtendedList(entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);
 
 
-        EditorHelper.DrawInspectorSectionFooter();
+        //EditorHelper.DrawInspectorSectionFooter();
 
 
         EditorGUILayout.Separator();
@@ -452,33 +468,33 @@ public class CardDataEditor : Editor {
         return entry;
     }
 
-    private SpecialAbility.StatAdjustment DrawStatAdjustments(SpecialAbility.StatAdjustment entry) {
-        entry.stat = (Constants.CardStats)EditorGUILayout.EnumPopup("Stat", entry.stat);
+    //private SpecialAbility.StatAdjustment DrawStatAdjustments(SpecialAbility.StatAdjustment entry) {
+    //    entry.stat = (Constants.CardStats)EditorGUILayout.EnumPopup("Stat", entry.stat);
 
-        entry.valueSetBytargetStat = EditorGUILayout.Toggle("Set Value By an Effect Target's Stat?", entry.valueSetBytargetStat);
+    //    entry.valueSetBytargetStat = EditorGUILayout.Toggle("Set Value By an Effect Target's Stat?", entry.valueSetBytargetStat);
 
-        if (entry.valueSetBytargetStat) {
-            entry.deriveStatsFromWhom = EditorHelper.EnumPopup("Derive Stats from Target or Source?", entry.deriveStatsFromWhom);
+    //    if (entry.valueSetBytargetStat) {
+    //        entry.deriveStatsFromWhom = EditorHelper.EnumPopup("Derive Stats from Target or Source?", entry.deriveStatsFromWhom);
 
-            entry.targetStat = EditorHelper.EnumPopup("Target Stat", entry.targetStat);
-            entry.invertValue = EditorGUILayout.Toggle("Inverse Value?", entry.invertValue);
-        }
-        else {
-            entry.value = EditorGUILayout.IntField("Value", entry.value);
-        }
-
-
-        entry.nonStacking = EditorGUILayout.Toggle("Non-Stacking?", entry.nonStacking);
-        entry.temporary = EditorGUILayout.Toggle("Is this removable?", entry.temporary);
-        entry.spellDamage = EditorGUILayout.Toggle("Is this Spell Damage?", entry.spellDamage);
-
-        //if(entry.uniqueID == -1 || entry.uniqueID == 0) {
-        //    entry.uniqueID = IDFactory.GenerateID();
-        //}
+    //        entry.targetStat = EditorHelper.EnumPopup("Target Stat", entry.targetStat);
+    //        entry.invertValue = EditorGUILayout.Toggle("Inverse Value?", entry.invertValue);
+    //    }
+    //    else {
+    //        entry.value = EditorGUILayout.IntField("Value", entry.value);
+    //    }
 
 
-        return entry;
-    }
+    //    entry.nonStacking = EditorGUILayout.Toggle("Non-Stacking?", entry.nonStacking);
+    //    entry.temporary = EditorGUILayout.Toggle("Is this removable?", entry.temporary);
+    //    entry.spellDamage = EditorGUILayout.Toggle("Is this Spell Damage?", entry.spellDamage);
+
+    //    //if(entry.uniqueID == -1 || entry.uniqueID == 0) {
+    //    //    entry.uniqueID = IDFactory.GenerateID();
+    //    //}
+
+
+    //    return entry;
+    //}
 
 
     //private 
@@ -580,13 +596,13 @@ public class CardDataEditor : Editor {
             case Constants.ConstraintType.StatMinimum:
                 EditorGUILayout.Separator();
                 EditorGUILayout.LabelField("Does the " + constraintName + " meet a minimum stat requirement?", EditorStyles.boldLabel);
-                entry.minStats = EditorHelper.DrawExtendedList("Minimum Stats", entry.minStats, "Stat", DrawStatAdjustments);
+                entry.minStats = EditorHelper.DrawExtendedList("Minimum Stats", entry.minStats, "Stat", DrawStatInformation);
                 break;
 
             case Constants.ConstraintType.StatMaximum:
                 EditorGUILayout.Separator();
                 EditorGUILayout.LabelField("Does the " + constraintName + " meet a Maximum stat requirement?", EditorStyles.boldLabel);
-                entry.maxStats = EditorHelper.DrawExtendedList("Maximum Stats", entry.maxStats, "Stat", DrawStatAdjustments);
+                entry.maxStats = EditorHelper.DrawExtendedList("Maximum Stats", entry.maxStats, "Stat", DrawStatInformation);
                 break;
 
             //case ConstraintType.NumberofCardsInZone:
