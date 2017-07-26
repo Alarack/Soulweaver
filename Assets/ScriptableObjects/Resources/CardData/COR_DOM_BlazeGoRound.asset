@@ -61,31 +61,20 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
     sourceConstraints:
       types: 040000000c000000
       owner: 0
@@ -116,34 +105,22 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
     effect: 1
     abilityName: RoundBlaze
-    effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
@@ -176,34 +153,23 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
-    ID: 0
     abilityVFX: 
     movingVFX: 0
+    additionalRequirements: 
     additionalRequirementConstraints:
       types: 
       owner: 0
@@ -234,46 +200,86 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
-    keywordsToAddorRemove: 
-    additionalRequirements: 
-    statAdjustments:
-    - stat: 4
-      value: -1
-      nonStacking: 0
-      temporary: 0
-      source: {fileID: 0}
-      uniqueID: -1
-      valueSetBytargetStat: 0
-      deriveStatsFromWhom: 0
-      targetStat: 0
-      invertValue: 0
-      spellDamage: 0
-    activeStatAdjustments: []
+    effectHolder:
+      zoneChanges: []
+      tokenSpanws: []
+      statAdjustments:
+      - effectType: 0
+        source: {fileID: 0}
+        valueSetmethod: 0
+        adjustments:
+        - stat: 4
+          value: -1
+          nonStacking: 0
+          temporary: 0
+          source: {fileID: 0}
+          uniqueID: -1
+          spellDamage: 0
+        deriveStatsFromWhom: 0
+        targetStat: 0
+        zoneToCount: 0
+        constraints:
+          types: 
+          owner: 0
+          whosTurn: 0
+          primaryType: 
+          notPrimaryType: 0
+          additionalType: 
+          notAdditionalType: 0
+          subtype: 
+          notSubtype: 0
+          keyword: 
+          notKeyword: 0
+          attunement: 
+          notAttunement: 0
+          currentZone: 
+          notCurrentZone: 0
+          previousZone: 
+          notPreviousZone: 0
+          creatureStatus: 
+          resources: 
+          minStats: []
+          maxStats: []
+          mostStat: 0
+          leastStat: 0
+          thisCardOnly: 0
+          oncePerTurn: 0
+          triggeredThisTurn: 0
+          neverTargetSelf: 0
+          triggerbySpecificAbility: 0
+          triggerablePrimaryAbilityName: 
+          abilityToRemove: 
+          abilityToRetrigger: 
+          gainedOrLost: 0
+          statChanged: 0
+          zoneToCheckForNumberOfCards: 0
+          moreOrLess: 0
+          numberOfcardsInZone: 0
+          requireMultipleTriggers: 0
+          resetCountAtTurnEnd: 0
+          triggersRequired: 0
+          counter: 0
+          requiredResourceType: 0
+          amountOfResourceRequried: 0
+          consumeResource: 0
+        invertValue: 0
+      generateResources: []
+      addOrRemoveKeywords: []
+      addOrRemoveSpecialAttribute: []
     processTriggerOnWhom: 0
     logicTargetingMethod: 2
     numberofTargets: 1

@@ -243,10 +243,95 @@ public class CardDataEditor : Editor {
     }
 
 
+
+    private void DrawInspirePreset(SpecialAbility entry) {
+
+        if (entry.trigger.Contains(AbilityActivationTrigger.EntersZone))
+            return;
+
+        entry.trigger.Add(AbilityActivationTrigger.EntersZone);
+        entry.triggerConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.triggerConstraints.currentZone.Add(DeckType.Battlefield);
+        entry.triggerConstraints.thisCardOnly = true;
+    }
+
+    private void DrawFinalePreset(SpecialAbility entry) {
+
+        if (entry.trigger.Contains(AbilityActivationTrigger.EntersZone))
+            return;
+
+        entry.trigger.Add(AbilityActivationTrigger.EntersZone);
+        entry.triggerConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.triggerConstraints.types.Add(ConstraintType.PreviousZone);
+
+        entry.triggerConstraints.currentZone.Add(DeckType.SoulCrypt);
+        entry.triggerConstraints.previousZone.Add(DeckType.Battlefield);
+        entry.triggerConstraints.thisCardOnly = true;
+    }
+
+    private void DrawDeathwatchPreset(SpecialAbility entry) {
+        if (entry.trigger.Contains(AbilityActivationTrigger.EntersZone))
+            return;
+
+        entry.trigger.Add(AbilityActivationTrigger.EntersZone);
+        entry.triggerConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.triggerConstraints.types.Add(ConstraintType.PreviousZone);
+        entry.triggerConstraints.types.Add(ConstraintType.PrimaryType);
+
+        entry.triggerConstraints.currentZone.Add(DeckType.SoulCrypt);
+        entry.triggerConstraints.previousZone.Add(DeckType.Battlefield);
+        entry.triggerConstraints.primaryType.Add(CardType.Soul);
+
+        entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.sourceConstraints.currentZone.Add(DeckType.Battlefield);
+
+    }
+
+    private void DrawBloodthirstPreset(SpecialAbility entry) {
+
+        entry.trigger.Add(AbilityActivationTrigger.CreatureStatChanged);
+        entry.triggerConstraints.statChanged = Constants.CardStats.Health;
+        entry.triggerConstraints.gainedOrLost = SpecialAbility.GainedOrLost.Lost;
+        //entry.processTriggerOnWhom = SpecialAbility.ApplyEffectToWhom.TriggeringCard;
+
+        entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.sourceConstraints.currentZone.Add(DeckType.Battlefield);
+
+
+    }
+
+
+
     private SpecialAbility DrawSpecalAbilities(SpecialAbility entry) {
 
         GUIStyle boldRed = new GUIStyle(EditorStyles.boldLabel);
         boldRed.normal.textColor = Color.red;
+
+        GUIStyle boldTeal = new GUIStyle(EditorStyles.boldLabel);
+        boldTeal.normal.textColor = Color.cyan;
+
+
+        EditorGUILayout.LabelField("Presets", boldRed);
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Inspire")) {
+            DrawInspirePreset(entry);
+        }
+
+        if (GUILayout.Button("Finale")) {
+            DrawFinalePreset(entry);
+        }
+
+        if (GUILayout.Button("Deathwatch")) {
+            DrawDeathwatchPreset(entry);
+        }
+
+        if (GUILayout.Button("Bloodthirst")) {
+            DrawBloodthirstPreset(entry);
+        }
+
+
+        EditorGUILayout.EndHorizontal();
 
 
         entry.abilityName = EditorGUILayout.TextField("Name of Ability (Optional) ", entry.abilityName);
@@ -379,7 +464,6 @@ public class CardDataEditor : Editor {
                 break;
 
             case EffectType.AddOrRemoveKeywordAbilities:
-            case EffectType.RemoveKeywordAbilities:
                 //entry.keywordsToAddorRemove = EditorHelper.DrawList("Keywords", entry.keywordsToAddorRemove, true, Keywords.None, true, DrawKeywords);
 
                 entry.effectHolder.addOrRemoveKeywords = EditorHelper.DrawExtendedList("Add or Remove Keyword Effect", entry.effectHolder.addOrRemoveKeywords, "Keyword", DrawEffectList);
@@ -398,7 +482,7 @@ public class CardDataEditor : Editor {
 
                 break;
 
-            case EffectType.GrantSpecialAttribute:
+            case EffectType.AddOrRemoveSpecialAttribute:
 
 
                 entry.effectHolder.addOrRemoveSpecialAttribute = EditorHelper.DrawExtendedList("Special Attribute Effects", entry.effectHolder.addOrRemoveSpecialAttribute, "Special Attribute", DrawEffectList);

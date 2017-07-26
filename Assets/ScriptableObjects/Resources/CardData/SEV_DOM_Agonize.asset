@@ -19,6 +19,7 @@ MonoBehaviour:
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
+  deathVFX: 
   primaryCardType: 5
   otherCardTypes: 
   attunements: 
@@ -31,6 +32,7 @@ MonoBehaviour:
     triggerConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -57,34 +59,24 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
     sourceConstraints:
       types: 0400000008000000
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -111,39 +103,28 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
     effect: 1
     abilityName: Deal Damage
-    effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
       types: 02000000040000000b000000
       owner: 0
+      whosTurn: 0
       primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
@@ -170,37 +151,27 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
-    ID: 0
     abilityVFX: 
-    moveingVFX: 0
+    movingVFX: 0
+    additionalRequirements: 02000000
     additionalRequirementConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -227,45 +198,86 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 1
       amountOfResourceRequried: 2
       consumeResource: 1
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
-    keywordsToAddorRemove: 
-    additionalRequirements: 02000000
-    statAdjustments:
-    - stat: 4
-      value: -2
-      nonStacking: 0
-      temporary: 0
-      source: {fileID: 0}
-      uniqueID: -1
-      valueSetBytargetStat: 0
-      deriveStatsFromWhom: 0
-      targetStat: 0
-      invertValue: 0
-    activeStatAdjustments: []
+    effectHolder:
+      zoneChanges: []
+      tokenSpanws: []
+      statAdjustments:
+      - effectType: 0
+        source: {fileID: 0}
+        valueSetmethod: 0
+        adjustments:
+        - stat: 4
+          value: -2
+          nonStacking: 0
+          temporary: 0
+          source: {fileID: 0}
+          uniqueID: -1
+          spellDamage: 0
+        deriveStatsFromWhom: 0
+        targetStat: 0
+        zoneToCount: 0
+        constraints:
+          types: 
+          owner: 0
+          whosTurn: 0
+          primaryType: 
+          notPrimaryType: 0
+          additionalType: 
+          notAdditionalType: 0
+          subtype: 
+          notSubtype: 0
+          keyword: 
+          notKeyword: 0
+          attunement: 
+          notAttunement: 0
+          currentZone: 
+          notCurrentZone: 0
+          previousZone: 
+          notPreviousZone: 0
+          creatureStatus: 
+          resources: 
+          minStats: []
+          maxStats: []
+          mostStat: 0
+          leastStat: 0
+          thisCardOnly: 0
+          oncePerTurn: 0
+          triggeredThisTurn: 0
+          neverTargetSelf: 0
+          triggerbySpecificAbility: 0
+          triggerablePrimaryAbilityName: 
+          abilityToRemove: 
+          abilityToRetrigger: 
+          gainedOrLost: 0
+          statChanged: 0
+          zoneToCheckForNumberOfCards: 0
+          moreOrLess: 0
+          numberOfcardsInZone: 0
+          requireMultipleTriggers: 0
+          resetCountAtTurnEnd: 0
+          triggersRequired: 0
+          counter: 0
+          requiredResourceType: 0
+          amountOfResourceRequried: 0
+          consumeResource: 0
+        invertValue: 0
+      generateResources: []
+      addOrRemoveKeywords: []
+      addOrRemoveSpecialAttribute: []
     processTriggerOnWhom: 0
   multiTargetAbilities:
   - trigger: 0a000000
@@ -273,6 +285,7 @@ MonoBehaviour:
     triggerConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -299,34 +312,24 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
     sourceConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -353,39 +356,28 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
-    effect: 6
+    effect: 5
     abilityName: Exhaust self
-    effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -412,37 +404,27 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
-    ID: 0
     abilityVFX: 
-    moveingVFX: 0
+    movingVFX: 0
+    additionalRequirements: 
     additionalRequirementConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -469,35 +451,31 @@ MonoBehaviour:
       neverTargetSelf: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      copyTargetsStatsOnly: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      grantedSpecialAttributeType: 0
-      grantedSpecialAttributeValue: 0
-    keywordsToAddorRemove: 16000000
-    additionalRequirements: 
-    statAdjustments: []
-    activeStatAdjustments: []
+    effectHolder:
+      zoneChanges: []
+      tokenSpanws: []
+      statAdjustments: []
+      generateResources: []
+      addOrRemoveKeywords:
+      - effectType: 0
+        source: {fileID: 0}
+        keywords: 16000000
+        addOrRemove: 0
+      addOrRemoveSpecialAttribute: []
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0

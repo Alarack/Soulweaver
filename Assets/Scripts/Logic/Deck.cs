@@ -228,6 +228,9 @@ public class Deck : Photon.MonoBehaviour {
         cardVisual.RPCSetOwner(PhotonTargets.Others);
         cardVisual.RPCSetParentDeck(PhotonTargets.Others, decktype.ToString());
 
+        cardVisual.RPCSetUpCardData(PhotonTargets.All);
+        activeCard.name = cardVisual.cardData.cardName + " " + index;
+
         if (targetDeck != null) {
 
             switch (targetDeck.decktype) {
@@ -274,8 +277,7 @@ public class Deck : Photon.MonoBehaviour {
             cardVisual.RPCRotateCard(PhotonTargets.Others);
         }
 
-        cardVisual.RPCSetUpCardData(PhotonTargets.All);
-        activeCard.name = cardVisual.cardData.cardName + " " + index;
+
         //Debug.Log(cardVisual.photonView.viewID + " has been created");
         //cardVisual.InitializeSpecialAbilities(cardVisual.photonView.viewID);
 

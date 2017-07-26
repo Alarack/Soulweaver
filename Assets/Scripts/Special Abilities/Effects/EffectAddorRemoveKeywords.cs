@@ -17,6 +17,8 @@ public class EffectAddorRemoveKeywords : Effect {
     public AddOrRemove addOrRemove;
 
     public override void Apply(CardVisual target) {
+        //Debug.Log("Add Or Remove Keywords Apply method");
+
         switch (addOrRemove) {
             case AddOrRemove.Add:
                 AddKeywords(target);
@@ -43,6 +45,9 @@ public class EffectAddorRemoveKeywords : Effect {
 
     private void AddKeywords(CardVisual target) {
         for (int i = 0; i < keywords.Count; i++) {
+
+            //Debug.Log("adding " + keywords[i].ToString() + " to " + target.gameObject.name);
+
             target.RPCAddKeyword(PhotonTargets.All, keywords[i], true);
         }
     }

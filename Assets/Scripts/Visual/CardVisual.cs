@@ -897,10 +897,18 @@ public class CardVisual : Photon.MonoBehaviour {
     [PunRPC]
     public void ToggleKeyword(bool add, int keywordIndex) {
 
+        
+
         Constants.Keywords newKeyword = (Constants.Keywords)keywordIndex;
+
+
+
 
         switch (add) {
             case true:
+
+                //Debug.Log("adding " + newKeyword.ToString() + " to " + gameObject.name);
+
                 if (newKeyword == Constants.Keywords.Interceptor) {
                     if (keywords.Contains(Constants.Keywords.Exhausted) || keywords.Contains(Constants.Keywords.NoIntercept)) {
                         return;

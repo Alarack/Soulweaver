@@ -190,6 +190,9 @@ public abstract class SpecialAbility {
 
             case EffectType.AddOrRemoveKeywordAbilities:
                 //GrantKeywords(card, keywordsToAddorRemove);
+
+                //Debug.Log("Special Ability Effect | Add or Remove Keywords");
+
                 for (int i = 0; i < effectHolder.addOrRemoveKeywords.Count; i++) {
                     effectHolder.addOrRemoveKeywords[i].Apply(card);
                 }
@@ -204,7 +207,7 @@ public abstract class SpecialAbility {
 
                 break;
 
-            case EffectType.GrantSpecialAttribute:
+            case EffectType.AddOrRemoveSpecialAttribute:
                 //AddSpecialAttribute(card, targetConstraints);
                 for (int i = 0; i < effectHolder.addOrRemoveSpecialAttribute.Count; i++) {
                     effectHolder.addOrRemoveSpecialAttribute[i].Apply(card);
@@ -275,7 +278,7 @@ public abstract class SpecialAbility {
 
                     break;
 
-                case EffectType.GrantSpecialAttribute:
+                case EffectType.AddOrRemoveSpecialAttribute:
                     for (int j = 0; j < effectHolder.addOrRemoveSpecialAttribute.Count; j++) {
                         effectHolder.addOrRemoveSpecialAttribute[j].Remove(cards[i]);
                     }
@@ -508,6 +511,8 @@ public abstract class SpecialAbility {
         CardVisual card = data.GetMonoBehaviour("Source") as CardVisual;
         string triggeringAbilityName = data.GetString("AbilityName");
 
+        //Debug.Log(abilityName + " is triggering");
+
         if (card != source)
             return;
 
@@ -520,6 +525,10 @@ public abstract class SpecialAbility {
 
         if (!source.photonView.isMine)
             return;
+
+
+        //Debug.Log(abilityName + " is triggering");
+
 
         if (this is LogicTargetedAbility) {
             LogicTargetedAbility lta = this as LogicTargetedAbility;
