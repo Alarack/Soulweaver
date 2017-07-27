@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SoulWeaver;
 
 [System.Serializable]
 public class GameResource {
@@ -48,6 +49,15 @@ public class GameResource {
         //}
 
         UpdateText();
+
+        EventData data = new EventData();
+        data.AddInt("ResourceType", (int)resourceType);
+        data.AddInt("Value", value);
+        data.AddMonoBehaviour("Player", manager.owner);
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.ResourceChanged, data);
+
+
     }
 
     public bool RemoveResource(int value) {
@@ -57,6 +67,14 @@ public class GameResource {
         else {
             currentValue -= value;
             UpdateText();
+
+            EventData data = new EventData();
+            data.AddInt("ResourceType", (int)resourceType);
+            data.AddInt("Value", -value);
+            data.AddMonoBehaviour("Player", manager.owner);
+
+            Grid.EventManager.SendEvent(Constants.GameEvent.ResourceChanged, data);
+
             return true;
         }
     }
@@ -67,6 +85,14 @@ public class GameResource {
             return;
 
         maximumValue += value;
+
+        EventData data = new EventData();
+        data.AddInt("ResourceType", (int)resourceType);
+        data.AddInt("Value", value);
+        data.AddMonoBehaviour("Player", manager.owner);
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.ResourceChanged, data);
+
 
         UpdateText();
     }

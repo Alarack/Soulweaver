@@ -154,7 +154,6 @@ public class CardVisual : Photon.MonoBehaviour {
             multiTargetAbiliies.Add(newEffect);
         }
 
-
         List<SpecialAttribute> tempAttributes = new List<SpecialAttribute>(cardData.specialAttributes);
 
         foreach (SpecialAttribute att in tempAttributes) {

@@ -195,6 +195,7 @@ public class CardDataEditor : Editor {
         if(entry is EffectAddorRemoveSpecialAttribute) {
             EffectAddorRemoveSpecialAttribute specialAttribute = entry as EffectAddorRemoveSpecialAttribute;
             specialAttribute.attributeType = EditorHelper.EnumPopup("Attribute Type", specialAttribute.attributeType);
+            specialAttribute.attributeAction = EditorHelper.EnumPopup("Add, Modify, or Remmove?", specialAttribute.attributeAction);
 
             switch (specialAttribute.attributeAction) {
                 case EffectAddorRemoveSpecialAttribute.AttributeAction.Add:
@@ -291,7 +292,7 @@ public class CardDataEditor : Editor {
 
         entry.trigger.Add(AbilityActivationTrigger.CreatureStatChanged);
         entry.triggerConstraints.statChanged = Constants.CardStats.Health;
-        entry.triggerConstraints.gainedOrLost = SpecialAbility.GainedOrLost.Lost;
+        entry.triggerConstraints.statGainedOrLost = SpecialAbility.GainedOrLost.Lost;
         //entry.processTriggerOnWhom = SpecialAbility.ApplyEffectToWhom.TriggeringCard;
 
         entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
@@ -354,7 +355,7 @@ public class CardDataEditor : Editor {
 
                 case AbilityActivationTrigger.CreatureStatChanged:
                     entry.triggerConstraints.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.triggerConstraints.statChanged);
-                    entry.triggerConstraints.gainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.triggerConstraints.gainedOrLost);
+                    entry.triggerConstraints.statGainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.triggerConstraints.statGainedOrLost);
                     entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
 
                     break;
@@ -377,6 +378,12 @@ public class CardDataEditor : Editor {
 
                 case AbilityActivationTrigger.Slain:
                     entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
+
+                    break;
+
+                case AbilityActivationTrigger.ResourceChanged:
+                    entry.triggerConstraints.resourceThatChanged = EditorHelper.EnumPopup("Resource", entry.triggerConstraints.resourceThatChanged);
+                    entry.triggerConstraints.resourceGainedOrLost = EditorHelper.EnumPopup("Gained or Lost?", entry.triggerConstraints.resourceGainedOrLost);
 
                     break;
             }
@@ -418,7 +425,7 @@ public class CardDataEditor : Editor {
                 case Constants.AdditionalRequirement.NumberofCardsInZone:
                     entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards);
                     entry.additionalRequirementConstraints.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.additionalRequirementConstraints.numberOfcardsInZone);
-                    entry.additionalRequirementConstraints.moreOrLess = EditorHelper.EnumPopup("At Least Or Less Than?", entry.additionalRequirementConstraints.moreOrLess);
+                    entry.additionalRequirementConstraints.moreOrLessCards = EditorHelper.EnumPopup("At Least Or Less Than?", entry.additionalRequirementConstraints.moreOrLessCards);
 
                     EditorGUILayout.Separator();
                     entry.additionalRequirementConstraints.types = EditorHelper.DrawList("Number of cards Constraint", entry.additionalRequirementConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
@@ -431,6 +438,7 @@ public class CardDataEditor : Editor {
 
                 case Constants.AdditionalRequirement.RequireResource:
                     entry.additionalRequirementConstraints.requiredResourceType = EditorHelper.EnumPopup("What kind of Resource?", entry.additionalRequirementConstraints.requiredResourceType);
+                    entry.additionalRequirementConstraints.moreOrlessResource = EditorHelper.EnumPopup("More or less?", entry.additionalRequirementConstraints.moreOrlessResource);
                     entry.additionalRequirementConstraints.amountOfResourceRequried = EditorGUILayout.IntField("How Much?", entry.additionalRequirementConstraints.amountOfResourceRequried);
                     entry.additionalRequirementConstraints.consumeResource = EditorGUILayout.Toggle("Consume this resource?", entry.additionalRequirementConstraints.consumeResource);
 
@@ -647,6 +655,17 @@ public class CardDataEditor : Editor {
                 entry.keyword = EditorHelper.DrawList("Keyword", entry.keyword, true, Keywords.None, true, DrawKeywords);
                 break;
 
+            case ConstraintType.SpecialAttribute:
+                EditorGUILayout.Separator();
+
+                entry.notSpecialAttribute = EditorGUILayout.Toggle("Not?", entry.notSpecialAttribute);
+
+                EditorGUILayout.LabelField("Which Special Attributes are" + ShowNot(entry.notSpecialAttribute) + "valid for the " + constraintName + " ?", EditorStyles.boldLabel);
+
+                entry.specialAttributes = EditorHelper.DrawList("Special Attribute", entry.specialAttributes, true, SpecialAttribute.AttributeType.None, true, DrawSpecialAttributeTypes);
+
+                break;
+
             case Constants.ConstraintType.Attunement:
                 EditorGUILayout.Separator();
 
@@ -761,6 +780,11 @@ public class CardDataEditor : Editor {
 
     private Constants.Keywords DrawKeywords(List<Constants.Keywords> list, int index) {
         Constants.Keywords result = (Constants.Keywords)EditorGUILayout.EnumPopup("Keywords", list[index]);
+        return result;
+    }
+
+    private SpecialAttribute.AttributeType DrawSpecialAttributeTypes(List<SpecialAttribute.AttributeType> list, int index) {
+        SpecialAttribute.AttributeType result = EditorHelper.EnumPopup("Special Attributes", list[index]);
         return result;
     }
 

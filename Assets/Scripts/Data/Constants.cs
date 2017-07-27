@@ -153,7 +153,8 @@ public class Constants {
         UserActivated,
         //Combat
         SecondaryEffect,
-        Slain
+        Slain,
+        ResourceChanged
 
     }
 
@@ -170,7 +171,8 @@ public class Constants {
         StatMinimum,
         StatMaximum,
         CreatureStatus,
-        WhosTurn
+        WhosTurn,
+        SpecialAttribute
 
 
 
@@ -221,7 +223,8 @@ public class Constants {
         Permanent,
         EndOfTurn,
         StartOfTurn,
-        WhileInZone
+        WhileInZone,
+        InsufficientResource
     }
 
     public enum OwnerConstraints {
@@ -277,6 +280,7 @@ public class Constants {
         CharacterAttacked = 301,
         CharacterDefends = 302,
         Combat = 303,
+        ResourceChanged = 304,
 
         CardClicked = 400,
         UserActivatedAbilityInitiated = 401,
