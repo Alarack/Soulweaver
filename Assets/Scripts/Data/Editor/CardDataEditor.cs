@@ -115,6 +115,9 @@ public class CardDataEditor : Editor {
             spawnToken.numberOfSpawns = EditorGUILayout.IntField("Number of Spawns", spawnToken.numberOfSpawns);
             spawnToken.spawnTokenLocation = EditorHelper.EnumPopup("Send Token Where?", spawnToken.spawnTokenLocation);
 
+            if(spawnToken.spawnMethod != EffectSpawnToken.SpawnMethod.CopyStats)
+                spawnToken.spawnForOpponent = EditorGUILayout.Toggle("Spawn for Opponent?", spawnToken.spawnForOpponent);
+
             switch (spawnToken.spawnMethod) {
                 case EffectSpawnToken.SpawnMethod.Basic:
                     spawnToken.spawnableTokenDataName = EditorGUILayout.TextField("Token Data Name", spawnToken.spawnableTokenDataName);
@@ -127,7 +130,11 @@ public class CardDataEditor : Editor {
                     break;
 
                 case EffectSpawnToken.SpawnMethod.CopyStats:
+                    spawnToken.spawnableTokenDataName = EditorGUILayout.TextField("Token Data Name", spawnToken.spawnableTokenDataName);
                     spawnToken.spawnCardType = EditorHelper.EnumPopup("Token Card Type", spawnToken.spawnCardType);
+
+                    if(spawnToken.spawnForOpponent)
+                        spawnToken.spawnForOpponent = false;
                     break;
 
                 default:

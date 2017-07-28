@@ -173,6 +173,11 @@ public class Deck : Photon.MonoBehaviour {
                     CardFactory(card, GlobalSettings._globalSettings.domainCard.name, null, index);
 
                     break;
+
+                case Constants.CardType.Support:
+                    CardFactory(card, GlobalSettings._globalSettings.supportCard.name, null, index);
+
+                    break;
             }
         }
 
@@ -196,6 +201,11 @@ public class Deck : Photon.MonoBehaviour {
 
             case Constants.CardType.Player:
                 result = GlobalSettings._globalSettings.playerCard.name;
+
+                break;
+
+            case Constants.CardType.Support:
+                result = GlobalSettings._globalSettings.supportCard.name;
 
                 break;
         }
@@ -300,6 +310,31 @@ public class Deck : Photon.MonoBehaviour {
     private void CheckAndActivateCard(CardVisual card) {
         if (!card.active) {
             card.RPCSetCardAciveState(PhotonTargets.All, true);
+        }
+    }
+
+    private Deck GetDeckFromType(DeckType type) {
+        switch (type) {
+            case DeckType.Battlefield:
+                return owner.battlefield;
+
+            case DeckType.Hand:
+                return owner.myHand;
+
+            case DeckType.Grimoire:
+                return owner.activeGrimoire.GetComponent<Deck>();
+
+            case DeckType.SoulCrypt:
+                return owner.activeCrypt.GetComponent<Deck>();
+
+            case DeckType.Void:
+                return Deck._void;
+
+            case DeckType.None:
+                return null;
+
+            default:
+                return null;
         }
     }
 
@@ -469,6 +504,42 @@ public class Deck : Photon.MonoBehaviour {
         cardVisual.cardData = cardData;
     }
 
+
+
+    public void RPCSpawnCardRemote(PhotonTargets targets, CardIDs.CardID dataID, string prefabname, DeckType targetDeck = DeckType.None) {
+        int cardDataID = (int)dataID;
+        int deckTypeEnum;
+
+        if (targetDeck != DeckType.None)
+            deckTypeEnum = (int)targetDeck;
+        else {
+            deckTypeEnum = 0;
+        }
+
+        photonView.RPC("SpawnCardRemote", targets, cardDataID, deckTypeEnum, prefabname);
+    }
+
+    [PunRPC]
+    public void SpawnCardRemote(int cardDataID, int deckTypeEnum, string prefabName) {
+        CardIDs.CardID dataID = (CardIDs.CardID)cardDataID;
+
+        Deck targetLocation = null;
+
+        if (deckTypeEnum!= 0) {
+            targetLocation = GetDeckFromType((DeckType)deckTypeEnum);
+        }
+
+        CardData cardData = Finder.FindCardDataFromDatabase(dataID);
+
+        CardVisual tokenCard = CardFactory(cardData, prefabName, targetLocation);
+        tokenCard.isToken = true;
+
+
+    }
+
+
+
+
     #endregion
 
     #region Transfer Card Helpers
@@ -555,6 +626,16 @@ public class Deck : Photon.MonoBehaviour {
 
                 break;
 
+            case Constants.CardType.Support:
+                card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowBattleToken);
+
+                if (card.photonView.isMine) {
+                    //card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition();
+                    card.battlefieldPos = owner.supportPositionManager.GetFirstEmptyCardPosition();
+                }
+
+
+                break;
 
             case Constants.CardType.Spell:
 

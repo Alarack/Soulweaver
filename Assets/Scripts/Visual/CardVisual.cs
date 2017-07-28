@@ -323,6 +323,11 @@ public class CardVisual : Photon.MonoBehaviour {
                 return;
             }
 
+            if(owner.supportPositionManager.IsCollectionFull() && cardData.primaryCardType == Constants.CardType.Support) {
+                Debug.Log("No place to put that");
+                return;
+            }
+
             if (currentDeck.decktype != Constants.DeckType.Hand)
                 return;
 
@@ -344,6 +349,38 @@ public class CardVisual : Photon.MonoBehaviour {
             RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this);
 
         }
+
+        //Check Adjacency
+        //if (Input.GetKeyDown(KeyCode.C)) {
+        //    List<CardVisual> cardsOnField = Finder.FindAllCardsInZone(Constants.DeckType.Battlefield, Constants.OwnerConstraints.Mine);
+
+
+        //    CardVisual leftCard = null;
+
+        //    CardVisual rightCard = null;
+
+        //    List<Transform> adjacentTransforms = owner.battleFieldManager.GetAdjacentPositions(battlefieldPos);
+
+        //    for(int i = 0; i < cardsOnField.Count; i++) {
+        //        if(cardsOnField[i].battlefieldPos == adjacentTransforms[0]) {
+        //            rightCard = cardsOnField[i];
+        //        }
+
+        //        if (cardsOnField[i].battlefieldPos == adjacentTransforms[1]) {
+        //            leftCard = cardsOnField[i];
+        //        }
+
+        //    }
+
+
+
+        //    if(leftCard != null)
+        //        Debug.Log(leftCard.gameObject.name + " is to the left");
+
+        //    if(rightCard != null)
+        //        Debug.Log(rightCard.gameObject.name + " is to the right");
+
+        //}
 
 
 
@@ -572,6 +609,11 @@ public class CardVisual : Photon.MonoBehaviour {
                     visual.battleToken.gameObject.SetActive(false);
                 }
 
+                if(this is SupportCardVisual) {
+                    SupportCardVisual visual = this as SupportCardVisual;
+                    visual.supportToken.gameObject.SetActive(false);
+                }
+
                 break;
 
             case CardVisualState.ShowFront:
@@ -587,6 +629,11 @@ public class CardVisual : Photon.MonoBehaviour {
                 if (this is CreatureCardVisual) {
                     CreatureCardVisual visual = this as CreatureCardVisual;
                     visual.battleToken.gameObject.SetActive(false);
+                }
+
+                if (this is SupportCardVisual) {
+                    SupportCardVisual visual = this as SupportCardVisual;
+                    visual.supportToken.gameObject.SetActive(false);
                 }
 
                 //battleToken.gameObject.SetActive(false);
@@ -605,6 +652,17 @@ public class CardVisual : Photon.MonoBehaviour {
                         cardCollider.center = new Vector3(0.2f, -.03f, 0f);
                         cardCollider.size = new Vector3(7f, 7f, cardCollider.size.z);
                     }
+
+                }
+
+                if (this is SupportCardVisual) {
+                    SupportCardVisual visual = this as SupportCardVisual;
+                    visual.cardBack.SetActive(false);
+                    visual.cardFront.SetActive(false);
+                    visual.supportToken.gameObject.SetActive(true);
+
+                    cardCollider.center = new Vector3(0.1f, -.27f, 0f);
+                    cardCollider.size = new Vector3(5f, 5f, cardCollider.size.z);
 
                 }
 

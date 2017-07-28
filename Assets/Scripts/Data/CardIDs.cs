@@ -23,6 +23,7 @@ public class CardIDs {
         Domain_TestDomain = 110,
         TestSubject1 = 111,
         TestSubject2 = 112,
+        AngryFist = 113,
 
         //Tokens
         FusedSoul_1000 = 1000,

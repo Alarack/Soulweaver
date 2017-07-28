@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleToken : MonoBehaviour {
+public class BattleToken : BoardToken {
 
 
-    public Image image;
+    //public Image image;
     public Text attack;
     public Text size;
     public Text health;
     [Space(10)]
     public GameObject battleTokenGlow;
-    public Transform incomingEffectLocation;
+    //public Transform incomingEffectLocation;
 
     private CreatureCardVisual _parentCard;
     private CardCreatureData _creatureData;
 
-    public void Initalize(CardCreatureData data, CreatureCardVisual parentCard) {
-        _creatureData = data;
 
-        _parentCard = parentCard;
-        image.sprite = data.cardImage;
+    public override void Initialize(CardData data, CardVisual card) {
+        base.Initialize(data, card);
+
+        _creatureData = parentCardData as CardCreatureData;
+        _parentCard = parentCard as CreatureCardVisual;
+
         SetUpTokenText();
     }
 

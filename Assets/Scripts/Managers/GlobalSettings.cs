@@ -9,8 +9,8 @@ public class GlobalSettings : MonoBehaviour {
     [Header("Prefabs and Assets")]
     public GameObject creatureCard;
     public GameObject spellCard;
-    public GameObject relicCard;
-    public GameObject artifactCard;
+    //public GameObject relicCard;
+    public GameObject supportCard;
     public GameObject playerCard;
     public GameObject domainCard;
 

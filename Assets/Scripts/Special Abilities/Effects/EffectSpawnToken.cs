@@ -13,7 +13,7 @@ public class EffectSpawnToken : Effect {
         Basic,
         Copy,
         CopyStats,
-        Series
+        Series,
     }
 
     public SpawnMethod spawnMethod;
@@ -21,6 +21,8 @@ public class EffectSpawnToken : Effect {
     public DeckType spawnTokenLocation;
     public CardType spawnCardType;
     public int numberOfSpawns;
+
+    public bool spawnForOpponent;
 
     //Spawn Token Series
     public List<string> tokenSeriesNames;
@@ -97,7 +99,18 @@ public class EffectSpawnToken : Effect {
         return tokenCard;
     }
 
+    public void SpawnTokenForOpponent() {
+
+
+    }
+
     private CardVisual SpawnBaseToken(CardData data, string prefabName) {
+
+        if (spawnForOpponent) {
+            source.owner.opponent.activeGrimoire.GetComponent<Deck>().RPCSpawnCardRemote(PhotonTargets.Others, data.cardID, prefabName, spawnTokenLocation);
+            return null;
+        }
+
         CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(data, prefabName, GetDeckFromType(spawnTokenLocation, source));
         tokenCard.isToken = true;
 

@@ -42,7 +42,7 @@ public class CreatureCardVisual : CardVisual {
         cardHealthText.text = _creatureData.health.ToString();
 
         if(battleToken != null) {
-            battleToken.Initalize(_creatureData, this);
+            battleToken.Initialize(_creatureData, this);
         }
 
 

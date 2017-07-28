@@ -73,6 +73,27 @@ public class CardPositionManager : MonoBehaviour {
 
     }
 
+    public List<Transform> GetAdjacentPositions(Transform targetPos) {
+        List<Transform> results = new List<Transform>();
+
+        int targetIndex = 0;
+
+        for(int i = 0; i < cardPositions.Count; i++) {
+            if (cardPositions[i].cardPosition == targetPos) {
+                targetIndex = i;
+                break;
+            }
+        }
+
+        for (int i = 0; i < cardPositions.Count; i++) {
+            if (targetIndex - i == -1 || targetIndex - 1 == 1) {
+                results.Add(cardPositions[i].cardPosition);
+            }
+
+        }
+        return results;
+    }
+
 
     [System.Serializable]
     public class CardPosition {

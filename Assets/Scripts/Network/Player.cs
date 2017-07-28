@@ -30,6 +30,7 @@ public class Player : Photon.MonoBehaviour {
     public CardPositionManager handManager;
     public CardPositionManager battleFieldManager;
     public CardPositionManager mulliganManager;
+    public CardPositionManager supportPositionManager;
     [Header("Decks to Load")]
     //public GameObject grimoire;
     //public GameObject domain;

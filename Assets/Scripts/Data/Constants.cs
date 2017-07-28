@@ -8,7 +8,7 @@ public class Constants {
         None = 0,
         Soul,
         Spell,
-        Enchantment,
+        Support,
         Relic,
         Domain,
         Player
@@ -68,7 +68,10 @@ public class Constants {
         Fated,
         Scheme,
         Bureau,
-        Giant
+        Giant,
+        Artifact,
+        Ritual,
+        Enchantment
 
 
     }
@@ -253,7 +256,9 @@ public class Constants {
         Attack,
         Size,
         Health,
-        MaxHealth
+        MaxHealth,
+        SupportValue,
+        MaxSupport
 
     }
 
