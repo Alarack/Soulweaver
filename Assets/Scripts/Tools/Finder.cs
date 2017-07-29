@@ -399,9 +399,19 @@ public static class Finder {
             result += cards[i].CheckSpecialAttributes(SpecialAttribute.AttributeType.SpellDamage);
         }
 
-
-
         return result;
+    }
+
+    public static List<CardVisual> FindAllCardsBeingChosen() {
+        List<CardVisual> results = new List<CardVisual>();
+
+        for(int i = 0; i < Deck._allCards.activeCards.Count; i++) {
+            if (Deck._allCards.activeCards[i].isBeingChosen)
+                results.Add(Deck._allCards.activeCards[i]);
+        }
+
+
+        return results;
     }
 
 

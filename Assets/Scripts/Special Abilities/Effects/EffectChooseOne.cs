@@ -13,7 +13,22 @@ public class EffectChooseOne : Effect {
 
     public override void Apply(CardVisual target) {
 
+        AssignPositions(GatherChoices());
 
+    }
+
+
+    private void AssignPositions(List<CardVisual> cards) {
+        for(int i = 0; i < cards.Count; i++) {
+            Vector3 pos = source.owner.mulliganManager.cardPositions[i].cardPosition.position;
+
+            cards[i].transform.position = pos;
+            cards[i].isBeingChosen = true;
+            //cards[i].RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowFront);
+
+            cards[i].RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
+            cards[i].ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
+        }
 
     }
 

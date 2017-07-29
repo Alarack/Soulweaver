@@ -1821,6 +1821,8 @@ MonoBehaviour:
   statAdjustments: []
   essenceCost: 0
   isToken: 0
+  isMulligand: 0
+  isBeingChosen: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -2047,11 +2049,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 114078796606407830}
+  incomingEffectLocation: {fileID: 224806810042525248}
   attack: {fileID: 114804684849244458}
   size: {fileID: 114072678920629078}
   health: {fileID: 114597193698351174}
   battleTokenGlow: {fileID: 1290968771505282}
-  incomingEffectLocation: {fileID: 224806810042525248}
 --- !u!114 &114911582230484880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10608,7 +10610,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 75.8, y: 118.6}
+  m_SizeDelta: {x: 46.1, y: 72.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224360705490532766
 RectTransform:
@@ -10662,8 +10664,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 16.8}
-  m_SizeDelta: {x: 75.8, y: 118.6}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 98.7, y: 154.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224488356015002996
 RectTransform:

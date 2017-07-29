@@ -212,9 +212,15 @@ public class CardDataEditor : Editor {
                 case EffectAddorRemoveSpecialAttribute.AttributeAction.Modify:
                     specialAttribute.modificationValue = EditorGUILayout.IntField("Modifier Value", specialAttribute.modificationValue);
                     break;
-
             }
+        }
 
+        //Choose One
+        if(entry is EffectChooseOne) {
+            EffectChooseOne chooseOne = entry as EffectChooseOne;
+
+            chooseOne.cardType = EditorHelper.EnumPopup("Card Type", chooseOne.cardType);
+            chooseOne.choices = EditorHelper.DrawList("Choice Data Names", chooseOne.choices, true, "", true, DrawListOfStrings);
         }
 
         return entry;
@@ -308,6 +314,26 @@ public class CardDataEditor : Editor {
 
     }
 
+    private void DrawSendToCryptPreset(SpecialAbility entry) {
+        entry.trigger.Add(AbilityActivationTrigger.SecondaryEffect);
+
+        entry.effect = EffectType.ZoneChange;
+
+        EffectZoneChange toTheCrypt = new EffectZoneChange();
+        toTheCrypt.targetLocation = DeckType.SoulCrypt;
+
+        entry.effectHolder.zoneChanges.Add(toTheCrypt);
+
+        entry.targetConstraints.thisCardOnly = true;
+
+        if(entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.AllValidTargets;
+        }
+
+    }
+
 
 
     private SpecialAbility DrawSpecalAbilities(SpecialAbility entry) {
@@ -338,6 +364,10 @@ public class CardDataEditor : Editor {
             DrawBloodthirstPreset(entry);
         }
 
+        if (GUILayout.Button("Spell")) {
+            DrawSendToCryptPreset(entry);
+        }
+
 
         EditorGUILayout.EndHorizontal();
 
@@ -356,6 +386,7 @@ public class CardDataEditor : Editor {
             entry.triggerConstraints.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggerConstraints.triggersRequired);
             entry.triggerConstraints.resetCountAtTurnEnd = EditorGUILayout.Toggle("Reset Counter On Turn End?", entry.triggerConstraints.resetCountAtTurnEnd);
         }
+        entry.triggerDuration = EditorHelper.EnumPopup("Trigger Duration?", entry.triggerDuration);
 
         for (int i = 0; i < entry.trigger.Count; i++) {
             switch (entry.trigger[i]) {
@@ -465,6 +496,7 @@ public class CardDataEditor : Editor {
         entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
         entry.movingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.movingVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
+        entry.effectDuration = EditorHelper.EnumPopup(" Effect Duration", entry.effectDuration);
 
         switch (entry.effect) {
             case EffectType.SpawnToken:
@@ -499,11 +531,13 @@ public class CardDataEditor : Editor {
 
             case EffectType.AddOrRemoveSpecialAttribute:
 
-
                 entry.effectHolder.addOrRemoveSpecialAttribute = EditorHelper.DrawExtendedList("Special Attribute Effects", entry.effectHolder.addOrRemoveSpecialAttribute, "Special Attribute", DrawEffectList);
 
+                break;
 
+            case EffectType.ChooseOne:
 
+                entry.effectHolder.chooseOne = EditorHelper.DrawExtendedList("Choose One Effects", entry.effectHolder.chooseOne, "Choose One", DrawEffectList);
 
                 break;
 
@@ -519,7 +553,7 @@ public class CardDataEditor : Editor {
         }//End of Effects
 
 
-        entry.duration = EditorHelper.EnumPopup("Duration", entry.duration);
+        
 
         //EditorHelper.DrawInspectorSectionHeader("Stat Adjustments");
         //entry.statAdjustments = EditorHelper.DrawExtendedList(entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);

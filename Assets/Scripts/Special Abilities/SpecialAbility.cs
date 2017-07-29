@@ -16,14 +16,15 @@ using DeckType = Constants.DeckType;
 using ConstraintType = Constants.ConstraintType;
 using CardStats = Constants.CardStats;
 using GameEvent = Constants.GameEvent;
-using EffectDuration = Constants.EffectDuration;
+using Duration = Constants.Duration;
 
 [System.Serializable]
 public abstract class SpecialAbility {
 
     [Header("Basic Info")]
     public List<AbilityActivationTrigger> trigger = new List<AbilityActivationTrigger>();
-    public EffectDuration duration;
+    public Duration effectDuration;
+    public Duration triggerDuration;
     public ConstraintList triggerConstraints = new ConstraintList();
     public ConstraintList sourceConstraints = new ConstraintList();
 
@@ -50,6 +51,7 @@ public abstract class SpecialAbility {
         public List<EffectGenerateResource> generateResources = new List<EffectGenerateResource>();
         public List<EffectAddorRemoveKeywords> addOrRemoveKeywords = new List<EffectAddorRemoveKeywords>();
         public List<EffectAddorRemoveSpecialAttribute> addOrRemoveSpecialAttribute = new List<EffectAddorRemoveSpecialAttribute>();
+        public List<EffectChooseOne> chooseOne = new List<EffectChooseOne>();
     }
 
     public enum ApplyEffectToWhom {
@@ -117,6 +119,9 @@ public abstract class SpecialAbility {
         for (int i = 0; i < effectHolder.addOrRemoveSpecialAttribute.Count; i++) {
             effectHolder.addOrRemoveSpecialAttribute[i].Initialize(source, this);
         }
+        for (int i = 0; i < effectHolder.chooseOne.Count; i++) {
+            effectHolder.chooseOne[i].Initialize(source, this);
+        }
     }
 
     public List<StatAdjustment> GetAllStatAdjustments() {
@@ -165,7 +170,6 @@ public abstract class SpecialAbility {
 
         switch (effect) {
             case EffectType.StatAdjustment:
-                //ApplyStatAdjustments(card);
                 for (int i = 0; i < effectHolder.statAdjustments.Count; i++) {
                     effectHolder.statAdjustments[i].Apply(card);
                 }
@@ -173,7 +177,6 @@ public abstract class SpecialAbility {
                 break;
 
             case EffectType.SpawnToken:
-                //SpawnToken(targetConstraints);
                 for (int i = 0; i < effectHolder.tokenSpanws.Count; i++) {
                     effectHolder.tokenSpanws[i].Apply(card);
                 }
@@ -181,7 +184,6 @@ public abstract class SpecialAbility {
                 break;
 
             case EffectType.ZoneChange:
-                //ForcedZoneChange(card, targetConstraints);
                 for(int i = 0; i < effectHolder.zoneChanges.Count; i++) {
                     effectHolder.zoneChanges[i].Apply(card);
                 }
@@ -189,9 +191,6 @@ public abstract class SpecialAbility {
                 break;
 
             case EffectType.AddOrRemoveKeywordAbilities:
-                //GrantKeywords(card, keywordsToAddorRemove);
-
-                //Debug.Log("Special Ability Effect | Add or Remove Keywords");
 
                 for (int i = 0; i < effectHolder.addOrRemoveKeywords.Count; i++) {
                     effectHolder.addOrRemoveKeywords[i].Apply(card);
@@ -200,7 +199,6 @@ public abstract class SpecialAbility {
                 break;
 
             case EffectType.GenerateResource:
-                //GenerateResource(targetConstraints);
                 for (int i = 0; i < effectHolder.generateResources.Count; i++) {
                     effectHolder.generateResources[i].Apply(card);
                 }
@@ -208,9 +206,15 @@ public abstract class SpecialAbility {
                 break;
 
             case EffectType.AddOrRemoveSpecialAttribute:
-                //AddSpecialAttribute(card, targetConstraints);
                 for (int i = 0; i < effectHolder.addOrRemoveSpecialAttribute.Count; i++) {
                     effectHolder.addOrRemoveSpecialAttribute[i].Apply(card);
+                }
+
+                break;
+
+            case EffectType.ChooseOne:
+                for (int i = 0; i < effectHolder.chooseOne.Count; i++) {
+                    effectHolder.chooseOne[i].Apply(card);
                 }
 
                 break;
@@ -365,15 +369,24 @@ public abstract class SpecialAbility {
             return;
 
 
+        //Trigger Duration
+        if (triggerDuration == Duration.EndOfTurn) {
+            Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndTriggerDuration);
+            Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, ResetTriggerDuration);
+        }
+            
 
-        //Trigger Removal
-        if (duration == EffectDuration.EndOfTurn && source.photonView.isMine) 
+
+
+
+        //Effect Duration
+        if (effectDuration == Duration.EndOfTurn) 
             Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndDuration);
         
-        if (duration == EffectDuration.StartOfTurn)
+        if (effectDuration == Duration.StartOfTurn)
             Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStartEndDuration);
 
-        if (duration == EffectDuration.WhileInZone && source.photonView.isMine) 
+        if (effectDuration == Duration.WhileInZone) 
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZoneEndDuration);
         
 
@@ -425,6 +438,39 @@ public abstract class SpecialAbility {
     }
 
     #region EVENTS
+
+    protected void OnTurnEndTriggerDuration(EventData data) {
+        Player player = data.GetMonoBehaviour("Player") as Player;
+
+        if (!source.owner == player) {
+            return;
+        }
+
+        if (!source.photonView.isMine)
+            return;
+
+        if(!triggerConstraints.suspendTrigger)
+            triggerConstraints.suspendTrigger = true;
+    }
+
+    protected void ResetTriggerDuration(EventData data) {
+        if (!source.photonView.isMine)
+            return;
+
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+        Deck deck = data.GetMonoBehaviour("Deck") as Deck;
+
+        if (card != source)
+            return;
+
+        if (deck.decktype != DeckType.SoulCrypt)
+            return;
+
+
+        if(triggerConstraints.suspendTrigger)
+            triggerConstraints.suspendTrigger = false;
+    }
+
 
     protected void OnTurnEndDuration(EventData data) {
         if (targets.Count < 1)
@@ -853,6 +899,9 @@ public abstract class SpecialAbility {
 
     protected bool ManageConstraints(CardVisual triggeringCard) {
         bool result = true;
+
+        if (triggerConstraints.suspendTrigger)
+            return false;
 
         if (triggerConstraints.thisCardOnly && triggeringCard != source) {
             //Debug.Log(source.gameObject.name + " can only trigger its own effect and " + target.gameObject.name + " has happened");
@@ -1628,6 +1677,8 @@ public abstract class SpecialAbility {
         public bool oncePerTurn;
         public bool triggeredThisTurn;
         public bool neverTargetSelf;
+
+        public bool suspendTrigger;
 
         //Secondary Effect
         public bool triggerbySpecificAbility;

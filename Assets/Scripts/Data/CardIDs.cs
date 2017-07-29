@@ -24,10 +24,11 @@ public class CardIDs {
         TestSubject1 = 111,
         TestSubject2 = 112,
         AngryFist = 113,
+        TestSpell = 114,
 
         //Tokens
         FusedSoul_1000 = 1000,
-        AmorphousVestige = 1001,
+        
 
         //Cult of Rillock 10000
         COR_DesolateWaste = 10000,
@@ -76,6 +77,25 @@ public class CardIDs {
         //The Others 40000
         OTH_CorpseFeeder = 40000,
         OTH_TKN_DistendedRipper = 40001,
+        OTH_DOM_PainSpawn = 40002,
+        OTH_DOM_UncheckedGrowth = 40003,
+        OTH_DOM_Evolve = 40004,
+        OTH_DOM_Abiogenisis = 40005,
+        OTH_DOM_AlterForm = 40006,
+        OTH_DOM_AlterMind= 40007,
+        OTH_DOM_Mindshed = 40008,
+        OTH_DOM_WarpSoul = 40009,
+        OTH_DOM_Mindfang = 40010,
+        OTH_TKN_NithEvolve1 = 40011,
+        OTH_TKN_NithEvolve2 = 40012,
+        OTH_TKN_NithEvolve3 = 40013,
+        OTH_TKN_NithEvolve4 = 40014,
+        OTH_TKN_TentacleOfNith = 40015,
+        OTH_TKN_AmorphousVestige = 40016,
+        OTH_TKN_AmorphousVestige2 = 40017,
+        OTH_TKN_ShatteredMemory = 40018,
+
+
 
         //Children of Illia 50000
         COI_DOM_Sentinel = 50000,

@@ -212,6 +212,7 @@ public class Constants {
         //AffectInterceptor,
         RemoveOtherEffect,
         RetriggerOtherEffect,
+        ChooseOne,
     }
 
 
@@ -222,13 +223,12 @@ public class Constants {
 
     }
 
-    public enum EffectDuration {
+    public enum Duration {
         None = 0,
         Permanent,
         EndOfTurn,
         StartOfTurn,
         WhileInZone,
-        InsufficientResource
     }
 
     public enum OwnerConstraints {

@@ -13,7 +13,7 @@ public class EffectZoneChange : Effect {
 
 
     public override void Apply(CardVisual target) {
-        Debug.Log(targetLocation.ToString());
+        //Debug.Log(targetLocation.ToString());
 
         target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(targetLocation, target));
     }

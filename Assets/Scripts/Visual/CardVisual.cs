@@ -52,6 +52,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public int essenceCost;
     public bool isToken;
     public bool isMulligand;
+    public bool isBeingChosen;
     public Constants.CardType primaryCardType;
     public List<Constants.CardType> otherCardTypes = new List<Constants.CardType>();
     public List<Constants.Attunements> attunements = new List<Constants.Attunements>();
@@ -183,28 +184,6 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     }
-
-    //public void InitializeSpecialAbilities(int id) {
-    //    CardVisual card = Finder.FindCardByID(id);
-
-    //    for (int i = 0; i < userTargtedAbilities.Count; i++) {
-
-    //        Debug.Log(card.name + " is being assigned to " + gameObject.name + "'s special abilities");
-
-    //        userTargtedAbilities[i].Initialize(card);
-    //    }
-    //}
-
-    //public void SourceAssignment() {
-    //    for (int i = 0; i < userTargtedAbilities.Count; i++) {
-
-    //        userTargtedAbilities[i].abilityName = gameObject.name + " Effect On Target";
-
-    //        Debug.Log(gameObject.name + " is being assigned to " + userTargtedAbilities[i].abilityName + "'s special abilities");
-
-    //        userTargtedAbilities[i].Initialize(this);
-    //    }
-    //}
 
     public void AddKeyword(Constants.Keywords keyword) {
         if (!keywords.Contains(keyword)) {
@@ -350,28 +329,13 @@ public class CardVisual : Photon.MonoBehaviour {
 
         }
 
-        //Check Adjacency
-        if (Input.GetKeyDown(KeyCode.C)) {
-            List<CardVisual> cardsOnField = Finder.FindAllCardsInZone(Constants.DeckType.Battlefield, Constants.OwnerConstraints.Mine);
+        //Dev Heals
+        if (Input.GetKeyDown(KeyCode.H)) {
+            SpecialAbility.StatAdjustment damage = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, 1, false, false, this);
 
-
-            CardVisual leftCard = null;
-
-            CardVisual rightCard = null;
-
-
-           leftCard = owner.battleFieldManager.GetCardToTheLeft(this);
-           rightCard = owner.battleFieldManager.GetCardToTheRight(this);
-
-            if (leftCard != null)
-                Debug.Log(leftCard.gameObject.name + " is to the left");
-
-            if (rightCard != null)
-                Debug.Log(rightCard.gameObject.name + " is to the right");
+            RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this);
 
         }
-
-
 
         //Targeting
         if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
@@ -406,8 +370,27 @@ public class CardVisual : Photon.MonoBehaviour {
                 ActivateAbility();
         }
 
+
+        //Mulligan
         if (Mulligan.choosingMulligan && photonView.isMine && currentDeck.decktype == Constants.DeckType.Hand && Input.GetMouseButtonDown(0)) {
             ToggleMulligan();
+        }
+
+
+        //Choose One
+        if (isBeingChosen) {
+            if(Input.GetMouseButtonDown(0)){
+                isBeingChosen = false;
+                currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
+
+                List<CardVisual> others = Finder.FindAllCardsBeingChosen();
+
+                for(int i = 0; i <others.Count; i++) {
+                    others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], Deck._void);
+                }
+            }
+
+
         }
 
     }

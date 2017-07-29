@@ -9,15 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: AmorphousVestige
+  m_Name: OTH_TKN_AmorphousVestige
   m_EditorClassIdentifier: 
-  cardID: 1001
+  cardID: 40016
   cardName: Amorphous Vestige
   cardText: 
   cardCost: 1
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImage: {fileID: 21300000, guid: e7f230209e17d204489d5d1684d86ebe, type: 3}
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
+  movingVFX: 0
+  deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0b000000
@@ -26,6 +28,7 @@ MonoBehaviour:
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
+  specialAttributes: []
   attack: 1
   size: 1
   health: 1
