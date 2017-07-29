@@ -134,7 +134,8 @@ public class Constants {
         Bloodthirst,
         Tortured,
         Rush,
-        Reach
+        Reach,
+        Cleave
     }
 
 

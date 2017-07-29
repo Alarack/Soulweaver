@@ -533,6 +533,21 @@ public class Player : Photon.MonoBehaviour {
 
     }
 
+
+    [PunRPC]
+    public void BroadcastCardPosition(int index, int cardID) {
+        CardVisual card = Finder.FindCardByID(cardID);
+
+        //Debug.Log(card.cardData.cardName + " has been assigned to " + battleFieldManager.cardPositions[index].cardPosition.gameObject.name);
+        battleFieldManager.cardPositions[index].card = card;
+    }
+
+    [PunRPC]
+    public void BroadcastNullCardPosition(int index) {
+
+        battleFieldManager.cardPositions[index].card = null;
+    }
+
     public IEnumerator RPCBroadcastTurnStart(PhotonTargets targets, Player player) {
         yield return new WaitForSeconds(0.5f);
 

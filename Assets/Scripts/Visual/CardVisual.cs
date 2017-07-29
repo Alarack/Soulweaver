@@ -351,36 +351,25 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         //Check Adjacency
-        //if (Input.GetKeyDown(KeyCode.C)) {
-        //    List<CardVisual> cardsOnField = Finder.FindAllCardsInZone(Constants.DeckType.Battlefield, Constants.OwnerConstraints.Mine);
+        if (Input.GetKeyDown(KeyCode.C)) {
+            List<CardVisual> cardsOnField = Finder.FindAllCardsInZone(Constants.DeckType.Battlefield, Constants.OwnerConstraints.Mine);
 
 
-        //    CardVisual leftCard = null;
+            CardVisual leftCard = null;
 
-        //    CardVisual rightCard = null;
-
-        //    List<Transform> adjacentTransforms = owner.battleFieldManager.GetAdjacentPositions(battlefieldPos);
-
-        //    for(int i = 0; i < cardsOnField.Count; i++) {
-        //        if(cardsOnField[i].battlefieldPos == adjacentTransforms[0]) {
-        //            rightCard = cardsOnField[i];
-        //        }
-
-        //        if (cardsOnField[i].battlefieldPos == adjacentTransforms[1]) {
-        //            leftCard = cardsOnField[i];
-        //        }
-
-        //    }
+            CardVisual rightCard = null;
 
 
+           leftCard = owner.battleFieldManager.GetCardToTheLeft(this);
+           rightCard = owner.battleFieldManager.GetCardToTheRight(this);
 
-        //    if(leftCard != null)
-        //        Debug.Log(leftCard.gameObject.name + " is to the left");
+            if (leftCard != null)
+                Debug.Log(leftCard.gameObject.name + " is to the left");
 
-        //    if(rightCard != null)
-        //        Debug.Log(rightCard.gameObject.name + " is to the right");
+            if (rightCard != null)
+                Debug.Log(rightCard.gameObject.name + " is to the right");
 
-        //}
+        }
 
 
 

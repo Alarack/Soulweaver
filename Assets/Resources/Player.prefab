@@ -21684,22 +21684,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3c45bb8a2a2e1478499a4a108c8073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  managerLocation: 0
   cardPositions:
   - cardPosition: {fileID: 4951298379993570}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4887478109321756}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4558833581041250}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4547980566560564}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4815261128144334}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4718719296812702}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4595301961358582}
     filled: 0
+    card: {fileID: 0}
   offset: 1
+  owner: {fileID: 0}
 --- !u!114 &114270425448713766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -21775,22 +21784,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3c45bb8a2a2e1478499a4a108c8073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  managerLocation: 1
   cardPositions:
   - cardPosition: {fileID: 4941565372824550}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4346716533860224}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4065141925106702}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4806686138760296}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4201498952369098}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4470916815760732}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4289499176293788}
     filled: 0
+    card: {fileID: 0}
   offset: 0
+  owner: {fileID: 0}
 --- !u!114 &114276352751817428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23618,16 +23636,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3c45bb8a2a2e1478499a4a108c8073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  managerLocation: 2
   cardPositions:
   - cardPosition: {fileID: 4193206485446534}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4282991774071914}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4455212791924772}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4007861577419830}
     filled: 0
+    card: {fileID: 0}
   offset: 0
+  owner: {fileID: 0}
 --- !u!114 &114380652237583306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -31023,14 +31047,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3c45bb8a2a2e1478499a4a108c8073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  managerLocation: 3
   cardPositions:
   - cardPosition: {fileID: 4206027752144674}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4442224350924400}
     filled: 0
+    card: {fileID: 0}
   - cardPosition: {fileID: 4534605360384790}
     filled: 0
+    card: {fileID: 0}
   offset: 0
+  owner: {fileID: 0}
 --- !u!114 &114738542876554878
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -579,11 +579,11 @@ public class Deck : Photon.MonoBehaviour {
 
         if (!Mulligan.choosingMulligan) {
             CheckAndActivateCard(card);
-            card.handPos = owner.handManager.GetFirstEmptyCardPosition();
+            card.handPos = owner.handManager.GetFirstEmptyCardPosition(card);
         }
         else {
             card.RPCSetCardAciveState(PhotonTargets.All, false);
-            card.handPos = owner.mulliganManager.GetFirstEmptyCardPosition();
+            card.handPos = owner.mulliganManager.GetFirstEmptyCardPosition(card);
         }
 
 
@@ -613,7 +613,7 @@ public class Deck : Photon.MonoBehaviour {
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowBattleToken);
 
                 if (card.photonView.isMine)
-                    card.battlefieldPos = owner.battleFieldManager.AssignSpecificPosition(owner.battleFieldManager.transform.FindChild("PlayerBattlePos"));
+                    card.battlefieldPos = owner.battleFieldManager.AssignSpecificPosition(owner.battleFieldManager.transform.FindChild("PlayerBattlePos"), card);
 
                 break;
 
@@ -621,7 +621,7 @@ public class Deck : Photon.MonoBehaviour {
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowBattleToken);
 
                 if (card.photonView.isMine) {
-                    card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition();
+                    card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition(card);
                 }
 
                 break;
@@ -631,7 +631,7 @@ public class Deck : Photon.MonoBehaviour {
 
                 if (card.photonView.isMine) {
                     //card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition();
-                    card.battlefieldPos = owner.supportPositionManager.GetFirstEmptyCardPosition();
+                    card.battlefieldPos = owner.supportPositionManager.GetFirstEmptyCardPosition(card);
                 }
 
 
