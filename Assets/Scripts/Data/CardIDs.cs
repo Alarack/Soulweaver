@@ -86,11 +86,63 @@ public class CardIDs {
 
 
         //The Wardens 70000
-        WAR_HeadlessChanneler = 70000,
-        WAR_FreshFerryman = 70001,
+        //Arbiter Sub Faction 70000 - 73000
+		WAR_BureauofBureaucracy = 70000,
+		WAR_BenifsBrooding = 70001,
+		WAR_BureaucraticImpediment = 70002,
+		WAR_Paperpushing = 70003,
+		WAR_SoulCrush = 70004,
+		WAR_DisarmingOrder = 70005,
+		WAR_Redirect = 70006,
+		WAR_RedTape = 70007,
+		WAR_BureaucraticInsanity = 70008,
+		WAR_SoulSecretary = 70009,
+		WAR_BusyVeteran = 70010,
+		WAR_SoulstoneGolem = 70011,
+		WAR_SoulstoneTitan = 70012,
+		WAR_LibrarianRoki = 70013,
 
+		//Guardian Sub Faction 73001 - 76000
+		WAR_ArgensStrikes = 73001,
+		WAR_StormAssault = 73002,
+		WAR_Thunderslam = 73003,
+		WAR_DeathDefied = 73004,
+		WAR_ConfidentProtector = 73005,
+		WAR_VengefulWarden = 73006,
+		WAR_UrsolusAndTorusin = 73007,
+		WAR_TagTeamTacklers = 73008,
+		WAR_SpiritGuard = 73009,
+		WAR_SwornProtector = 73010,
+		WAR_SwornAvenger = 73011,
+		WAR_ShieldWarden = 73012,
+		WAR_LurikTheShadow = 73013,
+		WAR_TKN_ShadowOfLurik = 73014,
 
+		//Ferryman Sub Faction 76001 - 79000
+		WAR_TavernOfSouls = 76001,
+		WAR_FerrymansPlight = 76002,
+		WAR_UrteilsWarding = 76003,
+		WAR_WatchdogWard = 76004,
+		WAR_FerrymansSoulskiff = 76005,
+		WAR_SoulLightLantern = 76006,
+		WAR_FreshFerryman = 76007,
+		WAR_BeastHandler = 76008,
+		WAR_SoulMender = 76009,
+		WAR_LoyalHound = 76010,
+		WAR_SoulchainSlinger = 76011,
+		WAR_HeadlessChanneler = 76012,
+		WAR_MasterOfTheMeek = 76013,
 
+		//Warden Other 79001 - 79999
+		WAR_DOM_SpiritGuide = 79001,
+		WAR_DOM_Bolster = 79001,
+		WAR_DOM_Fearsome = 79001,
+		WAR_DOM_DeadlySalvation = 79001,
+		WAR_DOM_OneManPhalanx = 79001,
+		WAR_DOM_Flex = 79001,
+		WAR_DOM_GraveyardShift = 79001,
+		WAR_DOM_SoulExchange = 79001,
+		WAR_DOM_Micromanage = 79001,
 
         //Neutral 80000
         NEU_SkeletalMinions = 80000,

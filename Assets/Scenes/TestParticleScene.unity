@@ -244,6 +244,106 @@ Prefab:
       propertyPath: instantiationId
       value: 24
       objectReference: {fileID: 0}
+    - target: {fileID: 114981941193040258, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114981941193040258, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114928710891012076, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114928710891012076, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792284239957892, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792284239957892, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 114756491417196260, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 114756491417196260, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 114706087810868936, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 114706087810868936, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 114566249409267818, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 114566249409267818, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 114358640393933182, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 114358640393933182, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 114357833537888764, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 114357833537888764, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 114229861291721444, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 114229861291721444, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 114094304686914754, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: viewIdField
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 114094304686914754, guid: 3fd31513d33c2024db96c9f1720ee6e1,
+        type: 2}
+      propertyPath: instantiationId
+      value: 38
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3fd31513d33c2024db96c9f1720ee6e1, type: 2}
   m_IsPrefabParent: 0
@@ -440,6 +540,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 114541851251151056, guid: d735fc46a7b841745acb8e7b887381ad,
+        type: 2}
+      propertyPath: viewIdField
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 114541851251151056, guid: d735fc46a7b841745acb8e7b887381ad,
+        type: 2}
+      propertyPath: instantiationId
+      value: 29
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d735fc46a7b841745acb8e7b887381ad, type: 2}
   m_IsPrefabParent: 0
@@ -535,7 +645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &138556124
 Transform:
   m_ObjectHideFlags: 0
@@ -654,7 +764,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1382619375
+  randomSeed: -1527889982
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3329,7 +3439,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -261430804
+  randomSeed: 2079259121
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14147,7 +14257,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1378539691
+  randomSeed: -965321817
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -33157,7 +33267,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 163638895
+  randomSeed: -642703956
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -49352,7 +49462,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1500897106
+  randomSeed: -1286380179
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -54741,8 +54851,7 @@ MonoBehaviour:
   creatureCard: {fileID: 1699223784666928, guid: bb74f2198ba7cf5439e07718ebc127a7,
     type: 2}
   spellCard: {fileID: 1699223784666928, guid: bb74f2198ba7cf5439e07718ebc127a7, type: 2}
-  relicCard: {fileID: 1699223784666928, guid: bb74f2198ba7cf5439e07718ebc127a7, type: 2}
-  artifactCard: {fileID: 0}
+  supportCard: {fileID: 0}
   playerCard: {fileID: 1469190766055066, guid: 6eae34f2f1fd51b4d9a8c5c14bda43a5, type: 2}
   domainCard: {fileID: 0}
 --- !u!114 &1250079808
@@ -68538,7 +68647,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -191331331
+  randomSeed: -934511865
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -71229,7 +71338,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1451392276
+  randomSeed: -802034432
   InitialModule:
     serializedVersion: 3
     enabled: 1
