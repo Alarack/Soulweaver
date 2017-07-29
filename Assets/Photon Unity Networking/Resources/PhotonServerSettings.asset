@@ -95,4 +95,8 @@ MonoBehaviour:
   - RemoveSpecialAbilityStatAdjustment
   - UpdateSpecialAbilityStatAdjustment
   - ModifySpecialAtribute
+  - SpawnCardRemote
+  - BroadcastCardPosition
+  - NullCardPosition
+  - BroadcastNullCardPosition
   DisableAutoOpenWizard: 1

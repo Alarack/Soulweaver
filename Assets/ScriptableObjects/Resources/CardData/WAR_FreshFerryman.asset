@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
   m_Name: WAR_FreshFerryman
   m_EditorClassIdentifier: 
-  cardID: 107
+  cardID: 70001
   cardName: FreshFerryman
   cardText: 'Inspire : Find a Lost Soul.'
   cardCost: 1
@@ -29,7 +29,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbilities:
   - trigger: 01000000
-    duration: 1
+    duration: 0
     triggerConstraints:
       types: 04000000
       owner: 0
@@ -42,6 +42,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 05000000
@@ -62,18 +64,22 @@ MonoBehaviour:
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
+      insufficentResourceCheck: 0
     sourceConstraints:
       types: 
       owner: 0
@@ -86,9 +92,11 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -106,18 +114,22 @@ MonoBehaviour:
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
+      insufficentResourceCheck: 0
     effect: 4
     abilityName: 
     source: {fileID: 0}
@@ -134,6 +146,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 
@@ -154,18 +168,22 @@ MonoBehaviour:
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
+      insufficentResourceCheck: 0
     abilityVFX: 
     movingVFX: 0
     additionalRequirements: 
@@ -181,6 +199,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 
@@ -201,18 +221,22 @@ MonoBehaviour:
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      requiredResourceType: 0
-      amountOfResourceRequried: 0
+      requiredResourceType: 3
+      moreOrlessResource: 0
+      amountOfResourceRequried: 7
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
+      insufficentResourceCheck: 0
     effectHolder:
       zoneChanges: []
       tokenSpanws: []

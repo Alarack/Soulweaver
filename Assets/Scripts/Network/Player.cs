@@ -30,6 +30,7 @@ public class Player : Photon.MonoBehaviour {
     public CardPositionManager handManager;
     public CardPositionManager battleFieldManager;
     public CardPositionManager mulliganManager;
+    public CardPositionManager supportPositionManager;
     [Header("Decks to Load")]
     //public GameObject grimoire;
     //public GameObject domain;
@@ -530,6 +531,21 @@ public class Player : Photon.MonoBehaviour {
         Grid.EventManager.SendEvent(Constants.GameEvent.Combat, data);
 
 
+    }
+
+
+    [PunRPC]
+    public void BroadcastCardPosition(int index, int cardID) {
+        CardVisual card = Finder.FindCardByID(cardID);
+
+        //Debug.Log(card.cardData.cardName + " has been assigned to " + battleFieldManager.cardPositions[index].cardPosition.gameObject.name);
+        battleFieldManager.cardPositions[index].card = card;
+    }
+
+    [PunRPC]
+    public void BroadcastNullCardPosition(int index) {
+
+        battleFieldManager.cardPositions[index].card = null;
     }
 
     public IEnumerator RPCBroadcastTurnStart(PhotonTargets targets, Player player) {

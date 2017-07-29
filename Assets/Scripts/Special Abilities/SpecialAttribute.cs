@@ -6,15 +6,16 @@ using UnityEngine;
 public class SpecialAttribute {
 
     public enum AttributeType {
+        None,
         Protection,
         Regeneration,
         Volatile,
-        SpellDamage
+        SpellDamage,
+
     }
 
     public AttributeType attributeType;
     public int attributeValue;
-    public bool suspended;
 
 
     public SpecialAttribute() {

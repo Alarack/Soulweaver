@@ -287,6 +287,27 @@ public class CombatManager : Photon.MonoBehaviour {
 
             //damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker, damageDealer.cardData.movingVFX);
         }
+
+
+
+
+        if(damageDealer == attacker) {
+            if (damageDealer.keywords.Contains(Keywords.Cleave)) {
+                CardVisual rightOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheRight(damageTaker);
+                CardVisual leftOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheLeft(damageTaker);
+
+                if (rightOfTarget != null) {
+                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+                }
+                    //Debug.Log(rightOfTarget.cardData.name);
+
+                if (leftOfTarget != null) {
+                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+                }
+                    //Debug.Log(leftOfTarget.cardData.name);
+
+            }
+        }
        
 
         damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);

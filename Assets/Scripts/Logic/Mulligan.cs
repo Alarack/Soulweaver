@@ -29,7 +29,7 @@ public class Mulligan : MonoBehaviour {
             }
 
             if (!owner.myHand.activeCards[i].isMulligand) {
-                Transform handPos = owner.handManager.GetFirstEmptyCardPosition();
+                Transform handPos = owner.handManager.GetFirstEmptyCardPosition(owner.myHand.activeCards[i]);
                 owner.mulliganManager.ReleaseCardPosition(owner.myHand.activeCards[i].handPos);
                 owner.myHand.activeCards[i].handPos = handPos;
                 owner.myHand.activeCards[i].RPCSetCardAciveState(PhotonTargets.All, true);

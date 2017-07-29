@@ -8,7 +8,7 @@ public class Constants {
         None = 0,
         Soul,
         Spell,
-        Enchantment,
+        Support,
         Relic,
         Domain,
         Player
@@ -68,7 +68,10 @@ public class Constants {
         Fated,
         Scheme,
         Bureau,
-        Giant
+        Giant,
+        Artifact,
+        Ritual,
+        Enchantment
 
 
     }
@@ -131,7 +134,8 @@ public class Constants {
         Bloodthirst,
         Tortured,
         Rush,
-        Reach
+        Reach,
+        Cleave
     }
 
 
@@ -153,7 +157,8 @@ public class Constants {
         UserActivated,
         //Combat
         SecondaryEffect,
-        Slain
+        Slain,
+        ResourceChanged
 
     }
 
@@ -170,7 +175,8 @@ public class Constants {
         StatMinimum,
         StatMaximum,
         CreatureStatus,
-        WhosTurn
+        WhosTurn,
+        SpecialAttribute
 
 
 
@@ -221,7 +227,8 @@ public class Constants {
         Permanent,
         EndOfTurn,
         StartOfTurn,
-        WhileInZone
+        WhileInZone,
+        InsufficientResource
     }
 
     public enum OwnerConstraints {
@@ -250,7 +257,9 @@ public class Constants {
         Attack,
         Size,
         Health,
-        MaxHealth
+        MaxHealth,
+        SupportValue,
+        MaxSupport
 
     }
 
@@ -277,6 +286,7 @@ public class Constants {
         CharacterAttacked = 301,
         CharacterDefends = 302,
         Combat = 303,
+        ResourceChanged = 304,
 
         CardClicked = 400,
         UserActivatedAbilityInitiated = 401,

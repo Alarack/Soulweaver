@@ -12,7 +12,7 @@ public class GameResourceDisplay : Photon.MonoBehaviour {
 
     public GameObject canvas;
 
-    private Player owner;
+    public Player owner;
 
 
 	public void Initialize (Player owner, GameResource essence, Text newText) {

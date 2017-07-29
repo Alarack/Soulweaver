@@ -23,6 +23,7 @@ public class CardIDs {
         Domain_TestDomain = 110,
         TestSubject1 = 111,
         TestSubject2 = 112,
+        AngryFist = 113,
 
         //Tokens
         FusedSoul_1000 = 1000,
@@ -60,6 +61,8 @@ public class CardIDs {
         SEV_DOM_CollectSpecimen = 20013,
         SEV_DOM_Agonize = 20014,
         SEV_TNK_CapturedVictim = 20015,
+        SEV_DOM_GluttonousFeasting = 20016,
+        SEV_DOM_Wasting = 20017,
 
         //The Realm Keepers 30000
         RLM_DrillmanGorman = 30000,
@@ -83,7 +86,8 @@ public class CardIDs {
 
 
         //The Wardens 70000
-
+        WAR_HeadlessChanneler = 70000,
+        WAR_FreshFerryman = 70001,
 
 
 
