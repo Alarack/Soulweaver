@@ -18,11 +18,13 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
+  movingVFX: 0
+  deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0800000006000000
   subTypes: 19000000
-  keywords: 00000000
+  keywords: 19000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -31,6 +33,7 @@ MonoBehaviour:
     triggerConstraints:
       types: 04000000
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -52,31 +55,29 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 1
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
     sourceConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -98,36 +99,33 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
     effect: 3
     abilityName: 
-    effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -149,33 +147,32 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: WAR_ShadowOfLurik
-      spawnTokenLocation: 5
-      spawnCardType: 1
-      numberOfSpawns: 1
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-    ID: 0
     abilityVFX: 
+    movingVFX: 0
+    additionalRequirements: 
     additionalRequirementConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -197,40 +194,50 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-    keywordsToAddorRemove: 
-    additionalRequirements: 
-    statAdjustments: []
-    applyEffectToWhom: 0
-    applyEffectToSourceOfAdjustment: 0
-    logicTargetingMethod: 2
-    numberofTargets: 1
+    effectHolder:
+      zoneChanges: []
+      tokenSpanws:
+      - effectType: 0
+        source: {fileID: 0}
+        spawnMethod: 0
+        spawnableTokenDataName: WAR_ShadowOfLurik
+        spawnTokenLocation: 5
+        spawnCardType: 1
+        numberOfSpawns: 1
+        tokenSeriesNames: []
+      statAdjustments: []
+      generateResources: []
+      addOrRemoveKeywords: []
+      addOrRemoveSpecialAttribute: []
+    processTriggerOnWhom: 0
+    logicTargetingMethod: 0
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
   - trigger: 01000000
     duration: 1
     triggerConstraints:
       types: 0400000005000000
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -252,31 +259,29 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 1
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
     sourceConstraints:
-      types: 00000000
+      types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -298,36 +303,33 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
     effect: 3
     abilityName: 
-    effectValue: 0
     source: {fileID: 0}
     targets: []
     targetConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -349,33 +351,32 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: WAR_ShadowOfLurik
-      spawnTokenLocation: 5
-      spawnCardType: 1
-      numberOfSpawns: 1
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-    ID: 0
     abilityVFX: 
+    movingVFX: 0
+    additionalRequirements: 
     additionalRequirementConstraints:
       types: 
       owner: 0
+      whosTurn: 0
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -397,35 +398,45 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
       gainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLess: 0
       numberOfcardsInZone: 0
-      copyTargets: 0
-      spawnableTokenDataName: 
-      spawnTokenLocation: 0
-      spawnCardType: 0
-      numberOfSpawns: 0
-      targetZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      generatedResourceType: 0
-      amountOfResourceToGenerate: 0
-      generatedResouceCap: 0
-      generatedResourceName: 
       requiredResourceType: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-    keywordsToAddorRemove: 
-    additionalRequirements: 
-    statAdjustments: []
-    applyEffectToWhom: 0
-    applyEffectToSourceOfAdjustment: 0
+    effectHolder:
+      zoneChanges: []
+      tokenSpanws:
+      - effectType: 0
+        source: {fileID: 0}
+        spawnMethod: 0
+        spawnableTokenDataName: WAR_ShadowOfLurik
+        spawnTokenLocation: 5
+        spawnCardType: 1
+        numberOfSpawns: 1
+        tokenSeriesNames: []
+      statAdjustments: []
+      generateResources: []
+      addOrRemoveKeywords: []
+      addOrRemoveSpecialAttribute: []
+    processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+  specialAttributes: []
   attack: 4
   size: 3
   health: 4
