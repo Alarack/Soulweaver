@@ -48,4 +48,8 @@ public abstract class Effect {
         }
     }
 
+    protected string GetCardPrefabName(Constants.CardType cardType) {
+        return Deck._allCards.GetCardPrefabNameByType(cardType);
+    }
+
 }

@@ -61,14 +61,14 @@ public class EffectSpawnToken : Effect {
     public CardVisual SpawnCopy(CardVisual target) {
         spawnCardType = target.primaryCardType;
         CardData tokenData = Resources.Load<CardData>("CardData/" + target.cardData.name) as CardData;
-        CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName());
+        CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName(spawnCardType));
 
         return tokenCard;
     }
 
     public CardVisual SpawnTokenWithCopiedStats(CardVisual target) {
         CardData tokenData = Resources.Load<CardData>("CardData/" + spawnableTokenDataName) as CardData;
-        CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName());
+        CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName(spawnCardType));
 
         if (target is CreatureCardVisual) {
             CreatureCardVisual soul = target as CreatureCardVisual;
@@ -81,14 +81,14 @@ public class EffectSpawnToken : Effect {
 
     public CardVisual SpawnToken() {
         CardData tokenData = Resources.Load<CardData>("CardData/" + spawnableTokenDataName) as CardData;
-        CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName());
+        CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName(spawnCardType));
 
         return tokenCard;
     }
 
     public CardVisual SpawnTokensInSeries() {
         CardData tokenData = Resources.Load<CardData>("CardData/" + tokenSeriesNames[seriesTokenSpawnIndex]) as CardData;
-        CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName());
+        CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName(spawnCardType));
 
         seriesTokenSpawnIndex++;
 
@@ -117,9 +117,7 @@ public class EffectSpawnToken : Effect {
         return tokenCard;
     }
 
-    private string GetCardPrefabName() {
-        return Deck._allCards.GetCardPrefabNameByType(spawnCardType);
-    }
+
 
 
 }
