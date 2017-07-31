@@ -42,6 +42,12 @@ public class CardVFX : Photon.MonoBehaviour {
                 if(MoveTowardsTarget(target, 0.2f)) {
                     if(impactParticle != null) {
                         PhotonNetwork.Instantiate(impactParticle.name, target.position, Quaternion.identity, 0);
+
+
+
+
+                        //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded);
+
                         Invoke("NetworkCleanup", 0.3f);
                         //Destroy(gameObject, 0.5f);
                     }

@@ -253,9 +253,10 @@ MonoBehaviour:
     logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes:
   - attributeType: 3
     attributeValue: 1
-  attack: 1
-  size: 0
+  attack: 3
+  size: 2
   health: 5

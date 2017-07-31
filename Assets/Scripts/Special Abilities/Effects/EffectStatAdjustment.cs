@@ -17,7 +17,8 @@ public class EffectStatAdjustment : Effect {
 
     public enum DeriveStatsFromWhom {
         TargetOFEffect,
-        SourceOfEffect
+        SourceOfEffect,
+        TriggeringCard
     }
 
     public ValueSetMethod valueSetmethod;
@@ -26,6 +27,7 @@ public class EffectStatAdjustment : Effect {
     //Derive Stats From Target
     public DeriveStatsFromWhom deriveStatsFromWhom;
     public CardStats targetStat;
+    public string targetAbilityName;
 
     //Derive Stats from Cards in Zone
     public Constants.DeckType zoneToCount;
@@ -97,7 +99,12 @@ public class EffectStatAdjustment : Effect {
                 break;
 
             case DeriveStatsFromWhom.TargetOFEffect:
-                SetAdjustmentValuesByTargetStat(parentAbility.targets[0]);
+                SetAdjustmentValuesByTargetStat(Finder.FindSpecialAbilityOnCardByName(source, targetAbilityName).targets[0]);
+                break;
+
+            case DeriveStatsFromWhom.TriggeringCard:
+                SetAdjustmentValuesByTargetStat(parentAbility.triggeringCards[0]);
+
                 break;
         }
     }

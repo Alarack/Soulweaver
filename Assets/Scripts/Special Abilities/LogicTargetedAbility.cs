@@ -11,7 +11,9 @@ public class LogicTargetedAbility : SpecialAbility {
         NoTargetsNeeded,
         AllValidTargets,
         NumberOfValidTargets,
-        OnlyTargetTriggeringCard
+        OnlyTargetTriggeringCard,
+        UseTargetsFromOtherAbility,
+        TriggeringCardsOwner
     }
 
 
@@ -22,6 +24,7 @@ public class LogicTargetedAbility : SpecialAbility {
 
     public int numberofTargets;
     public bool processEffectOnPrimaryEffectTargets;
+    public string targetAbilityName;
     //public bool onlyThisCard;
 
 
@@ -88,11 +91,31 @@ public class LogicTargetedAbility : SpecialAbility {
                     Effect(card);
 
                 }
-                    
 
                 break;
 
+            case LogicTargeting.UseTargetsFromOtherAbility:
+                List<CardVisual> otherTargets = FindTargetsFromAnotherAbility();
 
+                for(int i = 0; i < otherTargets.Count; i++) {
+                    if (CheckConstraints(targetConstraints, otherTargets[i]) != null)
+                        Effect(otherTargets[i]);
+
+                }
+
+                break;
+
+            case LogicTargeting.TriggeringCardsOwner:
+
+                CardVisual targetOwner = Finder.FindCardsOwner(card);
+
+                if (CheckConstraints(targetConstraints, targetOwner) != null) {
+                    Effect(targetOwner);
+
+                }
+
+                break;
+                    
 
         }
 
@@ -109,15 +132,33 @@ public class LogicTargetedAbility : SpecialAbility {
             if(CheckConstraints(targetConstraints, targets[i])) {
                 Effect(targets[i]);
             }
+        }
+    }
 
 
+    private List<CardVisual> FindTargetsFromAnotherAbility() {
+
+        SpecialAbility targetAbility = null;
+
+        for(int i = 0; i < source.specialAbilities.Count; i++) {
+            if(source.specialAbilities[i].abilityName == targetAbilityName) {
+                targetAbility = source.specialAbilities[i];
+                break;
+            }
+        }
+
+        if(targetAbility != null) {
+            return targetAbility.targets;
+        }
+        else {
+            return null;
         }
 
     }
 
 
 
-    public List<CardVisual> GatherValidTargets() {
+    private List<CardVisual> GatherValidTargets() {
         List<CardVisual> results = new List<CardVisual>();
 
         for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {

@@ -11,6 +11,7 @@ public class SpecialAttribute {
         Regeneration,
         Volatile,
         SpellDamage,
+        Reanimator
 
     }
 

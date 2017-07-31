@@ -44,6 +44,24 @@ public class CardIDs {
         COR_DOM_BlazeGoRound = 10010,
         COR_DOM_RecklessBlaze = 10011,
         COR_DOM_Churn = 10012,
+        COR_Kindler = 10013,
+        COR_CorpseYard = 10014,
+        COR_TKN_Zonbie = 10015,
+        COR_RillocksBargain = 10016,
+        COR_RillocksAvatar = 10017,
+        COR_SoulSear = 10018,
+        COR_Effigy = 10019,
+        COR_BlackPhoenix = 10020,
+        COR_SearFlesh = 10021,
+        COR_Pyromaster = 10022,
+        COR_FuelForTheFire = 10023,
+        COR_TKN_Flameling = 10024,
+        COR_CharredLord = 10025,
+        COR_Conflagration = 10026,
+        COR_Incinerate = 10027,
+        COR_SpitefulGravestone = 10028,
+        COR_AshesToFlames = 10029,
+        COR_BurntOffering = 10030,
 
         //The Severed 20000
         SEV_SoulTorturer = 20000,
@@ -166,6 +184,8 @@ public class CardIDs {
 
         //Neutral 80000
         NEU_SkeletalMinions = 80000,
+        NEU_FireElemental = 80001,
+        NEU_Emberstone = 80002,
 
     }
 

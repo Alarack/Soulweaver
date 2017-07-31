@@ -62,10 +62,12 @@ public static class Finder {
         return results;
     }
 
-    public static List<CardVisual> FindCardsWithStatExtreme(CardStats stat, DeckType zone, bool high) {
+    public static List<CardVisual> FindCardsWithStatExtreme(CardStats stat, DeckType zone, bool high, OwnerConstraints owner) {
         List<CardVisual> results = new List<CardVisual>();
 
-        Dictionary<int, int> cardsByStat = StatCollector(stat, zone);
+        //Debug.Log("Finding cards in" + zone.ToString());
+
+        Dictionary<int, int> cardsByStat = StatCollector(stat, zone, owner);
         List<int> sortedStats = cardsByStat.Values.ToList();
 
         int targetStat;
@@ -81,17 +83,21 @@ public static class Finder {
             }
         }
 
-        //foreach(CardVisual card in results) {
-        //    Debug.Log(card.gameObject.name + " has the highest " + stat.ToString());
+        //foreach (CardVisual card in results) {
+        //    Debug.Log(card.gameObject.name + " has the least " + stat.ToString());
         //}
 
         return results;
     }
 
-    private static Dictionary<int, int> StatCollector(CardStats stat, DeckType zone) {
+    private static Dictionary<int, int> StatCollector(CardStats stat, DeckType zone, OwnerConstraints owner) {
         Dictionary<int, int> results = new Dictionary<int, int>();
 
-        List<CardVisual> cardsToSearch = FindAllCardsOfType(CardType.Soul, zone);
+        List<CardVisual> cardsToSearch = FindAllCardsOfType(CardType.Soul, zone, owner);
+
+        //foreach(CardVisual card in cardsToSearch) {
+        //    Debug.Log(card.gameObject.name + " is " + card.cardData.cardName);
+        //}
 
         switch (stat) {
             case CardStats.Cost:
@@ -390,10 +396,10 @@ public static class Finder {
         return result;
     }
 
-    public static int FindTotalSpellDamage() {
+    public static int FindTotalSpellDamage(OwnerConstraints owner) {
         int result = 0;
 
-        List<CardVisual> cards = FindAllCardsInZone(DeckType.Battlefield, OwnerConstraints.Mine);
+        List<CardVisual> cards = FindAllCardsInZone(DeckType.Battlefield, owner);
 
         for (int i = 0; i < cards.Count; i++) {
             result += cards[i].CheckSpecialAttributes(SpecialAttribute.AttributeType.SpellDamage);
@@ -412,6 +418,19 @@ public static class Finder {
 
 
         return results;
+    }
+
+    public static CardVisual FindCardsOwner(CardVisual card) {
+
+        List<CardVisual> cardsToSearch = FindAllCardsOfType(CardType.Player);
+
+        for(int i = 0; i < cardsToSearch.Count; i++) {
+            if (card.owner == cardsToSearch[i].owner)
+                return cardsToSearch[i];
+        }
+
+        return null;
+
     }
 
 

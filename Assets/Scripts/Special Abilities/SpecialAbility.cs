@@ -32,6 +32,7 @@ public abstract class SpecialAbility {
     public string abilityName;
     public CardVisual source;
     public List<CardVisual> targets = new List<CardVisual>();
+    public List<CardVisual> triggeringCards = new List<CardVisual>();
     public ConstraintList targetConstraints = new ConstraintList();
     public string abilityVFX;
     public bool movingVFX;
@@ -240,6 +241,8 @@ public abstract class SpecialAbility {
 
             Grid.EventManager.SendEvent(GameEvent.TriggerSecondaryEffect, data);
         }
+
+        triggeringCards.Clear();
     }
 
     protected virtual void RemoveEffect(List<CardVisual> cards) {
@@ -417,7 +420,7 @@ public abstract class SpecialAbility {
         if (trigger.Contains(AbilityActivationTrigger.Defends))
             Grid.EventManager.RegisterListener(GameEvent.CharacterDefends, OnCombatDefense);
 
-        if (trigger.Contains(AbilityActivationTrigger.UserActivated))
+        if (source.primaryCardType != CardType.Domain && trigger.Contains(AbilityActivationTrigger.UserActivated))
             Grid.EventManager.RegisterListener(GameEvent.UserActivatedAbilityInitiated, OnUserActivation);
 
         if (trigger.Contains(AbilityActivationTrigger.SecondaryEffect))
@@ -560,6 +563,9 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
+        if (causeOfdeath != source)
+            return;
+
         CardVisual effectTarget = null;
 
         switch (processTriggerOnWhom) {
@@ -656,6 +662,9 @@ public abstract class SpecialAbility {
 
         if (!source.photonView.isMine)
             return;
+
+        //if (card.primaryCardType == CardType.Domain)
+        //    return;
 
         if (!ManageConstraints(card)) {
             return;
@@ -908,6 +917,9 @@ public abstract class SpecialAbility {
             return false;
         }
 
+        if (triggerConstraints.neverTargetSelf && triggeringCard == source)
+            return false;
+
         if (triggerConstraints.oncePerTurn && triggerConstraints.triggeredThisTurn)
             return false;
 
@@ -930,6 +942,8 @@ public abstract class SpecialAbility {
             if (!CheckAdditionalRequirements(additionalRequirements[i], additionalRequirementConstraints))
                 return false;
         }
+
+        triggeringCards.Add(triggeringCard);
 
         if (triggerConstraints.requireMultipleTriggers) {
             result = CheckForMultipleTriggers(triggerConstraints);
@@ -1109,12 +1123,12 @@ public abstract class SpecialAbility {
                 for (int i = 0; i < constraint.creatureStatus.Count; i++) {
                     switch (constraint.creatureStatus[i]) {
                         case Constants.CreatureStatus.MostStat:
-                            if (HasHighOrLowStat(constraint.mostStat, constraint.currentZone, target, true) == null)
+                            if (HasHighOrLowStat(constraint.mostStat, constraint.currentZone, target, true, constraint.owner) == null)
                                 return null;
                             break;
 
                         case Constants.CreatureStatus.LeastStat:
-                            if (HasHighOrLowStat(constraint.leastStat, constraint.currentZone, target, false) == null)
+                            if (HasHighOrLowStat(constraint.leastStat, constraint.currentZone, target, false, constraint.owner) == null)
                                 return null;
                             break;
 
@@ -1249,12 +1263,13 @@ public abstract class SpecialAbility {
         return resul;
     }
 
-    private CardVisual HasHighOrLowStat(CardStats statToCompare, List<DeckType> zones, CardVisual target, bool highest) {
+    private CardVisual HasHighOrLowStat(CardStats statToCompare, List<DeckType> zones, CardVisual target, bool highest, OwnerConstraints owner) {
         CardVisual result = null;
 
         List<CardVisual> cardsToSearch = new List<CardVisual>();
         for (int i = 0; i < zones.Count; i++) {
-            cardsToSearch.AddRange(Finder.FindCardsWithStatExtreme(statToCompare, zones[i], highest));
+            //Debug.Log("Sending " + zones[i].ToString() + " to the finder method");
+            cardsToSearch.AddRange(Finder.FindCardsWithStatExtreme(statToCompare, zones[i], highest, owner));
         }
 
         if (cardsToSearch.Contains(target))
@@ -1498,7 +1513,7 @@ public abstract class SpecialAbility {
 
     #endregion
 
-
+    
 
 
 

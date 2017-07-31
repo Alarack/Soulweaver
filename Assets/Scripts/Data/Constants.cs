@@ -293,6 +293,9 @@ public class Constants {
         UserActivatedDomainAbility = 402,
 
         TriggerSecondaryEffect = 500,
+
+
+        VFXLanded = 600,
     }
 
 

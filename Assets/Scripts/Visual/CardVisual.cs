@@ -486,6 +486,12 @@ public class CardVisual : Photon.MonoBehaviour {
 
     #region Events
 
+    protected void OnVFXLanded(EventData data) {
+
+
+    }
+
+
 
     #endregion
 

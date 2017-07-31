@@ -84,6 +84,13 @@ public class CreatureCardVisual : CardVisual {
         health = tempHealth;
 
 
+        StartCoroutine(RestCardVisualData());
+
+    }
+
+    private IEnumerator RestCardVisualData() {
+        yield return new WaitForSeconds(0.5f);
+
         cardAttackText.text = _creatureData.attack.ToString();
         cardSizeText.text = _creatureData.size.ToString();
         cardHealthText.text = _creatureData.health.ToString();
@@ -285,7 +292,7 @@ public class CreatureCardVisual : CardVisual {
 
     [PunRPC]
     public void CheckDeath(int source, bool forceDeath) {
-        GameObject deathVFX;
+        
 
         if (currentDeck.decktype == Constants.DeckType.SoulCrypt) {
             Debug.LogError(cardData.cardName + " is already dead, and was told to go to the soulcypt");
@@ -297,15 +304,8 @@ public class CreatureCardVisual : CardVisual {
         if (health <=0 || forceDeath) {
 
             if (photonView.isMine) {
-                if (deathEffect != "")
-                    deathVFX = PhotonNetwork.Instantiate(deathEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
-                else {
-                    deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
-                }
+                StartCoroutine(DisplayDeathEffect());
             }
-
-
-
 
             Debug.Log(causeOfDeath.cardData.cardName + " has killed " + cardData.cardName);
             //currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
@@ -317,6 +317,18 @@ public class CreatureCardVisual : CardVisual {
             data.AddMonoBehaviour("CauseOfDeath", causeOfDeath);
 
             Grid.EventManager.SendEvent(Constants.GameEvent.CreatureDied, data);
+        }
+
+    }
+
+    private IEnumerator DisplayDeathEffect() {
+        yield return new WaitForSeconds(0.2f);
+        GameObject deathVFX;
+
+        if (deathEffect != "")
+            deathVFX = PhotonNetwork.Instantiate(deathEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        else {
+            deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
         }
 
     }
@@ -339,12 +351,16 @@ public class CreatureCardVisual : CardVisual {
         //vfx.transform.SetParent(vfx.transform);
 
         //vfx.SetText(value.ToString());
+        StartCoroutine(ShowDamageEffect(value));
+
+    }
+
+    private IEnumerator ShowDamageEffect(int value) {
+        yield return new WaitForSeconds(0.1f);
 
         damageToken.SetText(value.ToString());
         damageToken.PlayAnim();
         damageToken.PlayParticles();
-
-
 
     }
 

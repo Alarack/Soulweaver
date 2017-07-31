@@ -30,6 +30,8 @@ public class SupportCardVisual : CardVisual {
         int tempSupportValue = _supportData.supportValue;
         supportValue = tempSupportValue;
 
+        supportToken.SetUpSupportText();
+
         supportToken.UpdateSupportText(Constants.CardStats.SupportValue, supportValue);
 
     }
