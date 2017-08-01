@@ -273,8 +273,11 @@ public class CombatManager : Photon.MonoBehaviour {
                 if (damageDealer.cardData.movingVFX) {
                     atkVFX.transform.SetParent(damageDealer.transform, false);
                     atkVFX.transform.localPosition = Vector3.zero;
-                    vfx.target = damageTaker.battleToken.incomingEffectLocation;
-                    vfx.beginMovement = true;
+
+                    vfx.Initialize(damageTaker, damageDealer.cardData.movingVFX);
+
+                    //vfx.target = damageTaker.battleToken.incomingEffectLocation;
+                    //vfx.beginMovement = true;
                 }
                 else {
                     atkVFX.transform.SetParent(damageTaker.battleToken.incomingEffectLocation, false);

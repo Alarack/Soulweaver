@@ -688,7 +688,7 @@ public class Deck : Photon.MonoBehaviour {
 
     private IEnumerator RemoveCardVisualFromField(CardVisual card) {
         card.SetCardActiveState(false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         if (card.photonView.isMine) {
             card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);

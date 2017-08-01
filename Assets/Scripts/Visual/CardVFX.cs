@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SoulWeaver;
 
 public class CardVFX : Photon.MonoBehaviour {
 
@@ -21,6 +22,7 @@ public class CardVFX : Photon.MonoBehaviour {
     public bool playAnimOnStart;
 
     private Vector3 position;
+    private CardVisual targetCard;
 
 	void Start () {
 
@@ -33,6 +35,27 @@ public class CardVFX : Photon.MonoBehaviour {
         //active = false;
 	}
 
+    public void Initialize(CardVisual target, bool moving) {
+
+        photonView.RPC("RPCInitialize", PhotonTargets.All, target.photonView.viewID);
+
+
+        if (moving) {
+            StartCoroutine(StartMovement());
+        }
+        else {
+            RPCSendImpactEvent(PhotonTargets.Others);
+            SendImpactEvent();
+        }
+
+        //StartCoroutine(StartMovement());
+
+        
+
+        //RPCInitialize(targetCard.photonView.viewID, moving);
+
+    }
+
 	void Update () {
 
 
@@ -44,15 +67,13 @@ public class CardVFX : Photon.MonoBehaviour {
                         PhotonNetwork.Instantiate(impactParticle.name, target.position, Quaternion.identity, 0);
 
 
-
-
-                        //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded);
-
+                        RPCSendImpactEvent(PhotonTargets.Others);
+                        SendImpactEvent();
                         Invoke("NetworkCleanup", 0.3f);
                         //Destroy(gameObject, 0.5f);
                     }
                         
-                    //impactParticle.transform.SetParent()
+
                 }
             }
 
@@ -74,6 +95,9 @@ public class CardVFX : Photon.MonoBehaviour {
     }
 
 
+
+
+
     public void SetText(string textValue) {
 
         if(optionalText != null) {
@@ -90,6 +114,15 @@ public class CardVFX : Photon.MonoBehaviour {
 
     public void PlayParticles() {
         particles.Play();
+    }
+
+
+    public IEnumerator StartMovement() {
+        yield return new WaitForSeconds(0.7f);
+
+        beginMovement = true;
+
+
     }
 
 
@@ -129,6 +162,31 @@ public class CardVFX : Photon.MonoBehaviour {
     [PunRPC]
     public void SetVFXActiveState(bool activate) {
         active = activate;
+    }
+
+    [PunRPC]
+    public void RPCInitialize(int cardID) {
+        CardVisual target = Finder.FindCardByID(cardID);
+
+        this.targetCard = target;
+
+        if (target is CreatureCardVisual) {
+            CreatureCardVisual soul = target as CreatureCardVisual;
+            this.target = soul.battleToken.incomingEffectLocation;
+        }
+    }
+
+    public void RPCSendImpactEvent(PhotonTargets targets) {
+        photonView.RPC("SendImpactEvent", targets);
+    }
+
+    [PunRPC]
+    public void SendImpactEvent() {
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Card", targetCard);
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+
     }
 
 

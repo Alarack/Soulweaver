@@ -1537,14 +1537,17 @@ public abstract class SpecialAbility {
 
                 if (vfx.photonView.isMine) {
                     if (movingVFX) {
-                        atkVFX.transform.SetParent(source.transform, false);
-                        atkVFX.transform.localPosition = Vector3.zero;
-                        vfx.target = soul.battleToken.incomingEffectLocation;
-                        vfx.beginMovement = true;
+                        //atkVFX.transform.SetParent(source.transform, false);
+                        //atkVFX.transform.localPosition = Vector3.zero;
+
+                        vfx.Initialize(soul, movingVFX);
+
+                        //vfx.target = soul.battleToken.incomingEffectLocation;
+                        //vfx.beginMovement = true;
                     }
                     else {
-                        atkVFX.transform.SetParent(soul.battleToken.incomingEffectLocation, false);
-                        atkVFX.transform.localPosition = Vector3.zero;
+                        //atkVFX.transform.SetParent(soul.battleToken.incomingEffectLocation, false);
+                        //atkVFX.transform.localPosition = Vector3.zero;
                     }
                 }
             }

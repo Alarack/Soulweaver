@@ -89,7 +89,7 @@ public class CreatureCardVisual : CardVisual {
     }
 
     private IEnumerator RestCardVisualData() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         cardAttackText.text = _creatureData.attack.ToString();
         cardSizeText.text = _creatureData.size.ToString();
@@ -151,6 +151,10 @@ public class CreatureCardVisual : CardVisual {
                 if(value < 1) {
                     //RPCShowDamage(PhotonTargets.Others, value);
                     ShowDamage(value);
+
+                    Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
+
+
                 }
 
                 if(value < 0) {
@@ -270,6 +274,20 @@ public class CreatureCardVisual : CardVisual {
     #endregion
 
 
+    #region EVENTS
+
+    protected override void OnVFXLanded(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+        Debug.Log(card.gameObject.name + " has been hit with a VFX");
+
+        Grid.EventManager.RemoveListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
+    }
+
+
+
+    #endregion
+
 
 
     #region RPCs
@@ -322,7 +340,7 @@ public class CreatureCardVisual : CardVisual {
     }
 
     private IEnumerator DisplayDeathEffect() {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.7f);
         GameObject deathVFX;
 
         if (deathEffect != "")
