@@ -33,7 +33,7 @@ public class CreatureCardVisual : CardVisual {
     private CardCreatureData _creatureData;
 
 
-    private Constants.CardStats lastStatChanged;
+
 
 
     public override void SetupCardData() {
@@ -184,8 +184,14 @@ public class CreatureCardVisual : CardVisual {
         }
 
         //if (photonView.isMine) {
-            lastStatChanged = stat;
-            Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
+            //lastStatChanged = stat;
+
+        SpecialAbility.StatAdjustment latest = new SpecialAbility.StatAdjustment(stat, value, false, false, null);
+
+        lastStatAdjustment = latest;
+
+
+        Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
         //}
 
 
@@ -290,30 +296,30 @@ public class CreatureCardVisual : CardVisual {
             return;
 
 
-        switch (lastStatChanged) {
+        switch (lastStatAdjustment.stat) {
 
             case Constants.CardStats.Attack:
                 cardAttackText.text = attack.ToString();
-                battleToken.UpdateBattleTokenTokenText(lastStatChanged, attack);
+                battleToken.UpdateBattleTokenTokenText(lastStatAdjustment.stat, attack);
                 TextTools.AlterTextColor(attack, _creatureData.attack, cardAttackText);
                 break;
 
             case Constants.CardStats.Size:
                 cardSizeText.text = size.ToString();
-                battleToken.UpdateBattleTokenTokenText(lastStatChanged, size);
+                battleToken.UpdateBattleTokenTokenText(lastStatAdjustment.stat, size);
                 TextTools.AlterTextColor(size, _creatureData.size, cardSizeText);
                 break;
 
             case Constants.CardStats.Health:
-                ShowDamage(CalcProtection(statAdjustments[statAdjustments.Count - 1].value));
+                ShowDamage(CalcProtection(lastStatAdjustment.value));
                 cardHealthText.text = health.ToString();
-                battleToken.UpdateBattleTokenTokenText(lastStatChanged, health);
+                battleToken.UpdateBattleTokenTokenText(lastStatAdjustment.stat, health);
                 TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
                 break;
 
             case Constants.CardStats.MaxHealth:
                 cardHealthText.text = health.ToString();
-                battleToken.UpdateBattleTokenTokenText(lastStatChanged, health);
+                battleToken.UpdateBattleTokenTokenText(lastStatAdjustment.stat, health);
                 TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
                 break;
         }
@@ -407,7 +413,7 @@ public class CreatureCardVisual : CardVisual {
 
         if(deathVFX != null) {
             CardVFX cardVFX = deathVFX.GetComponent<CardVFX>();
-            cardVFX.Initialize(null, false);
+            cardVFX.Initialize(this, false);
         }
 
     }

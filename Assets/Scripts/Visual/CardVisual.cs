@@ -70,6 +70,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public DomainTile domainTile;
 
+    //protected Constants.CardStats lastStatChanged;
+    protected SpecialAbility.StatAdjustment lastStatAdjustment;
+
+
 
     protected float lerpSmoothing = 10f;
     protected CardVisualState _visualState;
@@ -235,6 +239,10 @@ public class CardVisual : Photon.MonoBehaviour {
                 cardCostText.text = essenceCost.ToString();
                 break;
         }
+
+        SpecialAbility.StatAdjustment latest = new SpecialAbility.StatAdjustment(stat, value, false, false, null);
+
+        lastStatAdjustment = latest;
     }
 
     public virtual void ActivateGlow(Color32 color) {
@@ -280,18 +288,20 @@ public class CardVisual : Photon.MonoBehaviour {
         if (photonView.isMine || currentDeck.decktype == Constants.DeckType.Battlefield)
             CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
 
+        if (photonView.isMine) {
 
-        if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) > 10f && !Mulligan.choosingMulligan) {
-            //mainHudText.text = "Play " + cardName + "?";
-            if (Input.GetMouseButton(0)) {
-                ActivateGlow(Color.cyan);
+            if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) > 10f && !Mulligan.choosingMulligan) {
+                //mainHudText.text = "Play " + cardName + "?";
+                if (Input.GetMouseButton(0)) {
+                    ActivateGlow(Color.cyan);
+                }
             }
-        }
 
-        if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) < 10f && !Mulligan.choosingMulligan) {
-            //mainHudText.text = "Play " + cardName + "?";
-            if (Input.GetMouseButton(0)) {
-                ActivateGlow(Color.green);
+            if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) < 10f && !Mulligan.choosingMulligan) {
+                //mainHudText.text = "Play " + cardName + "?";
+                if (Input.GetMouseButton(0)) {
+                    ActivateGlow(Color.green);
+                }
             }
         }
 
@@ -495,9 +505,9 @@ public class CardVisual : Photon.MonoBehaviour {
 
         if (animationManager != null) {
             //if(stat != Constants.CardStats.Health && value < 1)
-            Debug.Log(statAdjustments.Count + " is the current count of stat adjustments on " + cardData.cardName + " : " + gameObject.name);
+            //Debug.Log(statAdjustments.Count + " is the current count of stat adjustments on " + cardData.cardName + " : " + gameObject.name);
 
-            animationManager.BounceText(statAdjustments[statAdjustments.Count - 1].stat);
+            animationManager.BounceText(lastStatAdjustment.stat);
         }
 
     }
@@ -1171,8 +1181,21 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
+    public void RPCBroadCastNoVFXImpactEvent(PhotonTargets targets, CardVisual card) {
+        int cardID = card.photonView.viewID;
 
+        photonView.RPC("BroadcastNoVFXImpactEvent", targets, cardID);
+    }
 
+    [PunRPC]
+    public void BroadcastNoVFXImpactEvent(int cardID) {
+        CardVisual card = Finder.FindCardByID(cardID);
+
+        Debug.Log(card.cardData.name + " : " + card.gameObject.name + " is sending a broadcast no vfx event");
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Card", card);
+        Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+    }
 
 
     #endregion

@@ -30,7 +30,8 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbilities:
   - trigger: 05000000
-    duration: 0
+    effectDuration: 0
+    triggerDuration: 0
     triggerConstraints:
       types: 
       owner: 0
@@ -43,6 +44,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 
@@ -59,22 +62,26 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
     sourceConstraints:
       types: 040000000c000000
       owner: 0
@@ -87,6 +94,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 05000000
@@ -103,26 +112,31 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
     effect: 1
     abilityName: RoundBlaze
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 02000000040000000b000000
       owner: 0
@@ -135,6 +149,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 05000000
@@ -151,22 +167,26 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
     abilityVFX: 
     movingVFX: 0
     additionalRequirements: 
@@ -182,6 +202,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 
@@ -198,22 +220,26 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
     effectHolder:
       zoneChanges: []
       tokenSpanws: []
@@ -231,6 +257,7 @@ MonoBehaviour:
           spellDamage: 0
         deriveStatsFromWhom: 0
         targetStat: 0
+        targetAbilityName: 
         zoneToCount: 0
         constraints:
           types: 
@@ -244,6 +271,8 @@ MonoBehaviour:
           notSubtype: 0
           keyword: 
           notKeyword: 0
+          specialAttributes: 
+          notSpecialAttribute: 0
           attunement: 
           notAttunement: 0
           currentZone: 
@@ -260,29 +289,35 @@ MonoBehaviour:
           oncePerTurn: 0
           triggeredThisTurn: 0
           neverTargetSelf: 0
+          suspendTrigger: 0
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
           abilityToRetrigger: 
-          gainedOrLost: 0
+          statGainedOrLost: 0
           statChanged: 0
           zoneToCheckForNumberOfCards: 0
-          moreOrLess: 0
+          moreOrLessCards: 0
           numberOfcardsInZone: 0
           requireMultipleTriggers: 0
           resetCountAtTurnEnd: 0
           triggersRequired: 0
           counter: 0
           requiredResourceType: 0
+          moreOrlessResource: 0
           amountOfResourceRequried: 0
           consumeResource: 0
+          resourceThatChanged: 0
+          resourceGainedOrLost: 0
         invertValue: 0
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
+      chooseOne: []
     processTriggerOnWhom: 0
     logicTargetingMethod: 2
     numberofTargets: 1
     processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
   domainIcon: {fileID: 21300036, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

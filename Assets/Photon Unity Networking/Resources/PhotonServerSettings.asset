@@ -101,4 +101,5 @@ MonoBehaviour:
   - BroadcastNullCardPosition
   - RPCInitialize
   - SendImpactEvent
+  - BroadcastNoVFXImpactEvent
   DisableAutoOpenWizard: 1

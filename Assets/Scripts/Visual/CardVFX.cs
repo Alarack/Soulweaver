@@ -26,6 +26,10 @@ public class CardVFX : Photon.MonoBehaviour {
 
 	void Start () {
 
+        //if (!photonView.isMine) {
+        //    if (lifetime > 0 && !beginMovement)
+        //        Invoke("CleanUp", lifetime);
+        //}
 
 
         if (playAnimOnStart)
@@ -36,14 +40,14 @@ public class CardVFX : Photon.MonoBehaviour {
 
     public void Initialize(CardVisual target, bool moving) {
 
-        if (lifetime > 0 && !moving)
-            Invoke("CleanUp", lifetime);
+        //if (lifetime > 0 && !moving)
+        //    Invoke("CleanUp", lifetime);
 
 
         if (target == null)
             return;
 
-        photonView.RPC("RPCInitialize", PhotonTargets.All, target.photonView.viewID);
+        photonView.RPC("RPCInitialize", PhotonTargets.All, target.photonView.viewID, moving);
 
 
         if (moving) {
@@ -72,8 +76,8 @@ public class CardVFX : Photon.MonoBehaviour {
                     if(impactParticle != null) {
                         GameObject impact = PhotonNetwork.Instantiate(impactParticle.name, target.position, Quaternion.identity, 0) as GameObject;
                         CardVFX impactVFX = impact.GetComponent<CardVFX>();
-                        impactVFX.Initialize(null, false);
-
+                        impactVFX.Initialize(targetCard, false);
+                        //impactVFX.photonView.RPC("RPCInitialize", PhotonTargets.Others, 0);
                         RPCSendImpactEvent(PhotonTargets.Others);
                         SendImpactEvent();
                         Invoke("NetworkCleanup", 0.3f);
@@ -170,11 +174,15 @@ public class CardVFX : Photon.MonoBehaviour {
     }
 
     [PunRPC]
-    public void RPCInitialize(int cardID) {
+    public void RPCInitialize(int cardID, bool moving) {
         CardVisual target = Finder.FindCardByID(cardID);
 
         if (target == null)
             return;
+
+
+        if (lifetime > 0 && !moving)
+            Invoke("CleanUp", lifetime);
 
         this.targetCard = target;
 

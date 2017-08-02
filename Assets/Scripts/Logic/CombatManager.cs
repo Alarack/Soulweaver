@@ -285,16 +285,14 @@ public class CombatManager : Photon.MonoBehaviour {
                 atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
             }
 
-
             CardVFX vfx = atkVFX.GetComponent<CardVFX>();
 
             if (vfx.photonView.isMine) {
+                vfx.Initialize(damageTaker, damageDealer.cardData.movingVFX);
+
                 if (damageDealer.cardData.movingVFX) {
                     atkVFX.transform.SetParent(damageDealer.transform, false);
                     atkVFX.transform.localPosition = Vector3.zero;
-
-                    vfx.Initialize(damageTaker, damageDealer.cardData.movingVFX);
-
                     //vfx.target = damageTaker.battleToken.incomingEffectLocation;
                     //vfx.beginMovement = true;
                 }
@@ -310,9 +308,12 @@ public class CombatManager : Photon.MonoBehaviour {
             //damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker, damageDealer.cardData.movingVFX);
         }
         else {
-            EventData data = new EventData();
-            data.AddMonoBehaviour("Card", damageTaker);
-            Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+
+            damageDealer.RPCBroadCastNoVFXImpactEvent(PhotonTargets.All, damageTaker);
+
+            //EventData data = new EventData();
+            //data.AddMonoBehaviour("Card", damageTaker);
+            //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
         }
 
     }

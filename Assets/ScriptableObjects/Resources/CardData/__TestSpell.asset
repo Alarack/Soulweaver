@@ -135,6 +135,7 @@ MonoBehaviour:
     abilityName: Draw
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 0100000004000000
       owner: 2
@@ -253,11 +254,12 @@ MonoBehaviour:
     logicTargetingMethod: 2
     numberofTargets: 1
     processEffectOnPrimaryEffectTargets: 0
-  - trigger: 01000000
+    targetAbilityName: 
+  - trigger: 0a000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -272,7 +274,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -282,7 +284,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -322,7 +324,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -357,9 +359,10 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
     effect: 2
-    abilityName: Send to Crypt
+    abilityName: 
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 
       owner: 0
@@ -478,4 +481,5 @@ MonoBehaviour:
     logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []

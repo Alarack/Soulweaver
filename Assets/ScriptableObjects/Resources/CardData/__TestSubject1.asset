@@ -29,8 +29,8 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes:
-  - attributeType: 3
-    attributeValue: 1
+  - attributeType: 0
+    attributeValue: 0
   attack: 2
   size: 2
   health: 5

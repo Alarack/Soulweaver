@@ -254,10 +254,8 @@ public abstract class SpecialAbility {
         else {
             //Debug.Log(source.gameObject.name + " has an ability: " + abilityName + " that has no vfx. It is targeting " + card.gameObject.name);
 
-            //TODO: RPC THIS
-            EventData data = new EventData();
-            data.AddMonoBehaviour("Card", card);
-            Grid.EventManager.SendEvent(GameEvent.VFXLanded, data);
+            source.RPCBroadCastNoVFXImpactEvent(PhotonTargets.All, card);
+
         }
 
 
