@@ -525,7 +525,7 @@ public class Deck : Photon.MonoBehaviour {
 
         Deck targetLocation = null;
 
-        if (deckTypeEnum!= 0) {
+        if (deckTypeEnum != 0) {
             targetLocation = GetDeckFromType((DeckType)deckTypeEnum);
         }
 
@@ -596,7 +596,7 @@ public class Deck : Photon.MonoBehaviour {
         }
 
 
-        if (owner.battleFieldManager.IsCollectionFull()) {
+        if (card.primaryCardType == Constants.CardType.Soul && owner.battleFieldManager.IsCollectionFull()) {
             Debug.LogWarning("board is Full");
             //SendCardToHand(card);
             if (card.photonView.isMine) {
@@ -671,7 +671,20 @@ public class Deck : Photon.MonoBehaviour {
     }
 
     private void SendCardToSoulCrypt(CardVisual card) {
-        //yield return new WaitForSeconds(0.4f);
+
+
+
+        card.RestCardData();
+
+        //StartCoroutine(RemoveCardVisualFromField(card));
+
+
+
+    }
+
+    private IEnumerator RemoveCardVisualFromField(CardVisual card) {
+        card.SetCardActiveState(false);
+        yield return new WaitForSeconds(3f);
 
         if (card.photonView.isMine) {
             card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
@@ -683,12 +696,7 @@ public class Deck : Photon.MonoBehaviour {
             creature.RPCToggleExhaust(PhotonTargets.All, false);
         }
 
-        card.RestCardData();
-        //card.RPCSetUpCardData(PhotonTargets.All);
-        //card.SetupCardData();
-        //if (card.photonView.isMine)
         card.transform.localPosition = new Vector3(-40f, 20f, 20f);
-
 
     }
 

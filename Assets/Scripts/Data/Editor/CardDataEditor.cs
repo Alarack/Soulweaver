@@ -101,13 +101,13 @@ public class CardDataEditor : Editor {
     private Effect DrawEffect(Effect entry) {
 
         //Zone Change
-        if(entry is EffectZoneChange) {
+        if (entry is EffectZoneChange) {
             EffectZoneChange zoneChange = entry as EffectZoneChange;
             zoneChange.targetLocation = EditorHelper.EnumPopup("Target Zone", zoneChange.targetLocation);
         }
 
         //Spawn Tokens
-        if(entry is EffectSpawnToken) {
+        if (entry is EffectSpawnToken) {
             EffectSpawnToken spawnToken = entry as EffectSpawnToken;
 
             spawnToken.spawnMethod = EditorHelper.EnumPopup("Spawn Method", spawnToken.spawnMethod);
@@ -115,7 +115,7 @@ public class CardDataEditor : Editor {
             spawnToken.numberOfSpawns = EditorGUILayout.IntField("Number of Spawns", spawnToken.numberOfSpawns);
             spawnToken.spawnTokenLocation = EditorHelper.EnumPopup("Send Token Where?", spawnToken.spawnTokenLocation);
 
-            if(spawnToken.spawnMethod != EffectSpawnToken.SpawnMethod.CopyStats)
+            if (spawnToken.spawnMethod != EffectSpawnToken.SpawnMethod.CopyStats)
                 spawnToken.spawnForOpponent = EditorGUILayout.Toggle("Spawn for Opponent?", spawnToken.spawnForOpponent);
 
             switch (spawnToken.spawnMethod) {
@@ -133,7 +133,7 @@ public class CardDataEditor : Editor {
                     spawnToken.spawnableTokenDataName = EditorGUILayout.TextField("Token Data Name", spawnToken.spawnableTokenDataName);
                     spawnToken.spawnCardType = EditorHelper.EnumPopup("Token Card Type", spawnToken.spawnCardType);
 
-                    if(spawnToken.spawnForOpponent)
+                    if (spawnToken.spawnForOpponent)
                         spawnToken.spawnForOpponent = false;
                     break;
 
@@ -143,7 +143,7 @@ public class CardDataEditor : Editor {
         }//End of Spawn Token
 
         //Stat Adjustments
-        if(entry is EffectStatAdjustment) {
+        if (entry is EffectStatAdjustment) {
             EffectStatAdjustment adjustment = entry as EffectStatAdjustment;
 
 
@@ -156,21 +156,26 @@ public class CardDataEditor : Editor {
                     break;
 
                 case EffectStatAdjustment.ValueSetMethod.DeriveValueFromTargetStat:
+
+                    if (adjustment.deriveStatsFromWhom == EffectStatAdjustment.DeriveStatsFromWhom.TargetOFEffect)
+                        adjustment.targetAbilityName = EditorGUILayout.TextField("Target From What Ability?", adjustment.targetAbilityName);
+
+
                     adjustment.deriveStatsFromWhom = EditorHelper.EnumPopup("Derive Stat from what Target?", adjustment.deriveStatsFromWhom);
                     adjustment.targetStat = EditorHelper.EnumPopup("Which Stat to derive value from?", adjustment.targetStat);
+                    adjustment.invertValue = EditorGUILayout.Toggle("Invert Value?", adjustment.invertValue);
                     adjustment.adjustments = EditorHelper.DrawExtendedList("Adjustments", adjustment.adjustments, "Adjustment", DrawDerivedStatAdjustment);
 
                     break;
 
                 case EffectStatAdjustment.ValueSetMethod.DeriveValueFromCardsInZone:
                     adjustment.zoneToCount = EditorHelper.EnumPopup("Which Zone?", adjustment.zoneToCount);
-                    //adjustment.constraints =
-
+                    adjustment.invertValue = EditorGUILayout.Toggle("Invert Value?", adjustment.invertValue);
                     adjustment.constraints.types = EditorHelper.DrawList("Zone Constraints", adjustment.constraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
                     for (int i = 0; i < adjustment.constraints.types.Count; i++) {
                         ShowConstraintsOfType(adjustment.constraints.types[i], adjustment.constraints, "Counted Target");
                     }
-
+                    
                     adjustment.adjustments = EditorHelper.DrawExtendedList("Adjustments", adjustment.adjustments, "Adjustment", DrawDerivedStatAdjustment);
 
                     break;
@@ -181,7 +186,7 @@ public class CardDataEditor : Editor {
         }//End of Stat Adjustments
 
         //Generate Resource
-        if(entry is EffectGenerateResource) {
+        if (entry is EffectGenerateResource) {
             EffectGenerateResource generateResource = entry as EffectGenerateResource;
 
             generateResource.resourceType = EditorHelper.EnumPopup("What Kind of Resource?", generateResource.resourceType);
@@ -191,7 +196,7 @@ public class CardDataEditor : Editor {
         }
 
         //Add or Remove Keywords
-        if(entry is EffectAddorRemoveKeywords) {
+        if (entry is EffectAddorRemoveKeywords) {
             EffectAddorRemoveKeywords keywords = entry as EffectAddorRemoveKeywords;
             keywords.addOrRemove = EditorHelper.EnumPopup("Add or Remove?", keywords.addOrRemove);
             keywords.keywords = EditorHelper.DrawList("Keywords", keywords.keywords, true, Keywords.None, true, DrawKeywords);
@@ -199,7 +204,7 @@ public class CardDataEditor : Editor {
         }
 
         //Add or Remove Special Attributes
-        if(entry is EffectAddorRemoveSpecialAttribute) {
+        if (entry is EffectAddorRemoveSpecialAttribute) {
             EffectAddorRemoveSpecialAttribute specialAttribute = entry as EffectAddorRemoveSpecialAttribute;
             specialAttribute.attributeType = EditorHelper.EnumPopup("Attribute Type", specialAttribute.attributeType);
             specialAttribute.attributeAction = EditorHelper.EnumPopup("Add, Modify, or Remmove?", specialAttribute.attributeAction);
@@ -216,7 +221,7 @@ public class CardDataEditor : Editor {
         }
 
         //Choose One
-        if(entry is EffectChooseOne) {
+        if (entry is EffectChooseOne) {
             EffectChooseOne chooseOne = entry as EffectChooseOne;
 
             chooseOne.cardType = EditorHelper.EnumPopup("Card Type", chooseOne.cardType);
@@ -326,7 +331,35 @@ public class CardDataEditor : Editor {
 
         entry.targetConstraints.thisCardOnly = true;
 
-        if(entry is LogicTargetedAbility) {
+        if (entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.AllValidTargets;
+        }
+
+    }
+
+    private void DrawExaustAbilityPreset(SpecialAbility entry) {
+        entry.trigger.Add(AbilityActivationTrigger.UserActivated);
+        entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.sourceConstraints.types.Add(ConstraintType.Keyword);
+        entry.sourceConstraints.currentZone.Add(DeckType.Battlefield);
+        entry.sourceConstraints.keyword.Add(Keywords.Exhausted);
+        entry.sourceConstraints.notKeyword = true;
+    }
+
+
+    private void DrawExhaustSelfPreset(SpecialAbility entry) {
+        entry.trigger.Add(AbilityActivationTrigger.SecondaryEffect);
+        entry.effect = EffectType.AddOrRemoveKeywordAbilities;
+
+        EffectAddorRemoveKeywords addExhaust = new EffectAddorRemoveKeywords();
+        addExhaust.addOrRemove = EffectAddorRemoveKeywords.AddOrRemove.Add;
+        addExhaust.keywords.Add(Keywords.Exhausted);
+        entry.effectHolder.addOrRemoveKeywords.Add(addExhaust);
+        entry.targetConstraints.thisCardOnly = true;
+
+        if (entry is LogicTargetedAbility) {
             LogicTargetedAbility lta = entry as LogicTargetedAbility;
 
             lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.AllValidTargets;
@@ -366,6 +399,14 @@ public class CardDataEditor : Editor {
 
         if (GUILayout.Button("Spell")) {
             DrawSendToCryptPreset(entry);
+        }
+
+        if (GUILayout.Button("Exhaust Ability")) {
+            DrawExaustAbilityPreset(entry);
+        }
+
+        if (GUILayout.Button("Exhaust Self")) {
+            DrawExhaustSelfPreset(entry);
         }
 
 
@@ -430,6 +471,7 @@ public class CardDataEditor : Editor {
         EditorGUILayout.Separator();
 
         entry.triggerConstraints.thisCardOnly = EditorGUILayout.Toggle("Only this card can trigger this effect?", entry.triggerConstraints.thisCardOnly);
+        entry.triggerConstraints.neverTargetSelf = EditorGUILayout.Toggle("This card CANNOT trigger this effect?", entry.triggerConstraints.neverTargetSelf);
         entry.triggerConstraints.types = EditorHelper.DrawList("Trigger Constraints", entry.triggerConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
         for (int i = 0; i < entry.triggerConstraints.types.Count; i++) {
             ShowConstraintsOfType(entry.triggerConstraints.types[i], entry.triggerConstraints, "Trigger");
@@ -553,7 +595,7 @@ public class CardDataEditor : Editor {
         }//End of Effects
 
 
-        
+
 
         //EditorHelper.DrawInspectorSectionHeader("Stat Adjustments");
         //entry.statAdjustments = EditorHelper.DrawExtendedList(entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);
@@ -581,6 +623,10 @@ public class CardDataEditor : Editor {
             if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
                 logicTargeted.numberofTargets = EditorGUILayout.IntField("Number of Targets", logicTargeted.numberofTargets);
             }
+
+            if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility) {
+                logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
+            }
         }
 
         for (int i = 0; i < entry.targetConstraints.types.Count; i++) {
@@ -601,36 +647,6 @@ public class CardDataEditor : Editor {
         return entry;
     }
 
-    //private SpecialAbility.StatAdjustment DrawStatAdjustments(SpecialAbility.StatAdjustment entry) {
-    //    entry.stat = (Constants.CardStats)EditorGUILayout.EnumPopup("Stat", entry.stat);
-
-    //    entry.valueSetBytargetStat = EditorGUILayout.Toggle("Set Value By an Effect Target's Stat?", entry.valueSetBytargetStat);
-
-    //    if (entry.valueSetBytargetStat) {
-    //        entry.deriveStatsFromWhom = EditorHelper.EnumPopup("Derive Stats from Target or Source?", entry.deriveStatsFromWhom);
-
-    //        entry.targetStat = EditorHelper.EnumPopup("Target Stat", entry.targetStat);
-    //        entry.invertValue = EditorGUILayout.Toggle("Inverse Value?", entry.invertValue);
-    //    }
-    //    else {
-    //        entry.value = EditorGUILayout.IntField("Value", entry.value);
-    //    }
-
-
-    //    entry.nonStacking = EditorGUILayout.Toggle("Non-Stacking?", entry.nonStacking);
-    //    entry.temporary = EditorGUILayout.Toggle("Is this removable?", entry.temporary);
-    //    entry.spellDamage = EditorGUILayout.Toggle("Is this Spell Damage?", entry.spellDamage);
-
-    //    //if(entry.uniqueID == -1 || entry.uniqueID == 0) {
-    //    //    entry.uniqueID = IDFactory.GenerateID();
-    //    //}
-
-
-    //    return entry;
-    //}
-
-
-    //private 
 
     private string ShowNot(bool showNot) {
         if (showNot)

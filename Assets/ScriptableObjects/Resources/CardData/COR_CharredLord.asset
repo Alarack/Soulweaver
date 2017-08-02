@@ -8,29 +8,80 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: RLM_TKN_Firebolt
+  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
+  m_Name: COR_CharredLord
   m_EditorClassIdentifier: 
-  cardID: 30001
-  cardName: Fire Bolt
-  cardText: Deal 2 damage
-  cardCost: 2
-  cardImage: {fileID: 0}
-  cardImagePos: {x: 0, y: 0}
-  attackEffect: 
+  cardID: 10025
+  cardName: Charred Lord
+  cardText: At the end of your turn, Summon a Flameling
+  cardCost: 8
+  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImagePos: {x: 0, y: 16.8}
+  attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
-  primaryCardType: 2
+  primaryCardType: 1
   otherCardTypes: 
   attunements: 03000000
-  subTypes: 
+  subTypes: 05000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
-  - trigger: 01000000
+  userTargtedAbilities: []
+  multiTargetAbilities:
+  - trigger: 06000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
+      types: 0c000000
+      owner: 0
+      whosTurn: 2
+      primaryType: 
+      notPrimaryType: 0
+      additionalType: 
+      notAdditionalType: 0
+      subtype: 
+      notSubtype: 0
+      keyword: 
+      notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
+      attunement: 
+      notAttunement: 0
+      currentZone: 
+      notCurrentZone: 0
+      previousZone: 
+      notPreviousZone: 0
+      creatureStatus: 
+      resources: 
+      minStats: []
+      maxStats: []
+      mostStat: 0
+      leastStat: 0
+      thisCardOnly: 0
+      oncePerTurn: 0
+      triggeredThisTurn: 0
+      neverTargetSelf: 0
+      suspendTrigger: 0
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
+      abilityToRemove: 
+      abilityToRetrigger: 
+      statGainedOrLost: 0
+      statChanged: 0
+      zoneToCheckForNumberOfCards: 0
+      moreOrLessCards: 0
+      numberOfcardsInZone: 0
+      requireMultipleTriggers: 0
+      resetCountAtTurnEnd: 0
+      triggersRequired: 0
+      counter: 0
+      requiredResourceType: 0
+      moreOrlessResource: 0
+      amountOfResourceRequried: 0
+      consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
+    sourceConstraints:
       types: 04000000
       owner: 0
       whosTurn: 0
@@ -56,7 +107,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -80,7 +131,12 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-    sourceConstraints:
+    effect: 3
+    abilityName: 
+    source: {fileID: 0}
+    targets: []
+    triggeringCards: []
+    targetConstraints:
       types: 
       owner: 0
       whosTurn: 0
@@ -130,63 +186,8 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-    effect: 1
-    abilityName: Blast
-    source: {fileID: 0}
-    targets: []
-    triggeringCards: []
-    targetConstraints:
-      types: 0200000004000000
-      owner: 0
-      whosTurn: 0
-      primaryType: 0100000006000000
-      notPrimaryType: 0
-      additionalType: 
-      notAdditionalType: 0
-      subtype: 
-      notSubtype: 0
-      keyword: 
-      notKeyword: 0
-      specialAttributes: 
-      notSpecialAttribute: 0
-      attunement: 
-      notAttunement: 0
-      currentZone: 05000000
-      notCurrentZone: 0
-      previousZone: 
-      notPreviousZone: 0
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-      oncePerTurn: 0
-      triggeredThisTurn: 0
-      neverTargetSelf: 0
-      suspendTrigger: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
-      abilityToRemove: 
-      abilityToRetrigger: 
-      statGainedOrLost: 0
-      statChanged: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLessCards: 0
-      numberOfcardsInZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      requiredResourceType: 0
-      moreOrlessResource: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
-      resourceThatChanged: 0
-      resourceGainedOrLost: 0
-    abilityVFX: VFX_Ball_Lightning
-    movingVFX: 1
+    abilityVFX: 
+    movingVFX: 0
     additionalRequirements: 
     additionalRequirementConstraints:
       types: 
@@ -240,78 +241,27 @@ MonoBehaviour:
       resourceGainedOrLost: 0
     effectHolder:
       zoneChanges: []
-      tokenSpanws: []
-      statAdjustments:
+      tokenSpanws:
       - effectType: 0
         source: {fileID: 0}
-        valueSetmethod: 0
-        adjustments:
-        - stat: 4
-          value: -2
-          nonStacking: 0
-          temporary: 0
-          source: {fileID: 0}
-          uniqueID: -1
-          spellDamage: 0
-        deriveStatsFromWhom: 0
-        targetStat: 0
-        targetAbilityName: 
-        zoneToCount: 0
-        constraints:
-          types: 
-          owner: 0
-          whosTurn: 0
-          primaryType: 
-          notPrimaryType: 0
-          additionalType: 
-          notAdditionalType: 0
-          subtype: 
-          notSubtype: 0
-          keyword: 
-          notKeyword: 0
-          specialAttributes: 
-          notSpecialAttribute: 0
-          attunement: 
-          notAttunement: 0
-          currentZone: 
-          notCurrentZone: 0
-          previousZone: 
-          notPreviousZone: 0
-          creatureStatus: 
-          resources: 
-          minStats: []
-          maxStats: []
-          mostStat: 0
-          leastStat: 0
-          thisCardOnly: 0
-          oncePerTurn: 0
-          triggeredThisTurn: 0
-          neverTargetSelf: 0
-          suspendTrigger: 0
-          triggerbySpecificAbility: 0
-          triggerablePrimaryAbilityName: 
-          abilityToRemove: 
-          abilityToRetrigger: 
-          statGainedOrLost: 0
-          statChanged: 0
-          zoneToCheckForNumberOfCards: 0
-          moreOrLessCards: 0
-          numberOfcardsInZone: 0
-          requireMultipleTriggers: 0
-          resetCountAtTurnEnd: 0
-          triggersRequired: 0
-          counter: 0
-          requiredResourceType: 0
-          moreOrlessResource: 0
-          amountOfResourceRequried: 0
-          consumeResource: 0
-          resourceThatChanged: 0
-          resourceGainedOrLost: 0
-        invertValue: 0
+        spawnMethod: 0
+        spawnableTokenDataName: COR_TKN_Flameling
+        spawnTokenLocation: 5
+        spawnCardType: 1
+        numberOfSpawns: 1
+        spawnForOpponent: 0
+        tokenSeriesNames: []
+      statAdjustments: []
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
     processTriggerOnWhom: 0
-  multiTargetAbilities: []
+    logicTargetingMethod: 0
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
+  attack: 7
+  size: 7
+  health: 7

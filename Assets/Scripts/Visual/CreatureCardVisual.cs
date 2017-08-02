@@ -32,6 +32,10 @@ public class CreatureCardVisual : CardVisual {
 
     private CardCreatureData _creatureData;
 
+
+    private Constants.CardStats lastStatChanged;
+
+
     public override void SetupCardData() {
         base.SetupCardData();
 
@@ -41,7 +45,7 @@ public class CreatureCardVisual : CardVisual {
         cardSizeText.text = _creatureData.size.ToString();
         cardHealthText.text = _creatureData.health.ToString();
 
-        if(battleToken != null) {
+        if (battleToken != null) {
             battleToken.Initialize(_creatureData, this);
         }
 
@@ -84,6 +88,15 @@ public class CreatureCardVisual : CardVisual {
         health = tempHealth;
 
 
+        //StartCoroutine(RestCardVisualData());
+
+    }
+
+    private IEnumerator RestCardVisualData() {
+        yield return new WaitForSeconds(4f);
+
+        Debug.Log("Reseting card data visual");
+
         cardAttackText.text = _creatureData.attack.ToString();
         cardSizeText.text = _creatureData.size.ToString();
         cardHealthText.text = _creatureData.health.ToString();
@@ -101,10 +114,12 @@ public class CreatureCardVisual : CardVisual {
     public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool sendEvent = true) {
         base.AlterCardStats(stat, value, source);
 
+
+
         //Debug.Log("creature card alter stat");
         switch (stat) {
             case Constants.CardStats.Attack:
-                
+
                 attack += value;
 
                 if (attack <= 0)
@@ -116,37 +131,38 @@ public class CreatureCardVisual : CardVisual {
                 break;
 
             case Constants.CardStats.Size:
-                
+
                 size += value;
 
                 if (size <= 0)
                     size = 0;
 
-                cardSizeText.text = size.ToString();
-                battleToken.UpdateBattleTokenTokenText(stat, size);
-                TextTools.AlterTextColor(size, _creatureData.size, cardSizeText);
+                //cardSizeText.text = size.ToString();
+                //battleToken.UpdateBattleTokenTokenText(stat, size);
+                //TextTools.AlterTextColor(size, _creatureData.size, cardSizeText);
                 break;
 
             case Constants.CardStats.Health:
+                value = CalcProtection(value);
 
                 health += value;
 
-                if(health > _creatureData.health) {
+                if (health > _creatureData.health) {
                     health = _creatureData.health;
                 }
 
 
-                cardHealthText.text = health.ToString();
-                battleToken.UpdateBattleTokenTokenText(stat, health);
-                TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
+                //cardHealthText.text = health.ToString();
+                //battleToken.UpdateBattleTokenTokenText(stat, health);
+                //TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
 
 
-                if(value < 1) {
-                    //RPCShowDamage(PhotonTargets.Others, value);
-                    ShowDamage(value);
+                if (value < 1) {
+                    //ShowDamage(value);
+                    Debug.Log(gameObject.name + " has taken " + Mathf.Abs(value) + "point(s) of damage");
                 }
 
-                if(value < 0) {
+                if (value < 0) {
                     CheckDeath(source.photonView.viewID, false);
                 }
 
@@ -160,19 +176,26 @@ public class CreatureCardVisual : CardVisual {
                     CheckDeath(source.photonView.viewID, false);
                 }
 
-                cardHealthText.text = health.ToString();
-                battleToken.UpdateBattleTokenTokenText(stat, health);
-                TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
+                //cardHealthText.text = health.ToString();
+                //battleToken.UpdateBattleTokenTokenText(stat, health);
+                //TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
 
                 break;
         }
+
+        //if (photonView.isMine) {
+            lastStatChanged = stat;
+            Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
+        //}
+
+
     }
 
     public override void ActivateGlow(Color32 color) {
-        if(currentDeck.decktype == Constants.DeckType.Hand)
+        if (currentDeck.decktype == Constants.DeckType.Hand)
             base.ActivateGlow(color);
 
-        if(currentDeck.decktype == Constants.DeckType.Battlefield) {
+        if (currentDeck.decktype == Constants.DeckType.Battlefield) {
             if (!battleToken.battleTokenGlow.activeInHierarchy) {
                 battleToken.battleTokenGlow.SetActive(true);
             }
@@ -192,17 +215,6 @@ public class CreatureCardVisual : CardVisual {
         }
     }
 
-    //public int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
-
-    //    for (int i = 0; i < specialAttributes.Count; i++) {
-    //        if (specialAttributes[i].attributeType == attribute && !specialAttributes[i].suspended) {
-    //            return specialAttributes[i].attributeValue;
-    //        }
-    //    }
-
-    //    return 0;
-    //}
-
     public int CalcProtection(int value) {
 
         int prot = CheckSpecialAttributes(SpecialAttribute.AttributeType.Protection);
@@ -216,6 +228,8 @@ public class CreatureCardVisual : CardVisual {
                     value = 0;
             }
         }
+
+        //Debug.Log(prot + " is the amount of protection on " + gameObject.name);
 
         return value;
     }
@@ -248,13 +262,13 @@ public class CreatureCardVisual : CardVisual {
                 if (add) {
                     cardImage.color = interceptingColor;
                     battleFrame.color = interceptingColor;
-                    if(photonView.isMine)
+                    if (photonView.isMine)
                         battlefieldPos.position += interceptPos;
                 }
                 else {
                     cardImage.color = Color.white;
                     battleFrame.color = Color.white;
-                    if(photonView.isMine)
+                    if (photonView.isMine)
                         battlefieldPos.position -= interceptPos;
                 }
                 break;
@@ -262,6 +276,72 @@ public class CreatureCardVisual : CardVisual {
     }
     #endregion
 
+
+    #region EVENTS
+
+    protected override void OnVFXLanded(EventData data) {
+        base.OnVFXLanded(data);
+
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+
+
+        if (card != this)
+            return;
+
+
+        switch (lastStatChanged) {
+
+            case Constants.CardStats.Attack:
+                cardAttackText.text = attack.ToString();
+                battleToken.UpdateBattleTokenTokenText(lastStatChanged, attack);
+                TextTools.AlterTextColor(attack, _creatureData.attack, cardAttackText);
+                break;
+
+            case Constants.CardStats.Size:
+                cardSizeText.text = size.ToString();
+                battleToken.UpdateBattleTokenTokenText(lastStatChanged, size);
+                TextTools.AlterTextColor(size, _creatureData.size, cardSizeText);
+                break;
+
+            case Constants.CardStats.Health:
+                ShowDamage(CalcProtection(statAdjustments[statAdjustments.Count - 1].value));
+                cardHealthText.text = health.ToString();
+                battleToken.UpdateBattleTokenTokenText(lastStatChanged, health);
+                TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
+                break;
+
+            case Constants.CardStats.MaxHealth:
+                cardHealthText.text = health.ToString();
+                battleToken.UpdateBattleTokenTokenText(lastStatChanged, health);
+                TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
+                break;
+        }
+
+        Debug.Log(card.gameObject.name + " has been hit with a VFX");
+
+
+
+        Grid.EventManager.RemoveListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
+    }
+
+    //protected void OnDeathVisual(EventData data) {
+    //    CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+    //    if (card != this)
+    //        return;
+        
+    //    StartCoroutine(DisplayDeathEffect());
+    //    StartCoroutine(RemoveCardVisualFromField(this));
+    //    //StartCoroutine(RestCardVisualData());
+
+    //    Grid.EventManager.RemoveListener(Constants.GameEvent.VFXLanded, OnDeathVisual);
+
+    //}
+
+
+
+    #endregion
 
 
 
@@ -272,12 +352,12 @@ public class CreatureCardVisual : CardVisual {
     public void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath = false) {
         int cardID = source.photonView.viewID;
 
-        
-        if(health < 0 && deathEffect != "") {
+
+        if (health < 0 && deathEffect != "") {
             Debug.Log(cardData.cardName + " is showing a death effect");
-            
+
         }
-            
+
 
 
         photonView.RPC("CheckDeath", targets, cardID, forceDeath);
@@ -285,7 +365,7 @@ public class CreatureCardVisual : CardVisual {
 
     [PunRPC]
     public void CheckDeath(int source, bool forceDeath) {
-        GameObject deathVFX;
+
 
         if (currentDeck.decktype == Constants.DeckType.SoulCrypt) {
             Debug.LogError(cardData.cardName + " is already dead, and was told to go to the soulcypt");
@@ -293,19 +373,13 @@ public class CreatureCardVisual : CardVisual {
         }
 
         CardVisual causeOfDeath = Finder.FindCardByID(source);
-        
-        if (health <=0 || forceDeath) {
+
+        if (health <= 0 || forceDeath) {
 
             if (photonView.isMine) {
-                if (deathEffect != "")
-                    deathVFX = PhotonNetwork.Instantiate(deathEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
-                else {
-                    deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
-                }
+                //StartCoroutine(DisplayDeathEffect());
+                Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnDeathVisual);
             }
-
-
-
 
             Debug.Log(causeOfDeath.cardData.cardName + " has killed " + cardData.cardName);
             //currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
@@ -317,6 +391,23 @@ public class CreatureCardVisual : CardVisual {
             data.AddMonoBehaviour("CauseOfDeath", causeOfDeath);
 
             Grid.EventManager.SendEvent(Constants.GameEvent.CreatureDied, data);
+        }
+
+    }
+
+    protected override IEnumerator DisplayDeathEffect() {
+        yield return new WaitForSeconds(0.7f);
+        GameObject deathVFX;
+
+        if (deathEffect != "")
+            deathVFX = PhotonNetwork.Instantiate(deathEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        else {
+            deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        }
+
+        if(deathVFX != null) {
+            CardVFX cardVFX = deathVFX.GetComponent<CardVFX>();
+            cardVFX.Initialize(null, false);
         }
 
     }
@@ -339,12 +430,16 @@ public class CreatureCardVisual : CardVisual {
         //vfx.transform.SetParent(vfx.transform);
 
         //vfx.SetText(value.ToString());
+        StartCoroutine(ShowDamageEffect(value));
+
+    }
+
+    private IEnumerator ShowDamageEffect(int value) {
+        yield return new WaitForSeconds(0.1f);
 
         damageToken.SetText(value.ToString());
         damageToken.PlayAnim();
         damageToken.PlayParticles();
-
-
 
     }
 

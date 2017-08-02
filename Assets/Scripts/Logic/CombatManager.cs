@@ -257,40 +257,6 @@ public class CombatManager : Photon.MonoBehaviour {
 
         SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -damageDealer.attack, false, false, damageDealer);
 
-        if(damageDealer.attackEffect != null && damageDealer.attackEffect != "") {
-            GameObject atkVFX;
-            if (damageDealer.cardData.movingVFX) {
-                atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageDealer.transform.position, Quaternion.identity, 0) as GameObject;
-            }
-            else {
-                atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
-            }
-            
-
-            CardVFX vfx = atkVFX.GetComponent<CardVFX>();
-
-            if (vfx.photonView.isMine) {
-                if (damageDealer.cardData.movingVFX) {
-                    atkVFX.transform.SetParent(damageDealer.transform, false);
-                    atkVFX.transform.localPosition = Vector3.zero;
-                    vfx.target = damageTaker.battleToken.incomingEffectLocation;
-                    vfx.beginMovement = true;
-                }
-                else {
-                    atkVFX.transform.SetParent(damageTaker.battleToken.incomingEffectLocation, false);
-                    atkVFX.transform.localPosition = Vector3.zero;
-                }
-            }
-
-            vfx.RPCSetVFXAciveState(PhotonTargets.Others, true);
-
-
-            //damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker, damageDealer.cardData.movingVFX);
-        }
-
-
-
-
         if(damageDealer == attacker) {
             if (damageDealer.keywords.Contains(Keywords.Cleave)) {
                 CardVisual rightOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheRight(damageTaker);
@@ -305,12 +271,49 @@ public class CombatManager : Photon.MonoBehaviour {
                     leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
                 }
                     //Debug.Log(leftOfTarget.cardData.name);
-
             }
         }
-       
 
         damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+
+        if (damageDealer.attackEffect != null && damageDealer.attackEffect != "") {
+            GameObject atkVFX;
+            if (damageDealer.cardData.movingVFX) {
+                atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageDealer.transform.position, Quaternion.identity, 0) as GameObject;
+            }
+            else {
+                atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
+            }
+
+
+            CardVFX vfx = atkVFX.GetComponent<CardVFX>();
+
+            if (vfx.photonView.isMine) {
+                if (damageDealer.cardData.movingVFX) {
+                    atkVFX.transform.SetParent(damageDealer.transform, false);
+                    atkVFX.transform.localPosition = Vector3.zero;
+
+                    vfx.Initialize(damageTaker, damageDealer.cardData.movingVFX);
+
+                    //vfx.target = damageTaker.battleToken.incomingEffectLocation;
+                    //vfx.beginMovement = true;
+                }
+                else {
+                    atkVFX.transform.SetParent(damageTaker.battleToken.incomingEffectLocation, false);
+                    atkVFX.transform.localPosition = Vector3.zero;
+                }
+            }
+
+            vfx.RPCSetVFXAciveState(PhotonTargets.Others, true);
+
+
+            //damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker, damageDealer.cardData.movingVFX);
+        }
+        else {
+            EventData data = new EventData();
+            data.AddMonoBehaviour("Card", damageTaker);
+            Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+        }
 
     }
 
@@ -369,7 +372,7 @@ public class CombatManager : Photon.MonoBehaviour {
     private void DoStuffOnTarget() {
         CardVisual currentTarget = CardClicked();
 
-        if (!ConfirmCardClicked(currentTarget))
+        if (!ConfirmCardClicked(currentTarget, DeckType.Battlefield))
             return ;
 
         //TargetingHandler.CreateTargetInfoListing(sourceOfTargetingEffect, currentTarget);

@@ -199,13 +199,16 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public virtual void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool sendEvent = true) {
 
-        if (animationManager != null) {
-            animationManager.BounceText(stat);
-        }
+        //if (animationManager != null) {
+        //    //if(stat != Constants.CardStats.Health && value < 1)
+        //        animationManager.BounceText(stat);
+        //}
 
         if (this is CreatureCardVisual) {
             CreatureCardVisual soul = this as CreatureCardVisual;
             value = soul.CalcProtection(value);
+
+            //Debug.Log(value + " is the value of the stat adjustment being applied to " + gameObject.name);
         }
 
         if (sendEvent) {
@@ -219,10 +222,13 @@ public class CardVisual : Photon.MonoBehaviour {
             Grid.EventManager.SendEvent(Constants.GameEvent.CreatureStatAdjusted, data);
         }
 
-
-
         switch (stat) {
             case Constants.CardStats.Cost:
+
+                if (animationManager != null) {
+                    animationManager.BounceText(stat);
+                }
+
                 TextTools.AlterTextColor(value, cardData.cardCost, cardCostText, true);
                 //Debug.Log("altering cost " + value);
                 essenceCost += value;
@@ -268,10 +274,6 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
     #region Private Methods
-
-
-
-
 
     protected virtual void OnMouseOver() {
 
@@ -319,6 +321,7 @@ public class CardVisual : Photon.MonoBehaviour {
         //Dev delete
         if (Input.GetKeyDown(KeyCode.Delete)) {
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
+            StartCoroutine(RemoveCardVisualFromField(this));
         }
 
         //Dev Damage
@@ -407,8 +410,6 @@ public class CardVisual : Photon.MonoBehaviour {
 
     }
 
-
-
     protected bool CheckForUserActivatedAbilities() {
         for (int i = 0; i < specialAbilities.Count; i++) {
             if (specialAbilities[i].trigger.Contains(Constants.AbilityActivationTrigger.UserActivated))
@@ -441,7 +442,6 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
     }
-
 
     protected void KeepCardInhand() {
         transform.position = Vector3.MoveTowards(transform.position, handPos.position, 2f);
@@ -485,6 +485,75 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     #region Events
+
+    protected virtual void OnVFXLanded(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+        if (card != this)
+            return;
+
+
+        if (animationManager != null) {
+            //if(stat != Constants.CardStats.Health && value < 1)
+            Debug.Log(statAdjustments.Count + " is the current count of stat adjustments on " + cardData.cardName + " : " + gameObject.name);
+
+            animationManager.BounceText(statAdjustments[statAdjustments.Count - 1].stat);
+        }
+
+    }
+
+
+    protected virtual void OnDeathVisual(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+
+        if (card != this)
+            return;
+
+        StartCoroutine(DisplayDeathEffect());
+        StartCoroutine(RemoveCardVisualFromField(this));
+        //StartCoroutine(RestCardVisualData());
+
+        Grid.EventManager.RemoveListener(Constants.GameEvent.VFXLanded, OnDeathVisual);
+
+    }
+
+
+    protected virtual IEnumerator DisplayDeathEffect() {
+        yield return new WaitForSeconds(0.7f);
+        //GameObject deathVFX;
+
+        //if (deathEffect != "")
+        //    deathVFX = PhotonNetwork.Instantiate(deathEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        //else {
+        //    deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        //}
+
+        //if (deathVFX != null) {
+        //    CardVFX cardVFX = deathVFX.GetComponent<CardVFX>();
+        //    cardVFX.Initialize(null, false);
+        //}
+
+    }
+
+    protected IEnumerator RemoveCardVisualFromField(CardVisual card) {
+        card.SetCardActiveState(false);
+        yield return new WaitForSeconds(2f);
+
+        if (card.photonView.isMine) {
+            card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
+            card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
+        }
+
+        if (card is CreatureCardVisual) {
+            CreatureCardVisual creature = card as CreatureCardVisual;
+            creature.RPCToggleExhaust(PhotonTargets.All, false);
+        }
+
+        card.transform.localPosition = new Vector3(-40f, 20f, 20f);
+
+    }
+
+
 
 
     #endregion
@@ -834,6 +903,16 @@ public class CardVisual : Photon.MonoBehaviour {
                 }
 
                 AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source);
+
+
+                EventData data = new EventData();
+                data.AddMonoBehaviour("Card", this);
+                Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+
+                //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded)
+
+
+
                 statAdjustments.Remove(allAdjustments[i]);
             }
         }

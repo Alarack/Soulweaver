@@ -8,25 +8,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: RLM_TKN_Firebolt
+  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
+  m_Name: COR_RillocksAvatar
   m_EditorClassIdentifier: 
-  cardID: 30001
-  cardName: Fire Bolt
-  cardText: Deal 2 damage
-  cardCost: 2
-  cardImage: {fileID: 0}
-  cardImagePos: {x: 0, y: 0}
-  attackEffect: 
+  cardID: 10017
+  cardName: Rillock's Avatar
+  cardText: 'Vanguard, Deathtouch, Volatile 5. Inspire: Deal 3 damage to ALL other
+    souls'
+  cardCost: 9
+  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImagePos: {x: 0, y: 16.8}
+  attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
-  primaryCardType: 2
+  primaryCardType: 1
   otherCardTypes: 
-  attunements: 03000000
-  subTypes: 
-  keywords: 
+  attunements: 0300000008000000
+  subTypes: 04000000
+  keywords: 0900000005000000
   specialAbilityTypes: 
-  userTargtedAbilities:
+  userTargtedAbilities: []
+  multiTargetAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
@@ -131,7 +133,7 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
     effect: 1
-    abilityName: Blast
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -139,7 +141,7 @@ MonoBehaviour:
       types: 0200000004000000
       owner: 0
       whosTurn: 0
-      primaryType: 0100000006000000
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -164,7 +166,7 @@ MonoBehaviour:
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
-      neverTargetSelf: 0
+      neverTargetSelf: 1
       suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
@@ -185,8 +187,8 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-    abilityVFX: VFX_Ball_Lightning
-    movingVFX: 1
+    abilityVFX: 
+    movingVFX: 0
     additionalRequirements: 
     additionalRequirementConstraints:
       types: 
@@ -247,7 +249,7 @@ MonoBehaviour:
         valueSetmethod: 0
         adjustments:
         - stat: 4
-          value: -2
+          value: -3
           nonStacking: 0
           temporary: 0
           source: {fileID: 0}
@@ -313,5 +315,13 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
     processTriggerOnWhom: 0
-  multiTargetAbilities: []
-  specialAttributes: []
+    logicTargetingMethod: 1
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
+  specialAttributes:
+  - attributeType: 3
+    attributeValue: 5
+  attack: 7
+  size: 5
+  health: 7

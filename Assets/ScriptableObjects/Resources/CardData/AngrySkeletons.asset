@@ -29,7 +29,8 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbilities:
   - trigger: 01000000
-    duration: 0
+    effectDuration: 0
+    triggerDuration: 0
     triggerConstraints:
       types: 04000000
       owner: 0
@@ -60,6 +61,7 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -79,7 +81,6 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-      insufficentResourceCheck: 0
     sourceConstraints:
       types: 
       owner: 0
@@ -110,6 +111,7 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -129,11 +131,11 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-      insufficentResourceCheck: 0
     effect: 1
     abilityName: 
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 
       owner: 0
@@ -164,6 +166,7 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -183,7 +186,6 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-      insufficentResourceCheck: 0
     abilityVFX: 
     movingVFX: 0
     additionalRequirements: 02000000
@@ -217,6 +219,7 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -236,7 +239,6 @@ MonoBehaviour:
       consumeResource: 1
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-      insufficentResourceCheck: 0
     effectHolder:
       zoneChanges: []
       tokenSpanws: []
@@ -254,6 +256,7 @@ MonoBehaviour:
           spellDamage: 0
         deriveStatsFromWhom: 0
         targetStat: 0
+        targetAbilityName: 
         zoneToCount: 0
         constraints:
           types: 
@@ -285,6 +288,7 @@ MonoBehaviour:
           oncePerTurn: 0
           triggeredThisTurn: 0
           neverTargetSelf: 0
+          suspendTrigger: 0
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
@@ -304,16 +308,17 @@ MonoBehaviour:
           consumeResource: 0
           resourceThatChanged: 0
           resourceGainedOrLost: 0
-          insufficentResourceCheck: 0
         invertValue: 0
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
+      chooseOne: []
     processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
-  attack: 0
+  attack: 3
   size: 3
-  health: 2
+  health: 3
