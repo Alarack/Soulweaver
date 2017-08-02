@@ -257,7 +257,26 @@ public class CombatManager : Photon.MonoBehaviour {
 
         SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -damageDealer.attack, false, false, damageDealer);
 
-        if(damageDealer.attackEffect != null && damageDealer.attackEffect != "") {
+        if(damageDealer == attacker) {
+            if (damageDealer.keywords.Contains(Keywords.Cleave)) {
+                CardVisual rightOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheRight(damageTaker);
+                CardVisual leftOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheLeft(damageTaker);
+
+                if (rightOfTarget != null) {
+                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+                }
+                    //Debug.Log(rightOfTarget.cardData.name);
+
+                if (leftOfTarget != null) {
+                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+                }
+                    //Debug.Log(leftOfTarget.cardData.name);
+            }
+        }
+
+        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+
+        if (damageDealer.attackEffect != null && damageDealer.attackEffect != "") {
             GameObject atkVFX;
             if (damageDealer.cardData.movingVFX) {
                 atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageDealer.transform.position, Quaternion.identity, 0) as GameObject;
@@ -265,7 +284,7 @@ public class CombatManager : Photon.MonoBehaviour {
             else {
                 atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
             }
-            
+
 
             CardVFX vfx = atkVFX.GetComponent<CardVFX>();
 
@@ -290,30 +309,11 @@ public class CombatManager : Photon.MonoBehaviour {
 
             //damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker, damageDealer.cardData.movingVFX);
         }
-
-
-
-
-        if(damageDealer == attacker) {
-            if (damageDealer.keywords.Contains(Keywords.Cleave)) {
-                CardVisual rightOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheRight(damageTaker);
-                CardVisual leftOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheLeft(damageTaker);
-
-                if (rightOfTarget != null) {
-                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
-                }
-                    //Debug.Log(rightOfTarget.cardData.name);
-
-                if (leftOfTarget != null) {
-                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
-                }
-                    //Debug.Log(leftOfTarget.cardData.name);
-
-            }
+        else {
+            EventData data = new EventData();
+            data.AddMonoBehaviour("Card", damageTaker);
+            Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
         }
-       
-
-        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
 
     }
 
@@ -372,7 +372,7 @@ public class CombatManager : Photon.MonoBehaviour {
     private void DoStuffOnTarget() {
         CardVisual currentTarget = CardClicked();
 
-        if (!ConfirmCardClicked(currentTarget))
+        if (!ConfirmCardClicked(currentTarget, DeckType.Battlefield))
             return ;
 
         //TargetingHandler.CreateTargetInfoListing(sourceOfTargetingEffect, currentTarget);

@@ -596,7 +596,7 @@ public class Deck : Photon.MonoBehaviour {
         }
 
 
-        if (owner.battleFieldManager.IsCollectionFull()) {
+        if (card.primaryCardType == Constants.CardType.Soul && owner.battleFieldManager.IsCollectionFull()) {
             Debug.LogWarning("board is Full");
             //SendCardToHand(card);
             if (card.photonView.isMine) {
@@ -671,24 +671,20 @@ public class Deck : Photon.MonoBehaviour {
     }
 
     private void SendCardToSoulCrypt(CardVisual card) {
-        //yield return new WaitForSeconds(0.4f);
 
 
-        //card.RPCSetUpCardData(PhotonTargets.All);
-        //card.SetupCardData();
-        //if (card.photonView.isMine)
+
         card.RestCardData();
 
-        StartCoroutine(RemoveCardVisualFromField(card));
+        //StartCoroutine(RemoveCardVisualFromField(card));
 
-        //card.transform.localPosition = new Vector3(-40f, 20f, 20f);
 
 
     }
 
     private IEnumerator RemoveCardVisualFromField(CardVisual card) {
         card.SetCardActiveState(false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         if (card.photonView.isMine) {
             card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);

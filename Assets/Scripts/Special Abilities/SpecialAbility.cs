@@ -162,9 +162,7 @@ public abstract class SpecialAbility {
             }
         }
 
-        if (abilityVFX != null && abilityVFX != "") {
-            CreateVFX();
-        }
+
 
         if (triggerConstraints.oncePerTurn)
             triggerConstraints.triggeredThisTurn = true;
@@ -233,6 +231,11 @@ public abstract class SpecialAbility {
                 break;
         }
 
+
+
+       
+
+
         if (!trigger.Contains(AbilityActivationTrigger.SecondaryEffect)) {
             EventData data = new EventData();
 
@@ -243,6 +246,22 @@ public abstract class SpecialAbility {
         }
 
         triggeringCards.Clear();
+
+
+        if (abilityVFX != null && abilityVFX != "") {
+            CreateVFX();
+        }
+        else {
+            //Debug.Log(source.gameObject.name + " has an ability: " + abilityName + " that has no vfx. It is targeting " + card.gameObject.name);
+
+            //TODO: RPC THIS
+            EventData data = new EventData();
+            data.AddMonoBehaviour("Card", card);
+            Grid.EventManager.SendEvent(GameEvent.VFXLanded, data);
+        }
+
+
+
     }
 
     protected virtual void RemoveEffect(List<CardVisual> cards) {
@@ -1210,9 +1229,9 @@ public abstract class SpecialAbility {
             return false;
 
 
-        if (stat == CardStats.Health && statChangeValue < 0) {
-            Debug.Log(target.gameObject.name + " has taken " + Mathf.Abs(statChangeValue) + " point(s) of damage");
-        }
+        //if (stat == CardStats.Health && statChangeValue < 0) {
+        //    Debug.Log(target.gameObject.name + " has taken " + Mathf.Abs(statChangeValue) + " point(s) of damage");
+        //}
 
         result = CheckStatGainedOrLost(constraint.statGainedOrLost, statChangeValue);
 
@@ -1519,6 +1538,8 @@ public abstract class SpecialAbility {
 
     public void CreateVFX() {
 
+        
+
         for (int i = 0; i < targets.Count; i++) {
             GameObject atkVFX;
 
@@ -1529,26 +1550,26 @@ public abstract class SpecialAbility {
                 atkVFX = PhotonNetwork.Instantiate(abilityVFX, targets[i].transform.position, Quaternion.identity, 0) as GameObject;
             }
 
-
             CardVFX vfx = atkVFX.GetComponent<CardVFX>();
 
             if (targets[i] is CreatureCardVisual) {
                 CreatureCardVisual soul = targets[i] as CreatureCardVisual;
 
                 if (vfx.photonView.isMine) {
-                    if (movingVFX) {
-                        //atkVFX.transform.SetParent(source.transform, false);
-                        //atkVFX.transform.localPosition = Vector3.zero;
+                    //Debug.Log(" CreateVFX " + soul.gameObject.name + " is the target of " + abilityName);
+                    vfx.Initialize(soul, movingVFX);
 
-                        vfx.Initialize(soul, movingVFX);
+                    //if (movingVFX) {
+                    //    //atkVFX.transform.SetParent(source.transform, false);
+                    //    //atkVFX.transform.localPosition = Vector3.zero;
 
-                        //vfx.target = soul.battleToken.incomingEffectLocation;
-                        //vfx.beginMovement = true;
-                    }
-                    else {
-                        //atkVFX.transform.SetParent(soul.battleToken.incomingEffectLocation, false);
-                        //atkVFX.transform.localPosition = Vector3.zero;
-                    }
+                    //    //vfx.target = soul.battleToken.incomingEffectLocation;
+                    //    //vfx.beginMovement = true;
+                    //}
+                    //else {
+                    //    //atkVFX.transform.SetParent(soul.battleToken.incomingEffectLocation, false);
+                    //    //atkVFX.transform.localPosition = Vector3.zero;
+                    //}
                 }
             }
 

@@ -26,8 +26,7 @@ public class CardVFX : Photon.MonoBehaviour {
 
 	void Start () {
 
-        if(lifetime > 0)
-            Invoke("CleanUp", lifetime);
+
 
         if (playAnimOnStart)
             animMain.SetTrigger("Bounce");
@@ -37,6 +36,13 @@ public class CardVFX : Photon.MonoBehaviour {
 
     public void Initialize(CardVisual target, bool moving) {
 
+        if (lifetime > 0 && !moving)
+            Invoke("CleanUp", lifetime);
+
+
+        if (target == null)
+            return;
+
         photonView.RPC("RPCInitialize", PhotonTargets.All, target.photonView.viewID);
 
 
@@ -44,13 +50,14 @@ public class CardVFX : Photon.MonoBehaviour {
             StartCoroutine(StartMovement());
         }
         else {
-            RPCSendImpactEvent(PhotonTargets.Others);
-            SendImpactEvent();
+            //RPCSendImpactEvent(PhotonTargets.Others);
+            //StartCoroutine(SendImmediateEvent());
+            SendImmediateEvent();
         }
 
         //StartCoroutine(StartMovement());
 
-        
+
 
         //RPCInitialize(targetCard.photonView.viewID, moving);
 
@@ -58,41 +65,31 @@ public class CardVFX : Photon.MonoBehaviour {
 
 	void Update () {
 
-
         if(beginMovement && target != null) {
 
             if (photonView.isMine) {
                 if(MoveTowardsTarget(target, 0.2f)) {
                     if(impactParticle != null) {
-                        PhotonNetwork.Instantiate(impactParticle.name, target.position, Quaternion.identity, 0);
-
+                        GameObject impact = PhotonNetwork.Instantiate(impactParticle.name, target.position, Quaternion.identity, 0) as GameObject;
+                        CardVFX impactVFX = impact.GetComponent<CardVFX>();
+                        impactVFX.Initialize(null, false);
 
                         RPCSendImpactEvent(PhotonTargets.Others);
                         SendImpactEvent();
                         Invoke("NetworkCleanup", 0.3f);
                         //Destroy(gameObject, 0.5f);
                     }
-                        
-
                 }
             }
-
         }
 
-
-
-
         if (!photonView.isMine) {
-
-            //Debug.Log(position);
-
             if (active) {
                 //transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * lerpSmoothing);
                 transform.position = Vector3.MoveTowards(transform.position, position, moveSpeed);
             }
         }
-
-    }
+    }//End of Update
 
 
 
@@ -123,6 +120,14 @@ public class CardVFX : Photon.MonoBehaviour {
         beginMovement = true;
 
 
+    }
+
+    public void SendImmediateEvent() {
+        //yield return new WaitForSeconds(0.2f);
+        Debug.Log("Sending VFX land Event");
+
+        RPCSendImpactEvent(PhotonTargets.Others);
+        SendImpactEvent();
     }
 
 
@@ -167,6 +172,9 @@ public class CardVFX : Photon.MonoBehaviour {
     [PunRPC]
     public void RPCInitialize(int cardID) {
         CardVisual target = Finder.FindCardByID(cardID);
+
+        if (target == null)
+            return;
 
         this.targetCard = target;
 
