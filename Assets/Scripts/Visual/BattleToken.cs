@@ -35,6 +35,9 @@ public class BattleToken : BoardToken {
 
 
     public void UpdateBattleTokenTokenText(Constants.CardStats statToUpdate, int value) {
+
+        //Debug.Log(_parentCard.gameObject.name + " :: " + _parentCard.cardData.cardName + " is updating its battle token");
+
         switch (statToUpdate) {
             case Constants.CardStats.Attack:
                 TextTools.AlterTextColor(value, _creatureData.attack, attack);

@@ -185,7 +185,7 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-    abilityVFX: VFX_Primal_Slash
+    abilityVFX: 
     movingVFX: 0
     additionalRequirements: 
     additionalRequirementConstraints:

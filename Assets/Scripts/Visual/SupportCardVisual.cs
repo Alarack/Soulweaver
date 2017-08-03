@@ -36,8 +36,8 @@ public class SupportCardVisual : CardVisual {
 
     }
 
-    public override void RestCardData() {
-        base.RestCardData();
+    public override void ResetCardData() {
+        base.ResetCardData();
 
         int tempSupportValue = _supportData.supportValue;
         supportValue = tempSupportValue;
@@ -49,8 +49,8 @@ public class SupportCardVisual : CardVisual {
         supportToken.UpdateSupportText(Constants.CardStats.SupportValue, supportValue);
     }
 
-    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool sendEvent = true) {
-        base.AlterCardStats(stat, value, source, sendEvent);
+    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true) {
+        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent);
 
 
         switch (stat) {

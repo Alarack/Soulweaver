@@ -75,17 +75,21 @@ public class EffectStatAdjustment : Effect {
         for (int i = 0; i < adjustments.Count; i++) {
             adjustments[i].uniqueID = IDFactory.GenerateID();
             adjustments[i].source = source;
+
+            //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName);
         }
     }
 
 
     //Apply All Adjustmetns to a target
     private void ApplyStatAdjustment(CardVisual target) {
-        for(int i = 0; i < adjustments.Count; i++) {
+        bool hasVFX = String.IsNullOrEmpty(parentAbility.abilityVFX);
+
+        for (int i = 0; i < adjustments.Count; i++) {
 
             //Debug.Log("Applying " + adjustments[i].stat.ToString() + " adjustment of value " + adjustments[i].value.ToString() + " to " + target.cardData.name);
-
-            target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source);
+            //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName);
+            target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source, !hasVFX);
         }
     }
 
@@ -181,6 +185,7 @@ public class EffectStatAdjustment : Effect {
 
     //Remove all my adjustments from a target
     private void RemoveStatAdjustments(CardVisual card) {
+        bool hasVFX = String.IsNullOrEmpty(parentAbility.abilityVFX);
 
         List<StatAdjustment> targetAdjustments = new List<StatAdjustment>();
 
@@ -194,7 +199,7 @@ public class EffectStatAdjustment : Effect {
         }
 
         for (int i = 0; i < targetAdjustments.Count; i++) {
-            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source);
+            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, !hasVFX);
         }
 
 

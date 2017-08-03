@@ -38,7 +38,7 @@ public class CardVFX : Photon.MonoBehaviour {
         //active = false;
 	}
 
-    public void Initialize(CardVisual target, bool moving) {
+    public void Initialize(CardVisual target, bool moving, bool sendImpactEvent = true) {
 
         //if (lifetime > 0 && !moving)
         //    Invoke("CleanUp", lifetime);
@@ -56,7 +56,8 @@ public class CardVFX : Photon.MonoBehaviour {
         else {
             //RPCSendImpactEvent(PhotonTargets.Others);
             //StartCoroutine(SendImmediateEvent());
-            SendImmediateEvent();
+            if(sendImpactEvent)
+                SendImmediateEvent();
         }
 
         //StartCoroutine(StartMovement());
@@ -76,7 +77,7 @@ public class CardVFX : Photon.MonoBehaviour {
                     if(impactParticle != null) {
                         GameObject impact = PhotonNetwork.Instantiate(impactParticle.name, target.position, Quaternion.identity, 0) as GameObject;
                         CardVFX impactVFX = impact.GetComponent<CardVFX>();
-                        impactVFX.Initialize(targetCard, false);
+                        impactVFX.Initialize(targetCard, false, false);
                         //impactVFX.photonView.RPC("RPCInitialize", PhotonTargets.Others, 0);
                         RPCSendImpactEvent(PhotonTargets.Others);
                         SendImpactEvent();
@@ -128,7 +129,7 @@ public class CardVFX : Photon.MonoBehaviour {
 
     public void SendImmediateEvent() {
         //yield return new WaitForSeconds(0.2f);
-        Debug.Log("Sending VFX land Event");
+        //Debug.Log(gameObject.name + " is Sending VFX land Event");
 
         RPCSendImpactEvent(PhotonTargets.Others);
         SendImpactEvent();
@@ -200,6 +201,7 @@ public class CardVFX : Photon.MonoBehaviour {
     public void SendImpactEvent() {
         EventData data = new EventData();
         data.AddMonoBehaviour("Card", targetCard);
+        data.AddMonoBehaviour("VFX", this);
 
         Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
 

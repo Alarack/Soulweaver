@@ -102,4 +102,5 @@ MonoBehaviour:
   - RPCInitialize
   - SendImpactEvent
   - BroadcastNoVFXImpactEvent
+  - CheckAdjID
   DisableAutoOpenWizard: 1

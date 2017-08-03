@@ -180,11 +180,20 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    public virtual void RestCardData() {
+    public virtual void ResetCardData() {
         statAdjustments.Clear();
 
         List<Constants.Keywords> tempKeywords = new List<Constants.Keywords>(cardData.keywords);
         keywords = tempKeywords;
+
+        specialAttributes.Clear();
+
+        List<SpecialAttribute> tempAttributes = new List<SpecialAttribute>(cardData.specialAttributes);
+
+        foreach (SpecialAttribute att in tempAttributes) {
+            SpecialAttribute newAtt = ObjectCopier.Clone(att) as SpecialAttribute;
+            specialAttributes.Add(newAtt);
+        }
 
 
     }
@@ -201,12 +210,13 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
-    public virtual void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool sendEvent = true) {
+    public virtual void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true) {
 
-        //if (animationManager != null) {
-        //    //if(stat != Constants.CardStats.Health && value < 1)
-        //        animationManager.BounceText(stat);
-        //}
+        if (!waitForVFX) {
+            if (animationManager != null) {
+                animationManager.BounceText(stat);
+            }
+        }
 
         if (this is CreatureCardVisual) {
             CreatureCardVisual soul = this as CreatureCardVisual;
@@ -240,9 +250,11 @@ public class CardVisual : Photon.MonoBehaviour {
                 break;
         }
 
-        SpecialAbility.StatAdjustment latest = new SpecialAbility.StatAdjustment(stat, value, false, false, null);
+        if (waitForVFX) {
+            SpecialAbility.StatAdjustment latest = new SpecialAbility.StatAdjustment(stat, value, false, false, null);
 
-        lastStatAdjustment = latest;
+            lastStatAdjustment = latest;
+        }
     }
 
     public virtual void ActivateGlow(Color32 color) {
@@ -338,7 +350,7 @@ public class CardVisual : Photon.MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.K)) {
             SpecialAbility.StatAdjustment damage = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -1, false, false, this);
 
-            RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this);
+            RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this, false);
 
         }
 
@@ -346,7 +358,7 @@ public class CardVisual : Photon.MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.H)) {
             SpecialAbility.StatAdjustment damage = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, 1, false, false, this);
 
-            RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this);
+            RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this, false);
 
         }
 
@@ -521,7 +533,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         StartCoroutine(DisplayDeathEffect());
         StartCoroutine(RemoveCardVisualFromField(this));
-        //StartCoroutine(RestCardVisualData());
+        //StartCoroutine(ResetCardVisualData());
 
         Grid.EventManager.RemoveListener(Constants.GameEvent.VFXLanded, OnDeathVisual);
 
@@ -547,7 +559,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     protected IEnumerator RemoveCardVisualFromField(CardVisual card) {
         card.SetCardActiveState(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.3f);
 
         if (card.photonView.isMine) {
             card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
@@ -771,7 +783,7 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
-    public virtual void RPCApplyUntrackedStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
+    public virtual void RPCApplyUntrackedStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, bool waitForVFX) {
         int statEnum = (int)adjustment.stat;
         int value = adjustment.value;
 
@@ -782,18 +794,18 @@ public class CardVisual : Photon.MonoBehaviour {
         else {
             sourceID = photonView.viewID;
         }
-        photonView.RPC("ApplyCombatDamage", targets, statEnum, value, sourceID);
+        photonView.RPC("ApplyCombatDamage", targets, statEnum, value, sourceID, waitForVFX);
     }
 
     [PunRPC]
-    public void ApplyCombatDamage(int statEnum, int value, int sourceID) {
+    public void ApplyCombatDamage(int statEnum, int value, int sourceID, bool waitForVFX) {
         CardVisual source = Finder.FindCardByID(sourceID);
         Constants.CardStats stat = (Constants.CardStats)statEnum;
 
-        AlterCardStats(stat, value, source);
+        AlterCardStats(stat, value, source, waitForVFX);
     }
 
-    public virtual void RPCApplySpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source) {
+    public virtual void RPCApplySpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, bool waitForVFX) {
         int sourceID;
 
         //adjustment.uniqueID = IDFactory.GenerateID();
@@ -805,7 +817,7 @@ public class CardVisual : Photon.MonoBehaviour {
             //Debug.Log("I'm the source of me!");
         }
 
-        photonView.RPC("ApplySpecialAbilityStatAdjustment", targets, sourceID, adjustment.uniqueID);
+        photonView.RPC("ApplySpecialAbilityStatAdjustment", targets, sourceID, adjustment.uniqueID, waitForVFX);
     }
 
 
@@ -840,18 +852,28 @@ public class CardVisual : Photon.MonoBehaviour {
     //}
 
     [PunRPC]
-    public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID) {
+    public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID, bool waitForVFX) {
         CardVisual source = Finder.FindCardByID(sourceID);
+
+        //Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment. Should it Wait for FVX::: " + waitForVFX);
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
         for (int i = 0; i < allAdjustments.Count; i++) {
+            //Debug.Log(allAdjustments[i].uniqueID + " is the id of a Stat Adjustment on: " + source.gameObject.name + " ::: " + source.cardData.cardName);
+            //Debug.Log("I am looking for the id " + adjID);
+
+
+
             if (allAdjustments[i].uniqueID == adjID) {
                 if (allAdjustments[i].nonStacking && statAdjustments.Contains(allAdjustments[i])) {
+                    //Debug.Log("Match found, but it's a non stackin adjustment and I already have that one");
                     return;
                 }
 
-                AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source);
+                //Debug.Log("Match Found!");
+
+                AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
                 statAdjustments.Add(allAdjustments[i]);
             }
         }
@@ -860,12 +882,12 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    public virtual void RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets targets, int adjID, CardVisual source) {
+    public virtual void RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets targets, int adjID, CardVisual source, bool waitForVFX) {
         int sourceID = source.photonView.viewID;
 
         //Debug.Log(adjID + " is the ID I'm Sending");
 
-        photonView.RPC("RemoveSpecialAbilityStatAdjustment", targets, adjID, sourceID);
+        photonView.RPC("RemoveSpecialAbilityStatAdjustment", targets, adjID, sourceID, waitForVFX);
     }
 
     //[PunRPC]
@@ -897,7 +919,7 @@ public class CardVisual : Photon.MonoBehaviour {
     //}
 
     [PunRPC]
-    public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID) {
+    public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
         //Debug.Log(source.gameObject.name + " is removeing stat adjustments");
@@ -912,12 +934,12 @@ public class CardVisual : Photon.MonoBehaviour {
                     return;
                 }
 
-                AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source);
+                AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
 
 
-                EventData data = new EventData();
-                data.AddMonoBehaviour("Card", this);
-                Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+                //EventData data = new EventData();
+                //data.AddMonoBehaviour("Card", this);
+                //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
 
                 //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded)
 
@@ -1181,20 +1203,30 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    public void RPCBroadCastNoVFXImpactEvent(PhotonTargets targets, CardVisual card) {
-        int cardID = card.photonView.viewID;
+    //public void RPCBroadCastNoVFXImpactEvent(PhotonTargets targets, CardVisual card) {
+    //    int cardID = card.photonView.viewID;
 
-        photonView.RPC("BroadcastNoVFXImpactEvent", targets, cardID);
+    //    photonView.RPC("BroadcastNoVFXImpactEvent", targets, cardID);
+    //}
+
+    //[PunRPC]
+    //public void BroadcastNoVFXImpactEvent(int cardID) {
+    //    CardVisual card = Finder.FindCardByID(cardID);
+
+    //    Debug.Log(card.cardData.name + " : " + card.gameObject.name + " is sending a broadcast no vfx event");
+    //    EventData data = new EventData();
+    //    data.AddMonoBehaviour("Card", card);
+    //    Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+    //}
+
+    public void RPCCheckAdjID(PhotonTargets targets, int id, string abilityName) {
+        photonView.RPC("CheckAdjID", targets, id, abilityName);
     }
 
     [PunRPC]
-    public void BroadcastNoVFXImpactEvent(int cardID) {
-        CardVisual card = Finder.FindCardByID(cardID);
+    public void CheckAdjID(int id, string abilityName) {
 
-        Debug.Log(card.cardData.name + " : " + card.gameObject.name + " is sending a broadcast no vfx event");
-        EventData data = new EventData();
-        data.AddMonoBehaviour("Card", card);
-        Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+        Debug.Log("Ability Name: " + abilityName + " ADJ ID: " + id);
     }
 
 

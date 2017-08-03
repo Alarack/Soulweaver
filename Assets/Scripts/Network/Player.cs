@@ -318,7 +318,7 @@ public class Player : Photon.MonoBehaviour {
 
             SpecialAbility.StatAdjustment torture = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -1, false, false, torturedSouls[i]);
 
-            torturedSouls[i].RPCApplyUntrackedStatAdjustment(PhotonTargets.All, torture, torturedSouls[i]);
+            torturedSouls[i].RPCApplyUntrackedStatAdjustment(PhotonTargets.All, torture, torturedSouls[i], false);
         }
 
 
@@ -337,7 +337,7 @@ public class Player : Photon.MonoBehaviour {
             for(int j = 0; j < regeneratorSouls[i].specialAttributes.Count; j++) {
                 if(regeneratorSouls[i].specialAttributes[j].attributeType == SpecialAttribute.AttributeType.Regeneration) {
                     SpecialAbility.StatAdjustment regen = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, regeneratorSouls[i].specialAttributes[j].attributeValue, false, false, regeneratorSouls[i]);
-                    regeneratorSouls[i].RPCApplyUntrackedStatAdjustment(PhotonTargets.All, regen, regeneratorSouls[i]);
+                    regeneratorSouls[i].RPCApplyUntrackedStatAdjustment(PhotonTargets.All, regen, regeneratorSouls[i], false);
                 }
             }
         }
