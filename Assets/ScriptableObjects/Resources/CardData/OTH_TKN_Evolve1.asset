@@ -134,6 +134,7 @@ MonoBehaviour:
     abilityName: Ping
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 0200000004000000
       owner: 0
@@ -254,6 +255,7 @@ MonoBehaviour:
           spellDamage: 0
         deriveStatsFromWhom: 0
         targetStat: 0
+        targetAbilityName: 
         zoneToCount: 0
         constraints:
           types: 
@@ -419,6 +421,7 @@ MonoBehaviour:
     abilityName: Heal Nith
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 0100000002000000
       owner: 2
@@ -539,6 +542,7 @@ MonoBehaviour:
           spellDamage: 0
         deriveStatsFromWhom: 0
         targetStat: 0
+        targetAbilityName: 
         zoneToCount: 0
         constraints:
           types: 
@@ -599,6 +603,7 @@ MonoBehaviour:
     logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   - trigger: 0a000000
     effectDuration: 0
     triggerDuration: 0
@@ -706,6 +711,7 @@ MonoBehaviour:
     abilityName: Banish Self
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 
       owner: 0
@@ -824,4 +830,5 @@ MonoBehaviour:
     logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []

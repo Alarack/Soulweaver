@@ -248,17 +248,15 @@ public abstract class SpecialAbility {
         triggeringCards.Clear();
 
 
-        if (abilityVFX != null && abilityVFX != "") {
+        if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateVFX();
         }
-        else {
-            //Debug.Log(source.gameObject.name + " has an ability: " + abilityName + " that has no vfx. It is targeting " + card.gameObject.name);
+        //else {
+        //    //Debug.Log(source.gameObject.name + " has an ability: " + abilityName + " that has no vfx. It is targeting " + card.gameObject.name);
 
-            //TODO: RPC THIS
-            EventData data = new EventData();
-            data.AddMonoBehaviour("Card", card);
-            Grid.EventManager.SendEvent(GameEvent.VFXLanded, data);
-        }
+        //    //source.RPCBroadCastNoVFXImpactEvent(PhotonTargets.All, card);
+
+        //}
 
 
 
@@ -1604,7 +1602,7 @@ public abstract class SpecialAbility {
             //this.invertValue = inverse;
             temporary = temp;
 
-            uniqueID = IDFactory.GenerateID();
+            //uniqueID = IDFactory.GenerateID();
         }
 
         //public void AlterValueBasedOnTarget(CreatureCardVisual targetToBasevalueFrom) {
