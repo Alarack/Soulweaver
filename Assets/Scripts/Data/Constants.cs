@@ -248,6 +248,7 @@ public class Constants {
         Battlefield,
         Void,
         AllCards,
+        NotInGame
 
     }
 

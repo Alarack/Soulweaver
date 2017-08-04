@@ -612,7 +612,7 @@ public class CardDataEditor : Editor {
         if (!entry.targetConstraints.thisCardOnly)
             entry.targetConstraints.neverTargetSelf = EditorGUILayout.Toggle("This card can't target itself?", entry.targetConstraints.neverTargetSelf);
 
-
+        //entry.targetConstraints.targetAdjacency = EditorGUILayout.Toggle("Include Adjacent Targets on Battlefield?", entry.targetConstraints.targetAdjacency);
         entry.targetConstraints.types = EditorHelper.DrawList("Target Constraints", entry.targetConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
 
         if (entry is LogicTargetedAbility) {
@@ -620,13 +620,29 @@ public class CardDataEditor : Editor {
 
             logicTargeted.logicTargetingMethod = EditorHelper.EnumPopup("Targeting Method", logicTargeted.logicTargetingMethod);
 
-            if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
-                logicTargeted.numberofTargets = EditorGUILayout.IntField("Number of Targets", logicTargeted.numberofTargets);
+            switch (logicTargeted.logicTargetingMethod) {
+                case LogicTargetedAbility.LogicTargeting.NumberOfValidTargets:
+                    logicTargeted.numberofTargets = EditorGUILayout.IntField("Number of Targets", logicTargeted.numberofTargets);
+                    break;
+
+                case LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility:
+                    logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
+                    break;
+
+                case LogicTargetedAbility.LogicTargeting.AdjacentTagets:
+                    logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
+                    break;
             }
 
-            if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility) {
-                logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
-            }
+
+
+            //if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
+                
+            //}
+
+            //if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility) {
+                
+            //}
         }
 
         for (int i = 0; i < entry.targetConstraints.types.Count; i++) {

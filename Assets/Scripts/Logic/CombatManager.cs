@@ -450,11 +450,7 @@ public class CombatManager : Photon.MonoBehaviour {
 
     public void OnTurnStart(EventData data) {
         Player p = data.GetMonoBehaviour("Player") as Player;
-
-        Debug.Log(p.gameObject.name + " has started their turn");
-
-        if(p = owner) {
-            Debug.Log(p.gameObject.name + " is " + owner.gameObject.name);
+        if(p == owner) {
             HandleFusion();
         }
 
