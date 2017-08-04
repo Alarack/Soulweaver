@@ -9,15 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: COR_Kindler
+  m_Name: COR_CacklingFireSpinner
   m_EditorClassIdentifier: 
-  cardID: 10013
-  cardName: Kindler
-  cardText: Whenever you summon another Soul, deal 1 damage to an enemy Soul with
-    the least health.
-  cardCost: 2
-  cardImage: {fileID: 21300000, guid: cd2ce8288a68f9d4baa0d05032075325, type: 3}
-  cardImagePos: {x: 0, y: 5}
+  cardID: 10034
+  cardName: Cackling Fire-Spinner
+  cardText: 'Cleave. Finale: Put a Fire Poi into your hand.'
+  cardCost: 4
+  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
@@ -25,7 +24,7 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 03000000
   subTypes: 06000000
-  keywords: 
+  keywords: 230000001a000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -33,10 +32,10 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 010000000200000004000000
-      owner: 2
+      types: 0400000005000000
+      owner: 0
       whosTurn: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -48,9 +47,9 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 04000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 05000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -58,10 +57,10 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 0
+      thisCardOnly: 1
       oncePerTurn: 0
       triggeredThisTurn: 0
-      neverTargetSelf: 1
+      neverTargetSelf: 0
       suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
@@ -83,7 +82,7 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
     sourceConstraints:
-      types: 04000000
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -98,7 +97,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -132,16 +131,16 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-    effect: 1
+    effect: 3
     abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0100000002000000040000000b000000
-      owner: 3
+      types: 
+      owner: 0
       whosTurn: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -153,16 +152,16 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
-      creatureStatus: 04000000
+      creatureStatus: 
       resources: 
       minStats: []
       maxStats: []
       mostStat: 0
-      leastStat: 4
+      leastStat: 0
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
@@ -242,84 +241,27 @@ MonoBehaviour:
       resourceGainedOrLost: 0
     effectHolder:
       zoneChanges: []
-      tokenSpanws: []
-      statAdjustments:
+      tokenSpanws:
       - effectType: 0
         source: {fileID: 0}
-        valueSetmethod: 0
-        adjustments:
-        - stat: 4
-          value: -1
-          nonStacking: 0
-          temporary: 0
-          source: {fileID: 0}
-          uniqueID: -1
-          spellDamage: 0
-        deriveStatsFromWhom: 0
-        targetStat: 0
-        targetAbilityName: 
-        zoneToCount: 0
-        constraints:
-          types: 
-          owner: 0
-          whosTurn: 0
-          primaryType: 
-          notPrimaryType: 0
-          additionalType: 
-          notAdditionalType: 0
-          subtype: 
-          notSubtype: 0
-          keyword: 
-          notKeyword: 0
-          specialAttributes: 
-          notSpecialAttribute: 0
-          attunement: 
-          notAttunement: 0
-          currentZone: 
-          notCurrentZone: 0
-          previousZone: 
-          notPreviousZone: 0
-          creatureStatus: 
-          resources: 
-          minStats: []
-          maxStats: []
-          mostStat: 0
-          leastStat: 0
-          thisCardOnly: 0
-          oncePerTurn: 0
-          triggeredThisTurn: 0
-          neverTargetSelf: 0
-          suspendTrigger: 0
-          triggerbySpecificAbility: 0
-          triggerablePrimaryAbilityName: 
-          abilityToRemove: 
-          abilityToRetrigger: 
-          statGainedOrLost: 0
-          statChanged: 0
-          zoneToCheckForNumberOfCards: 0
-          moreOrLessCards: 0
-          numberOfcardsInZone: 0
-          requireMultipleTriggers: 0
-          resetCountAtTurnEnd: 0
-          triggersRequired: 0
-          counter: 0
-          requiredResourceType: 0
-          moreOrlessResource: 0
-          amountOfResourceRequried: 0
-          consumeResource: 0
-          resourceThatChanged: 0
-          resourceGainedOrLost: 0
-        invertValue: 0
+        spawnMethod: 0
+        spawnableTokenDataName: COR_FirePoi
+        spawnTokenLocation: 3
+        spawnCardType: 3
+        numberOfSpawns: 1
+        spawnForOpponent: 0
+        tokenSeriesNames: []
+      statAdjustments: []
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
     processTriggerOnWhom: 0
-    logicTargetingMethod: 2
-    numberofTargets: 1
+    logicTargetingMethod: 0
+    numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  attack: 2
+  attack: 3
   size: 3
   health: 2

@@ -24,12 +24,13 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 08000000
   subTypes: 02000000
-  keywords: 
+  keywords: 10000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
   - trigger: 05000000
-    duration: 0
+    effectDuration: 0
+    triggerDuration: 0
     triggerConstraints:
       types: 
       owner: 0
@@ -42,6 +43,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 04000000
@@ -58,22 +61,26 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 1
       resetCountAtTurnEnd: 0
       triggersRequired: 3
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
     sourceConstraints:
       types: 04000000
       owner: 0
@@ -86,6 +93,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 04000000
@@ -102,26 +111,31 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
     effect: 2
     abilityName: Reanimate
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 
       owner: 0
@@ -134,6 +148,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 
@@ -150,22 +166,26 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
     abilityVFX: 
     movingVFX: 0
     additionalRequirements: 
@@ -181,6 +201,8 @@ MonoBehaviour:
       notSubtype: 0
       keyword: 
       notKeyword: 0
+      specialAttributes: 
+      notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
       currentZone: 
@@ -197,22 +219,26 @@ MonoBehaviour:
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
+      suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      gainedOrLost: 0
+      statGainedOrLost: 0
       statChanged: 0
       zoneToCheckForNumberOfCards: 0
-      moreOrLess: 0
+      moreOrLessCards: 0
       numberOfcardsInZone: 0
       requireMultipleTriggers: 0
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
       requiredResourceType: 0
+      moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
     effectHolder:
       zoneChanges:
       - effectType: 0
@@ -223,10 +249,12 @@ MonoBehaviour:
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
+      chooseOne: []
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
   attack: 2
   size: 3

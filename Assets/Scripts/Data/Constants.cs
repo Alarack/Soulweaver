@@ -135,7 +135,9 @@ public class Constants {
         Tortured,
         Rush,
         Reach,
-        Cleave
+        Cleave,
+        NoAttack,
+        Stun
     }
 
 
