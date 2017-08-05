@@ -1825,6 +1825,18 @@ public static class EditorHelper {
         DrawInspectorSectionFooterFoldout();
     }
 
+    public static void DrawInspectorSectionFoldout(ref bool foldout, string caption, Action<SpecialAbility> drawMethod, SpecialAbility entry, bool help = false, string helpText = null) {
+        DrawInspectorSectionHeaderFoldout(ref foldout, caption);
+        if (foldout) {
+            EditorGUI.indentLevel++;
+            if (help && helpText != null)
+                EditorGUILayout.LabelField(helpText, HelpLabel);
+            drawMethod(entry);
+            EditorGUI.indentLevel--;
+        }
+        DrawInspectorSectionFooterFoldout();
+    }
+
     /// <summary>
     /// Draws the default section header:
     /// Beginning a vertical group and displaying caption in bold.

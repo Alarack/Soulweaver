@@ -397,7 +397,11 @@ public abstract class SpecialAbility {
             Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndTriggerDuration);
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, ResetTriggerDuration);
         }
-            
+        if (triggerDuration == Duration.StartOfTurn) {
+            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnEndTriggerDuration);
+            Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, ResetTriggerDuration);
+        }
+
 
 
 
