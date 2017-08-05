@@ -415,12 +415,12 @@ public class CardDataEditor : Editor {
 
     }
 
-    public bool togglePresets = true;
-    public bool toggleTriggerOptions;
-    public bool toggleSourceOptions;
-    public bool toggleEffectOptions;
-    public bool toggleTargetOptions = true;
-    public bool toggleAdditonalRequirementOptions;
+    //public bool togglePresets = true;
+    //public bool toggleTriggerOptions;
+    //public bool toggleSourceOptions;
+    //public bool toggleEffectOptions;
+    //public bool toggleTargetOptions = true;
+    //public bool toggleAdditonalRequirementOptions;
 
     private SpecialAbility DrawSpecalAbilities(SpecialAbility entry) {
 
@@ -430,8 +430,8 @@ public class CardDataEditor : Editor {
         GUIStyle boldTeal = new GUIStyle(EditorStyles.boldLabel);
         boldTeal.normal.textColor = Color.cyan;
 
-        EditorGUILayout.BeginVertical();
-        EditorHelper.DrawInspectorSectionFoldout(ref togglePresets, "Presets", DrawPresets, entry);
+        //EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref entry.togglePresets, "Presets", DrawPresets, entry);
 
 
         entry.abilityName = EditorGUILayout.TextField("Name of Ability (Optional) ", entry.abilityName);
@@ -439,32 +439,32 @@ public class CardDataEditor : Editor {
         EditorGUILayout.LabelField("Start of " + entry.abilityName + " section", boldRed);
 
         //Trigger Logic
-        EditorGUILayout.BeginVertical();
-        EditorHelper.DrawInspectorSectionFoldout(ref toggleTriggerOptions, "Trigger Logic", DrawTriggerOptions, entry);
+        //EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref entry.toggleTriggerOptions, "Trigger Logic", DrawTriggerOptions, entry);
 
         EditorGUILayout.Separator();
 
         //Source of Effect Logic
-        EditorGUILayout.BeginVertical();
-        EditorHelper.DrawInspectorSectionFoldout(ref toggleSourceOptions, "Source Constraints", DrawSourceOptions, entry);
+        //EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref entry.toggleSourceOptions, "Source Constraints", DrawSourceOptions, entry);
 
         EditorGUILayout.Separator();
 
         //Additional Requirements
-        EditorGUILayout.BeginVertical();
-        EditorHelper.DrawInspectorSectionFoldout(ref toggleAdditonalRequirementOptions, "Additional Requirements", DrawAdditionalRequirementsOptions, entry);
+        //EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref entry.toggleAdditonalRequirementOptions, "Additional Requirements", DrawAdditionalRequirementsOptions, entry);
 
         EditorGUILayout.Separator();
 
         //Effect Logic
-        EditorGUILayout.BeginVertical();
-        EditorHelper.DrawInspectorSectionFoldout(ref toggleEffectOptions, "Effect", DrawEffectOptions, entry);
+        //EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref entry.toggleEffectOptions, "Effect", DrawEffectOptions, entry);
     
         EditorGUILayout.Separator();
 
         //Targeting Logic
-        EditorGUILayout.BeginVertical();
-        EditorHelper.DrawInspectorSectionFoldout(ref toggleTargetOptions, "Target Constraints", DrawTargetOptions, entry);
+        //EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref entry.toggleTargetOptions, "Target Constraints", DrawTargetOptions, entry);
 
    
 
@@ -565,7 +565,7 @@ public class CardDataEditor : Editor {
         entry.movingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.movingVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
         entry.effectDuration = EditorHelper.EnumPopup(" Effect Duration", entry.effectDuration);
-
+        entry.clearTargetsOnEffectComplete = EditorGUILayout.Toggle("Clear ALL targets after this effect?", entry.clearTargetsOnEffectComplete);
         switch (entry.effect) {
             case EffectType.SpawnToken:
                 entry.effectHolder.tokenSpanws = EditorHelper.DrawExtendedList("Spawn Token Effects", entry.effectHolder.tokenSpanws, "Spawn Token", DrawEffectList);

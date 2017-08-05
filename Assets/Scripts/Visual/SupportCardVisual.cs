@@ -183,7 +183,7 @@ public class SupportCardVisual : CardVisual {
     #region RPCs
 
 
-    public void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
+    public override void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
         int cardID = source.photonView.viewID;
 
         if (supportValue < 0 && deathEffect != "") {
@@ -196,7 +196,7 @@ public class SupportCardVisual : CardVisual {
 
     [PunRPC]
     public void CheckDeath(int source, bool forceDeath, bool waitForVFX) {
-        GameObject deathVFX;
+        //GameObject deathVFX;
 
         if (currentDeck.decktype == Constants.DeckType.SoulCrypt) {
             Debug.LogError(cardData.cardName + " is already dead, and was told to go to the soulcypt");

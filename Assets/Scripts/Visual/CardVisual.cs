@@ -293,6 +293,12 @@ public class CardVisual : Photon.MonoBehaviour {
         return results;
     }
 
+    public void ClearAllSpecialAbilityTargets() {
+        for(int i = 0; i < specialAbilities.Count; i++) {
+            specialAbilities[i].ClearTargets();
+        }
+    }
+
     #region Private Methods
 
     protected virtual void OnMouseOver() {
@@ -557,7 +563,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     }
 
-    protected IEnumerator RemoveCardVisualFromField(CardVisual card) {
+    public IEnumerator RemoveCardVisualFromField(CardVisual card) {
         card.SetCardActiveState(false);
         yield return new WaitForSeconds(2.3f);
 
@@ -1218,6 +1224,13 @@ public class CardVisual : Photon.MonoBehaviour {
     //    data.AddMonoBehaviour("Card", card);
     //    Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
     //}
+
+
+    public virtual void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
+
+    }
+
+
 
     public void RPCCheckAdjID(PhotonTargets targets, int id, string abilityName) {
         photonView.RPC("CheckAdjID", targets, id, abilityName);
