@@ -175,7 +175,7 @@ public class CardDataEditor : Editor {
                     for (int i = 0; i < adjustment.constraints.types.Count; i++) {
                         ShowConstraintsOfType(adjustment.constraints.types[i], adjustment.constraints, "Counted Target");
                     }
-                    
+
                     adjustment.adjustments = EditorHelper.DrawExtendedList("Adjustments", adjustment.adjustments, "Adjustment", DrawDerivedStatAdjustment);
 
                     break;
@@ -348,7 +348,6 @@ public class CardDataEditor : Editor {
         entry.sourceConstraints.notKeyword = true;
     }
 
-
     private void DrawExhaustSelfPreset(SpecialAbility entry) {
         entry.trigger.Add(AbilityActivationTrigger.SecondaryEffect);
         entry.effect = EffectType.AddOrRemoveKeywordAbilities;
@@ -367,9 +366,62 @@ public class CardDataEditor : Editor {
 
     }
 
+    private void DrawArtifactPreset(SpecialAbility entry) {
+        entry.trigger.Add(AbilityActivationTrigger.CreatureStatChanged);
+        entry.triggerConstraints.statChanged = Constants.CardStats.Health;
+        entry.triggerConstraints.statGainedOrLost = SpecialAbility.GainedOrLost.Lost;
+        entry.processTriggerOnWhom = SpecialAbility.ApplyEffectToWhom.TriggeringCard;
 
+        entry.triggerConstraints.types.Add(ConstraintType.Owner);
+        entry.triggerConstraints.owner = OwnerConstraints.Mine;
+
+        entry.triggerConstraints.types.Add(ConstraintType.PrimaryType);
+        entry.triggerConstraints.primaryType.Add(CardType.Player);
+
+        entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.sourceConstraints.currentZone.Add(DeckType.Battlefield);
+
+        entry.effect = EffectType.StatAdjustment;
+
+        EffectStatAdjustment durabilityLoss = new EffectStatAdjustment();
+
+        SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment();
+        adj.stat = Constants.CardStats.SupportValue;
+        adj.value = -1;
+
+        durabilityLoss.adjustments.Add(adj);
+
+        durabilityLoss.valueSetmethod = EffectStatAdjustment.ValueSetMethod.Manual;
+
+        entry.effectHolder.statAdjustments.Add(durabilityLoss);
+
+        entry.targetConstraints.thisCardOnly = true;
+
+        if (entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.AllValidTargets;
+        }
+
+
+    }
+
+    public bool togglePresets = true;
+    public bool toggleTriggerOptions;
+    public bool toggleSourceOptions;
+    public bool toggleEffectOptions;
+    public bool toggleTargetOptions = true;
+    public bool toggleAdditonalRequirementOptions;
 
     private SpecialAbility DrawSpecalAbilities(SpecialAbility entry) {
+
+        //bool togglePresets = true;
+        //bool toggleTriggerOptions = false;
+        //bool toggleSourceOptions = false;
+        //bool toggleEffectOptions = false;
+        //bool toggleTargetOptions = true;
+        //bool toggleAdditonalRequirementOptions = false;
+
 
         GUIStyle boldRed = new GUIStyle(EditorStyles.boldLabel);
         boldRed.normal.textColor = Color.red;
@@ -377,45 +429,292 @@ public class CardDataEditor : Editor {
         GUIStyle boldTeal = new GUIStyle(EditorStyles.boldLabel);
         boldTeal.normal.textColor = Color.cyan;
 
+        //EditorGUILayout.Toggle("Show Presets", togglePresets);
 
-        EditorGUILayout.LabelField("Presets", boldRed);
+        //bool showPresets;
 
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("Inspire")) {
-            DrawInspirePreset(entry);
-        }
+        //EditorHelper.DrawInspectorSectionHeaderFoldout(ref togglePresets, "Presets");
+        EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref togglePresets, "Presets", DrawPresets, entry);
 
-        if (GUILayout.Button("Finale")) {
-            DrawFinalePreset(entry);
-        }
+        //DrawPresets(entry);
 
-        if (GUILayout.Button("Deathwatch")) {
-            DrawDeathwatchPreset(entry);
-        }
-
-        if (GUILayout.Button("Bloodthirst")) {
-            DrawBloodthirstPreset(entry);
-        }
-
-        if (GUILayout.Button("Spell")) {
-            DrawSendToCryptPreset(entry);
-        }
-
-        if (GUILayout.Button("Exhaust Ability")) {
-            DrawExaustAbilityPreset(entry);
-        }
-
-        if (GUILayout.Button("Exhaust Self")) {
-            DrawExhaustSelfPreset(entry);
-        }
-
-
-        EditorGUILayout.EndHorizontal();
+        //EditorHelper.DrawInspectorSectionFooter();
 
 
         entry.abilityName = EditorGUILayout.TextField("Name of Ability (Optional) ", entry.abilityName);
 
         EditorGUILayout.LabelField("Start of " + entry.abilityName + " section", boldRed);
+
+        //Trigger Logic
+        EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref toggleTriggerOptions, "Trigger Logic", DrawTriggerOptions, entry);
+
+        //EditorHelper.DrawInspectorSectionHeader("Effect Triggers:");
+
+        //entry.trigger = EditorHelper.DrawList("Triggers", entry.trigger, true, AbilityActivationTrigger.None, true, DrawActivationTrigger);
+        //entry.triggerConstraints.oncePerTurn = EditorGUILayout.Toggle("Can only trigger once per turn?", entry.triggerConstraints.oncePerTurn);
+        //entry.triggerConstraints.requireMultipleTriggers = EditorGUILayout.Toggle("Require Multiple Triggers?", entry.triggerConstraints.requireMultipleTriggers);
+        //if (entry.triggerConstraints.requireMultipleTriggers) {
+        //    entry.triggerConstraints.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggerConstraints.triggersRequired);
+        //    entry.triggerConstraints.resetCountAtTurnEnd = EditorGUILayout.Toggle("Reset Counter On Turn End?", entry.triggerConstraints.resetCountAtTurnEnd);
+        //}
+        //entry.triggerDuration = EditorHelper.EnumPopup("Trigger Duration?", entry.triggerDuration);
+
+        //for (int i = 0; i < entry.trigger.Count; i++) {
+        //    switch (entry.trigger[i]) {
+
+        //        case AbilityActivationTrigger.CreatureStatChanged:
+        //            entry.triggerConstraints.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.triggerConstraints.statChanged);
+        //            entry.triggerConstraints.statGainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.triggerConstraints.statGainedOrLost);
+        //            entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
+
+        //            break;
+
+        //        case AbilityActivationTrigger.SecondaryEffect:
+        //            EditorGUILayout.Separator();
+        //            entry.triggerConstraints.triggerbySpecificAbility = EditorGUILayout.Toggle("Trigger from specific ability?", entry.triggerConstraints.triggerbySpecificAbility);
+
+        //            if (entry.triggerConstraints.triggerbySpecificAbility) {
+        //                entry.triggerConstraints.triggerablePrimaryAbilityName = EditorGUILayout.TextField("Ability Name", entry.triggerConstraints.triggerablePrimaryAbilityName);
+        //            }
+
+        //            if (entry is LogicTargetedAbility) {
+        //                LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+        //                lta.processEffectOnPrimaryEffectTargets = EditorGUILayout.Toggle("Target the same targets as primary ability?", lta.processEffectOnPrimaryEffectTargets);
+        //            }
+
+        //            break;
+
+        //        case AbilityActivationTrigger.Slain:
+        //            entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
+
+        //            break;
+
+        //        case AbilityActivationTrigger.ResourceChanged:
+        //            entry.triggerConstraints.resourceThatChanged = EditorHelper.EnumPopup("Resource", entry.triggerConstraints.resourceThatChanged);
+        //            entry.triggerConstraints.resourceGainedOrLost = EditorHelper.EnumPopup("Gained or Lost?", entry.triggerConstraints.resourceGainedOrLost);
+
+        //            break;
+        //    }
+        //}
+
+        //EditorGUILayout.Separator();
+
+        //entry.triggerConstraints.thisCardOnly = EditorGUILayout.Toggle("Only this card can trigger this effect?", entry.triggerConstraints.thisCardOnly);
+        //entry.triggerConstraints.neverTargetSelf = EditorGUILayout.Toggle("This card CANNOT trigger this effect?", entry.triggerConstraints.neverTargetSelf);
+        //entry.triggerConstraints.types = EditorHelper.DrawList("Trigger Constraints", entry.triggerConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
+        //for (int i = 0; i < entry.triggerConstraints.types.Count; i++) {
+        //    ShowConstraintsOfType(entry.triggerConstraints.types[i], entry.triggerConstraints, "Trigger");
+
+        //}
+        //EditorHelper.DrawInspectorSectionFooter();
+
+
+        EditorGUILayout.Separator();
+
+
+        //Source of Effect Logic
+        EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref toggleSourceOptions, "Source Constraints", DrawSourceOptions, entry);
+
+
+        //EditorHelper.DrawInspectorSectionHeader("Source of Effect:");
+        //entry.sourceConstraints.types = EditorHelper.DrawList("Source Constraints", entry.sourceConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
+        //for (int i = 0; i < entry.sourceConstraints.types.Count; i++) {
+        //    ShowConstraintsOfType(entry.sourceConstraints.types[i], entry.sourceConstraints, "Source of this Effect");
+        //}
+
+        //EditorHelper.DrawInspectorSectionFooter();
+
+
+        EditorGUILayout.Separator();
+
+        //Additional Requirements
+        EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref toggleAdditonalRequirementOptions, "Additional Requirements", DrawAdditionalRequirementsOptions, entry);
+
+        //EditorHelper.DrawInspectorSectionHeader("Additional Requirements:");
+
+        //entry.additionalRequirements = EditorHelper.DrawList("Requirement", entry.additionalRequirements, true, Constants.AdditionalRequirement.None, true, DrawAdditionalRequirements);
+
+        //for (int i = 0; i < entry.additionalRequirements.Count; i++) {
+        //    switch (entry.additionalRequirements[i]) {
+        //        case Constants.AdditionalRequirement.NumberofCardsInZone:
+        //            entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards);
+        //            entry.additionalRequirementConstraints.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.additionalRequirementConstraints.numberOfcardsInZone);
+        //            entry.additionalRequirementConstraints.moreOrLessCards = EditorHelper.EnumPopup("At Least Or Less Than?", entry.additionalRequirementConstraints.moreOrLessCards);
+
+        //            EditorGUILayout.Separator();
+        //            entry.additionalRequirementConstraints.types = EditorHelper.DrawList("Number of cards Constraint", entry.additionalRequirementConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
+
+        //            for (int j = 0; j < entry.additionalRequirementConstraints.types.Count; j++) {
+        //                ShowConstraintsOfType(entry.additionalRequirementConstraints.types[j], entry.additionalRequirementConstraints, "Extra Requirement");
+        //            }
+
+        //            break;
+
+        //        case Constants.AdditionalRequirement.RequireResource:
+        //            entry.additionalRequirementConstraints.requiredResourceType = EditorHelper.EnumPopup("What kind of Resource?", entry.additionalRequirementConstraints.requiredResourceType);
+        //            entry.additionalRequirementConstraints.moreOrlessResource = EditorHelper.EnumPopup("More or less?", entry.additionalRequirementConstraints.moreOrlessResource);
+        //            entry.additionalRequirementConstraints.amountOfResourceRequried = EditorGUILayout.IntField("How Much?", entry.additionalRequirementConstraints.amountOfResourceRequried);
+        //            entry.additionalRequirementConstraints.consumeResource = EditorGUILayout.Toggle("Consume this resource?", entry.additionalRequirementConstraints.consumeResource);
+
+
+        //            break;
+        //    }
+        //}
+
+
+        //EditorHelper.DrawInspectorSectionFooter();
+
+
+        EditorGUILayout.Separator();
+
+        //Effect Logic
+        EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref toggleEffectOptions, "Effect", DrawEffectOptions, entry);
+
+
+
+        //EditorHelper.DrawInspectorSectionHeader("Effect:");
+        //entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
+        //entry.movingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.movingVFX);
+        //entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
+        //entry.effectDuration = EditorHelper.EnumPopup(" Effect Duration", entry.effectDuration);
+
+        //switch (entry.effect) {
+        //    case EffectType.SpawnToken:
+        //        entry.effectHolder.tokenSpanws = EditorHelper.DrawExtendedList("Spawn Token Effects", entry.effectHolder.tokenSpanws, "Spawn Token", DrawEffectList);
+
+        //        break;
+
+        //    case EffectType.ZoneChange:
+        //        entry.effectHolder.zoneChanges = EditorHelper.DrawExtendedList("Zone Change Effect", entry.effectHolder.zoneChanges, "Zone Change", DrawEffectList);
+
+        //        //entry.targetConstraints.targetZone = EditorHelper.EnumPopup("Target Zone", entry.targetConstraints.targetZone);
+        //        break;
+
+        //    case EffectType.AddOrRemoveKeywordAbilities:
+        //        //entry.keywordsToAddorRemove = EditorHelper.DrawList("Keywords", entry.keywordsToAddorRemove, true, Keywords.None, true, DrawKeywords);
+
+        //        entry.effectHolder.addOrRemoveKeywords = EditorHelper.DrawExtendedList("Add or Remove Keyword Effect", entry.effectHolder.addOrRemoveKeywords, "Keyword", DrawEffectList);
+
+
+        //        break;
+
+        //    case EffectType.GenerateResource:
+
+        //        entry.effectHolder.generateResources = EditorHelper.DrawExtendedList("Resource Generation Effect", entry.effectHolder.generateResources, "Generate Resource", DrawEffectList);
+
+        //        break;
+
+        //    case EffectType.StatAdjustment:
+        //        entry.effectHolder.statAdjustments = EditorHelper.DrawExtendedList("Stat Adjustment Effects", entry.effectHolder.statAdjustments, "Stat Adjustments", DrawEffectList);
+
+        //        break;
+
+        //    case EffectType.AddOrRemoveSpecialAttribute:
+
+        //        entry.effectHolder.addOrRemoveSpecialAttribute = EditorHelper.DrawExtendedList("Special Attribute Effects", entry.effectHolder.addOrRemoveSpecialAttribute, "Special Attribute", DrawEffectList);
+
+        //        break;
+
+        //    case EffectType.ChooseOne:
+
+        //        entry.effectHolder.chooseOne = EditorHelper.DrawExtendedList("Choose One Effects", entry.effectHolder.chooseOne, "Choose One", DrawEffectList);
+
+        //        break;
+
+        //    case EffectType.RemoveOtherEffect:
+        //        entry.targetConstraints.abilityToRemove = EditorGUILayout.TextField("Name of Ability to Remove", entry.targetConstraints.abilityToRemove);
+        //        break;
+
+        //    case EffectType.RetriggerOtherEffect:
+        //        entry.targetConstraints.abilityToRetrigger = EditorGUILayout.TextField("Name of Ability to Trigger", entry.targetConstraints.abilityToRetrigger);
+
+        //        break;
+
+        //}//End of Effects
+
+
+
+
+        //EditorHelper.DrawInspectorSectionHeader("Stat Adjustments");
+        //entry.statAdjustments = EditorHelper.DrawExtendedList(entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);
+
+
+        //EditorHelper.DrawInspectorSectionFooter();
+
+
+        EditorGUILayout.Separator();
+
+        EditorGUILayout.BeginVertical();
+        EditorHelper.DrawInspectorSectionFoldout(ref toggleTargetOptions, "Target Constraints", DrawTargetOptions, entry);
+
+        //EditorHelper.DrawInspectorSectionHeader("Target Constraints:");
+
+        //if (!entry.targetConstraints.neverTargetSelf)
+        //    entry.targetConstraints.thisCardOnly = EditorGUILayout.Toggle("This card only targets itself?", entry.targetConstraints.thisCardOnly);
+
+        //if (!entry.targetConstraints.thisCardOnly)
+        //    entry.targetConstraints.neverTargetSelf = EditorGUILayout.Toggle("This card can't target itself?", entry.targetConstraints.neverTargetSelf);
+
+        ////entry.targetConstraints.targetAdjacency = EditorGUILayout.Toggle("Include Adjacent Targets on Battlefield?", entry.targetConstraints.targetAdjacency);
+        //entry.targetConstraints.types = EditorHelper.DrawList("Target Constraints", entry.targetConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
+
+        //if (entry is LogicTargetedAbility) {
+        //    LogicTargetedAbility logicTargeted = entry as LogicTargetedAbility;
+
+        //    logicTargeted.logicTargetingMethod = EditorHelper.EnumPopup("Targeting Method", logicTargeted.logicTargetingMethod);
+
+        //    switch (logicTargeted.logicTargetingMethod) {
+        //        case LogicTargetedAbility.LogicTargeting.NumberOfValidTargets:
+        //            logicTargeted.numberofTargets = EditorGUILayout.IntField("Number of Targets", logicTargeted.numberofTargets);
+        //            break;
+
+        //        case LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility:
+        //            logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
+        //            break;
+
+        //        case LogicTargetedAbility.LogicTargeting.AdjacentTagets:
+        //            logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
+        //            break;
+        //    }
+
+
+
+        //    //if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
+
+        //    //}
+
+        //    //if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility) {
+
+        //    //}
+        //}
+
+        //for (int i = 0; i < entry.targetConstraints.types.Count; i++) {
+        //    ShowConstraintsOfType(entry.targetConstraints.types[i], entry.targetConstraints, "Target");
+        //}
+
+        //EditorHelper.DrawInspectorSectionFooter();
+
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+
+        EditorGUILayout.LabelField("End of " + entry.abilityName + " section", boldRed);
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+
+        return entry;
+    }
+
+
+
+    private void DrawTriggerOptions(SpecialAbility entry) {
 
         //Trigger Logic
         EditorHelper.DrawInspectorSectionHeader("Effect Triggers:");
@@ -480,10 +779,9 @@ public class CardDataEditor : Editor {
         EditorHelper.DrawInspectorSectionFooter();
 
 
-        EditorGUILayout.Separator();
+    }
 
-
-        //Source of Effect Logic
+    private void DrawSourceOptions(SpecialAbility entry) {
         EditorHelper.DrawInspectorSectionHeader("Source of Effect:");
         entry.sourceConstraints.types = EditorHelper.DrawList("Source Constraints", entry.sourceConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
         for (int i = 0; i < entry.sourceConstraints.types.Count; i++) {
@@ -492,48 +790,9 @@ public class CardDataEditor : Editor {
 
         EditorHelper.DrawInspectorSectionFooter();
 
+    }
 
-        EditorGUILayout.Separator();
-
-        //Additional Requirements
-        EditorHelper.DrawInspectorSectionHeader("Additional Requirements:");
-
-        entry.additionalRequirements = EditorHelper.DrawList("Requirement", entry.additionalRequirements, true, Constants.AdditionalRequirement.None, true, DrawAdditionalRequirements);
-
-        for (int i = 0; i < entry.additionalRequirements.Count; i++) {
-            switch (entry.additionalRequirements[i]) {
-                case Constants.AdditionalRequirement.NumberofCardsInZone:
-                    entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards);
-                    entry.additionalRequirementConstraints.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.additionalRequirementConstraints.numberOfcardsInZone);
-                    entry.additionalRequirementConstraints.moreOrLessCards = EditorHelper.EnumPopup("At Least Or Less Than?", entry.additionalRequirementConstraints.moreOrLessCards);
-
-                    EditorGUILayout.Separator();
-                    entry.additionalRequirementConstraints.types = EditorHelper.DrawList("Number of cards Constraint", entry.additionalRequirementConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
-
-                    for (int j = 0; j < entry.additionalRequirementConstraints.types.Count; j++) {
-                        ShowConstraintsOfType(entry.additionalRequirementConstraints.types[j], entry.additionalRequirementConstraints, "Extra Requirement");
-                    }
-
-                    break;
-
-                case Constants.AdditionalRequirement.RequireResource:
-                    entry.additionalRequirementConstraints.requiredResourceType = EditorHelper.EnumPopup("What kind of Resource?", entry.additionalRequirementConstraints.requiredResourceType);
-                    entry.additionalRequirementConstraints.moreOrlessResource = EditorHelper.EnumPopup("More or less?", entry.additionalRequirementConstraints.moreOrlessResource);
-                    entry.additionalRequirementConstraints.amountOfResourceRequried = EditorGUILayout.IntField("How Much?", entry.additionalRequirementConstraints.amountOfResourceRequried);
-                    entry.additionalRequirementConstraints.consumeResource = EditorGUILayout.Toggle("Consume this resource?", entry.additionalRequirementConstraints.consumeResource);
-
-
-                    break;
-            }
-        }
-
-
-        EditorHelper.DrawInspectorSectionFooter();
-
-
-        EditorGUILayout.Separator();
-
-        //Effect Logic
+    private void DrawEffectOptions(SpecialAbility entry) {
         EditorHelper.DrawInspectorSectionHeader("Effect:");
         entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
         entry.movingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.movingVFX);
@@ -594,17 +853,11 @@ public class CardDataEditor : Editor {
 
         }//End of Effects
 
+        EditorHelper.DrawInspectorSectionFooter();
+    }
 
-
-
-        //EditorHelper.DrawInspectorSectionHeader("Stat Adjustments");
-        //entry.statAdjustments = EditorHelper.DrawExtendedList(entry.statAdjustments, "Stat Adjustment", DrawStatAdjustments);
-
-
-        //EditorHelper.DrawInspectorSectionFooter();
-
-
-        EditorGUILayout.Separator();
+    private void DrawTargetOptions(SpecialAbility entry) {
+        EditorHelper.DrawInspectorSectionHeader("Target Constraints:");
 
         if (!entry.targetConstraints.neverTargetSelf)
             entry.targetConstraints.thisCardOnly = EditorGUILayout.Toggle("This card only targets itself?", entry.targetConstraints.thisCardOnly);
@@ -612,7 +865,7 @@ public class CardDataEditor : Editor {
         if (!entry.targetConstraints.thisCardOnly)
             entry.targetConstraints.neverTargetSelf = EditorGUILayout.Toggle("This card can't target itself?", entry.targetConstraints.neverTargetSelf);
 
-
+        //entry.targetConstraints.targetAdjacency = EditorGUILayout.Toggle("Include Adjacent Targets on Battlefield?", entry.targetConstraints.targetAdjacency);
         entry.targetConstraints.types = EditorHelper.DrawList("Target Constraints", entry.targetConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
 
         if (entry is LogicTargetedAbility) {
@@ -620,13 +873,29 @@ public class CardDataEditor : Editor {
 
             logicTargeted.logicTargetingMethod = EditorHelper.EnumPopup("Targeting Method", logicTargeted.logicTargetingMethod);
 
-            if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
-                logicTargeted.numberofTargets = EditorGUILayout.IntField("Number of Targets", logicTargeted.numberofTargets);
+            switch (logicTargeted.logicTargetingMethod) {
+                case LogicTargetedAbility.LogicTargeting.NumberOfValidTargets:
+                    logicTargeted.numberofTargets = EditorGUILayout.IntField("Number of Targets", logicTargeted.numberofTargets);
+                    break;
+
+                case LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility:
+                    logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
+                    break;
+
+                case LogicTargetedAbility.LogicTargeting.AdjacentTagets:
+                    logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
+                    break;
             }
 
-            if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility) {
-                logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
-            }
+
+
+            //if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.NumberOfValidTargets) {
+
+            //}
+
+            //if (logicTargeted.logicTargetingMethod == LogicTargetedAbility.LogicTargeting.UseTargetsFromOtherAbility) {
+
+            //}
         }
 
         for (int i = 0; i < entry.targetConstraints.types.Count; i++) {
@@ -635,16 +904,88 @@ public class CardDataEditor : Editor {
 
         EditorHelper.DrawInspectorSectionFooter();
 
+    }
 
-        EditorGUILayout.Separator();
-        EditorGUILayout.Separator();
+    private void DrawAdditionalRequirementsOptions(SpecialAbility entry) {
+        EditorHelper.DrawInspectorSectionHeader("Additional Requirements:");
 
-        EditorGUILayout.LabelField("End of " + entry.abilityName + " section", boldRed);
+        entry.additionalRequirements = EditorHelper.DrawList("Requirement", entry.additionalRequirements, true, Constants.AdditionalRequirement.None, true, DrawAdditionalRequirements);
 
-        EditorGUILayout.Separator();
-        EditorGUILayout.Separator();
+        for (int i = 0; i < entry.additionalRequirements.Count; i++) {
+            switch (entry.additionalRequirements[i]) {
+                case Constants.AdditionalRequirement.NumberofCardsInZone:
+                    entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards = EditorHelper.EnumPopup("Zone to Check", entry.additionalRequirementConstraints.zoneToCheckForNumberOfCards);
+                    entry.additionalRequirementConstraints.numberOfcardsInZone = EditorGUILayout.IntField("How many?", entry.additionalRequirementConstraints.numberOfcardsInZone);
+                    entry.additionalRequirementConstraints.moreOrLessCards = EditorHelper.EnumPopup("At Least Or Less Than?", entry.additionalRequirementConstraints.moreOrLessCards);
 
-        return entry;
+                    EditorGUILayout.Separator();
+                    entry.additionalRequirementConstraints.types = EditorHelper.DrawList("Number of cards Constraint", entry.additionalRequirementConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
+
+                    for (int j = 0; j < entry.additionalRequirementConstraints.types.Count; j++) {
+                        ShowConstraintsOfType(entry.additionalRequirementConstraints.types[j], entry.additionalRequirementConstraints, "Extra Requirement");
+                    }
+
+                    break;
+
+                case Constants.AdditionalRequirement.RequireResource:
+                    entry.additionalRequirementConstraints.requiredResourceType = EditorHelper.EnumPopup("What kind of Resource?", entry.additionalRequirementConstraints.requiredResourceType);
+                    entry.additionalRequirementConstraints.moreOrlessResource = EditorHelper.EnumPopup("More or less?", entry.additionalRequirementConstraints.moreOrlessResource);
+                    entry.additionalRequirementConstraints.amountOfResourceRequried = EditorGUILayout.IntField("How Much?", entry.additionalRequirementConstraints.amountOfResourceRequried);
+                    entry.additionalRequirementConstraints.consumeResource = EditorGUILayout.Toggle("Consume this resource?", entry.additionalRequirementConstraints.consumeResource);
+
+
+                    break;
+            }
+        }
+
+
+        EditorHelper.DrawInspectorSectionFooter();
+
+    }
+
+
+
+    private void DrawPresets(SpecialAbility entry) {
+        GUIStyle boldRed = new GUIStyle(EditorStyles.boldLabel);
+        boldRed.normal.textColor = Color.red;
+
+        EditorGUILayout.LabelField("Presets", boldRed);
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Inspire")) {
+            DrawInspirePreset(entry);
+        }
+
+        if (GUILayout.Button("Finale")) {
+            DrawFinalePreset(entry);
+        }
+
+        if (GUILayout.Button("Deathwatch")) {
+            DrawDeathwatchPreset(entry);
+        }
+
+        if (GUILayout.Button("Bloodthirst")) {
+            DrawBloodthirstPreset(entry);
+        }
+
+        if (GUILayout.Button("Spell")) {
+            DrawSendToCryptPreset(entry);
+        }
+
+        if (GUILayout.Button("Exhaust Ability")) {
+            DrawExaustAbilityPreset(entry);
+        }
+
+        if (GUILayout.Button("Exhaust Self")) {
+            DrawExhaustSelfPreset(entry);
+        }
+
+        if (GUILayout.Button("Artifact")) {
+            DrawArtifactPreset(entry);
+        }
+
+
+        EditorGUILayout.EndHorizontal();
     }
 
 

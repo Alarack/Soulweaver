@@ -135,7 +135,9 @@ public class Constants {
         Tortured,
         Rush,
         Reach,
-        Cleave
+        Cleave,
+        NoAttack,
+        Stun
     }
 
 
@@ -248,6 +250,7 @@ public class Constants {
         Battlefield,
         Void,
         AllCards,
+        NotInGame
 
     }
 

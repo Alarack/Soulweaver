@@ -32,6 +32,9 @@ public abstract class SpecialAbility {
     public string abilityName;
     public CardVisual source;
     public List<CardVisual> targets = new List<CardVisual>();
+    //public bool recordAdjacentTargets;
+    //public List<CardVisual> adjacentTargets = new List<CardVisual>();
+
     public List<CardVisual> triggeringCards = new List<CardVisual>();
     public ConstraintList targetConstraints = new ConstraintList();
     public string abilityVFX;
@@ -394,7 +397,11 @@ public abstract class SpecialAbility {
             Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndTriggerDuration);
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, ResetTriggerDuration);
         }
-            
+        if (triggerDuration == Duration.StartOfTurn) {
+            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnEndTriggerDuration);
+            Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, ResetTriggerDuration);
+        }
+
 
 
 
@@ -1716,6 +1723,10 @@ public abstract class SpecialAbility {
         public bool neverTargetSelf;
 
         public bool suspendTrigger;
+
+        ////Adjacent Targets
+        //public bool applyToAdjacenTagets;
+        //public string abilityNameToTargetAdjacency;
 
         //Secondary Effect
         public bool triggerbySpecificAbility;

@@ -62,14 +62,14 @@ public class SupportCardVisual : CardVisual {
                     supportValue = _supportData.supportValue;
                 }
 
-
-                cardSupportValueText.text = supportValue.ToString();
-                supportToken.UpdateSupportText(stat, supportValue);
-                TextTools.AlterTextColor(supportValue, _supportData.supportValue, cardSupportValueText);
-
-
                 if (value < 0)
-                    CheckDeath(source.photonView.viewID, false);
+                    CheckDeath(source.photonView.viewID, false, waitForVFX);
+
+                if (!waitForVFX) {
+                    cardSupportValueText.text = supportValue.ToString();
+                    supportToken.UpdateSupportText(stat, supportValue);
+                    TextTools.AlterTextColor(supportValue, _supportData.supportValue, cardSupportValueText);
+                }
 
                 break;
 
@@ -77,16 +77,26 @@ public class SupportCardVisual : CardVisual {
 
                 supportValue += value;
 
-                cardSupportValueText.text = supportValue.ToString();
-                supportToken.UpdateSupportText(stat, supportValue);
-                TextTools.AlterTextColor(supportValue, _supportData.supportValue, cardSupportValueText);
-
                 if (value < 0)
-                    CheckDeath(source.photonView.viewID, false);
+                    CheckDeath(source.photonView.viewID, false, waitForVFX);
 
+                if (!waitForVFX) {
+                    cardSupportValueText.text = supportValue.ToString();
+                    supportToken.UpdateSupportText(stat, supportValue);
+                    TextTools.AlterTextColor(supportValue, _supportData.supportValue, cardSupportValueText);
+                }
 
                 break;
         }
+
+        if (waitForVFX) {
+            SpecialAbility.StatAdjustment latest = new SpecialAbility.StatAdjustment(stat, value, false, false, null);
+            lastStatAdjustment = latest;
+
+            Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
+        }
+
+
     }
 
 
@@ -115,10 +125,65 @@ public class SupportCardVisual : CardVisual {
     }
 
 
+    #region EVENTS
+
+    protected override void OnVFXLanded(EventData data) {
+        base.OnVFXLanded(data);
+
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+        CardVFX vfx = data.GetMonoBehaviour("VFX") as CardVFX;
+
+
+        if (card != this)
+            return;
+
+
+
+        switch (lastStatAdjustment.stat) {
+
+            case Constants.CardStats.SupportValue:
+
+                cardSupportValueText.text = supportValue.ToString();
+                supportToken.UpdateSupportText(lastStatAdjustment.stat, supportValue);
+                TextTools.AlterTextColor(supportValue, _supportData.supportValue, cardSupportValueText);
+
+                break;
+
+      
+        }
+
+        Debug.Log(card.gameObject.name + " has been hit with a VFX: " + vfx.gameObject.name);
+
+
+
+        Grid.EventManager.RemoveListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
+    }
+
+    protected override IEnumerator DisplayDeathEffect() {
+        yield return new WaitForSeconds(0.7f);
+        GameObject deathVFX;
+
+        if (deathEffect != "")
+            deathVFX = PhotonNetwork.Instantiate(deathEffect, supportToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        else {
+            deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", supportToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        }
+
+        if (deathVFX != null) {
+            CardVFX cardVFX = deathVFX.GetComponent<CardVFX>();
+            cardVFX.Initialize(this, false, false);
+        }
+
+    }
+
+    #endregion
+
+
+
     #region RPCs
 
 
-    public void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath = false) {
+    public void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
         int cardID = source.photonView.viewID;
 
         if (supportValue < 0 && deathEffect != "") {
@@ -126,11 +191,11 @@ public class SupportCardVisual : CardVisual {
 
         }
 
-        photonView.RPC("CheckDeath", targets, cardID, forceDeath);
+        photonView.RPC("CheckDeath", targets, cardID, forceDeath, waitForVFX);
     }
 
     [PunRPC]
-    public void CheckDeath(int source, bool forceDeath) {
+    public void CheckDeath(int source, bool forceDeath, bool waitForVFX) {
         GameObject deathVFX;
 
         if (currentDeck.decktype == Constants.DeckType.SoulCrypt) {
@@ -143,11 +208,21 @@ public class SupportCardVisual : CardVisual {
         if (supportValue <= 0 || forceDeath) {
 
             if (photonView.isMine) {
-                if (deathEffect != "")
-                    deathVFX = PhotonNetwork.Instantiate(deathEffect, supportToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
-                else {
-                    deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", supportToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+
+
+                if (!waitForVFX) {
+                    StartCoroutine(DisplayDeathEffect());
+                    StartCoroutine(RemoveCardVisualFromField(this));
                 }
+                else {
+                    Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnDeathVisual);
+                }
+
+                //if (deathEffect != "")
+                //    deathVFX = PhotonNetwork.Instantiate(deathEffect, supportToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+                //else {
+                //    deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", supportToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+                //}
             }
 
             Debug.Log(causeOfDeath.cardData.cardName + " has killed " + cardData.cardName);
