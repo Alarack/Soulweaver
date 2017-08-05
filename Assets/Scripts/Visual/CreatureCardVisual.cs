@@ -354,7 +354,7 @@ public class CreatureCardVisual : CardVisual {
 
 
 
-    public void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
+    public override void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
         int cardID = source.photonView.viewID;
 
 

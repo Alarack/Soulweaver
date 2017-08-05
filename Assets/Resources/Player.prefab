@@ -21924,7 +21924,7 @@ MonoBehaviour:
   - cardPosition: {fileID: 4595301961358582}
     filled: 0
     card: {fileID: 0}
-  offset: 1
+  offset: 0.3
   owner: {fileID: 0}
 --- !u!114 &114270425448713766
 MonoBehaviour:

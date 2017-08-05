@@ -59,6 +59,17 @@ public class GameResourceDisplay : Photon.MonoBehaviour {
     }
 
 
+    public int GetCurrentResourceValueByType(GameResource.ResourceType type) {
+        for(int i = 0; i < resourceDisplayInfo.Count; i++) {
+            if(resourceDisplayInfo[i].resource.resourceType == type) {
+                return resourceDisplayInfo[i].resource.currentValue;
+            }
+        }
+
+        return 0;
+    }
+
+
     #region RPCs
 
 

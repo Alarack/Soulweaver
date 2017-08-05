@@ -12,7 +12,8 @@ public class EffectStatAdjustment : Effect {
     public enum ValueSetMethod {
         Manual,
         DeriveValueFromTargetStat,
-        DeriveValueFromCardsInZone
+        DeriveValueFromCardsInZone,
+        DeriveValueFromResource
     }
 
     public enum DeriveStatsFromWhom {
@@ -33,8 +34,11 @@ public class EffectStatAdjustment : Effect {
     public Constants.DeckType zoneToCount;
     public SpecialAbility.ConstraintList constraints;
 
+    //Derive Stats from Resource
+    public GameResource.ResourceType targetResource;
 
     public bool invertValue;
+    public int maxValue;
 
 
     public override void Initialize(CardVisual source, SpecialAbility parent) {
@@ -60,6 +64,12 @@ public class EffectStatAdjustment : Effect {
 
             case ValueSetMethod.DeriveValueFromCardsInZone:
                 SetAdjustmentValuesByCardsInZone();
+                ApplyStatAdjustment(target);
+
+                break;
+
+            case ValueSetMethod.DeriveValueFromResource:
+                SetAdjustmentValuesByResource();
                 ApplyStatAdjustment(target);
 
                 break;
@@ -152,9 +162,15 @@ public class EffectStatAdjustment : Effect {
             }
         }
 
+        if (maxValue > 0 && value > maxValue) {
+            value = maxValue;
+        }
+
         if (inverse) {
             value = -value;
         }
+
+
 
         return value;
 
@@ -176,12 +192,35 @@ public class EffectStatAdjustment : Effect {
 
         results = parentAbility.CheckNumberOfCardsInZone(zoneToCount, constraints).Count;
 
+        if (maxValue > 0 && results > maxValue) {
+            results = maxValue;
+        }
+
         if (inverse)
             results = -results;
 
         return results;
     }
 
+
+    private void SetAdjustmentValuesByResource() {
+        for (int i = 0; i < adjustments.Count; i++) {
+            adjustments[i].value = SetValueByAmountOfResource(invertValue);
+            source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
+        }
+
+    }
+
+    private int SetValueByAmountOfResource(bool inverse) {
+
+        int result = source.owner.gameResourceDisplay.GetCurrentResourceValueByType(targetResource);
+
+        if (inverse) {
+            result = -result;
+        }
+
+        return result;
+    }
 
     //Remove all my adjustments from a target
     private void RemoveStatAdjustments(CardVisual card) {

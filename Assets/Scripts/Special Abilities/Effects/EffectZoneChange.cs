@@ -14,8 +14,26 @@ public class EffectZoneChange : Effect {
 
     public override void Apply(CardVisual target) {
         //Debug.Log(targetLocation.ToString());
+        bool hasVFX = String.IsNullOrEmpty(parentAbility.abilityVFX);
 
-        target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(targetLocation, target));
+
+        switch (targetLocation) {
+            case DeckType.SoulCrypt:
+                target.RPCCheckDeath(PhotonTargets.All, source, true, !hasVFX);
+                break;
+
+            case DeckType.Void:
+                target.StartCoroutine(target.RemoveCardVisualFromField(target));
+
+                break;
+
+            default:
+                target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(targetLocation, target));
+                break;
+        }
+
+
+
     }
 
     public override void Remove(CardVisual target) {

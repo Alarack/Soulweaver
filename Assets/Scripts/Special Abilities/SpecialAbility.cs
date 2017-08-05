@@ -39,6 +39,7 @@ public abstract class SpecialAbility {
     public ConstraintList targetConstraints = new ConstraintList();
     public string abilityVFX;
     public bool movingVFX;
+    public bool clearTargetsOnEffectComplete;
 
     //Additional Requirements
     public List<Constants.AdditionalRequirement> additionalRequirements = new List<Constants.AdditionalRequirement>();
@@ -46,6 +47,18 @@ public abstract class SpecialAbility {
 
     //Effects
     public EffectHolder effectHolder = new EffectHolder();
+
+
+
+    //Editor Foldouts
+    public bool togglePresets = true;
+    public bool toggleTriggerOptions;
+    public bool toggleSourceOptions;
+    public bool toggleEffectOptions;
+    public bool toggleTargetOptions = true;
+    public bool toggleAdditonalRequirementOptions;
+
+
 
     [Serializable]
     public class EffectHolder {
@@ -235,10 +248,6 @@ public abstract class SpecialAbility {
         }
 
 
-
-       
-
-
         if (!trigger.Contains(AbilityActivationTrigger.SecondaryEffect)) {
             EventData data = new EventData();
 
@@ -250,6 +259,8 @@ public abstract class SpecialAbility {
 
         triggeringCards.Clear();
 
+        if (clearTargetsOnEffectComplete)
+            source.ClearAllSpecialAbilityTargets();
 
         if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateVFX();
@@ -1011,7 +1022,7 @@ public abstract class SpecialAbility {
         return target;
     }
 
-    protected void ClearTargets() {
+    public void ClearTargets() {
         targets.Clear();
     }
 
