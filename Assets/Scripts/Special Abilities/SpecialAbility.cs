@@ -40,6 +40,7 @@ public abstract class SpecialAbility {
     public string abilityVFX;
     public bool movingVFX;
     public bool clearTargetsOnEffectComplete;
+    public bool clearTriggeringTargetFromOtherAbility;
 
     //Additional Requirements
     public List<Constants.AdditionalRequirement> additionalRequirements = new List<Constants.AdditionalRequirement>();
@@ -52,7 +53,7 @@ public abstract class SpecialAbility {
 
     //Editor Foldouts
     public bool togglePresets = true;
-    public bool toggleTriggerOptions;
+    public bool toggleTriggerOptions = true;
     public bool toggleSourceOptions;
     public bool toggleEffectOptions;
     public bool toggleTargetOptions = true;
@@ -69,6 +70,7 @@ public abstract class SpecialAbility {
         public List<EffectAddorRemoveKeywords> addOrRemoveKeywords = new List<EffectAddorRemoveKeywords>();
         public List<EffectAddorRemoveSpecialAttribute> addOrRemoveSpecialAttribute = new List<EffectAddorRemoveSpecialAttribute>();
         public List<EffectChooseOne> chooseOne = new List<EffectChooseOne>();
+        public List<EffectBestowSpecialAbility> bestowAbility = new List<EffectBestowSpecialAbility>();
     }
 
     public enum ApplyEffectToWhom {
@@ -111,6 +113,11 @@ public abstract class SpecialAbility {
             return;
         }
 
+        //if(abilityName == "MakeDude") {
+        //    Debug.Log("Init " + abilityName);
+        //    Debug.Log(source.cardData.cardName + " is my source");
+        //}
+
         RegisterListeners();
         //InitializeStatAdjusments();
         InitializeEffects();
@@ -138,6 +145,9 @@ public abstract class SpecialAbility {
         }
         for (int i = 0; i < effectHolder.chooseOne.Count; i++) {
             effectHolder.chooseOne[i].Initialize(source, this);
+        }
+        for (int i = 0; i < effectHolder.bestowAbility.Count; i++) {
+            effectHolder.bestowAbility[i].Initialize(source, this);
         }
     }
 
@@ -234,6 +244,13 @@ public abstract class SpecialAbility {
 
                 break;
 
+            case EffectType.BestowAbility:
+                for (int i = 0; i < effectHolder.bestowAbility.Count; i++) {
+                    effectHolder.bestowAbility[i].Apply(card);
+                }
+
+                break;
+
             case EffectType.RemoveOtherEffect:
                 RemoveOtherEffect(targetConstraints);
                 break;
@@ -241,6 +258,7 @@ public abstract class SpecialAbility {
             case EffectType.RetriggerOtherEffect:
                 RetriggerEffect(targetConstraints);
                 break;
+
 
             case EffectType.None:
                 Debug.Log("No effect is set to happen for " + source.gameObject.name);
@@ -261,6 +279,15 @@ public abstract class SpecialAbility {
 
         if (clearTargetsOnEffectComplete)
             source.ClearAllSpecialAbilityTargets();
+
+
+        if (clearTriggeringTargetFromOtherAbility) {
+            RemoveTargetFromSpecificAbility(triggerConstraints.abilityToGatherTargetsFrom, card);
+
+            //List<CardVisual> otherTargets = FindTargetsFromAnotherAbility(triggerConstraints);
+            //if (otherTargets.Contains(card)) {
+            //}
+        }
 
         if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateVFX();
@@ -642,7 +669,7 @@ public abstract class SpecialAbility {
         if (triggerConstraints.triggerbySpecificAbility && triggerConstraints.triggerablePrimaryAbilityName != triggeringAbilityName)
             return;
 
-        //Debug.Log("triggering a secondary effect from " + source.cardData.cardName);
+        //Debug.Log("triggering a secondary effect: " + abilityName + " from " + source.cardData.cardName);
 
         if (!source.photonView.isMine)
             return;
@@ -781,9 +808,13 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
-        if (!source.owner == player) {
-            return;
+
+        if(triggerConstraints.whosTurn == OwnerConstraints.None) {
+            if (!source.owner == player) {
+                return;
+            }
         }
+
 
         if (triggerConstraints.resetCountAtTurnEnd)
             triggerConstraints.counter = 0;
@@ -1143,6 +1174,18 @@ public abstract class SpecialAbility {
 
             case ConstraintType.WhosTurn:
                 if (!CheckForPlayersTurn(constraint.whosTurn))
+                    return null;
+
+                break;
+
+            case ConstraintType.CanAttack:
+                if (!CreatureCanAttack(target, constraint))
+                    return null;
+
+                break;
+
+            case ConstraintType.OtherTargets:
+                if (!DoesTargetExistInOtherAbilityTargetList(target, constraint))
                     return null;
 
                 break;
@@ -1546,9 +1589,75 @@ public abstract class SpecialAbility {
         return results;
     }
 
+    public bool CreatureCanAttack(CardVisual target, ConstraintList constraint) {
+
+        if(!(target is CreatureCardVisual)){
+            return false;
+        }
+
+        CreatureCardVisual soul = target as CreatureCardVisual;
+
+        return soul.CanAttack() == constraint.creatureCanAttack;
+        
+    }
+
+    public bool DoesTargetExistInOtherAbilityTargetList(CardVisual target, ConstraintList constraint) {
+
+        List<CardVisual> otherTargets = FindTargetsFromAnotherAbility(constraint);
+
+        if (otherTargets == null || otherTargets.Count == 0) {
+            //Debug.Log(abilityName + " tried to find the targets from " + constraint.abilityToGatherTargetsFrom + " but it was null");
+            return false;
+        }
+
+        else return otherTargets.Contains(target);
+    }
+
     #endregion
 
-    
+
+    protected virtual List<CardVisual> FindTargetsFromAnotherAbility(ConstraintList constraints) {
+
+        //Debug.Log(abilityName + " is searching for another ability called " + constraints.abilityToGatherTargetsFrom);
+
+
+        SpecialAbility targetAbility = null;
+
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == constraints.abilityToGatherTargetsFrom) {
+                targetAbility = source.specialAbilities[i];
+                //Debug.Log(abilityName + " has found another ability called " + constraints.abilityToGatherTargetsFrom);
+                break;
+            }
+        }
+
+        if (targetAbility != null) {
+            return targetAbility.targets;
+        }
+        else {
+            //Debug.Log(abilityName + " could NOT find another ability called " + constraints.abilityToGatherTargetsFrom);
+
+            return null;
+        }
+
+    }
+
+    protected virtual void RemoveTargetFromSpecificAbility(string abilityName, CardVisual target) {
+        SpecialAbility targetAbility = null;
+
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == abilityName) {
+                targetAbility = source.specialAbilities[i];
+                break;
+            }
+        }
+
+        if (targetAbility != null) {
+            if(targetAbility.targets.Contains(target))
+                targetAbility.targets.Remove(target);
+        }
+
+    }
 
 
 
@@ -1753,6 +1862,9 @@ public abstract class SpecialAbility {
         public GainedOrLost statGainedOrLost;
         public CardStats statChanged;
 
+        //Creature Can Attack
+        public bool creatureCanAttack;
+
         //Cards In Zone
         public DeckType zoneToCheckForNumberOfCards;
         public MoreOrLess moreOrLessCards;
@@ -1774,6 +1886,8 @@ public abstract class SpecialAbility {
         public GameResource.ResourceType resourceThatChanged;
         public GainedOrLost resourceGainedOrLost;
 
+        //Trigger On Targets From Another Ability
+        public string abilityToGatherTargetsFrom;
 
     }
 

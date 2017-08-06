@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using SoulWeaver;
 
+using Keywords = Constants.Keywords;
+
 [System.Serializable]
 public class CreatureCardVisual : CardVisual {
 
@@ -32,10 +34,6 @@ public class CreatureCardVisual : CardVisual {
 
     private CardCreatureData _creatureData;
 
-
-
-
-
     public override void SetupCardData() {
         base.SetupCardData();
 
@@ -49,7 +47,6 @@ public class CreatureCardVisual : CardVisual {
             battleToken.Initialize(_creatureData, this);
         }
 
-
         //Initialzing Current Data
         int tempAtk = _creatureData.attack;
         attack = tempAtk;
@@ -60,10 +57,6 @@ public class CreatureCardVisual : CardVisual {
         int tempHealth = _creatureData.health;
         health = tempHealth;
 
-        //attack = _creatureData.attack;
-        //size = _creatureData.size;
-        //health = _creatureData.health;
-
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Attack, attack);
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Size, size);
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
@@ -71,6 +64,8 @@ public class CreatureCardVisual : CardVisual {
         if (owner.player2) {
             interceptPos = new Vector3(interceptPos.x, -interceptPos.y, interceptPos.z);
         }
+
+        Grid.EventManager.RegisterListener(Constants.GameEvent.CardEnteredZone, OnEnterBattlefield);
 
     }
 
@@ -252,9 +247,48 @@ public class CreatureCardVisual : CardVisual {
         return value;
     }
 
+    public bool CanAttack() {
+        bool result = true;
+
+
+        if (keywords.Contains(Keywords.Defender))
+            return false;
+
+        if (keywords.Contains(Keywords.NoAttack))
+            return false;
+
+        if (keywords.Contains(Keywords.Pacifist))
+            return false;
+
+        if (keywords.Contains(Keywords.Stun))
+            return false;
+
+        if (keywords.Contains(Keywords.Exhausted))
+            return false;
+
+        if (hasAttacked)
+            return false;
+
+        if (attack < 1)
+            return false;
+
+
+        return result;
+    }
 
     #region Private Methods
 
+    private bool CheckForSummonSickness() {
+        bool result = true;
+
+        if (keywords.Contains(Constants.Keywords.Vanguard))
+            return false;
+
+        if (keywords.Contains(Constants.Keywords.Rush))
+            return false;
+
+        return result;
+    }
 
     protected override void KeywordHelper(Constants.Keywords keyword, bool add) {
         base.KeywordHelper(keyword, add);
@@ -289,6 +323,17 @@ public class CreatureCardVisual : CardVisual {
                     if (photonView.isMine)
                         battlefieldPos.position -= interceptPos;
                 }
+                break;
+
+            case Constants.Keywords.NoIntercept:
+                if (add) {
+
+                    if (keywords.Contains(Constants.Keywords.Interceptor)) {
+                        ToggleKeyword(false, (int)Constants.Keywords.Interceptor);
+                    }
+
+                }
+
                 break;
         }
     }
@@ -344,7 +389,20 @@ public class CreatureCardVisual : CardVisual {
         Grid.EventManager.RemoveListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
     }
 
+    private void OnEnterBattlefield(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+        Deck deck = data.GetMonoBehaviour("Deck") as Deck;
 
+        if (card != this)
+            return;
+
+        if (deck.decktype != Constants.DeckType.Battlefield)
+            return;
+
+        if (CheckForSummonSickness())
+            hasAttacked = true;
+
+    }
 
     #endregion
 
@@ -357,20 +415,15 @@ public class CreatureCardVisual : CardVisual {
     public override void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
         int cardID = source.photonView.viewID;
 
-
         if (health < 0 && deathEffect != "") {
             Debug.Log(cardData.cardName + " is showing a death effect");
-
         }
-
-
 
         photonView.RPC("CheckDeath", targets, cardID, forceDeath, waitForVFX);
     }
 
     [PunRPC]
     public void CheckDeath(int source, bool forceDeath, bool waitForVFX) {
-
 
         if (currentDeck.decktype == Constants.DeckType.SoulCrypt) {
             Debug.LogError(cardData.cardName + " is already dead, and was told to go to the soulcypt");
@@ -399,8 +452,6 @@ public class CreatureCardVisual : CardVisual {
             //Debug.Log(health + " is the current health");
 
             Debug.Log(causeOfDeath.cardData.cardName + " has killed " + cardData.cardName);
-
-
 
             currentDeck.TransferCard(photonView.viewID, owner.activeCrypt.GetComponent<Deck>().photonView.viewID);
 
@@ -442,19 +493,7 @@ public class CreatureCardVisual : CardVisual {
 
     [PunRPC]
     public void ShowDamage(int value) {
-        //CardVFX vfx = Finder.FindEffectByID(vfxID).GetComponent<CardVFX>();
-
-        //vfx.transform.SetParent(battleToken.incomingEffectLocation, true);
-        //vfx.transform.localPosition = Vector3.zero;
-        //vfx.transform.SetParent(vfx.transform);
-
-        //vfx.SetText(value.ToString());
-
         StartCoroutine(ShowDamageEffect(value));
-
-
-
-
     }
 
     private IEnumerator ShowDamageEffect(int value) {

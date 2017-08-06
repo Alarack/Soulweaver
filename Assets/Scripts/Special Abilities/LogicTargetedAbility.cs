@@ -43,8 +43,6 @@ public class LogicTargetedAbility : SpecialAbility {
 
     public override bool ProcessEffect(CardVisual card) {
 
-
-
         switch (logicTargetingMethod) {
             case LogicTargeting.AllValidTargets:
                 validTargets = GatherValidTargets();
@@ -133,15 +131,10 @@ public class LogicTargetedAbility : SpecialAbility {
                     Effect(rightCard);
                 }
 
-
                 break;
-                    
-
         }
 
         return true;
-
-        //return base.ProcessEffect(card);
     }
 
     public void ProcessEffect(List<CardVisual> targets) {

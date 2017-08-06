@@ -68,6 +68,7 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
       numberOfcardsInZone: 0
@@ -81,6 +82,7 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
+      abilityToGatherTargetsFrom: 
     sourceConstraints:
       types: 
       owner: 0
@@ -118,6 +120,7 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
       numberOfcardsInZone: 0
@@ -131,6 +134,7 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
+      abilityToGatherTargetsFrom: 
     effect: 0
     abilityName: 
     source: {fileID: 0}
@@ -173,6 +177,7 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
       numberOfcardsInZone: 0
@@ -186,8 +191,11 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
+      abilityToGatherTargetsFrom: 
     abilityVFX: 
     movingVFX: 0
+    clearTargetsOnEffectComplete: 0
+    clearTriggeringTargetFromOtherAbility: 0
     additionalRequirements: 
     additionalRequirementConstraints:
       types: 
@@ -226,6 +234,7 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
       numberOfcardsInZone: 0
@@ -239,6 +248,7 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
+      abilityToGatherTargetsFrom: 
     effectHolder:
       zoneChanges: []
       tokenSpanws: []
@@ -247,6 +257,12 @@ MonoBehaviour:
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+    togglePresets: 1
+    toggleTriggerOptions: 0
+    toggleSourceOptions: 0
+    toggleEffectOptions: 0
+    toggleTargetOptions: 1
+    toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0

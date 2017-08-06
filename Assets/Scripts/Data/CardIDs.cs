@@ -246,6 +246,7 @@ public class CardIDs {
 
         //Children of Illia 50000
         COI_DOM_Sentinel = 50000,
+        COI_AvengeTheHost = 50001,
 
 
 

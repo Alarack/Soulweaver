@@ -26,7 +26,7 @@ public class Constants {
         Wall,
         Treant,
         Elf,
-        Gift,
+        //Gift,
         Curse,
         Emanation,
         Spider,
@@ -71,7 +71,9 @@ public class Constants {
         Giant,
         Artifact,
         Ritual,
-        Enchantment
+        Enchantment,
+        Blessing,
+
 
 
     }
@@ -178,7 +180,9 @@ public class Constants {
         StatMaximum,
         CreatureStatus,
         WhosTurn,
-        SpecialAttribute
+        SpecialAttribute,
+        CanAttack,
+        OtherTargets
 
 
 
@@ -215,6 +219,7 @@ public class Constants {
         RemoveOtherEffect,
         RetriggerOtherEffect,
         ChooseOne,
+        BestowAbility,
     }
 
 

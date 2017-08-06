@@ -145,6 +145,43 @@ public class CardVisual : Photon.MonoBehaviour {
         List<Constants.Keywords> tempKeywords = new List<Constants.Keywords>(cardData.keywords);
         keywords = tempKeywords;
 
+        SetUpSpecialAbilities();
+        //List<EffectOnTarget> tempSpecials = new List<EffectOnTarget>(cardData.userTargtedAbilities);
+
+        //foreach (EffectOnTarget effect in tempSpecials) {
+        //    EffectOnTarget newEffect = ObjectCopier.Clone(effect) as EffectOnTarget;
+        //    userTargtedAbilities.Add(newEffect);
+        //}
+
+        //List<LogicTargetedAbility> tempMulti = new List<LogicTargetedAbility>(cardData.multiTargetAbilities);
+
+        //foreach (LogicTargetedAbility effect in tempMulti) {
+        //    LogicTargetedAbility newEffect = ObjectCopier.Clone(effect) as LogicTargetedAbility;
+        //    multiTargetAbiliies.Add(newEffect);
+        //}
+
+        //List<SpecialAttribute> tempAttributes = new List<SpecialAttribute>(cardData.specialAttributes);
+
+        //foreach (SpecialAttribute att in tempAttributes) {
+        //    SpecialAttribute newAtt = ObjectCopier.Clone(att) as SpecialAttribute;
+        //    specialAttributes.Add(newAtt);
+        //}
+
+        //for (int i = 0; i < userTargtedAbilities.Count; i++) {
+        //    //userTargtedAbilities[i].source = this;
+        //    userTargtedAbilities[i].Initialize(this);
+        //}
+
+        //for (int i = 0; i < multiTargetAbiliies.Count; i++) {
+        //    //userTargtedAbilities[i].source = this;
+        //    multiTargetAbiliies[i].Initialize(this);
+        //}
+
+        Grid.EventManager.RegisterListener(Constants.GameEvent.CardLeftZone, OnLeavesBattlefield);
+    }
+
+
+    private void SetUpSpecialAbilities() {
         List<EffectOnTarget> tempSpecials = new List<EffectOnTarget>(cardData.userTargtedAbilities);
 
         foreach (EffectOnTarget effect in tempSpecials) {
@@ -176,7 +213,32 @@ public class CardVisual : Photon.MonoBehaviour {
             multiTargetAbiliies[i].Initialize(this);
         }
 
-        //Debug.Log(specialAbilities.Count + " is the total number of specials on " + cardData.cardName);
+
+    }
+
+    public void ProcessNewSpecialAbility(SpecialAbility ability) {
+        if(ability is LogicTargetedAbility) {
+            LogicTargetedAbility lta = ability as LogicTargetedAbility;
+
+            LogicTargetedAbility clone = ObjectCopier.Clone(lta) as LogicTargetedAbility;
+
+            multiTargetAbiliies.Add(clone);
+
+            clone.Initialize(this);
+        }
+
+        if(ability is EffectOnTarget) {
+            EffectOnTarget eot = ability as EffectOnTarget;
+
+            EffectOnTarget clone = ObjectCopier.Clone(eot) as EffectOnTarget;
+
+            userTargtedAbilities.Add(clone);
+
+            clone.Initialize(this);
+
+        }
+
+
     }
 
 
@@ -187,13 +249,18 @@ public class CardVisual : Photon.MonoBehaviour {
         keywords = tempKeywords;
 
         specialAttributes.Clear();
+        specialAbilities.Clear();
+        userTargtedAbilities.Clear();
+        multiTargetAbiliies.Clear();
 
-        List<SpecialAttribute> tempAttributes = new List<SpecialAttribute>(cardData.specialAttributes);
+        SetUpSpecialAbilities();
 
-        foreach (SpecialAttribute att in tempAttributes) {
-            SpecialAttribute newAtt = ObjectCopier.Clone(att) as SpecialAttribute;
-            specialAttributes.Add(newAtt);
-        }
+        //List<SpecialAttribute> tempAttributes = new List<SpecialAttribute>(cardData.specialAttributes);
+
+        //foreach (SpecialAttribute att in tempAttributes) {
+        //    SpecialAttribute newAtt = ObjectCopier.Clone(att) as SpecialAttribute;
+        //    specialAttributes.Add(newAtt);
+        //}
 
 
     }
@@ -383,6 +450,9 @@ public class CardVisual : Photon.MonoBehaviour {
         //Intercepting
         if (Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat && primaryCardType == Constants.CardType.Soul && currentDeck.decktype == Constants.DeckType.Battlefield) {
 
+            if(!CheckForInterceptionPrevention())
+                return;
+
             if (keywords.Contains(Constants.Keywords.Interceptor))
                 RPCToggleIntercept(PhotonTargets.All, false);
             else {
@@ -424,6 +494,18 @@ public class CardVisual : Photon.MonoBehaviour {
 
         }
 
+    }
+
+    protected bool CheckForInterceptionPrevention() {
+        bool result = true;
+
+        if (keywords.Contains(Constants.Keywords.NoIntercept))
+            return false;
+
+        if (keywords.Contains(Constants.Keywords.Exhausted))
+            return false;
+
+        return result;
     }
 
     protected void ToggleMulligan() {
@@ -545,22 +627,24 @@ public class CardVisual : Photon.MonoBehaviour {
 
     }
 
+    protected virtual void OnLeavesBattlefield(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+        Deck deck = data.GetMonoBehaviour("Deck") as Deck;
+
+        if (card != this)
+            return;
+
+        if (deck.decktype != Constants.DeckType.Battlefield)
+            return;
+
+        ResetCardData();
+    }
+
+
+
 
     protected virtual IEnumerator DisplayDeathEffect() {
         yield return new WaitForSeconds(0.7f);
-        //GameObject deathVFX;
-
-        //if (deathEffect != "")
-        //    deathVFX = PhotonNetwork.Instantiate(deathEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
-        //else {
-        //    deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
-        //}
-
-        //if (deathVFX != null) {
-        //    CardVFX cardVFX = deathVFX.GetComponent<CardVFX>();
-        //    cardVFX.Initialize(null, false);
-        //}
-
     }
 
     public IEnumerator RemoveCardVisualFromField(CardVisual card) {
@@ -814,8 +898,6 @@ public class CardVisual : Photon.MonoBehaviour {
     public virtual void RPCApplySpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, bool waitForVFX) {
         int sourceID;
 
-        //adjustment.uniqueID = IDFactory.GenerateID();
-
         if (source != null)
             sourceID = source.photonView.viewID;
         else {
@@ -869,8 +951,6 @@ public class CardVisual : Photon.MonoBehaviour {
             //Debug.Log(allAdjustments[i].uniqueID + " is the id of a Stat Adjustment on: " + source.gameObject.name + " ::: " + source.cardData.cardName);
             //Debug.Log("I am looking for the id " + adjID);
 
-
-
             if (allAdjustments[i].uniqueID == adjID) {
                 if (allAdjustments[i].nonStacking && statAdjustments.Contains(allAdjustments[i])) {
                     //Debug.Log("Match found, but it's a non stackin adjustment and I already have that one");
@@ -883,8 +963,6 @@ public class CardVisual : Photon.MonoBehaviour {
                 statAdjustments.Add(allAdjustments[i]);
             }
         }
-
-
     }
 
 
@@ -895,34 +973,6 @@ public class CardVisual : Photon.MonoBehaviour {
 
         photonView.RPC("RemoveSpecialAbilityStatAdjustment", targets, adjID, sourceID, waitForVFX);
     }
-
-    //[PunRPC]
-    //public void RemoveStatAdjustment(int adjID, int sourceID) {
-    //    CardVisual source = Finder.FindCardByID(sourceID);
-
-    //    //Debug.Log(adjID + " is the ID I'm searching for");
-
-    //    for (int i = 0; i < source.specialAbilities.Count; i++) {
-    //        SpecialAbility special = source.specialAbilities[i];
-
-    //        for (int j = 0; j < special.statAdjustments.Count; j++) {
-    //            SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
-
-    //            if (adj.uniqueID == adjID) {
-    //                //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
-
-    //                if (!adj.temporary) {
-    //                    //Debug.Log("This adjustment is not temporary, aborting");
-    //                    return;
-    //                }
-
-    //                AlterCardStats(adj.stat, -adj.value, adj.source);
-    //                statAdjustments.Remove(adj);
-
-    //            }
-    //        }
-    //    }
-    //}
 
     [PunRPC]
     public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX) {
@@ -942,19 +992,9 @@ public class CardVisual : Photon.MonoBehaviour {
 
                 AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
 
-
-                //EventData data = new EventData();
-                //data.AddMonoBehaviour("Card", this);
-                //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
-
-                //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded)
-
-
-
                 statAdjustments.Remove(allAdjustments[i]);
             }
         }
-
     }
 
 
@@ -970,25 +1010,6 @@ public class CardVisual : Photon.MonoBehaviour {
 
         photonView.RPC("UpdateSpecialAbilityStatAdjustment", targets, adjustment.uniqueID, sourceID, statEnum, updatedValue);
     }
-
-    //[PunRPC]
-    //public void UpdateStatAdjustment(int adjID, int sourceID, int statEnum, int updatedValue) {
-    //    CardVisual source = Finder.FindCardByID(sourceID);
-
-    //    for (int i = 0; i < source.specialAbilities.Count; i++) {
-    //        SpecialAbility special = source.specialAbilities[i];
-
-    //        for (int j = 0; j < special.statAdjustments.Count; j++) {
-    //            SpecialAbility.StatAdjustment adj = special.statAdjustments[j];
-
-    //            if (adj.uniqueID == adjID) {
-    //                //Debug.Log("Match found : " + adj.source.gameObject.name + " and " + gameObject.name);
-    //                adj.value = updatedValue;
-
-    //            }
-    //        }
-    //    }
-    //}
 
     [PunRPC]
     public void UpdateSpecialAbilityStatAdjustment(int adjID, int sourceID, int updatedValue) {
@@ -1042,19 +1063,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
     [PunRPC]
     public void ToggleKeyword(bool add, int keywordIndex) {
-
-        
-
         Constants.Keywords newKeyword = (Constants.Keywords)keywordIndex;
-
-
-
 
         switch (add) {
             case true:
-
-                //Debug.Log("adding " + newKeyword.ToString() + " to " + gameObject.name);
-
                 if (newKeyword == Constants.Keywords.Interceptor) {
                     if (keywords.Contains(Constants.Keywords.Exhausted) || keywords.Contains(Constants.Keywords.NoIntercept)) {
                         return;
@@ -1209,23 +1221,6 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    //public void RPCBroadCastNoVFXImpactEvent(PhotonTargets targets, CardVisual card) {
-    //    int cardID = card.photonView.viewID;
-
-    //    photonView.RPC("BroadcastNoVFXImpactEvent", targets, cardID);
-    //}
-
-    //[PunRPC]
-    //public void BroadcastNoVFXImpactEvent(int cardID) {
-    //    CardVisual card = Finder.FindCardByID(cardID);
-
-    //    Debug.Log(card.cardData.name + " : " + card.gameObject.name + " is sending a broadcast no vfx event");
-    //    EventData data = new EventData();
-    //    data.AddMonoBehaviour("Card", card);
-    //    Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
-    //}
-
-
     public virtual void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
 
     }
@@ -1240,6 +1235,33 @@ public class CardVisual : Photon.MonoBehaviour {
     public void CheckAdjID(int id, string abilityName) {
 
         Debug.Log("Ability Name: " + abilityName + " ADJ ID: " + id);
+    }
+
+
+    public void RPCProcessNewSpecialAbility(PhotonTargets targets, CardVisual sourceCard, string abilityName) {
+        int sourceCardID = sourceCard.photonView.viewID;
+
+        photonView.RPC("RemoteProcessNewSpecialAbility", targets, sourceCardID, abilityName);
+    }
+
+    [PunRPC]
+    public void RemoteProcessNewSpecialAbility(int sourceCardID, string abilityName) {
+        CardVisual sourceCard = Finder.FindCardByID(sourceCardID);
+
+        SpecialAbility targetAbility = null;
+
+        for (int i = 0; i < sourceCard.cardData.multiTargetAbilities.Count; i++) {
+            if (sourceCard.cardData.multiTargetAbilities[i].abilityName == abilityName) {
+                targetAbility = sourceCard.cardData.multiTargetAbilities[i];
+                break;
+            }
+        }
+
+        if(targetAbility != null) {
+            ProcessNewSpecialAbility(targetAbility);
+        }
+
+
     }
 
 

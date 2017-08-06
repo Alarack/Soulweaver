@@ -103,4 +103,5 @@ MonoBehaviour:
   - SendImpactEvent
   - BroadcastNoVFXImpactEvent
   - CheckAdjID
+  - RemoteProcessNewSpecialAbility
   DisableAutoOpenWizard: 1
