@@ -215,18 +215,23 @@ public class CardDataEditor : Editor {
         //Add or Remove Special Attributes
         if (entry is EffectAddorRemoveSpecialAttribute) {
             EffectAddorRemoveSpecialAttribute specialAttribute = entry as EffectAddorRemoveSpecialAttribute;
-            specialAttribute.attributeType = EditorHelper.EnumPopup("Attribute Type", specialAttribute.attributeType);
+            //specialAttribute.attributeType = EditorHelper.EnumPopup("Attribute Type", specialAttribute.attributeType);
             specialAttribute.attributeAction = EditorHelper.EnumPopup("Add, Modify, or Remmove?", specialAttribute.attributeAction);
 
-            switch (specialAttribute.attributeAction) {
-                case EffectAddorRemoveSpecialAttribute.AttributeAction.Add:
-                    specialAttribute.value = EditorGUILayout.IntField("Value", specialAttribute.value);
-                    break;
+            specialAttribute.specialAttributes = EditorHelper.DrawExtendedList("Special Attributes", specialAttribute.specialAttributes, "Adjustment", DrawManualSpecialAttribute);
 
-                case EffectAddorRemoveSpecialAttribute.AttributeAction.Modify:
-                    specialAttribute.modificationValue = EditorGUILayout.IntField("Modifier Value", specialAttribute.modificationValue);
-                    break;
-            }
+            //switch (specialAttribute.attributeAction) {
+            //    case EffectAddorRemoveSpecialAttribute.AttributeAction.Add:
+            //        //specialAttribute.value = EditorGUILayout.IntField("Value", specialAttribute.value);
+
+                    
+
+            //        break;
+
+            //    //case EffectAddorRemoveSpecialAttribute.AttributeAction.Modify:
+            //    //    specialAttribute.modificationValue = EditorGUILayout.IntField("Modifier Value", specialAttribute.modificationValue);
+            //    //    break;
+            //}
         }
 
         //Choose One
@@ -279,6 +284,15 @@ public class CardDataEditor : Editor {
 
         return entry;
     }
+
+
+    private SpecialAttribute DrawManualSpecialAttribute(SpecialAttribute entry) {
+        entry.attributeType = EditorHelper.EnumPopup("Attribute Type", entry.attributeType);
+        entry.attributeValue = EditorGUILayout.IntField("Value", entry.attributeValue);
+
+        return entry;
+    }
+
 
 
 

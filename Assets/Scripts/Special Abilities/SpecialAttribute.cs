@@ -17,6 +17,7 @@ public class SpecialAttribute {
 
     public AttributeType attributeType;
     public int attributeValue;
+    public int uniqueID = -1;
 
 
     public SpecialAttribute() {

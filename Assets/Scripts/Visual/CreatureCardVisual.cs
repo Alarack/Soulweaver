@@ -84,7 +84,6 @@ public class CreatureCardVisual : CardVisual {
 
 
         StartCoroutine(ResetCardVisualData());
-
     }
 
     private IEnumerator ResetCardVisualData() {

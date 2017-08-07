@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SoulWeaver;
+using System.Linq;
 
 [System.Serializable]
 public class CardVisual : Photon.MonoBehaviour {
@@ -63,6 +64,8 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public List<SpecialAbility> specialAbilities = new List<SpecialAbility>();
     public List<SpecialAttribute> specialAttributes = new List<SpecialAttribute>();
+
+    public List<SpecialAbility> newSpecialAbilities = new List<SpecialAbility>();
 
     public List<EffectOnTarget> userTargtedAbilities = new List<EffectOnTarget>();
     public List<LogicTargetedAbility> multiTargetAbiliies = new List<LogicTargetedAbility>();
@@ -216,54 +219,90 @@ public class CardVisual : Photon.MonoBehaviour {
 
     }
 
+    private void ResetSpecialAttributes() {
+        specialAttributes.Clear();
+
+        List<SpecialAttribute> tempAttributes = new List<SpecialAttribute>(cardData.specialAttributes);
+
+        foreach (SpecialAttribute att in tempAttributes) {
+            SpecialAttribute newAtt = ObjectCopier.Clone(att) as SpecialAttribute;
+            specialAttributes.Add(newAtt);
+        }
+    }
+
     public void ProcessNewSpecialAbility(SpecialAbility ability) {
-        if(ability is LogicTargetedAbility) {
+        if (ability is LogicTargetedAbility) {
             LogicTargetedAbility lta = ability as LogicTargetedAbility;
 
             LogicTargetedAbility clone = ObjectCopier.Clone(lta) as LogicTargetedAbility;
 
             multiTargetAbiliies.Add(clone);
+            newSpecialAbilities.Add(clone);
 
             clone.Initialize(this);
         }
 
-        if(ability is EffectOnTarget) {
+        if (ability is EffectOnTarget) {
             EffectOnTarget eot = ability as EffectOnTarget;
 
             EffectOnTarget clone = ObjectCopier.Clone(eot) as EffectOnTarget;
 
             userTargtedAbilities.Add(clone);
+            newSpecialAbilities.Add(clone);
 
             clone.Initialize(this);
 
         }
-
-
     }
 
 
     public virtual void ResetCardData() {
-        statAdjustments.Clear();
-
         List<Constants.Keywords> tempKeywords = new List<Constants.Keywords>(cardData.keywords);
         keywords = tempKeywords;
 
-        specialAttributes.Clear();
-        specialAbilities.Clear();
-        userTargtedAbilities.Clear();
-        multiTargetAbiliies.Clear();
+        ResetSpecialAttributes();
 
-        SetUpSpecialAbilities();
+        StartCoroutine(ResetSpecials());
+    }
 
-        //List<SpecialAttribute> tempAttributes = new List<SpecialAttribute>(cardData.specialAttributes);
+    private IEnumerator ResetSpecials() {
+        yield return new WaitForSeconds(1f);
 
-        //foreach (SpecialAttribute att in tempAttributes) {
-        //    SpecialAttribute newAtt = ObjectCopier.Clone(att) as SpecialAttribute;
-        //    specialAttributes.Add(newAtt);
-        //}
+        List<SpecialAbility> abilitiesToRemove = new List<SpecialAbility>();
 
+        for (int i = 0; i < newSpecialAbilities.Count; i++) {
+            //Debug.Log("Unreging " + newSpecialAbilities[i].abilityName);
+            UnregisterSpecialAbility(FindSpecialAbilityByName(newSpecialAbilities[i].abilityName));
+
+            if (specialAbilities.Contains(newSpecialAbilities[i])) {
+                //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
+                specialAbilities.Remove(newSpecialAbilities[i]);
+            }
+
+            if (newSpecialAbilities[i] is LogicTargetedAbility) {
+                LogicTargetedAbility lta = newSpecialAbilities[i] as LogicTargetedAbility;
+                if (multiTargetAbiliies.Contains(lta)) {
+                    //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
+                    multiTargetAbiliies.Remove(lta);
+                }
+            }
+
+            if (newSpecialAbilities[i] is EffectOnTarget) {
+                EffectOnTarget uta = newSpecialAbilities[i] as EffectOnTarget;
+                if (userTargtedAbilities.Contains(uta)) {
+                    //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
+                    userTargtedAbilities.Remove(uta);
+                }
+            }
+        }
+
+        newSpecialAbilities.Clear();
+
+        statAdjustments.Clear();
 
     }
+
+
 
     public void AddKeyword(Constants.Keywords keyword) {
         if (!keywords.Contains(keyword)) {
@@ -341,13 +380,38 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public int CheckSpecialAttributes(SpecialAttribute.AttributeType attribute) {
 
+        List<SpecialAttribute> allAttributesOfType = new List<SpecialAttribute>();
+        List<int> allValuesOfType = new List<int>();
+
         for (int i = 0; i < specialAttributes.Count; i++) {
             if (specialAttributes[i].attributeType == attribute) {
-                return specialAttributes[i].attributeValue;
+                allAttributesOfType.Add(specialAttributes[i]);
             }
         }
 
-        return 0;
+        if (allAttributesOfType.Count < 1)
+            return 0;
+
+
+        for (int i = 0; i < allAttributesOfType.Count; i++) {
+            allValuesOfType.Add(allAttributesOfType[i].attributeValue);
+        }
+
+
+        int maxValue = allValuesOfType.Max();
+
+        return maxValue;
+
+
+
+
+        //for (int i = 0; i < specialAttributes.Count; i++) {
+        //    if (specialAttributes[i].attributeType == attribute) {
+        //        return specialAttributes[i].attributeValue;
+        //    }
+        //}
+
+        //return 0;
     }
 
     public List<SpecialAbility.StatAdjustment> GatherAllSpecialAbilityStatAdjustments() {
@@ -360,9 +424,45 @@ public class CardVisual : Photon.MonoBehaviour {
         return results;
     }
 
+    public List<SpecialAttribute> GatherAllSpecialAbilitySpecialAttributes() {
+        List<SpecialAttribute> results = new List<SpecialAttribute>();
+
+        for (int i = 0; i < specialAbilities.Count; i++) {
+            results.AddRange(specialAbilities[i].GetAllSpecialAttributes());
+        }
+
+        return results;
+    }
+
     public void ClearAllSpecialAbilityTargets() {
-        for(int i = 0; i < specialAbilities.Count; i++) {
+        for (int i = 0; i < specialAbilities.Count; i++) {
             specialAbilities[i].ClearTargets();
+        }
+    }
+
+    public SpecialAbility FindSpecialAbilityByName(string abilityName) {
+
+        for (int i = 0; i < specialAbilities.Count; i++) {
+            if (specialAbilities[i].abilityName == abilityName)
+                return specialAbilities[i];
+        }
+
+        return null;
+    }
+
+    public void UnregisterSpecialAbility(SpecialAbility ability) {
+        for (int i = 0; i < multiTargetAbiliies.Count; i++) {
+            if (multiTargetAbiliies[i] == ability) {
+                multiTargetAbiliies[i].UnregisterListeners();
+                break;
+            }
+        }
+
+        for (int i = 0; i < userTargtedAbilities.Count; i++) {
+            if (userTargtedAbilities[i] == ability) {
+                userTargtedAbilities[i].UnregisterListeners();
+                break;
+            }
         }
     }
 
@@ -399,7 +499,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 return;
             }
 
-            if(owner.supportPositionManager.IsCollectionFull() && cardData.primaryCardType == Constants.CardType.Support) {
+            if (owner.supportPositionManager.IsCollectionFull() && cardData.primaryCardType == Constants.CardType.Support) {
                 Debug.Log("No place to put that");
                 return;
             }
@@ -450,7 +550,7 @@ public class CardVisual : Photon.MonoBehaviour {
         //Intercepting
         if (Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat && primaryCardType == Constants.CardType.Soul && currentDeck.decktype == Constants.DeckType.Battlefield) {
 
-            if(!CheckForInterceptionPrevention())
+            if (!CheckForInterceptionPrevention())
                 return;
 
             if (keywords.Contains(Constants.Keywords.Interceptor))
@@ -480,13 +580,13 @@ public class CardVisual : Photon.MonoBehaviour {
 
         //Choose One
         if (isBeingChosen) {
-            if(Input.GetMouseButtonDown(0)){
+            if (Input.GetMouseButtonDown(0)) {
                 isBeingChosen = false;
                 currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
 
                 List<CardVisual> others = Finder.FindAllCardsBeingChosen();
 
-                for(int i = 0; i <others.Count; i++) {
+                for (int i = 0; i < others.Count; i++) {
                     others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], Deck._void);
                 }
             }
@@ -637,7 +737,10 @@ public class CardVisual : Photon.MonoBehaviour {
         if (deck.decktype != Constants.DeckType.Battlefield)
             return;
 
+        //Debug.Log(cardData.cardName + " has left the battlefield");
+
         ResetCardData();
+
     }
 
 
@@ -652,8 +755,10 @@ public class CardVisual : Photon.MonoBehaviour {
         yield return new WaitForSeconds(2.3f);
 
         if (card.photonView.isMine) {
-            card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
-            card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
+            if (currentDeck.decktype != Constants.DeckType.Battlefield) {
+                card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
+                card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
+            }
         }
 
         if (card is CreatureCardVisual) {
@@ -757,12 +862,16 @@ public class CardVisual : Photon.MonoBehaviour {
                 cardBack.SetActive(true);
                 cardFront.SetActive(false);
 
+
+                //Debug.Log("Showing Front");
+
+
                 if (this is CreatureCardVisual) {
                     CreatureCardVisual visual = this as CreatureCardVisual;
                     visual.battleToken.gameObject.SetActive(false);
                 }
 
-                if(this is SupportCardVisual) {
+                if (this is SupportCardVisual) {
                     SupportCardVisual visual = this as SupportCardVisual;
                     visual.supportToken.gameObject.SetActive(false);
                 }
@@ -770,6 +879,9 @@ public class CardVisual : Photon.MonoBehaviour {
                 break;
 
             case CardVisualState.ShowFront:
+
+                //Debug.Log(cardData.cardName + ": Showing Front");
+
                 cardBack.SetActive(false);
                 cardFront.SetActive(true);
                 cardCollider.enabled = true;
@@ -793,6 +905,8 @@ public class CardVisual : Photon.MonoBehaviour {
                 break;
 
             case CardVisualState.ShowBattleToken:
+
+                //Debug.Log(cardData.cardName + ": Showing Battle Token");
 
                 if (this is CreatureCardVisual) {
                     CreatureCardVisual visual = this as CreatureCardVisual;
@@ -1029,6 +1143,154 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
+
+
+
+    public void RPCApplySpecialAttribute(PhotonTargets targets, SpecialAttribute attribute, CardVisual source) {
+        int sourceID = source.photonView.viewID;
+        int attributeID = attribute.uniqueID;
+
+        photonView.RPC("ApplySpecialAttribute", targets, sourceID, attributeID);
+    }
+
+    [PunRPC]
+    public void ApplySpecialAttribute(int sourceID, int attributeID) {
+
+        SpecialAttribute targetAttribute = GetSpecialAttributeFromSource(sourceID, attributeID);
+
+        if (targetAttribute != null) {
+            specialAttributes.Add(targetAttribute);
+        }
+    }
+
+
+    public void RPCRemoveSpecialAttribute(PhotonTargets targets, SpecialAttribute attribute, CardVisual source) {
+        int sourceID = source.photonView.viewID;
+        int attributeID = attribute.uniqueID;
+
+        photonView.RPC("RemoveSpecialAttribute", targets, sourceID, attributeID);
+    }
+
+    [PunRPC]
+    public void RemoveSpecialAttribute(int sourceID, int attributeID) {
+      
+        SpecialAttribute targetAttribute = GetSpecialAttributeFromSource(sourceID, attributeID);
+
+        if(targetAttribute != null) {
+            if(specialAttributes.Contains(targetAttribute))
+                specialAttributes.Remove(targetAttribute);
+        }
+    }
+
+
+
+
+    private SpecialAttribute GetSpecialAttributeFromSource(int sourceID, int attributeID) {
+        CardVisual source = Finder.FindCardByID(sourceID);
+
+        List<SpecialAttribute> allAttributes = source.GatherAllSpecialAbilitySpecialAttributes();
+        SpecialAttribute targetAttribute = null;
+
+        for (int i = 0; i < allAttributes.Count; i++) {
+            if (allAttributes[i].uniqueID == attributeID) {
+                targetAttribute = allAttributes[i];
+                break;
+            }
+        }
+
+        if (targetAttribute == null) {
+            Debug.LogError("No Special Attribute with ID " + attributeID + " could be found on source card: " + source.cardData.cardName);
+            return null;
+        }
+
+        return targetAttribute;
+
+    }
+
+
+
+
+
+    //public void RPCAddSpecialAttribute(PhotonTargets targets, SpecialAttribute.AttributeType type, int value) {
+    //    int attributeTypeEnum = (int)type;
+
+    //    photonView.RPC("AddSpecialAtribute", targets, attributeTypeEnum, value);
+    //}
+
+
+    //[PunRPC]
+    //public void AddSpecialAtribute(int type, int value) {
+    //    SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
+
+    //    SpecialAttribute existingAttribute = null;
+
+    //    for (int i = 0; i < specialAttributes.Count; i++) {
+    //        if (specialAttributes[i].attributeType == newType) {
+    //            existingAttribute = specialAttributes[i];
+
+    //            if (existingAttribute.attributeValue < value) {
+    //                existingAttribute.attributeValue = value;
+    //                break;
+    //            }
+    //        }
+    //    }
+
+    //    if (existingAttribute == null) {
+    //        SpecialAttribute newAtt = new SpecialAttribute(newType, value);
+    //        specialAttributes.Add(newAtt);
+    //    }
+
+    //}
+
+
+    //public void RPCModifySpecialAttribute(PhotonTargets targets, SpecialAttribute.AttributeType type, int value) {
+    //    int attributeTypeEnum = (int)type;
+
+    //    photonView.RPC("ReduceSpecialAtribute", targets, attributeTypeEnum, value);
+    //}
+
+
+    //[PunRPC]
+    //public void ModifySpecialAtribute(int type, int value) {
+    //    SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
+
+    //    SpecialAttribute existingAttribute = null;
+
+    //    for (int i = 0; i < specialAttributes.Count; i++) {
+    //        if (specialAttributes[i].attributeType == newType) {
+    //            existingAttribute = specialAttributes[i];
+    //            existingAttribute.attributeValue += value;
+    //            break;
+    //        }
+    //    }
+    //}
+
+    //public void RPCRemoveSpecialAttributeSuspension(PhotonTargets targets, SpecialAttribute.AttributeType type) {
+    //    int attributeTypeEnum = (int)type;
+    //    photonView.RPC("RemoveSpecialAtribute2", targets, attributeTypeEnum);
+    //}
+
+
+    //[PunRPC]
+    //public void RemoveSpecialAtribute2(int type) {
+    //    SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
+
+    //    SpecialAttribute existingAttribute = null;
+
+    //    for (int i = 0; i < specialAttributes.Count; i++) {
+    //        if (specialAttributes[i].attributeType == newType) {
+    //            existingAttribute = specialAttributes[i];
+    //            break;
+    //        }
+    //    }
+
+    //    if (existingAttribute != null) {
+    //        specialAttributes.Remove(existingAttribute);
+    //    }
+    //}
+
+
+
     public virtual void RPCTargetCard(PhotonTargets targets, bool target) {
         if (target)
             photonView.RPC("TargetCard", targets);
@@ -1142,83 +1404,7 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    public void RPCAddSpecialAttribute(PhotonTargets targets, SpecialAttribute.AttributeType type, int value) {
-        int attributeTypeEnum = (int)type;
 
-        photonView.RPC("AddSpecialAtribute", targets, attributeTypeEnum, value);
-    }
-
-
-    [PunRPC]
-    public void AddSpecialAtribute(int type, int value) {
-        SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
-
-        SpecialAttribute existingAttribute = null;
-
-        for (int i = 0; i < specialAttributes.Count; i++) {
-            if (specialAttributes[i].attributeType == newType) {
-                existingAttribute = specialAttributes[i];
-
-                if (existingAttribute.attributeValue < value) {
-                    existingAttribute.attributeValue = value;
-                    break;
-                }
-            }
-        }
-
-        if (existingAttribute == null) {
-            SpecialAttribute newAtt = new SpecialAttribute(newType, value);
-            specialAttributes.Add(newAtt);
-        }
-
-    }
-
-
-    public void RPCModifySpecialAttribute(PhotonTargets targets, SpecialAttribute.AttributeType type, int value) {
-        int attributeTypeEnum = (int)type;
-
-        photonView.RPC("ReduceSpecialAtribute", targets, attributeTypeEnum, value);
-    }
-
-
-    [PunRPC]
-    public void ModifySpecialAtribute(int type, int value) {
-        SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
-
-        SpecialAttribute existingAttribute = null;
-
-        for (int i = 0; i < specialAttributes.Count; i++) {
-            if (specialAttributes[i].attributeType == newType) {
-                existingAttribute = specialAttributes[i];
-                existingAttribute.attributeValue += value;
-                break;
-            }
-        }
-    }
-
-    public void RPCRemoveSpecialAttributeSuspension(PhotonTargets targets, SpecialAttribute.AttributeType type) {
-        int attributeTypeEnum = (int)type;
-        photonView.RPC("RemoveSpecialAtribute", targets, attributeTypeEnum);
-    }
-
-
-    [PunRPC]
-    public void RemoveSpecialAtribute(int type) {
-        SpecialAttribute.AttributeType newType = (SpecialAttribute.AttributeType)type;
-
-        SpecialAttribute existingAttribute = null;
-
-        for (int i = 0; i < specialAttributes.Count; i++) {
-            if (specialAttributes[i].attributeType == newType) {
-                existingAttribute = specialAttributes[i];
-                break;
-            }
-        }
-
-        if(existingAttribute != null) {
-            specialAttributes.Remove(existingAttribute);
-        }
-    }
 
 
     public virtual void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
@@ -1257,7 +1443,7 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
 
-        if(targetAbility != null) {
+        if (targetAbility != null) {
             ProcessNewSpecialAbility(targetAbility);
         }
 

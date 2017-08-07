@@ -161,6 +161,17 @@ public abstract class SpecialAbility {
         return results;
     }
 
+    public List<SpecialAttribute> GetAllSpecialAttributes() {
+        List<SpecialAttribute> results = new List<SpecialAttribute>();
+        for (int i = 0; i < effectHolder.addOrRemoveSpecialAttribute.Count; i++) {
+            for (int j = 0; j < effectHolder.addOrRemoveSpecialAttribute[i].specialAttributes.Count; j++) {
+                results.Add(effectHolder.addOrRemoveSpecialAttribute[i].specialAttributes[j]);
+            }
+        }
+
+        return results;
+    }
+
     protected virtual void Effect(CardVisual card) {
         //Debug.Log(abilityName + " is firing");
         
@@ -424,6 +435,10 @@ public abstract class SpecialAbility {
         }
     }
 
+    public void UnregisterListeners() {
+        Grid.EventManager.RemoveMyListeners(this);
+    }
+
     public virtual void RegisterListeners() {
 
         if (!source.photonView.isMine)
@@ -590,7 +605,7 @@ public abstract class SpecialAbility {
         int value = data.GetInt("Value");
         Player player = data.GetMonoBehaviour("Player") as Player;
 
-        Debug.Log(type.ToString() + " has changed by a value of " + value);
+        //Debug.Log(type.ToString() + " has changed by a value of " + value);
 
         if (player != source.owner)
             return;
@@ -601,7 +616,7 @@ public abstract class SpecialAbility {
         if (!CheckForResourceGainedOrLost(triggerConstraints, value))
             return;
 
-        Debug.Log(type.ToString() + " change has passed constraints");
+        //Debug.Log(type.ToString() + " change has passed constraints");
 
         if (!ManageConstraints(source)) {
             return;

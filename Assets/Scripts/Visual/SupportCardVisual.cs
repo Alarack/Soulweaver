@@ -47,6 +47,7 @@ public class SupportCardVisual : CardVisual {
         TextTools.SetTextColor(cardSupportValueText, Color.white);
 
         supportToken.UpdateSupportText(Constants.CardStats.SupportValue, supportValue);
+
     }
 
     public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true) {
