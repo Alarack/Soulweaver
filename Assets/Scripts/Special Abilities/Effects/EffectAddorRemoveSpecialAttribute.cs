@@ -13,8 +13,8 @@ public class EffectAddorRemoveSpecialAttribute : Effect {
     }
 
     public AttributeAction attributeAction;
-    public SpecialAttribute.AttributeType attributeType;
-    public int value;
+    //public SpecialAttribute.AttributeType attributeType;
+    //public int value;
 
 
     public List<SpecialAttribute> specialAttributes = new List<SpecialAttribute>();
@@ -43,9 +43,9 @@ public class EffectAddorRemoveSpecialAttribute : Effect {
                 RemoveSpecialAttribute(target);
                 break;
 
-            case AttributeAction.Modify:
-                ModifySpecialAttribute(target, modificationValue);
-                break;
+            //case AttributeAction.Modify:
+            //    ModifySpecialAttribute(target, modificationValue);
+            //    break;
 
         }
     }
@@ -60,9 +60,9 @@ public class EffectAddorRemoveSpecialAttribute : Effect {
                 AddSpecialAttribute(target);
                 break;
 
-            case AttributeAction.Modify:
-                ModifySpecialAttribute(target, -modificationValue);
-                break;
+            //case AttributeAction.Modify:
+            //    ModifySpecialAttribute(target, -modificationValue);
+            //    break;
 
         }
     }

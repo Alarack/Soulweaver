@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Name: WAR_ShieldWarden
   m_EditorClassIdentifier: 
   cardID: 73012
-  cardName: 
-  cardText: 
-  cardCost: 0
+  cardName: Shield Warden
+  cardText: Defender.
+  cardCost: 5
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  primaryCardType: 0
+  primaryCardType: 1
   otherCardTypes: 
-  attunements: 
-  subTypes: 
-  keywords: 
+  attunements: 08000000020000000d000000
+  subTypes: 1b000000
+  keywords: 0e000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes: []
-  attack: 0
-  size: 0
-  health: 0
+  attack: 6
+  size: 3
+  health: 7
