@@ -151,9 +151,9 @@ public class CreatureCardVisual : CardVisual {
                     health = _creatureData.health;
                 } //TODO: Make max health properly
 
-                if (value < 1) {
-                    Debug.Log(gameObject.name + " has taken " + Mathf.Abs(value) + " point(s) of damage");
-                }
+                //if (value < 1) {
+                //    Debug.Log(gameObject.name + " :: " + cardData.cardName + " has taken " + Mathf.Abs(value) + " point(s) of damage");
+                //}
 
                 if (value < 0) {
                     CheckDeath(source.photonView.viewID, false, waitForVFX);
@@ -381,7 +381,7 @@ public class CreatureCardVisual : CardVisual {
                 break;
         }
 
-        Debug.Log(card.gameObject.name + " has been hit with a VFX: " + vfx.gameObject.name);
+        //Debug.Log(card.gameObject.name + " has been hit with a VFX: " + vfx.gameObject.name);
 
 
 
@@ -468,7 +468,9 @@ public class CreatureCardVisual : CardVisual {
         yield return new WaitForSeconds(0.7f);
         GameObject deathVFX;
 
-        if (deathEffect != "")
+        bool hasDeathEffect = string.IsNullOrEmpty(deathEffect);
+
+        if (!hasDeathEffect)
             deathVFX = PhotonNetwork.Instantiate(deathEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
         else {
             deathVFX = PhotonNetwork.Instantiate("VFX_NecroticFlash", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;

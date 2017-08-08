@@ -336,8 +336,24 @@ public class CardVisual : Photon.MonoBehaviour {
 
             data.AddInt("Stat", (int)stat);
             data.AddInt("Value", value);
-            data.AddGameObject("Target", gameObject);
+            data.AddMonoBehaviour("Target", this);
             data.AddMonoBehaviour("Source", source);
+
+            //Debug.Log(owner.gameObject.name + " is the owner of " + gameObject.name + " :: " + cardData.cardName);
+
+            //if (photonView.isMine) {
+            //    //Debug.Log("[Card Visual - MINE] " + gameObject.name + " :: " + cardData.cardName + " is the target");
+            //    Debug.Log("[Card Visual - MINE] " + source.gameObject.name + " :: " + source.cardData.cardName + " is the source");
+            //}
+            //else {
+            //    //Debug.Log("[Card Visual - THEIRS] " + gameObject.name + " :: " + cardData.cardName + " is the target");
+            //    Debug.Log("[Card Visual - THEIRS] " + source.gameObject.name + " :: " + source.cardData.cardName + " is the source");
+            //}
+
+          
+
+            //Debug.Log(gameObject.name + " :: " + cardData.cardName + " has had " + stat.ToString() + " alterd by " + source.gameObject.name + " :: " + source.cardData.cardName);
+
 
             Grid.EventManager.SendEvent(Constants.GameEvent.CreatureStatAdjusted, data);
         }
@@ -991,13 +1007,13 @@ public class CardVisual : Photon.MonoBehaviour {
         int statEnum = (int)adjustment.stat;
         int value = adjustment.value;
 
-        int sourceID;
+        int sourceID = source.photonView.viewID;
 
-        if (source != null)
-            sourceID = source.photonView.viewID;
-        else {
-            sourceID = photonView.viewID;
-        }
+        //if (source != null)
+        //    sourceID = source.photonView.viewID;
+        //else {
+        //    sourceID = photonView.viewID;
+        //}
         photonView.RPC("ApplyCombatDamage", targets, statEnum, value, sourceID, waitForVFX);
     }
 
@@ -1104,6 +1120,8 @@ public class CardVisual : Photon.MonoBehaviour {
                     return;
                 }
 
+                //Debug.Log(source.gameObject.name + " is SUCCESSFULLY removeing stat adjustments");
+
                 AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
 
                 statAdjustments.Remove(allAdjustments[i]);
@@ -1113,16 +1131,16 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     public void RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, int updatedValue) {
-        int sourceID;
-        int statEnum = (int)adjustment.stat;
+        int sourceID = source.photonView.viewID; ;
+        //int statEnum = (int)adjustment.stat;
 
-        if (source != null)
-            sourceID = source.photonView.viewID;
-        else {
-            sourceID = photonView.viewID;
-        }
+        //if (source != null)
+        //    sourceID = source.photonView.viewID;
+        //else {
+        //    sourceID = photonView.viewID;
+        //}
 
-        photonView.RPC("UpdateSpecialAbilityStatAdjustment", targets, adjustment.uniqueID, sourceID, statEnum, updatedValue);
+        photonView.RPC("UpdateSpecialAbilityStatAdjustment", targets, adjustment.uniqueID, sourceID, updatedValue);
     }
 
     [PunRPC]

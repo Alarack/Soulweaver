@@ -27,6 +27,7 @@ public class EffectZoneChange : Effect {
                 break;
 
             case DeckType.Void:
+                target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(targetLocation, target));
                 target.StartCoroutine(target.RemoveCardVisualFromField(target));
 
                 break;

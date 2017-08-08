@@ -125,7 +125,7 @@ public abstract class SpecialAbility {
     }
 
     public virtual void InitializeEffects() {
-        for(int i = 0; i < effectHolder.statAdjustments.Count; i++) {
+        for (int i = 0; i < effectHolder.statAdjustments.Count; i++) {
             effectHolder.statAdjustments[i].Initialize(source, this);
         }
         for (int i = 0; i < effectHolder.zoneChanges.Count; i++) {
@@ -153,8 +153,8 @@ public abstract class SpecialAbility {
 
     public List<StatAdjustment> GetAllStatAdjustments() {
         List<StatAdjustment> results = new List<StatAdjustment>();
-        for(int i = 0; i < effectHolder.statAdjustments.Count; i++) {
-            for(int j = 0; j < effectHolder.statAdjustments[i].adjustments.Count; j++) {
+        for (int i = 0; i < effectHolder.statAdjustments.Count; i++) {
+            for (int j = 0; j < effectHolder.statAdjustments[i].adjustments.Count; j++) {
                 results.Add(effectHolder.statAdjustments[i].adjustments[j]);
             }
         }
@@ -174,8 +174,8 @@ public abstract class SpecialAbility {
 
     protected virtual void Effect(CardVisual card) {
         //Debug.Log(abilityName + " is firing");
-        
-        if(effect != EffectType.RetriggerOtherEffect && effect != EffectType.RemoveOtherEffect) {
+
+        if (effect != EffectType.RetriggerOtherEffect && effect != EffectType.RemoveOtherEffect) {
             if (!targets.Contains(card))
                 targets.Add(card);
             //Debug.Log(abilityName + " is adding " + card.gameObject.name + " to its target list");
@@ -191,7 +191,7 @@ public abstract class SpecialAbility {
                 }
             }
 
-            if(target != null) {
+            if (target != null) {
                 if (!target.targets.Contains(card)) {
                     target.targets.Add(card);
                     //Debug.Log(abilityName + " is adding " + card.gameObject.name + " to " + target.abilityName + "'s target list");
@@ -220,7 +220,7 @@ public abstract class SpecialAbility {
                 break;
 
             case EffectType.ZoneChange:
-                for(int i = 0; i < effectHolder.zoneChanges.Count; i++) {
+                for (int i = 0; i < effectHolder.zoneChanges.Count; i++) {
                     effectHolder.zoneChanges[i].Apply(card);
                 }
 
@@ -321,7 +321,7 @@ public abstract class SpecialAbility {
                 case EffectType.StatAdjustment:
                     //RemoveStatAdjustments(cards[i]);
 
-                    for(int j = 0; j < effectHolder.statAdjustments.Count; j++) {
+                    for (int j = 0; j < effectHolder.statAdjustments.Count; j++) {
                         effectHolder.statAdjustments[j].Remove(cards[i]);
                     }
 
@@ -399,7 +399,7 @@ public abstract class SpecialAbility {
     protected void RemoveOtherEffect(ConstraintList constraint) {
         SpecialAbility target = null;
 
-        for(int i = 0; i < source.specialAbilities.Count; i++) {
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
             if (source.specialAbilities[i].abilityName == constraint.abilityToRemove)
                 target = source.specialAbilities[i];
         }
@@ -424,10 +424,15 @@ public abstract class SpecialAbility {
 
         if (target != null) {
 
-            Debug.Log("retriggering");
+            Debug.Log(abilityName + " is retriggering " + constraint.abilityToRetrigger);
 
-            if(target is LogicTargetedAbility) {
+            if (target is LogicTargetedAbility) {
                 LogicTargetedAbility lta = target as LogicTargetedAbility;
+
+                if (!ManageConstraints(lta.source, lta)) {
+                    return;
+                }
+
                 lta.ProcessEffect(lta.source);
             }
 
@@ -460,15 +465,15 @@ public abstract class SpecialAbility {
 
 
         //Effect Duration
-        if (effectDuration == Duration.EndOfTurn) 
+        if (effectDuration == Duration.EndOfTurn)
             Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndDuration);
-        
+
         if (effectDuration == Duration.StartOfTurn)
             Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStartEndDuration);
 
-        if (effectDuration == Duration.WhileInZone) 
+        if (effectDuration == Duration.WhileInZone)
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZoneEndDuration);
-        
+
 
         //Once per turn and resent coutner at end of turn checks
         if (triggerConstraints.resetCountAtTurnEnd && triggerConstraints.requireMultipleTriggers)
@@ -479,9 +484,9 @@ public abstract class SpecialAbility {
 
 
         //Trigger Effects
-        if (source.primaryCardType == CardType.Domain && trigger.Contains(AbilityActivationTrigger.UserActivated)) 
+        if (source.primaryCardType == CardType.Domain && trigger.Contains(AbilityActivationTrigger.UserActivated))
             Grid.EventManager.RegisterListener(GameEvent.UserActivatedDomainAbility, OnUserActiveDomainAbility);
-        
+
         if (trigger.Contains(AbilityActivationTrigger.EntersZone))
             Grid.EventManager.RegisterListener(GameEvent.CardEnteredZone, OnEnterZone);
 
@@ -529,7 +534,7 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
-        if(!triggerConstraints.suspendTrigger)
+        if (!triggerConstraints.suspendTrigger)
             triggerConstraints.suspendTrigger = true;
     }
 
@@ -547,7 +552,7 @@ public abstract class SpecialAbility {
             return;
 
 
-        if(triggerConstraints.suspendTrigger)
+        if (triggerConstraints.suspendTrigger)
             triggerConstraints.suspendTrigger = false;
     }
 
@@ -618,7 +623,7 @@ public abstract class SpecialAbility {
 
         //Debug.Log(type.ToString() + " change has passed constraints");
 
-        if (!ManageConstraints(source)) {
+        if (!ManageConstraints(source, this)) {
             return;
         }
 
@@ -659,7 +664,7 @@ public abstract class SpecialAbility {
                 break;
         }
 
-        if (!ManageConstraints(effectTarget)) {
+        if (!ManageConstraints(effectTarget, this)) {
             return;
         }
 
@@ -718,7 +723,7 @@ public abstract class SpecialAbility {
         if (card != source)
             return;
 
-        if (!ManageConstraints(card)) {
+        if (!ManageConstraints(card, this)) {
             return;
         }
 
@@ -743,7 +748,7 @@ public abstract class SpecialAbility {
         //if (card.primaryCardType == CardType.Domain)
         //    return;
 
-        if (!ManageConstraints(card)) {
+        if (!ManageConstraints(card, this)) {
             return;
         }
 
@@ -787,7 +792,7 @@ public abstract class SpecialAbility {
             triggerConstraints.triggeredThisTurn = false;
         }
 
-        if (!ManageConstraints(source)) {
+        if (!ManageConstraints(source, this)) {
             return;
         }
 
@@ -824,7 +829,7 @@ public abstract class SpecialAbility {
             return;
 
 
-        if(triggerConstraints.whosTurn == OwnerConstraints.None) {
+        if (triggerConstraints.whosTurn == OwnerConstraints.None) {
             if (!source.owner == player) {
                 return;
             }
@@ -834,7 +839,7 @@ public abstract class SpecialAbility {
         if (triggerConstraints.resetCountAtTurnEnd)
             triggerConstraints.counter = 0;
 
-        if (!ManageConstraints(source)) {
+        if (!ManageConstraints(source, this)) {
             return;
         }
 
@@ -849,7 +854,7 @@ public abstract class SpecialAbility {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
         Deck deck = data.GetMonoBehaviour("Deck") as Deck;
 
-        if (!ManageConstraints(card)) {
+        if (!ManageConstraints(card, this)) {
             return;
         }
 
@@ -873,7 +878,7 @@ public abstract class SpecialAbility {
         //if (card == source)
         //Debug.Log(card.gameObject.name + " has left " + deck.decktype.ToString());
 
-        if (!ManageConstraints(card)) {
+        if (!ManageConstraints(card, this)) {
             return;
         }
 
@@ -885,7 +890,7 @@ public abstract class SpecialAbility {
         }
 
         //if (card == source)
-            //Debug.Log(card.gameObject.name + " has passed constraint testing ");
+        //Debug.Log(card.gameObject.name + " has passed constraint testing ");
 
         ActivateTargeting();
     }
@@ -898,7 +903,7 @@ public abstract class SpecialAbility {
 
         //Debug.Log(card.gameObject.name + " is attacking");
 
-        if (!ManageConstraints(card)) {
+        if (!ManageConstraints(card, this)) {
             return;
         }
 
@@ -914,7 +919,7 @@ public abstract class SpecialAbility {
 
         //Debug.Log(card.cardData.cardName + " is defending");
 
-        if (!ManageConstraints(card)) {
+        if (!ManageConstraints(card, this)) {
             return;
         }
         //Debug.Log("A defence trigger has happened");
@@ -928,11 +933,39 @@ public abstract class SpecialAbility {
     protected void OnCreatureStatAdjusted(EventData data) {
         CardStats stat = (CardStats)data.GetInt("Stat");
         int value = data.GetInt("Value");
-        CardVisual target = data.GetGameObject("Target").GetComponent<CardVisual>();
+        CardVisual target = data.GetMonoBehaviour("Target") as CardVisual;
         CardVisual sourceOfAdjustment = data.GetMonoBehaviour("Source") as CardVisual;
 
         if (!source.photonView.isMine)
             return;
+
+
+        if (source.currentDeck.decktype == DeckType.Battlefield) {
+
+            //if (source.photonView.isMine) {
+            //    Debug.Log("[Special Ability - MINE] " + abilityName + " " + target.gameObject.name + " :: " + target.cardData.cardName + " is the target");
+            //    Debug.Log("[Special Ability - MINE] " + abilityName + " " + sourceOfAdjustment.gameObject.name + " :: " + sourceOfAdjustment.cardData.cardName + " is the source");
+            //}
+            //else {
+            //    Debug.Log("[Special Ability - THEIRS] " + target.gameObject.name + " :: " + target.cardData.cardName + " is the target");
+            //    Debug.Log("[Special Ability - THEIRS] " + sourceOfAdjustment.gameObject.name + " :: " + sourceOfAdjustment.cardData.cardName + " is the source");
+            //}
+
+
+            //Debug.Log(target.gameObject.name + " :: " + target.cardData.cardName + " has had " + stat.ToString() + " altered by " + sourceOfAdjustment.gameObject.name + " :: " + sourceOfAdjustment.cardData.cardName);
+
+        }
+
+
+
+        if (triggerConstraints.thisCardAdjusted && target != source)
+            return;
+
+        if (triggerConstraints.thisCardAdjusts && sourceOfAdjustment != source)
+            return;
+
+        //if(target == source || sourceOfAdjustment == source)
+        //    Debug.Log(target.gameObject.name + " :: " + target.cardData.cardName + " has had " + stat.ToString() + " altered by " + sourceOfAdjustment.gameObject.name + " :: " + sourceOfAdjustment.cardData.cardName);
 
 
         if (!CheckCreatureStatAltered(triggerConstraints, stat, value, target))
@@ -954,7 +987,7 @@ public abstract class SpecialAbility {
                 break;
         }
 
-        if (!ManageConstraints(effectTarget)) {
+        if (!ManageConstraints(effectTarget, this)) {
             return;
         }
 
@@ -987,47 +1020,47 @@ public abstract class SpecialAbility {
 
     #region CONSTRAINT CHECKING
 
-    protected bool ManageConstraints(CardVisual triggeringCard) {
+    protected bool ManageConstraints(CardVisual triggeringCard, SpecialAbility ability) {
         bool result = true;
 
-        if (triggerConstraints.suspendTrigger)
+        if (ability.triggerConstraints.suspendTrigger)
             return false;
 
-        if (triggerConstraints.thisCardOnly && triggeringCard != source) {
+        if (ability.triggerConstraints.thisCardOnly && triggeringCard != source) {
             //Debug.Log(source.gameObject.name + " can only trigger its own effect and " + target.gameObject.name + " has happened");
             return false;
         }
 
-        if (triggerConstraints.neverTargetSelf && triggeringCard == source)
+        if (ability.triggerConstraints.neverTargetSelf && triggeringCard == source)
             return false;
 
-        if (triggerConstraints.oncePerTurn && triggerConstraints.triggeredThisTurn)
+        if (ability.triggerConstraints.oncePerTurn && ability.triggerConstraints.triggeredThisTurn)
             return false;
 
         //if (targetConstraints.neverTargetSelf && triggeringCard == source)
         //    return false;
 
-        if (CheckConstraints(triggerConstraints, triggeringCard) == null) {
+        if (ability.CheckConstraints(ability.triggerConstraints, triggeringCard) == null) {
             //Debug.Log("Trigger is not in place");
 
             return false;
         }
 
-        if (CheckConstraints(sourceConstraints, source) == null) {
+        if (ability.CheckConstraints(ability.sourceConstraints, source) == null) {
             //Debug.Log("Source is not in place for" + source.gameObject.name + "'s ability");
             //Debug.Log("Source is not in place");
             return false;
         }
 
-        for (int i = 0; i < additionalRequirements.Count; i++) {
-            if (!CheckAdditionalRequirements(additionalRequirements[i], additionalRequirementConstraints))
+        for (int i = 0; i < ability.additionalRequirements.Count; i++) {
+            if (!ability.CheckAdditionalRequirements(ability.additionalRequirements[i], ability.additionalRequirementConstraints))
                 return false;
         }
 
-        triggeringCards.Add(triggeringCard);
+        ability.triggeringCards.Add(triggeringCard);
 
-        if (triggerConstraints.requireMultipleTriggers) {
-            result = CheckForMultipleTriggers(triggerConstraints);
+        if (ability.triggerConstraints.requireMultipleTriggers) {
+            result = ability.CheckForMultipleTriggers(ability.triggerConstraints);
         }
 
         return result;
@@ -1165,7 +1198,7 @@ public abstract class SpecialAbility {
 
             case ConstraintType.Keyword:
                 if (constraint.notKeyword) {
-                    if (DoesListContainAny<Keywords>(constraint.keyword, target.keywords)) 
+                    if (DoesListContainAny<Keywords>(constraint.keyword, target.keywords))
                         return null;
                 }
                 else {
@@ -1248,12 +1281,12 @@ public abstract class SpecialAbility {
 
         List<SpecialAttribute.AttributeType> targetAttributes = new List<SpecialAttribute.AttributeType>();
 
-        for(int i = 0; i < target.specialAttributes.Count; i++) {
+        for (int i = 0; i < target.specialAttributes.Count; i++) {
             targetAttributes.Add(target.specialAttributes[i].attributeType);
 
         }
 
-        if(DoesListContainAny<SpecialAttribute.AttributeType>(constraints.specialAttributes, targetAttributes)) {
+        if (DoesListContainAny<SpecialAttribute.AttributeType>(constraints.specialAttributes, targetAttributes)) {
             return true;
         }
 
@@ -1574,10 +1607,10 @@ public abstract class SpecialAbility {
                 if (value > 0) {
                     return true;
                 }
-                    break;
+                break;
 
             case GainedOrLost.Lost:
-                if(value < 0) {
+                if (value < 0) {
                     return true;
                 }
 
@@ -1606,14 +1639,14 @@ public abstract class SpecialAbility {
 
     public bool CreatureCanAttack(CardVisual target, ConstraintList constraint) {
 
-        if(!(target is CreatureCardVisual)){
+        if (!(target is CreatureCardVisual)) {
             return false;
         }
 
         CreatureCardVisual soul = target as CreatureCardVisual;
 
         return soul.CanAttack() == constraint.creatureCanAttack;
-        
+
     }
 
     public bool DoesTargetExistInOtherAbilityTargetList(CardVisual target, ConstraintList constraint) {
@@ -1668,7 +1701,7 @@ public abstract class SpecialAbility {
         }
 
         if (targetAbility != null) {
-            if(targetAbility.targets.Contains(target))
+            if (targetAbility.targets.Contains(target))
                 targetAbility.targets.Remove(target);
         }
 
@@ -1678,7 +1711,7 @@ public abstract class SpecialAbility {
 
     public void CreateVFX() {
 
-        
+
 
         for (int i = 0; i < targets.Count; i++) {
             GameObject atkVFX;
@@ -1876,6 +1909,8 @@ public abstract class SpecialAbility {
         //Creature Stat Adjusted
         public GainedOrLost statGainedOrLost;
         public CardStats statChanged;
+        public bool thisCardAdjusts;
+        public bool thisCardAdjusted;
 
         //Creature Can Attack
         public bool creatureCanAttack;

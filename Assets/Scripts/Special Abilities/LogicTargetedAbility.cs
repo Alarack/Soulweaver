@@ -82,7 +82,9 @@ public class LogicTargetedAbility : SpecialAbility {
 
             case LogicTargeting.NoTargetsNeeded:
 
-                Effect(source);
+                if(CheckConstraints(targetConstraints, source) != null)
+                    Effect(source);
+
                 break;
 
             case LogicTargeting.OnlyTargetTriggeringCard:

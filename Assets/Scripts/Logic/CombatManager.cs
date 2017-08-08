@@ -255,18 +255,18 @@ public class CombatManager : Photon.MonoBehaviour {
 
 
                 if (rightOfTarget != null) {
-                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker, !hasVFX);
+                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, false);
                 }
                     //Debug.Log(rightOfTarget.cardData.name);
 
                 if (leftOfTarget != null) {
-                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker, !hasVFX);
+                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, false);
                 }
                     //Debug.Log(leftOfTarget.cardData.name);
             }
         }
 
-        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker, !hasVFX);
+        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, !hasVFX);
 
         if (!hasVFX) {
             GameObject atkVFX;
@@ -348,7 +348,7 @@ public class CombatManager : Photon.MonoBehaviour {
         }
 
 
-        Debug.Log("Ending Combat");
+        //Debug.Log("Ending Combat");
 
         if (attacker != null)
             attacker = null;

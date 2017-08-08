@@ -303,14 +303,14 @@ public class CardIDs {
 
 		//Warden Other 79001 - 79999
 		WAR_DOM_SpiritGuide = 79001,
-		WAR_DOM_Bolster = 79001,
-		WAR_DOM_Fearsome = 79001,
-		WAR_DOM_DeadlySalvation = 79001,
-		WAR_DOM_OneManPhalanx = 79001,
-		WAR_DOM_Flex = 79001,
-		WAR_DOM_GraveyardShift = 79001,
-		WAR_DOM_SoulExchange = 79001,
-		WAR_DOM_Micromanage = 79001,
+		WAR_DOM_Bolster = 79002,
+		WAR_DOM_Fearsome = 79003,
+		WAR_DOM_DeadlySalvation = 79004,
+		WAR_DOM_OneManPhalanx = 79005,
+		WAR_DOM_Flex = 79006,
+		WAR_DOM_GraveyardShift = 79007,
+		WAR_DOM_SoulExchange = 79008,
+		WAR_DOM_Micromanage = 79009,
 
         //Neutral 80000
         NEU_SkeletalMinions = 80000,

@@ -67,6 +67,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -119,6 +121,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -176,6 +180,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -233,6 +239,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -304,6 +312,8 @@ MonoBehaviour:
           abilityToRetrigger: 
           statGainedOrLost: 0
           statChanged: 0
+          thisCardAdjusts: 0
+          thisCardAdjusted: 0
           creatureCanAttack: 0
           zoneToCheckForNumberOfCards: 0
           moreOrLessCards: 0
@@ -326,10 +336,11 @@ MonoBehaviour:
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+      bestowAbility: []
     togglePresets: 1
-    toggleTriggerOptions: 0
+    toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
@@ -374,6 +385,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -426,6 +439,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -442,7 +457,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 1
-    abilityName: 
+    abilityName: Buff Me
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -483,6 +498,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -540,6 +557,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -566,7 +585,7 @@ MonoBehaviour:
         - stat: 2
           value: 2
           nonStacking: 0
-          temporary: 0
+          temporary: 1
           source: {fileID: 0}
           uniqueID: -1
           spellDamage: 0
@@ -611,6 +630,8 @@ MonoBehaviour:
           abilityToRetrigger: 
           statGainedOrLost: 0
           statChanged: 0
+          thisCardAdjusts: 0
+          thisCardAdjusted: 0
           creatureCanAttack: 0
           zoneToCheckForNumberOfCards: 0
           moreOrLessCards: 0
@@ -633,6 +654,7 @@ MonoBehaviour:
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+      bestowAbility: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
@@ -684,6 +706,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -736,6 +760,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -793,6 +819,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -850,6 +878,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -876,6 +906,7 @@ MonoBehaviour:
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+      bestowAbility: []
     togglePresets: 1
     toggleTriggerOptions: 0
     toggleSourceOptions: 0

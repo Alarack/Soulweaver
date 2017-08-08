@@ -523,6 +523,13 @@ public class CardDataEditor : Editor {
                     entry.triggerConstraints.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.triggerConstraints.statChanged);
                     entry.triggerConstraints.statGainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.triggerConstraints.statGainedOrLost);
                     entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
+                    EditorGUILayout.Separator();
+
+                    if(!entry.triggerConstraints.thisCardAdjusted)
+                        entry.triggerConstraints.thisCardAdjusts = EditorGUILayout.Toggle("This Card Caused Adjustment?", entry.triggerConstraints.thisCardAdjusts);
+
+                    if (!entry.triggerConstraints.thisCardAdjusts)
+                        entry.triggerConstraints.thisCardAdjusted = EditorGUILayout.Toggle("This Card Was Adjusted?", entry.triggerConstraints.thisCardAdjusted);
 
                     break;
 

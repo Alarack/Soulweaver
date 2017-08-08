@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
-  m_Name: COR_DOM_GraveKindling
+  m_Name: WAR_DOM_DeadlySalvation
   m_EditorClassIdentifier: 
-  cardID: 10003
-  cardName: Grave Kindling
-  cardText: 'At start of your turn, put a 1/1/1 Ashling into your Soulcrypt. '
+  cardID: 79004
+  cardName: Deadly Salvation
+  cardText: 'Whenever an Enemy Soul Dies, gain a Lost Soul. '
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
@@ -22,20 +22,20 @@ MonoBehaviour:
   deathVFX: 
   primaryCardType: 5
   otherCardTypes: 
-  attunements: 0300000008000000
+  attunements: 
   subTypes: 
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 05000000
+  - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 
-      owner: 2
+      types: 04000000050000000200000001000000
+      owner: 3
       whosTurn: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -47,9 +47,9 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 06000000
+      currentZone: 04000000
       notCurrentZone: 0
-      previousZone: 04000000
+      previousZone: 05000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -139,8 +139,8 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 3
-    abilityName: Deploy Ash
+    effect: 4
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -259,18 +259,15 @@ MonoBehaviour:
       abilityToGatherTargetsFrom: 
     effectHolder:
       zoneChanges: []
-      tokenSpanws:
+      tokenSpanws: []
+      statAdjustments: []
+      generateResources:
       - effectType: 0
         source: {fileID: 0}
-        spawnMethod: 0
-        spawnableTokenDataName: COR_TKN_Ashling
-        spawnTokenLocation: 4
-        spawnCardType: 1
-        numberOfSpawns: 1
-        spawnForOpponent: 0
-        tokenSeriesNames: []
-      statAdjustments: []
-      generateResources: []
+        resourceType: 3
+        amount: 1
+        cap: 0
+        resourceName: Lost Souls
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
@@ -278,7 +275,7 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
@@ -287,4 +284,4 @@ MonoBehaviour:
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  domainIcon: {fileID: 21300030, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}
+  domainIcon: {fileID: 21300024, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}
