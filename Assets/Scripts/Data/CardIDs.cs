@@ -181,6 +181,7 @@ public class CardIDs {
         RLM_HornOfTheLegions = 30094,
         RLM_FlashOfLight = 30095,
         RLM_Alarm = 30096,
+        RLM_GateGuardianCarth = 30097,
 
 
 
