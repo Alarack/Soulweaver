@@ -117,43 +117,32 @@ public class CombatManager : Photon.MonoBehaviour {
             return;
         }
 
-        if (currentTarget.hasAttacked) {
-            Debug.LogError("That has already attacked");
+        //if (currentTarget.hasAttacked) {
+        //    Debug.LogError("That has already attacked");
+        //    return;
+        //}
+
+        if (!currentTarget.CanAttack()) {
+            Debug.LogError("That cannot attack");
             return;
         }
 
-        if (currentTarget.keywords.Contains(Keywords.Pacifist) || currentTarget.keywords.Contains(Keywords.Defender)) {
-            Debug.LogError("That has pacifist or defender");
-            return;
-        }
+        //if (Finder.CardHasKeyword(currentTarget, Keywords.Exhausted)) {
+        //    Debug.LogError("That is exhausted");
+        //    return;
+        //}
 
-        if (Finder.CardHasKeyword(currentTarget, Keywords.Exhausted)) {
-            Debug.LogError("That is exhausted");
-            return;
-        }
-
-        if (currentTarget.attack < 1) {
-            Debug.LogError("That has no attack value");
-            return;
-        }
+        //if (currentTarget.attack < 1) {
+        //    Debug.LogError("That has no attack value");
+        //    return;
+        //}
             
 
         attacker = currentTarget;
         isInCombat = true;
         selectingDefender = true;
-        //Debug.Log(attacker.cardData.cardName + " is Attacking");
-
-
-        
 
         attacker.battlefieldPos.position += selectedPos;
-
-
-
-
-        //EventData data = new EventData();
-        //data.AddMonoBehaviour("Card", attacker);
-        //Grid.EventManager.SendEvent(Constants.GameEvent.CharacterAttacked, data);
 
     }
 
@@ -256,27 +245,30 @@ public class CombatManager : Photon.MonoBehaviour {
     private void CombatHelper(CreatureCardVisual damageDealer, CreatureCardVisual damageTaker) {
 
         SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -damageDealer.attack, false, false, damageDealer);
+        bool hasVFX = String.IsNullOrEmpty(damageDealer.attackEffect);
 
-        if(damageDealer == attacker) {
+        if (damageDealer == attacker) {
             if (damageDealer.keywords.Contains(Keywords.Cleave)) {
                 CardVisual rightOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheRight(damageTaker);
                 CardVisual leftOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheLeft(damageTaker);
+                
+
 
                 if (rightOfTarget != null) {
-                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, false);
                 }
                     //Debug.Log(rightOfTarget.cardData.name);
 
                 if (leftOfTarget != null) {
-                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, false);
                 }
                     //Debug.Log(leftOfTarget.cardData.name);
             }
         }
 
-        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker);
+        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, !hasVFX);
 
-        if (damageDealer.attackEffect != null && damageDealer.attackEffect != "") {
+        if (!hasVFX) {
             GameObject atkVFX;
             if (damageDealer.cardData.movingVFX) {
                 atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageDealer.transform.position, Quaternion.identity, 0) as GameObject;
@@ -285,16 +277,14 @@ public class CombatManager : Photon.MonoBehaviour {
                 atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
             }
 
-
             CardVFX vfx = atkVFX.GetComponent<CardVFX>();
 
             if (vfx.photonView.isMine) {
+                vfx.Initialize(damageTaker, damageDealer.cardData.movingVFX);
+
                 if (damageDealer.cardData.movingVFX) {
                     atkVFX.transform.SetParent(damageDealer.transform, false);
                     atkVFX.transform.localPosition = Vector3.zero;
-
-                    vfx.Initialize(damageTaker, damageDealer.cardData.movingVFX);
-
                     //vfx.target = damageTaker.battleToken.incomingEffectLocation;
                     //vfx.beginMovement = true;
                 }
@@ -309,11 +299,14 @@ public class CombatManager : Photon.MonoBehaviour {
 
             //damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker, damageDealer.cardData.movingVFX);
         }
-        else {
-            EventData data = new EventData();
-            data.AddMonoBehaviour("Card", damageTaker);
-            Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
-        }
+        //else {
+
+        //    //damageDealer.RPCBroadCastNoVFXImpactEvent(PhotonTargets.All, damageTaker);
+
+        //    //EventData data = new EventData();
+        //    //data.AddMonoBehaviour("Card", damageTaker);
+        //    //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
+        //}
 
     }
 
@@ -345,14 +338,17 @@ public class CombatManager : Photon.MonoBehaviour {
         //TODO: End of Combat Events
 
         if (attacker != null && defender != null) {
-            attacker.RPCCheckDeath(PhotonTargets.All, defender);
-            defender.RPCCheckDeath(PhotonTargets.All, attacker);
+            //bool attackerHasVFX = String.IsNullOrEmpty(attacker.attackEffect);
+            //bool defenderHasVFX = String.IsNullOrEmpty(defender.attackEffect);
+
+            //attacker.RPCCheckDeath(PhotonTargets.All, defender, false, !defenderHasVFX);
+            //defender.RPCCheckDeath(PhotonTargets.All, attacker, false, !attackerHasVFX);
 
             defender.RPCTargetCard(PhotonTargets.All, false);
         }
 
 
-        Debug.Log("Ending Combat");
+        //Debug.Log("Ending Combat");
 
         if (attacker != null)
             attacker = null;
@@ -437,14 +433,31 @@ public class CombatManager : Photon.MonoBehaviour {
 
     }
 
+    //public bool CheckForAttackPreventionEffects(CardVisual attacker) {
+    //    bool result = true;
 
+    //    if (attacker.keywords.Contains(Keywords.Defender))
+    //        return false;
+
+    //    if (attacker.keywords.Contains(Keywords.NoAttack))
+    //        return false;
+
+    //    if (attacker.keywords.Contains(Keywords.Pacifist))
+    //        return false;
+
+    //    if (attacker.keywords.Contains(Keywords.Stun))
+    //        return false;
+
+
+
+    //    return result;
+    //}
 
     #region Events
 
     public void OnTurnStart(EventData data) {
         Player p = data.GetMonoBehaviour("Player") as Player;
-
-        if(p = owner) {
+        if(p == owner) {
             HandleFusion();
         }
 

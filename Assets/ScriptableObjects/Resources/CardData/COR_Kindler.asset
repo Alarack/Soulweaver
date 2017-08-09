@@ -16,8 +16,8 @@ MonoBehaviour:
   cardText: Whenever you summon another Soul, deal 1 damage to an enemy Soul with
     the least health.
   cardCost: 2
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
+  cardImage: {fileID: 21300000, guid: cd2ce8288a68f9d4baa0d05032075325, type: 3}
+  cardImagePos: {x: 0, y: 5}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
@@ -136,6 +136,7 @@ MonoBehaviour:
     abilityName: 
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 0100000002000000040000000b000000
       owner: 3
@@ -256,6 +257,7 @@ MonoBehaviour:
           spellDamage: 0
         deriveStatsFromWhom: 0
         targetStat: 0
+        targetAbilityName: 
         zoneToCount: 0
         constraints:
           types: 
@@ -316,6 +318,7 @@ MonoBehaviour:
     logicTargetingMethod: 2
     numberofTargets: 1
     processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
   attack: 2
   size: 3

@@ -62,6 +62,25 @@ public class CardIDs {
         COR_SpitefulGravestone = 10028,
         COR_AshesToFlames = 10029,
         COR_BurntOffering = 10030,
+        COR_RestlessDead = 10031,
+        COR_TKN_VengefulRevenant = 10032,
+        COR_BlazingDead = 10033,
+        COR_CacklingFireSpinner = 10034,
+        COR_TKN_FirePoi = 10035,
+        COR_RecklessStrike = 10036,
+        COR_PyroBiologist = 10037,
+        COR_AutoImmolation = 10038,
+        COR_IgnitionBracers = 10039,
+        COR_UnstablePyromancer = 10040,
+        COR_BoomFly = 10041,
+        COR_EndlessHorde = 10042,
+        COR_BurningRemnants = 10043,
+        COR_Flamecaller = 10044,
+        COR_WallOfCorpses = 10045,
+        COR_ZombieHorde = 10046,
+
+
+
 
         //The Severed 20000
         SEV_SoulTorturer = 20000,
@@ -228,6 +247,7 @@ public class CardIDs {
 
         //Children of Illia 50000
         COI_DOM_Sentinel = 50000,
+        COI_AvengeTheHost = 50001,
 
 
 
@@ -284,14 +304,14 @@ public class CardIDs {
 
 		//Warden Other 79001 - 79999
 		WAR_DOM_SpiritGuide = 79001,
-		WAR_DOM_Bolster = 79001,
-		WAR_DOM_Fearsome = 79001,
-		WAR_DOM_DeadlySalvation = 79001,
-		WAR_DOM_OneManPhalanx = 79001,
-		WAR_DOM_Flex = 79001,
-		WAR_DOM_GraveyardShift = 79001,
-		WAR_DOM_SoulExchange = 79001,
-		WAR_DOM_Micromanage = 79001,
+		WAR_DOM_Bolster = 79002,
+		WAR_DOM_Fearsome = 79003,
+		WAR_DOM_DeadlySalvation = 79004,
+		WAR_DOM_OneManPhalanx = 79005,
+		WAR_DOM_Flex = 79006,
+		WAR_DOM_GraveyardShift = 79007,
+		WAR_DOM_SoulExchange = 79008,
+		WAR_DOM_Micromanage = 79009,
 
         //Neutral 80000
         NEU_SkeletalMinions = 80000,

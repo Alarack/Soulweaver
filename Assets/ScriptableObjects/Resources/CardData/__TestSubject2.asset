@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 112
   cardName: Test Subject 02
-  cardText: test  2
+  cardText: Just a dude
   cardCost: 1
   cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
   cardImagePos: {x: 0, y: 16.8}
@@ -24,11 +24,11 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 0b000000
   subTypes: 05000000
-  keywords: 23000000
+  keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes: []
-  attack: 2
+  attack: 1
   size: 3
-  health: 3
+  health: 1

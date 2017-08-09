@@ -12,7 +12,8 @@ public class EffectStatAdjustment : Effect {
     public enum ValueSetMethod {
         Manual,
         DeriveValueFromTargetStat,
-        DeriveValueFromCardsInZone
+        DeriveValueFromCardsInZone,
+        DeriveValueFromResource
     }
 
     public enum DeriveStatsFromWhom {
@@ -33,8 +34,11 @@ public class EffectStatAdjustment : Effect {
     public Constants.DeckType zoneToCount;
     public SpecialAbility.ConstraintList constraints;
 
+    //Derive Stats from Resource
+    public GameResource.ResourceType targetResource;
 
     public bool invertValue;
+    public int maxValue;
 
 
     public override void Initialize(CardVisual source, SpecialAbility parent) {
@@ -64,6 +68,12 @@ public class EffectStatAdjustment : Effect {
 
                 break;
 
+            case ValueSetMethod.DeriveValueFromResource:
+                SetAdjustmentValuesByResource();
+                ApplyStatAdjustment(target);
+
+                break;
+
         }
     }
 
@@ -75,17 +85,21 @@ public class EffectStatAdjustment : Effect {
         for (int i = 0; i < adjustments.Count; i++) {
             adjustments[i].uniqueID = IDFactory.GenerateID();
             adjustments[i].source = source;
+
+            //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName);
         }
     }
 
 
     //Apply All Adjustmetns to a target
     private void ApplyStatAdjustment(CardVisual target) {
-        for(int i = 0; i < adjustments.Count; i++) {
+        bool hasVFX = String.IsNullOrEmpty(parentAbility.abilityVFX);
+
+        for (int i = 0; i < adjustments.Count; i++) {
 
             //Debug.Log("Applying " + adjustments[i].stat.ToString() + " adjustment of value " + adjustments[i].value.ToString() + " to " + target.cardData.name);
-
-            target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source);
+            //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName);
+            target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source, !hasVFX);
         }
     }
 
@@ -148,9 +162,15 @@ public class EffectStatAdjustment : Effect {
             }
         }
 
+        if (maxValue > 0 && value > maxValue) {
+            value = maxValue;
+        }
+
         if (inverse) {
             value = -value;
         }
+
+
 
         return value;
 
@@ -172,6 +192,10 @@ public class EffectStatAdjustment : Effect {
 
         results = parentAbility.CheckNumberOfCardsInZone(zoneToCount, constraints).Count;
 
+        if (maxValue > 0 && results > maxValue) {
+            results = maxValue;
+        }
+
         if (inverse)
             results = -results;
 
@@ -179,8 +203,32 @@ public class EffectStatAdjustment : Effect {
     }
 
 
+    private void SetAdjustmentValuesByResource() {
+        for (int i = 0; i < adjustments.Count; i++) {
+            adjustments[i].value = SetValueByAmountOfResource(invertValue);
+            source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
+        }
+
+    }
+
+    private int SetValueByAmountOfResource(bool inverse) {
+
+        int result = source.owner.gameResourceDisplay.GetCurrentResourceValueByType(targetResource);
+
+        if (maxValue > 0 && result > maxValue) {
+            result = maxValue;
+        }
+
+        if (inverse) {
+            result = -result;
+        }
+
+        return result;
+    }
+
     //Remove all my adjustments from a target
     private void RemoveStatAdjustments(CardVisual card) {
+        bool hasVFX = String.IsNullOrEmpty(parentAbility.abilityVFX);
 
         List<StatAdjustment> targetAdjustments = new List<StatAdjustment>();
 
@@ -194,7 +242,7 @@ public class EffectStatAdjustment : Effect {
         }
 
         for (int i = 0; i < targetAdjustments.Count; i++) {
-            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source);
+            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, !hasVFX);
         }
 
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Pyromaster
   cardText: '(E): Deal 1 damage for each friendly Fire Attuned card.'
   cardCost: 4
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
+  cardImage: {fileID: 21300000, guid: a5b83e64f853198469d76812905badf4, type: 3}
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0

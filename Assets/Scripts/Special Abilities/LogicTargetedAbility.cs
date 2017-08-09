@@ -13,7 +13,8 @@ public class LogicTargetedAbility : SpecialAbility {
         NumberOfValidTargets,
         OnlyTargetTriggeringCard,
         UseTargetsFromOtherAbility,
-        TriggeringCardsOwner
+        TriggeringCardsOwner,
+        AdjacentTagets
     }
 
 
@@ -41,8 +42,6 @@ public class LogicTargetedAbility : SpecialAbility {
 
 
     public override bool ProcessEffect(CardVisual card) {
-
-
 
         switch (logicTargetingMethod) {
             case LogicTargeting.AllValidTargets:
@@ -83,7 +82,9 @@ public class LogicTargetedAbility : SpecialAbility {
 
             case LogicTargeting.NoTargetsNeeded:
 
-                Effect(source);
+                if(CheckConstraints(targetConstraints, source) != null)
+                    Effect(source);
+
                 break;
 
             case LogicTargeting.OnlyTargetTriggeringCard:
@@ -115,13 +116,27 @@ public class LogicTargetedAbility : SpecialAbility {
                 }
 
                 break;
-                    
 
+            case LogicTargeting.AdjacentTagets:
+                //CardVisual rightOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheRight(damageTaker);
+                List<CardVisual> otherTargets2 = FindTargetsFromAnotherAbility();
+
+
+                CardVisual leftcard = otherTargets2[0].owner.battleFieldManager.GetCardToTheLeft(otherTargets2[0]);
+                CardVisual rightCard = otherTargets2[0].owner.battleFieldManager.GetCardToTheRight(otherTargets2[0]);
+
+                if(leftcard != null && CheckConstraints(targetConstraints, leftcard) != null) {
+                    Effect(leftcard);
+                }
+
+                if (rightCard != null && CheckConstraints(targetConstraints, rightCard) != null) {
+                    Effect(rightCard);
+                }
+
+                break;
         }
 
         return true;
-
-        //return base.ProcessEffect(card);
     }
 
     public void ProcessEffect(List<CardVisual> targets) {

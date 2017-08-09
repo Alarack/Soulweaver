@@ -134,6 +134,7 @@ MonoBehaviour:
     abilityName: Target Soul
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 
       owner: 0
@@ -186,6 +187,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
     abilityVFX: 
     movingVFX: 0
+    clearTargetsOnEffectComplete: 0
     additionalRequirements: 
     additionalRequirementConstraints:
       types: 
@@ -320,11 +322,19 @@ MonoBehaviour:
           consumeResource: 0
           resourceThatChanged: 0
           resourceGainedOrLost: 0
+        targetResource: 0
         invertValue: 0
+        maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+    togglePresets: 1
+    toggleTriggerOptions: 0
+    toggleSourceOptions: 0
+    toggleEffectOptions: 0
+    toggleTargetOptions: 1
+    toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
   multiTargetAbilities:
   - trigger: 0a000000
@@ -431,9 +441,10 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
     effect: 1
-    abilityName: 
+    abilityName: Copy stats
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 
       owner: 0
@@ -486,6 +497,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
     abilityVFX: 
     movingVFX: 0
+    clearTargetsOnEffectComplete: 0
     additionalRequirements: 
     additionalRequirementConstraints:
       types: 
@@ -606,7 +618,9 @@ MonoBehaviour:
           consumeResource: 0
           resourceThatChanged: 0
           resourceGainedOrLost: 0
+        targetResource: 0
         invertValue: 0
+        maxValue: 0
       - effectType: 0
         source: {fileID: 0}
         valueSetmethod: 1
@@ -672,7 +686,9 @@ MonoBehaviour:
           consumeResource: 0
           resourceThatChanged: 0
           resourceGainedOrLost: 0
+        targetResource: 0
         invertValue: 0
+        maxValue: 0
       - effectType: 0
         source: {fileID: 0}
         valueSetmethod: 1
@@ -738,11 +754,19 @@ MonoBehaviour:
           consumeResource: 0
           resourceThatChanged: 0
           resourceGainedOrLost: 0
+        targetResource: 0
         invertValue: 0
+        maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+    togglePresets: 1
+    toggleTriggerOptions: 0
+    toggleSourceOptions: 0
+    toggleEffectOptions: 0
+    toggleTargetOptions: 1
+    toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
@@ -855,6 +879,7 @@ MonoBehaviour:
     abilityName: DieWithMe
     source: {fileID: 0}
     targets: []
+    triggeringCards: []
     targetConstraints:
       types: 
       owner: 0
@@ -907,6 +932,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
     abilityVFX: 
     movingVFX: 0
+    clearTargetsOnEffectComplete: 1
     additionalRequirements: 
     additionalRequirementConstraints:
       types: 
@@ -969,6 +995,12 @@ MonoBehaviour:
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+    togglePresets: 1
+    toggleTriggerOptions: 0
+    toggleSourceOptions: 0
+    toggleEffectOptions: 1
+    toggleTargetOptions: 1
+    toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 4
     numberofTargets: 0

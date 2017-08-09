@@ -674,7 +674,7 @@ public class Deck : Photon.MonoBehaviour {
 
 
 
-        card.RestCardData();
+        //card.ResetCardData();
 
         //StartCoroutine(RemoveCardVisualFromField(card));
 
@@ -682,23 +682,23 @@ public class Deck : Photon.MonoBehaviour {
 
     }
 
-    private IEnumerator RemoveCardVisualFromField(CardVisual card) {
-        card.SetCardActiveState(false);
-        yield return new WaitForSeconds(3f);
+    //private IEnumerator RemoveCardVisualFromField(CardVisual card) {
+    //    card.SetCardActiveState(false);
+    //    yield return new WaitForSeconds(3f);
 
-        if (card.photonView.isMine) {
-            card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
-            card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
-        }
+    //    if (card.photonView.isMine) {
+    //        card.ChangeCardVisualState((int)CardVisual.CardVisualState.ShowFront);
+    //        card.RPCChangeCardVisualState(PhotonTargets.Others, CardVisual.CardVisualState.ShowBack);
+    //    }
 
-        if (card is CreatureCardVisual) {
-            CreatureCardVisual creature = card as CreatureCardVisual;
-            creature.RPCToggleExhaust(PhotonTargets.All, false);
-        }
+    //    if (card is CreatureCardVisual) {
+    //        CreatureCardVisual creature = card as CreatureCardVisual;
+    //        creature.RPCToggleExhaust(PhotonTargets.All, false);
+    //    }
 
-        card.transform.localPosition = new Vector3(-40f, 20f, 20f);
+    //    card.transform.localPosition = new Vector3(-40f, 20f, 20f);
 
-    }
+    //}
 
     private void SendCardToVoid(CardVisual card) {
         if (card.photonView.isMine) {
@@ -711,7 +711,7 @@ public class Deck : Photon.MonoBehaviour {
             creature.RPCToggleExhaust(PhotonTargets.All, false);
         }
 
-        card.RestCardData();
+        card.ResetCardData();
         //card.RPCSetUpCardData(PhotonTargets.All);
         //card.SetupCardData();
         if (card.photonView.isMine)
