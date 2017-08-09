@@ -151,9 +151,9 @@ public class CreatureCardVisual : CardVisual {
                     health = _creatureData.health;
                 } //TODO: Make max health properly
 
-                //if (value < 1) {
-                //    Debug.Log(gameObject.name + " :: " + cardData.cardName + " has taken " + Mathf.Abs(value) + " point(s) of damage");
-                //}
+                if (value < 1) {
+                    Debug.Log(gameObject.name + " :: " + cardData.cardName + " has taken " + Mathf.Abs(value) + " point(s) of damage");
+                }
 
                 if (value < 0) {
                     CheckDeath(source.photonView.viewID, false, waitForVFX);
@@ -510,6 +510,8 @@ public class CreatureCardVisual : CardVisual {
         else {
             damageToken.SetText(value.ToString());
         }
+
+        Debug.Log(value + " was given to SHOW DAMAGE");
 
         damageToken.PlayAnim();
         damageToken.PlayParticles();

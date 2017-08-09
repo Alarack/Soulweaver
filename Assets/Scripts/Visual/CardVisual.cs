@@ -1073,25 +1073,33 @@ public class CardVisual : Photon.MonoBehaviour {
     public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID, bool waitForVFX) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment. Should it Wait for FVX::: " + waitForVFX);
+        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment with ID: " + adjID +". Should it Wait for FVX::: " + waitForVFX);
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
+        SpecialAbility.StatAdjustment targetAdj = null;
+
         for (int i = 0; i < allAdjustments.Count; i++) {
-            Debug.Log(allAdjustments[i].uniqueID + " is the id of a Stat Adjustment on: " + source.gameObject.name + " ::: " + source.cardData.cardName);
-            Debug.Log("I am looking for the id " + adjID);
+            //Debug.Log(allAdjustments[i].uniqueID + " is the id of a Stat Adjustment on: " + source.gameObject.name + " ::: " + source.cardData.cardName);
+            //Debug.Log("I am looking for the id " + adjID);
 
             if (allAdjustments[i].uniqueID == adjID) {
                 if (allAdjustments[i].nonStacking && statAdjustments.Contains(allAdjustments[i])) {
-                    Debug.Log("Match found, but it's a non stackin adjustment and I already have that one");
+                    //Debug.Log("Match found, but it's a non stackin adjustment and I already have that one");
                     return;
                 }
 
-                Debug.Log("Match Found!");
+                targetAdj = allAdjustments[i];
+                //Debug.Log("Match Found!");
 
                 AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
                 statAdjustments.Add(allAdjustments[i]);
             }
+
+        }
+
+        if(targetAdj == null) {
+            Debug.LogError("a stat adjustment with ID " + adjID + " could not be found on " + source.gameObject.name + " ::: " + source.cardData.cardName);
         }
 
 
