@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 10045
   cardName: Wall of Corpses
-  cardText: 'Deathwatch: Gain +1/+1/+0'
+  cardText: 'Defender. Protection 1. Vengence: Gain +1/+1/+0'
   cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
@@ -24,7 +24,7 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 08000000
   subTypes: 08000000
-  keywords: 
+  keywords: 0e000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -32,8 +32,8 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 040000000500000002000000
-      owner: 0
+      types: 04000000050000000200000001000000
+      owner: 2
       whosTurn: 0
       primaryType: 01000000
       notPrimaryType: 0

@@ -338,11 +338,11 @@ public class CombatManager : Photon.MonoBehaviour {
         //TODO: End of Combat Events
 
         if (attacker != null && defender != null) {
-            bool attackerHasVFX = String.IsNullOrEmpty(attacker.attackEffect);
-            bool defenderHasVFX = String.IsNullOrEmpty(defender.attackEffect);
+            //bool attackerHasVFX = String.IsNullOrEmpty(attacker.attackEffect);
+            //bool defenderHasVFX = String.IsNullOrEmpty(defender.attackEffect);
 
-            attacker.RPCCheckDeath(PhotonTargets.All, defender, false, !defenderHasVFX);
-            defender.RPCCheckDeath(PhotonTargets.All, attacker, false, !attackerHasVFX);
+            //attacker.RPCCheckDeath(PhotonTargets.All, defender, false, !defenderHasVFX);
+            //defender.RPCCheckDeath(PhotonTargets.All, attacker, false, !attackerHasVFX);
 
             defender.RPCTargetCard(PhotonTargets.All, false);
         }
