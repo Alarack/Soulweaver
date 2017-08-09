@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: RLM_
+  m_Name: RLM_ GateGuardian
   m_EditorClassIdentifier: 
   cardID: 0
   cardName: 
