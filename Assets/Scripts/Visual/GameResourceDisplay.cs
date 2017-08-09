@@ -52,6 +52,7 @@ public class GameResourceDisplay : Photon.MonoBehaviour {
         for(int i = 0; i < resourceDisplayInfo.Count; i++) {
             if(resourceDisplayInfo[i].resource == resource) {
                 resourceDisplayInfo[i].resourceText.text = resource.resourceName + " " + value;
+                RPCUpdateResourceText(PhotonTargets.Others, resourceDisplayInfo[i].resource.resourceType);
                 break;
             }
         }
