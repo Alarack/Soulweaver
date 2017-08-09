@@ -215,18 +215,23 @@ public class CardDataEditor : Editor {
         //Add or Remove Special Attributes
         if (entry is EffectAddorRemoveSpecialAttribute) {
             EffectAddorRemoveSpecialAttribute specialAttribute = entry as EffectAddorRemoveSpecialAttribute;
-            specialAttribute.attributeType = EditorHelper.EnumPopup("Attribute Type", specialAttribute.attributeType);
+            //specialAttribute.attributeType = EditorHelper.EnumPopup("Attribute Type", specialAttribute.attributeType);
             specialAttribute.attributeAction = EditorHelper.EnumPopup("Add, Modify, or Remmove?", specialAttribute.attributeAction);
 
-            switch (specialAttribute.attributeAction) {
-                case EffectAddorRemoveSpecialAttribute.AttributeAction.Add:
-                    specialAttribute.value = EditorGUILayout.IntField("Value", specialAttribute.value);
-                    break;
+            specialAttribute.specialAttributes = EditorHelper.DrawExtendedList("Special Attributes", specialAttribute.specialAttributes, "Adjustment", DrawManualSpecialAttribute);
 
-                case EffectAddorRemoveSpecialAttribute.AttributeAction.Modify:
-                    specialAttribute.modificationValue = EditorGUILayout.IntField("Modifier Value", specialAttribute.modificationValue);
-                    break;
-            }
+            //switch (specialAttribute.attributeAction) {
+            //    case EffectAddorRemoveSpecialAttribute.AttributeAction.Add:
+            //        //specialAttribute.value = EditorGUILayout.IntField("Value", specialAttribute.value);
+
+                    
+
+            //        break;
+
+            //    //case EffectAddorRemoveSpecialAttribute.AttributeAction.Modify:
+            //    //    specialAttribute.modificationValue = EditorGUILayout.IntField("Modifier Value", specialAttribute.modificationValue);
+            //    //    break;
+            //}
         }
 
         //Choose One
@@ -235,6 +240,16 @@ public class CardDataEditor : Editor {
 
             chooseOne.cardType = EditorHelper.EnumPopup("Card Type", chooseOne.cardType);
             chooseOne.choices = EditorHelper.DrawList("Choice Data Names", chooseOne.choices, true, "", true, DrawListOfStrings);
+        }
+
+        //Bestow Ability
+        if(entry is EffectBestowSpecialAbility) {
+            EffectBestowSpecialAbility bestow = entry as EffectBestowSpecialAbility;
+
+            bestow.targetAbiliity = EditorGUILayout.TextField("Target Ability Name", bestow.targetAbiliity);
+
+
+
         }
 
         return entry;
@@ -269,6 +284,15 @@ public class CardDataEditor : Editor {
 
         return entry;
     }
+
+
+    private SpecialAttribute DrawManualSpecialAttribute(SpecialAttribute entry) {
+        entry.attributeType = EditorHelper.EnumPopup("Attribute Type", entry.attributeType);
+        entry.attributeValue = EditorGUILayout.IntField("Value", entry.attributeValue);
+
+        return entry;
+    }
+
 
 
 
@@ -329,6 +353,8 @@ public class CardDataEditor : Editor {
     }
 
     private void DrawSendToCryptPreset(SpecialAbility entry) {
+        entry.abilityName = "Send to Crypt";
+
         entry.trigger.Add(AbilityActivationTrigger.SecondaryEffect);
 
         entry.effect = EffectType.ZoneChange;
@@ -415,12 +441,7 @@ public class CardDataEditor : Editor {
 
     }
 
-    //public bool togglePresets = true;
-    //public bool toggleTriggerOptions;
-    //public bool toggleSourceOptions;
-    //public bool toggleEffectOptions;
-    //public bool toggleTargetOptions = true;
-    //public bool toggleAdditonalRequirementOptions;
+
 
     private SpecialAbility DrawSpecalAbilities(SpecialAbility entry) {
 
@@ -502,6 +523,13 @@ public class CardDataEditor : Editor {
                     entry.triggerConstraints.statChanged = EditorHelper.EnumPopup("Which Stat Changed?", entry.triggerConstraints.statChanged);
                     entry.triggerConstraints.statGainedOrLost = EditorHelper.EnumPopup("Gained Or Lost?", entry.triggerConstraints.statGainedOrLost);
                     entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
+                    EditorGUILayout.Separator();
+
+                    if(!entry.triggerConstraints.thisCardAdjusted)
+                        entry.triggerConstraints.thisCardAdjusts = EditorGUILayout.Toggle("This Card Caused Adjustment?", entry.triggerConstraints.thisCardAdjusts);
+
+                    if (!entry.triggerConstraints.thisCardAdjusts)
+                        entry.triggerConstraints.thisCardAdjusted = EditorGUILayout.Toggle("This Card Was Adjusted?", entry.triggerConstraints.thisCardAdjusted);
 
                     break;
 
@@ -531,6 +559,7 @@ public class CardDataEditor : Editor {
                     entry.triggerConstraints.resourceGainedOrLost = EditorHelper.EnumPopup("Gained or Lost?", entry.triggerConstraints.resourceGainedOrLost);
 
                     break;
+
             }
         }
 
@@ -565,7 +594,19 @@ public class CardDataEditor : Editor {
         entry.movingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.movingVFX);
         entry.effect = (Constants.EffectType)EditorGUILayout.EnumPopup(entry.effect);
         entry.effectDuration = EditorHelper.EnumPopup(" Effect Duration", entry.effectDuration);
-        entry.clearTargetsOnEffectComplete = EditorGUILayout.Toggle("Clear ALL targets after this effect?", entry.clearTargetsOnEffectComplete);
+
+        if(!entry.clearTriggeringTargetFromOtherAbility)
+            entry.clearTargetsOnEffectComplete = EditorGUILayout.Toggle("Clear ALL targets after this effect?", entry.clearTargetsOnEffectComplete);
+
+
+        if (!entry.clearTargetsOnEffectComplete) {
+            entry.clearTriggeringTargetFromOtherAbility = EditorGUILayout.Toggle("Clear THIS target from other Ability targets?", entry.clearTriggeringTargetFromOtherAbility);
+
+            if(entry.clearTriggeringTargetFromOtherAbility)
+                entry.triggerConstraints.abilityToGatherTargetsFrom = EditorGUILayout.TextField("Ability Name", entry.triggerConstraints.abilityToGatherTargetsFrom);
+        }
+
+
         switch (entry.effect) {
             case EffectType.SpawnToken:
                 entry.effectHolder.tokenSpanws = EditorHelper.DrawExtendedList("Spawn Token Effects", entry.effectHolder.tokenSpanws, "Spawn Token", DrawEffectList);
@@ -575,7 +616,6 @@ public class CardDataEditor : Editor {
             case EffectType.ZoneChange:
                 entry.effectHolder.zoneChanges = EditorHelper.DrawExtendedList("Zone Change Effect", entry.effectHolder.zoneChanges, "Zone Change", DrawEffectList);
 
-                //entry.targetConstraints.targetZone = EditorHelper.EnumPopup("Target Zone", entry.targetConstraints.targetZone);
                 break;
 
             case EffectType.AddOrRemoveKeywordAbilities:
@@ -583,11 +623,9 @@ public class CardDataEditor : Editor {
 
                 entry.effectHolder.addOrRemoveKeywords = EditorHelper.DrawExtendedList("Add or Remove Keyword Effect", entry.effectHolder.addOrRemoveKeywords, "Keyword", DrawEffectList);
 
-
                 break;
 
             case EffectType.GenerateResource:
-
                 entry.effectHolder.generateResources = EditorHelper.DrawExtendedList("Resource Generation Effect", entry.effectHolder.generateResources, "Generate Resource", DrawEffectList);
 
                 break;
@@ -598,14 +636,17 @@ public class CardDataEditor : Editor {
                 break;
 
             case EffectType.AddOrRemoveSpecialAttribute:
-
                 entry.effectHolder.addOrRemoveSpecialAttribute = EditorHelper.DrawExtendedList("Special Attribute Effects", entry.effectHolder.addOrRemoveSpecialAttribute, "Special Attribute", DrawEffectList);
 
                 break;
 
             case EffectType.ChooseOne:
-
                 entry.effectHolder.chooseOne = EditorHelper.DrawExtendedList("Choose One Effects", entry.effectHolder.chooseOne, "Choose One", DrawEffectList);
+
+                break;
+
+            case EffectType.BestowAbility:
+                entry.effectHolder.bestowAbility = EditorHelper.DrawExtendedList("Bestow Ability Effects", entry.effectHolder.bestowAbility, "Bestow Ability", DrawEffectList);
 
                 break;
 
@@ -873,12 +914,18 @@ public class CardDataEditor : Editor {
                 entry.maxStats = EditorHelper.DrawExtendedList("Maximum Stats", entry.maxStats, "Stat", DrawStatInformation);
                 break;
 
-            //case ConstraintType.NumberofCardsInZone:
-            //    EditorGUILayout.Separator();
-            //    EditorGUILayout.LabelField("How many cards must be in the specified zone?", EditorStyles.boldLabel);
-            //    entry.numberOfCardsInZone = EditorGUILayout.IntField("Requirement", entry.numberOfCardsInZone);
+            case ConstraintType.OtherTargets:
+                EditorGUILayout.Separator();
 
-            //    break;
+                EditorGUILayout.LabelField("Does the " + constraintName + " exist in another ability's target list?", EditorStyles.boldLabel);
+                entry.abilityToGatherTargetsFrom = EditorGUILayout.TextField("Ability Name", entry.abilityToGatherTargetsFrom);
+                break;
+
+            case ConstraintType.CanAttack:
+                EditorGUILayout.Separator();
+                EditorGUILayout.LabelField("Can the " + constraintName + " attack?", EditorStyles.boldLabel);
+                entry.creatureCanAttack = EditorGUILayout.Toggle("Can Attack", entry.creatureCanAttack);
+                break;
 
             case ConstraintType.CreatureStatus:
                 EditorGUILayout.Separator();

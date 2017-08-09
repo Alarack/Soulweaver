@@ -674,7 +674,7 @@ public class Deck : Photon.MonoBehaviour {
 
 
 
-        card.ResetCardData();
+        //card.ResetCardData();
 
         //StartCoroutine(RemoveCardVisualFromField(card));
 

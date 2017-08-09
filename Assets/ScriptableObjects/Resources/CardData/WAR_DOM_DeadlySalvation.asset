@@ -8,19 +8,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: WAR_BenifsBrooding
+  m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
+  m_Name: WAR_DOM_DeadlySalvation
   m_EditorClassIdentifier: 
-  cardID: 70001
-  cardName: Benif's Brooding
-  cardText: Draw an additional card at the beginning of your next two turns.
-  cardCost: 2
+  cardID: 79004
+  cardName: Deadly Salvation
+  cardText: 'Whenever an Enemy Soul Dies, gain a Lost Soul. '
+  cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  primaryCardType: 0
+  primaryCardType: 5
   otherCardTypes: 
   attunements: 
   subTypes: 
@@ -28,14 +28,14 @@ MonoBehaviour:
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 
+  - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 
-      owner: 0
+      types: 04000000050000000200000001000000
+      owner: 3
       whosTurn: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -47,9 +47,9 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 04000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 05000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -68,6 +68,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -84,7 +86,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -99,7 +101,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -120,6 +122,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -135,7 +139,7 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 0
+    effect: 4
     abilityName: 
     source: {fileID: 0}
     targets: []
@@ -177,6 +181,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -234,6 +240,8 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -253,14 +261,21 @@ MonoBehaviour:
       zoneChanges: []
       tokenSpanws: []
       statAdjustments: []
-      generateResources: []
+      generateResources:
+      - effectType: 0
+        source: {fileID: 0}
+        resourceType: 3
+        amount: 1
+        cap: 0
+        resourceName: Lost Souls
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+      bestowAbility: []
     togglePresets: 1
-    toggleTriggerOptions: 0
+    toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
@@ -269,3 +284,4 @@ MonoBehaviour:
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
+  domainIcon: {fileID: 21300024, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

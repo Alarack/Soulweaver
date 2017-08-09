@@ -117,43 +117,32 @@ public class CombatManager : Photon.MonoBehaviour {
             return;
         }
 
-        if (currentTarget.hasAttacked) {
-            Debug.LogError("That has already attacked");
+        //if (currentTarget.hasAttacked) {
+        //    Debug.LogError("That has already attacked");
+        //    return;
+        //}
+
+        if (!currentTarget.CanAttack()) {
+            Debug.LogError("That cannot attack");
             return;
         }
 
-        if (currentTarget.keywords.Contains(Keywords.Pacifist) || currentTarget.keywords.Contains(Keywords.Defender)) {
-            Debug.LogError("That has pacifist or defender");
-            return;
-        }
+        //if (Finder.CardHasKeyword(currentTarget, Keywords.Exhausted)) {
+        //    Debug.LogError("That is exhausted");
+        //    return;
+        //}
 
-        if (Finder.CardHasKeyword(currentTarget, Keywords.Exhausted)) {
-            Debug.LogError("That is exhausted");
-            return;
-        }
-
-        if (currentTarget.attack < 1) {
-            Debug.LogError("That has no attack value");
-            return;
-        }
+        //if (currentTarget.attack < 1) {
+        //    Debug.LogError("That has no attack value");
+        //    return;
+        //}
             
 
         attacker = currentTarget;
         isInCombat = true;
         selectingDefender = true;
-        //Debug.Log(attacker.cardData.cardName + " is Attacking");
-
-
-        
 
         attacker.battlefieldPos.position += selectedPos;
-
-
-
-
-        //EventData data = new EventData();
-        //data.AddMonoBehaviour("Card", attacker);
-        //Grid.EventManager.SendEvent(Constants.GameEvent.CharacterAttacked, data);
 
     }
 
@@ -266,18 +255,18 @@ public class CombatManager : Photon.MonoBehaviour {
 
 
                 if (rightOfTarget != null) {
-                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker, !hasVFX);
+                    rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, false);
                 }
                     //Debug.Log(rightOfTarget.cardData.name);
 
                 if (leftOfTarget != null) {
-                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker, !hasVFX);
+                    leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, false);
                 }
                     //Debug.Log(leftOfTarget.cardData.name);
             }
         }
 
-        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, attacker, !hasVFX);
+        damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, !hasVFX);
 
         if (!hasVFX) {
             GameObject atkVFX;
@@ -359,7 +348,7 @@ public class CombatManager : Photon.MonoBehaviour {
         }
 
 
-        Debug.Log("Ending Combat");
+        //Debug.Log("Ending Combat");
 
         if (attacker != null)
             attacker = null;
@@ -444,7 +433,25 @@ public class CombatManager : Photon.MonoBehaviour {
 
     }
 
+    //public bool CheckForAttackPreventionEffects(CardVisual attacker) {
+    //    bool result = true;
 
+    //    if (attacker.keywords.Contains(Keywords.Defender))
+    //        return false;
+
+    //    if (attacker.keywords.Contains(Keywords.NoAttack))
+    //        return false;
+
+    //    if (attacker.keywords.Contains(Keywords.Pacifist))
+    //        return false;
+
+    //    if (attacker.keywords.Contains(Keywords.Stun))
+    //        return false;
+
+
+
+    //    return result;
+    //}
 
     #region Events
 

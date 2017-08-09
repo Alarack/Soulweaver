@@ -215,6 +215,10 @@ public class EffectStatAdjustment : Effect {
 
         int result = source.owner.gameResourceDisplay.GetCurrentResourceValueByType(targetResource);
 
+        if (maxValue > 0 && result > maxValue) {
+            result = maxValue;
+        }
+
         if (inverse) {
             result = -result;
         }
