@@ -590,7 +590,7 @@ MonoBehaviour:
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
     toggleEffectOptions: 1
-    toggleTargetOptions: 1
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 2
@@ -840,10 +840,10 @@ MonoBehaviour:
       chooseOne: []
       bestowAbility: []
     togglePresets: 1
-    toggleTriggerOptions: 1
+    toggleTriggerOptions: 0
     toggleSourceOptions: 0
     toggleEffectOptions: 0
-    toggleTargetOptions: 1
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 1

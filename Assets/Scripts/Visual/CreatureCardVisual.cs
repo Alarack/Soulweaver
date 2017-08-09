@@ -444,6 +444,10 @@ public class CreatureCardVisual : CardVisual {
                     Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnDeathVisual);
                 }
 
+                if (keywords.Contains(Keywords.Interceptor)) {
+                    battlefieldPos.position -= interceptPos;
+                }
+
             }
 
             //Debug.Log(forceDeath + " is the status of Force Death");
