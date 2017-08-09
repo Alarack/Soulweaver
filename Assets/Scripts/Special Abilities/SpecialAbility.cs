@@ -1766,7 +1766,7 @@ public abstract class SpecialAbility {
 
 
         public StatAdjustment() {
-            //uniqueID = IDFactory.GenerateID();
+
         }
 
         public StatAdjustment(CardStats stat, int value, bool nonStacking, bool temp, CardVisual source) {
@@ -1774,10 +1774,9 @@ public abstract class SpecialAbility {
             this.value = value;
             this.nonStacking = nonStacking;
             this.source = source;
-            //this.invertValue = inverse;
             temporary = temp;
 
-            //uniqueID = IDFactory.GenerateID();
+
         }
 
         //public void AlterValueBasedOnTarget(CreatureCardVisual targetToBasevalueFrom) {

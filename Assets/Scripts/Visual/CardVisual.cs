@@ -523,7 +523,9 @@ public class CardVisual : Photon.MonoBehaviour {
             if (currentDeck.decktype != Constants.DeckType.Hand)
                 return;
 
-            owner.gameResourceDisplay.resourceDisplayInfo[0].resource.RemoveResource(essenceCost);
+            owner.gameResourceDisplay.RPCRemoveResource(PhotonTargets.All, GameResource.ResourceType.Essence, essenceCost);
+
+            //owner.gameResourceDisplay.resourceDisplayInfo[0].resource.RemoveResource(essenceCost);
 
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
 
@@ -619,6 +621,9 @@ public class CardVisual : Photon.MonoBehaviour {
             return false;
 
         if (keywords.Contains(Constants.Keywords.Exhausted))
+            return false;
+
+        if (keywords.Contains(Constants.Keywords.Pacifist))
             return false;
 
         return result;
@@ -1358,7 +1363,7 @@ public class CardVisual : Photon.MonoBehaviour {
         switch (add) {
             case true:
                 if (newKeyword == Constants.Keywords.Interceptor) {
-                    if (keywords.Contains(Constants.Keywords.Exhausted) || keywords.Contains(Constants.Keywords.NoIntercept)) {
+                    if (keywords.Contains(Constants.Keywords.Exhausted) || keywords.Contains(Constants.Keywords.NoIntercept) || keywords.Contains(Constants.Keywords.Pacifist)) {
                         return;
                     }
                 }
