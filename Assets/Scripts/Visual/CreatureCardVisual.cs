@@ -73,6 +73,16 @@ public class CreatureCardVisual : CardVisual {
         base.ResetCardData();
 
 
+
+
+
+        StartCoroutine(ResetCardVisualData());
+    }
+
+    private IEnumerator ResetCardVisualData() {
+        yield return new WaitForSeconds(2.5f);
+
+
         int tempAtk = _creatureData.attack;
         attack = tempAtk;
 
@@ -81,13 +91,6 @@ public class CreatureCardVisual : CardVisual {
 
         int tempHealth = _creatureData.health;
         health = tempHealth;
-
-
-        StartCoroutine(ResetCardVisualData());
-    }
-
-    private IEnumerator ResetCardVisualData() {
-        yield return new WaitForSeconds(4f);
 
         //Debug.Log("Reseting card data visual");
 
@@ -151,9 +154,9 @@ public class CreatureCardVisual : CardVisual {
                     health = _creatureData.health;
                 } //TODO: Make max health properly
 
-                //if (value < 1) {
-                //    Debug.Log(gameObject.name + " :: " + cardData.cardName + " has taken " + Mathf.Abs(value) + " point(s) of damage");
-                //}
+                if (value < 1) {
+                    Debug.Log(gameObject.name + " :: " + cardData.cardName + " has taken " + Mathf.Abs(value) + " point(s) of damage");
+                }
 
                 if (value < 0) {
                     CheckDeath(source.photonView.viewID, false, waitForVFX);
@@ -165,6 +168,7 @@ public class CreatureCardVisual : CardVisual {
                     cardHealthText.text = health.ToString();
                     battleToken.UpdateBattleTokenTokenText(stat, health);
                     TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
+                    //Debug.Log("No VFX landed on " + gameObject.name + ". Value is: " + value);
                     ShowDamage(value);
                 }
 
@@ -368,13 +372,14 @@ public class CreatureCardVisual : CardVisual {
                 break;
 
             case Constants.CardStats.Health:
-                ShowDamage(CalcProtection(lastStatAdjustment.value));
+                ShowDamage(lastStatAdjustment.value);
                 cardHealthText.text = health.ToString();
                 battleToken.UpdateBattleTokenTokenText(lastStatAdjustment.stat, health);
                 TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
                 break;
 
             case Constants.CardStats.MaxHealth:
+                ShowDamage(lastStatAdjustment.value);
                 cardHealthText.text = health.ToString();
                 battleToken.UpdateBattleTokenTokenText(lastStatAdjustment.stat, health);
                 TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
@@ -456,6 +461,13 @@ public class CreatureCardVisual : CardVisual {
 
             Debug.Log(causeOfDeath.cardData.cardName + " has killed " + cardData.cardName);
 
+
+
+            if (CheckSpecialAttributes(SpecialAttribute.AttributeType.Volatile) > 0) {
+                HandleVolatile(causeOfDeath);
+            }
+
+
             currentDeck.TransferCard(photonView.viewID, owner.activeCrypt.GetComponent<Deck>().photonView.viewID);
 
             EventData data = new EventData();
@@ -467,6 +479,20 @@ public class CreatureCardVisual : CardVisual {
         }
 
     }
+
+    private void HandleVolatile(CardVisual sourceOfDeath) {
+        int volatileValue = CheckSpecialAttributes(SpecialAttribute.AttributeType.Volatile);
+
+        if (sourceOfDeath.primaryCardType == Constants.CardType.Soul) {
+            sourceOfDeath.ApplyCombatDamage((int)Constants.CardStats.Health, -volatileValue, photonView.viewID, false);
+        }
+        else {
+            CardVisual murderer = Finder.FindCardsOwner(sourceOfDeath);
+            murderer.ApplyCombatDamage((int)Constants.CardStats.Health, -volatileValue, photonView.viewID, false);
+        }
+    }
+
+
 
     protected override IEnumerator DisplayDeathEffect() {
         yield return new WaitForSeconds(0.7f);
@@ -510,6 +536,8 @@ public class CreatureCardVisual : CardVisual {
         else {
             damageToken.SetText(value.ToString());
         }
+
+        //Debug.Log(value + " was given to SHOW DAMAGE");
 
         damageToken.PlayAnim();
         damageToken.PlayParticles();

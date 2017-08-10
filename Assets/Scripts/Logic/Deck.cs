@@ -621,7 +621,11 @@ public class Deck : Photon.MonoBehaviour {
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowBattleToken);
 
                 if (card.photonView.isMine) {
-                    card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition(card);
+
+                    Transform desiredLocation = owner.battleFieldManager.GetNearestCardPosition(card.gameObject.transform.position);
+
+                    card.battlefieldPos = owner.battleFieldManager.AssignSpecificPosition(desiredLocation, card);
+                    owner.battleFieldManager.ClearAllHighlights();
                 }
 
                 break;

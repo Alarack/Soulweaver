@@ -495,7 +495,13 @@ public class CardVisual : Photon.MonoBehaviour {
                 //mainHudText.text = "Play " + cardName + "?";
                 if (Input.GetMouseButton(0)) {
                     ActivateGlow(Color.cyan);
+
+                    Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
+                    //Debug.Log(nearest.gameObject.name);
                 }
+
+ 
+
             }
 
             if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) < 10f && !Mulligan.choosingMulligan) {
@@ -503,6 +509,11 @@ public class CardVisual : Photon.MonoBehaviour {
                 if (Input.GetMouseButton(0)) {
                     ActivateGlow(Color.green);
                 }
+
+                if (Input.GetMouseButtonUp(0)) {
+                    owner.battleFieldManager.ClearAllHighlights();
+                }
+
             }
         }
 
@@ -523,7 +534,15 @@ public class CardVisual : Photon.MonoBehaviour {
             if (currentDeck.decktype != Constants.DeckType.Hand)
                 return;
 
-            owner.gameResourceDisplay.resourceDisplayInfo[0].resource.RemoveResource(essenceCost);
+
+            Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
+
+            if (nearest == null)
+                return;
+
+            owner.gameResourceDisplay.RPCRemoveResource(PhotonTargets.All, GameResource.ResourceType.Essence, essenceCost);
+
+            //owner.gameResourceDisplay.resourceDisplayInfo[0].resource.RemoveResource(essenceCost);
 
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
 
@@ -619,6 +638,9 @@ public class CardVisual : Photon.MonoBehaviour {
             return false;
 
         if (keywords.Contains(Constants.Keywords.Exhausted))
+            return false;
+
+        if (keywords.Contains(Constants.Keywords.Pacifist))
             return false;
 
         return result;
@@ -1073,25 +1095,33 @@ public class CardVisual : Photon.MonoBehaviour {
     public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID, bool waitForVFX) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment. Should it Wait for FVX::: " + waitForVFX);
+        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment with ID: " + adjID +". Should it Wait for FVX::: " + waitForVFX);
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
+        SpecialAbility.StatAdjustment targetAdj = null;
+
         for (int i = 0; i < allAdjustments.Count; i++) {
-            Debug.Log(allAdjustments[i].uniqueID + " is the id of a Stat Adjustment on: " + source.gameObject.name + " ::: " + source.cardData.cardName);
-            Debug.Log("I am looking for the id " + adjID);
+            //Debug.Log(allAdjustments[i].uniqueID + " is the id of a Stat Adjustment on: " + source.gameObject.name + " ::: " + source.cardData.cardName);
+            //Debug.Log("I am looking for the id " + adjID);
 
             if (allAdjustments[i].uniqueID == adjID) {
                 if (allAdjustments[i].nonStacking && statAdjustments.Contains(allAdjustments[i])) {
-                    Debug.Log("Match found, but it's a non stackin adjustment and I already have that one");
+                    //Debug.Log("Match found, but it's a non stackin adjustment and I already have that one");
                     return;
                 }
 
-                Debug.Log("Match Found!");
+                targetAdj = allAdjustments[i];
+                //Debug.Log("Match Found!");
 
                 AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
                 statAdjustments.Add(allAdjustments[i]);
             }
+
+        }
+
+        if(targetAdj == null) {
+            Debug.LogError("a stat adjustment with ID " + adjID + " could not be found on " + source.gameObject.name + " ::: " + source.cardData.cardName);
         }
 
 
@@ -1350,7 +1380,7 @@ public class CardVisual : Photon.MonoBehaviour {
         switch (add) {
             case true:
                 if (newKeyword == Constants.Keywords.Interceptor) {
-                    if (keywords.Contains(Constants.Keywords.Exhausted) || keywords.Contains(Constants.Keywords.NoIntercept)) {
+                    if (keywords.Contains(Constants.Keywords.Exhausted) || keywords.Contains(Constants.Keywords.NoIntercept) || keywords.Contains(Constants.Keywords.Pacifist)) {
                         return;
                     }
                 }

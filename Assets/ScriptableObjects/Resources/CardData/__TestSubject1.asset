@@ -284,6 +284,6 @@ MonoBehaviour:
   - attributeType: 0
     attributeValue: 0
     uniqueID: -1
-  attack: 1
+  attack: 2
   size: 2
-  health: 1
+  health: 2

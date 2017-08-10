@@ -83,7 +83,7 @@ public class EffectStatAdjustment : Effect {
 
     public void InitializeAdjustments() {
         for (int i = 0; i < adjustments.Count; i++) {
-            adjustments[i].uniqueID = IDFactory.GenerateID();
+            adjustments[i].uniqueID = IDFactory.GenerateID() + 1000;
             adjustments[i].source = source;
 
             //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName);
