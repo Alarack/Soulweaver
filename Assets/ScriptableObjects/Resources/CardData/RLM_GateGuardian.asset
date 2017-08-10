@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: RLM_
+  m_Name: RLM_GateGuardian
   m_EditorClassIdentifier: 
-  cardID: 0
-  cardName: 
-  cardText: 
-  cardCost: 0
+  cardID: 30015
+  cardName: Gate Guardian
+  cardText: First Strike, Reach
+  cardCost: 3
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
@@ -22,13 +22,13 @@ MonoBehaviour:
   deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 
-  subTypes: 
-  keywords: 
+  attunements: 0f00000005000000
+  subTypes: 28000000
+  keywords: 0a00000022000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes: []
-  attack: 0
-  size: 0
-  health: 0
+  attack: 2
+  size: 3
+  health: 3
