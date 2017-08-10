@@ -125,7 +125,7 @@ public class CardIDs {
         RLM_Defender = 30019,
         RLM_HardlightCavalry = 30020,
         RLM_TemporalKnight = 30021,
-        RLM_Undying = 30022,
+        RLM_UndyingGolem = 30022,
         RLM_ShaperSavantYorvthan = 30023,
         RLM_WarShaperKairna = 30024,
         RLM_MendingShaper = 30025,
@@ -200,6 +200,10 @@ public class CardIDs {
         RLM_HornOfTheLegions = 30094,
         RLM_FlashOfLight = 30095,
         RLM_Alarm = 30096,
+        RLM_TemporalConstruct = 30097,
+        RLM_OolakTheSpireOfLight = 30098,
+
+
 
 
 
