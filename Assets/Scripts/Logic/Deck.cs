@@ -627,6 +627,11 @@ public class Deck : Photon.MonoBehaviour {
                     card.battlefieldPos = owner.battleFieldManager.AssignSpecificPosition(desiredLocation, card);
                     owner.battleFieldManager.ClearAllHighlights();
 
+                    if(card.battlefieldPos == null) {
+                        card.battlefieldPos = owner.battleFieldManager.GetFirstEmptyCardPosition(card);
+                    }
+
+
                     card.transform.position = card.battlefieldPos.position;
                     card.RPCSetCardAciveState(PhotonTargets.All, false);
                     card.RPCSetCardPosition(PhotonTargets.Others, card.battlefieldPos.position);

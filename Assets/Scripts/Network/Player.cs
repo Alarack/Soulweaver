@@ -48,13 +48,13 @@ public class Player : Photon.MonoBehaviour {
     //public Text myEssenceText;
     //public Text enemyEssenceText;
     [Space(10)]
-    public float lerpSmoothing = 10f;
+    //public float lerpSmoothing = 10f;
     public bool player2;
     public bool myTurn;
     public bool firstTurn = true;
     [Header("Player Card")]
-    public GameObject playerCard;
-    public Transform playerLoc;
+    //public GameObject playerCard;
+    //public Transform playerLoc;
 
     [Header("Active Decks")]
     public GameObject activeGrimoire;
@@ -375,27 +375,7 @@ public class Player : Photon.MonoBehaviour {
         }
     }
 
-    public void AdjustCurEssence(int value) {
-        //curEssence += value;
-        //UpdateEssenceText();
-    }
-    public void AdjustMaxEssence(int value) {
-        //if (maxEssence < 10) {
-        //    maxEssence += value;
-        //    UpdateEssenceText();
-        //}
-    }
-    public void FillEssence() {
-        //curEssence = maxEssence;
-        //UpdateEssenceText();
-    }
 
-    void UpdateEssenceText() {
-        //myEssenceText.text = curEssence + "/" + maxEssence;
-        //RPCUpdateEnemyEssence(PhotonTargets.Others, curEssence, maxEssence);
-
-        //CreateOrActivateCardGlow();
-    }
 
 
 
@@ -404,11 +384,11 @@ public class Player : Photon.MonoBehaviour {
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            //stream.SendNext(transform.rotation);
         }
         else {
             position = (Vector3)stream.ReceiveNext();
-            rotation = (Quaternion)stream.ReceiveNext();
+            //rotation = (Quaternion)stream.ReceiveNext();
         }
     }
 

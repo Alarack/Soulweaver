@@ -228,7 +228,7 @@ public class EffectStatAdjustment : Effect {
 
     //Remove all my adjustments from a target
     private void RemoveStatAdjustments(CardVisual card) {
-        bool hasVFX = String.IsNullOrEmpty(parentAbility.abilityVFX);
+        //bool hasVFX = String.IsNullOrEmpty(parentAbility.abilityVFX);
 
         List<StatAdjustment> targetAdjustments = new List<StatAdjustment>();
 
@@ -242,7 +242,7 @@ public class EffectStatAdjustment : Effect {
         }
 
         for (int i = 0; i < targetAdjustments.Count; i++) {
-            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, !hasVFX);
+            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, false);
         }
 
 

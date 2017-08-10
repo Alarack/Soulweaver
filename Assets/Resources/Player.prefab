@@ -17392,7 +17392,7 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 3
+  synchronization: 0
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
@@ -37910,12 +37910,9 @@ MonoBehaviour:
   hud: {fileID: 1266457769110374}
   myCamera: {fileID: 1341306738509736}
   endTurnButton: {fileID: 114150764853571970}
-  lerpSmoothing: 10
   player2: 0
   myTurn: 0
   firstTurn: 1
-  playerCard: {fileID: 0}
-  playerLoc: {fileID: 0}
   activeGrimoire: {fileID: 0}
   activeDomain: {fileID: 0}
   activeCrypt: {fileID: 0}
