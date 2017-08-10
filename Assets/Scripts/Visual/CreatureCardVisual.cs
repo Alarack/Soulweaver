@@ -119,11 +119,18 @@ public class CreatureCardVisual : CardVisual {
 
                 attack += value;
 
-                if (attack <= 0)
-                    attack = 0;
+                //if (attack <= 0)
+                //    attack = 0;
 
                 if (!waitForVFX) {
-                    cardAttackText.text = attack.ToString();
+
+                    if(attack < 0) {
+                        cardAttackText.text = 0.ToString();
+                    }
+                    else {
+                        cardAttackText.text = attack.ToString();
+                    }
+
                     battleToken.UpdateBattleTokenTokenText(stat, attack);
                     TextTools.AlterTextColor(attack, _creatureData.attack, cardAttackText);
                 }
@@ -360,7 +367,14 @@ public class CreatureCardVisual : CardVisual {
         switch (lastStatAdjustment.stat) {
 
             case Constants.CardStats.Attack:
-                cardAttackText.text = attack.ToString();
+
+                if (attack < 0) {
+                    cardAttackText.text = 0.ToString();
+                }
+                else {
+                    cardAttackText.text = attack.ToString();
+                }
+
                 battleToken.UpdateBattleTokenTokenText(lastStatAdjustment.stat, attack);
                 TextTools.AlterTextColor(attack, _creatureData.attack, cardAttackText);
                 break;

@@ -628,7 +628,7 @@ public class Player : Photon.MonoBehaviour {
 
         if (firstResource) {
 
-            GameResource essence = new GameResource(GameResource.ResourceType.Essence, 0, 0, "Essence", gameResourceDisplay, 10);
+            GameResource essence = new GameResource(GameResource.ResourceType.Essence, 1, 1, "Essence", gameResourceDisplay, 10);
 
             gameResources.Add(essence);
 

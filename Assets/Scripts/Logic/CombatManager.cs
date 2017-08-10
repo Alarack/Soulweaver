@@ -244,7 +244,16 @@ public class CombatManager : Photon.MonoBehaviour {
 
     private void CombatHelper(CreatureCardVisual damageDealer, CreatureCardVisual damageTaker) {
 
-        SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -damageDealer.attack, false, false, damageDealer);
+        int tempAttackvalue = 0;
+
+        if(damageDealer.attack < 0) {
+            tempAttackvalue = 0;
+        }
+        else {
+            tempAttackvalue = -damageDealer.attack;
+        }
+
+        SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, tempAttackvalue, false, false, damageDealer);
         bool hasVFX = String.IsNullOrEmpty(damageDealer.attackEffect);
 
         if (damageDealer == attacker) {

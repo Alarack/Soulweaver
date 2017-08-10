@@ -1496,8 +1496,21 @@ public class CardVisual : Photon.MonoBehaviour {
         if (targetAbility != null) {
             ProcessNewSpecialAbility(targetAbility);
         }
+    }
 
 
+    public void RPCSetCardPosition(PhotonTargets targets, Vector3 position) {
+        float xpos = position.x;
+        float ypos = position.y;
+        float zpos = position.z;
+
+        photonView.RPC("SetCardPosition", targets, xpos, ypos, zpos);
+    }
+
+    [PunRPC]
+    public void SetCardPosition(float x, float y, float z) {
+        transform.position = new Vector3(x, y, z);
+        RPCSetCardAciveState(PhotonTargets.All, true);
     }
 
 

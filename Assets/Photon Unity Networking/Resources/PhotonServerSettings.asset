@@ -106,4 +106,5 @@ MonoBehaviour:
   - RemoteProcessNewSpecialAbility
   - ApplySpecialAttribute
   - RemoveSpecialAttribute
+  - SetCardPosition
   DisableAutoOpenWizard: 1

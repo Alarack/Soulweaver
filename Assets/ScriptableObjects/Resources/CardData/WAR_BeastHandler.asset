@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 76008
   cardName: Beast Handler
-  cardText: 'Inspire: Give a Soul Pacifist while this is on the Battlefield'
+  cardText: 'Inspire: Give an enemy Soul Pacifist while this is on the Battlefield'
   cardCost: 2
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
@@ -144,8 +144,8 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0200000004000000
-      owner: 0
+      types: 020000000400000001000000
+      owner: 3
       whosTurn: 0
       primaryType: 01000000
       notPrimaryType: 0

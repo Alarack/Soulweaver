@@ -301,7 +301,7 @@ public abstract class SpecialAbility {
         }
 
         if (!(String.IsNullOrEmpty(abilityVFX))) {
-            CreateVFX();
+            CreateSingleTargetVFX(card);
         }
         //else {
         //    //Debug.Log(source.gameObject.name + " has an ability: " + abilityName + " that has no vfx. It is targeting " + card.gameObject.name);
@@ -570,8 +570,12 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
-        Debug.Log("End of turn duration is ending");
-        RemoveEffect(targets);
+        if (CheckForPlayersTurn(OwnerConstraints.Mine)) {
+            //Debug.Log(player.gameObject.name + " is the player who started after checks");
+            Debug.Log("End of turn duration is ending");
+            RemoveEffect(targets);
+        }
+
     }
 
     protected void OnTurnStartEndDuration(EventData data) {
@@ -587,10 +591,12 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
-        Debug.Log("start of turn duration  is ending");
-        RemoveEffect(targets);
+        if (CheckForPlayersTurn(OwnerConstraints.Mine)) {
+            //Debug.Log(player.gameObject.name + " is the player who started after checks");
 
-
+            Debug.Log("start of turn duration  is ending");
+            RemoveEffect(targets);
+        }
 
     }
 
@@ -1708,10 +1714,30 @@ public abstract class SpecialAbility {
     }
 
 
+    private void CreateSingleTargetVFX(CardVisual target) {
+        GameObject atkVFX;
 
-    public void CreateVFX() {
+        if (movingVFX) {
+            atkVFX = PhotonNetwork.Instantiate(abilityVFX, source.transform.position, Quaternion.identity, 0) as GameObject;
+        }
+        else {
+            atkVFX = PhotonNetwork.Instantiate(abilityVFX, target.transform.position, Quaternion.identity, 0) as GameObject;
+        }
 
+        CardVFX vfx = atkVFX.GetComponent<CardVFX>();
 
+        if (target is CreatureCardVisual) {
+            CreatureCardVisual soul = target as CreatureCardVisual;
+
+            if (vfx.photonView.isMine) {
+                vfx.Initialize(soul, movingVFX);
+            }
+        }
+
+        vfx.RPCSetVFXAciveState(PhotonTargets.Others, true);
+    }
+
+    public void CreateAllTargetsVFX() {
 
         for (int i = 0; i < targets.Count; i++) {
             GameObject atkVFX;
@@ -1778,40 +1804,6 @@ public abstract class SpecialAbility {
 
 
         }
-
-        //public void AlterValueBasedOnTarget(CreatureCardVisual targetToBasevalueFrom) {
-        //    if (!valueSetBytargetStat)
-        //        return;
-
-        //    if (targetToBasevalueFrom != null) {
-        //        switch (targetStat) {
-        //            case CardStats.Cost:
-        //                value = targetToBasevalueFrom.essenceCost;
-        //                break;
-
-        //            case CardStats.Attack:
-        //                value = targetToBasevalueFrom.attack;
-        //                break;
-
-        //            case CardStats.Size:
-        //                value = targetToBasevalueFrom.size;
-        //                break;
-
-        //            case CardStats.Health:
-        //                value = targetToBasevalueFrom.health;
-        //                break;
-        //        }
-        //    }
-
-        //    if (invertValue) {
-        //        value = -value;
-        //    }
-
-
-        //    source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, this, source, value);
-
-        //}
-
 
         public void ModifyValue(int modifierValue) {
 

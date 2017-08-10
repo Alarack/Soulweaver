@@ -41,7 +41,12 @@ public class BattleToken : BoardToken {
         switch (statToUpdate) {
             case Constants.CardStats.Attack:
                 TextTools.AlterTextColor(value, _creatureData.attack, attack);
-                attack.text = value.ToString();
+                if (value < 0) {
+                    attack.text = 0.ToString();
+                }
+                else {
+                    attack.text = value.ToString();
+                }
                 break;
 
             case Constants.CardStats.Size:
