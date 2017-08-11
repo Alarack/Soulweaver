@@ -140,7 +140,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 2
-    abilityName: 
+    abilityName: Draw all souls
     source: {fileID: 0}
     targets: []
     triggeringCards: []

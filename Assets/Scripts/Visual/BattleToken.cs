@@ -22,7 +22,7 @@ public class BattleToken : BoardToken {
         base.Initialize(data, card);
 
         _creatureData = parentCardData as CardCreatureData;
-        _parentCard = parentCard as CreatureCardVisual;
+        //_parentCard = parentCard as CreatureCardVisual;
 
         SetUpTokenText();
     }

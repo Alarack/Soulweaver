@@ -268,7 +268,7 @@ public class CardVisual : Photon.MonoBehaviour {
     private IEnumerator ResetSpecials() {
         yield return new WaitForSeconds(1f);
 
-        List<SpecialAbility> abilitiesToRemove = new List<SpecialAbility>();
+        //List<SpecialAbility> abilitiesToRemove = new List<SpecialAbility>();
 
         for (int i = 0; i < newSpecialAbilities.Count; i++) {
             //Debug.Log("Unreging " + newSpecialAbilities[i].abilityName);
@@ -496,7 +496,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 if (Input.GetMouseButton(0)) {
                     ActivateGlow(Color.cyan);
 
-                    Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
+                    //Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
                     //Debug.Log(nearest.gameObject.name);
                 }
 
@@ -685,7 +685,7 @@ public class CardVisual : Photon.MonoBehaviour {
             RPCTargetCard(PhotonTargets.All, false);
 
             if (this is CreatureCardVisual) {
-                CreatureCardVisual soul = this as CreatureCardVisual;
+                //CreatureCardVisual soul = this as CreatureCardVisual;
                 combatManager.lineDrawer.RPCStopDrawing(PhotonTargets.Others);
             }
         }
@@ -1430,7 +1430,7 @@ public class CardVisual : Photon.MonoBehaviour {
     [PunRPC]
     public void DeployAttackEffect(int effectID, int targetID, bool moveingEffect) {
         GameObject effect = Finder.FindEffectByID(effectID);
-        CreatureCardVisual target = Finder.FindCardByID(targetID) as CreatureCardVisual;
+        //CreatureCardVisual target = Finder.FindCardByID(targetID) as CreatureCardVisual;
 
         //Debug.Log(effect);
         //Debug.Log(effect.GetComponent<CardVFX>());
@@ -1463,14 +1463,14 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
 
-    public void RPCCheckAdjID(PhotonTargets targets, int id, string abilityName) {
-        photonView.RPC("CheckAdjID", targets, id, abilityName);
+    public void RPCCheckAdjID(PhotonTargets targets, int id, string abilityName, string cardname) {
+        photonView.RPC("CheckAdjID", targets, id, abilityName, cardname);
     }
 
     [PunRPC]
-    public void CheckAdjID(int id, string abilityName) {
+    public void CheckAdjID(int id, string abilityName, string cardname) {
 
-        Debug.Log("Ability Name: " + abilityName + " ADJ ID: " + id);
+        Debug.Log("Ability Name: " + abilityName + " ADJ ID: " + id + " Card Name: " + cardname);
     }
 
 

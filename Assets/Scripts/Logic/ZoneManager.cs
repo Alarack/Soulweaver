@@ -37,7 +37,7 @@ public class ZoneManager : MonoBehaviour {
         }
 
 
-        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+        //CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
         Deck deck = data.GetMonoBehaviour("Deck") as Deck;
 
         switch (deck.decktype) {

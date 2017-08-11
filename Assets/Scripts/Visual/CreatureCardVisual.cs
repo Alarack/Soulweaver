@@ -356,7 +356,7 @@ public class CreatureCardVisual : CardVisual {
         base.OnVFXLanded(data);
 
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
-        CardVFX vfx = data.GetMonoBehaviour("VFX") as CardVFX;
+        //CardVFX vfx = data.GetMonoBehaviour("VFX") as CardVFX;
 
 
         if (card != this)

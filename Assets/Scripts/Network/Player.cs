@@ -381,16 +381,16 @@ public class Player : Photon.MonoBehaviour {
 
 
 
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.isWriting) {
-            stream.SendNext(transform.position);
-            //stream.SendNext(transform.rotation);
-        }
-        else {
-            position = (Vector3)stream.ReceiveNext();
-            //rotation = (Quaternion)stream.ReceiveNext();
-        }
-    }
+    //void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    //    if (stream.isWriting) {
+    //        stream.SendNext(transform.position);
+    //        //stream.SendNext(transform.rotation);
+    //    }
+    //    else {
+    //        position = (Vector3)stream.ReceiveNext();
+    //        //rotation = (Quaternion)stream.ReceiveNext();
+    //    }
+    //}
 
     public void SetUpDecks() {
         GameObject battleField = PhotonNetwork.Instantiate("Battlefield", transform.position, Quaternion.identity, 0) as GameObject;

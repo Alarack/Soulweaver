@@ -71,6 +71,20 @@ public abstract class SpecialAbility {
         public List<EffectAddorRemoveSpecialAttribute> addOrRemoveSpecialAttribute = new List<EffectAddorRemoveSpecialAttribute>();
         public List<EffectChooseOne> chooseOne = new List<EffectChooseOne>();
         public List<EffectBestowSpecialAbility> bestowAbility = new List<EffectBestowSpecialAbility>();
+
+
+
+        public void InitEffect<T>(List<T> effects, SpecialAbility parentAbility) where T : Effect {
+
+            if (effects.Count < 1)
+                return;
+
+            for (int i = 0; i < effects.Count; i++) {
+                effects[i].Initialize(parentAbility.source, parentAbility);
+            }
+        }
+
+
     }
 
     public enum ApplyEffectToWhom {
@@ -125,31 +139,46 @@ public abstract class SpecialAbility {
     }
 
     public virtual void InitializeEffects() {
-        for (int i = 0; i < effectHolder.statAdjustments.Count; i++) {
-            effectHolder.statAdjustments[i].Initialize(source, this);
-        }
-        for (int i = 0; i < effectHolder.zoneChanges.Count; i++) {
-            effectHolder.zoneChanges[i].Initialize(source, this);
-        }
-        for (int i = 0; i < effectHolder.tokenSpanws.Count; i++) {
-            effectHolder.tokenSpanws[i].Initialize(source, this);
-        }
-        for (int i = 0; i < effectHolder.generateResources.Count; i++) {
-            effectHolder.generateResources[i].Initialize(source, this);
-        }
-        for (int i = 0; i < effectHolder.addOrRemoveKeywords.Count; i++) {
-            effectHolder.addOrRemoveKeywords[i].Initialize(source, this);
-        }
-        for (int i = 0; i < effectHolder.addOrRemoveSpecialAttribute.Count; i++) {
-            effectHolder.addOrRemoveSpecialAttribute[i].Initialize(source, this);
-        }
-        for (int i = 0; i < effectHolder.chooseOne.Count; i++) {
-            effectHolder.chooseOne[i].Initialize(source, this);
-        }
-        for (int i = 0; i < effectHolder.bestowAbility.Count; i++) {
-            effectHolder.bestowAbility[i].Initialize(source, this);
-        }
+
+        effectHolder.InitEffect(effectHolder.statAdjustments, this);
+        effectHolder.InitEffect(effectHolder.zoneChanges, this);
+        effectHolder.InitEffect(effectHolder.tokenSpanws, this);
+        effectHolder.InitEffect(effectHolder.generateResources, this);
+        effectHolder.InitEffect(effectHolder.addOrRemoveKeywords, this);
+        effectHolder.InitEffect(effectHolder.addOrRemoveSpecialAttribute, this);
+        effectHolder.InitEffect(effectHolder.chooseOne, this);
+        effectHolder.InitEffect(effectHolder.bestowAbility, this);
+
+        //for (int i = 0; i < effectHolder.statAdjustments.Count; i++) {
+        //    effectHolder.statAdjustments[i].Initialize(source, this);
+        //}
+        //for (int i = 0; i < effectHolder.zoneChanges.Count; i++) {
+        //    effectHolder.zoneChanges[i].Initialize(source, this);
+        //}
+        //for (int i = 0; i < effectHolder.tokenSpanws.Count; i++) {
+        //    effectHolder.tokenSpanws[i].Initialize(source, this);
+        //}
+        //for (int i = 0; i < effectHolder.generateResources.Count; i++) {
+        //    effectHolder.generateResources[i].Initialize(source, this);
+        //}
+        //for (int i = 0; i < effectHolder.addOrRemoveKeywords.Count; i++) {
+        //    effectHolder.addOrRemoveKeywords[i].Initialize(source, this);
+        //}
+        //for (int i = 0; i < effectHolder.addOrRemoveSpecialAttribute.Count; i++) {
+        //    effectHolder.addOrRemoveSpecialAttribute[i].Initialize(source, this);
+        //}
+        //for (int i = 0; i < effectHolder.chooseOne.Count; i++) {
+        //    effectHolder.chooseOne[i].Initialize(source, this);
+        //}
+        //for (int i = 0; i < effectHolder.bestowAbility.Count; i++) {
+        //    effectHolder.bestowAbility[i].Initialize(source, this);
+        //}
     }
+
+
+
+
+
 
     public List<StatAdjustment> GetAllStatAdjustments() {
         List<StatAdjustment> results = new List<StatAdjustment>();
@@ -612,7 +641,7 @@ public abstract class SpecialAbility {
     }
 
     protected void OnResourceChanged(EventData data) {
-        GameResource.ResourceType type = (GameResource.ResourceType)data.GetInt("ResourceType");
+        //GameResource.ResourceType type = (GameResource.ResourceType)data.GetInt("ResourceType");
         int value = data.GetInt("Value");
         Player player = data.GetMonoBehaviour("Player") as Player;
 
@@ -722,7 +751,7 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
-        DomainTile tile = data.GetMonoBehaviour("Tile") as DomainTile;
+        //DomainTile tile = data.GetMonoBehaviour("Tile") as DomainTile;
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
 
 
@@ -858,7 +887,7 @@ public abstract class SpecialAbility {
 
     protected void OnEnterZone(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
-        Deck deck = data.GetMonoBehaviour("Deck") as Deck;
+        //Deck deck = data.GetMonoBehaviour("Deck") as Deck;
 
         if (!ManageConstraints(card, this)) {
             return;
@@ -876,7 +905,7 @@ public abstract class SpecialAbility {
 
     protected void OnLeavesZone(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
-        Deck deck = data.GetMonoBehaviour("Deck") as Deck;
+        //Deck deck = data.GetMonoBehaviour("Deck") as Deck;
 
         if (!source.photonView.isMine)
             return;

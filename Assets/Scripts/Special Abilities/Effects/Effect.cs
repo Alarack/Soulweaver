@@ -14,6 +14,9 @@ public abstract class Effect {
     public virtual void Initialize(CardVisual source, SpecialAbility parent) {
         this.source = source;
         parentAbility = parent;
+
+
+        Debug.Log(this + " is being initialized for " + parentAbility.source.cardData.cardName);
     }
 
     public abstract void Apply(CardVisual target);
