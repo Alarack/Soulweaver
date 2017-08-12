@@ -206,7 +206,7 @@ public class CombatManager : Photon.MonoBehaviour {
                 results.Remove(interceptor);
             }
 
-            if (Finder.CardHasKeyword(attacker, Keywords.Flight) && (!Finder.CardHasKeyword(interceptor, Keywords.Flight) || !Finder.CardHasKeyword(interceptor, Keywords.Reach )))
+            if (Finder.CardHasKeyword(attacker, Keywords.Flight) && !Finder.CardHasKeyword(interceptor, Keywords.Flight) && !Finder.CardHasKeyword(interceptor, Keywords.Reach ))
                 results.Remove(interceptor);
         }
 

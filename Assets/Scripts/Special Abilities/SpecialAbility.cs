@@ -1832,6 +1832,10 @@ public abstract class SpecialAbility {
 
         public bool spellDamage;
 
+        //public void SetID() {
+        //    uniqueID = IDFactory.GenerateAdjID();
+        //}
+
 
         public StatAdjustment() {
 

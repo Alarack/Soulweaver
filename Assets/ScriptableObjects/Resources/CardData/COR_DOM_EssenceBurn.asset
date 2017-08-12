@@ -340,7 +340,7 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -403,7 +403,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 08000000
+      types: 0800000004000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -418,7 +418,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 00000000
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -588,7 +588,7 @@ MonoBehaviour:
       bestowAbility: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 0
+    toggleSourceOptions: 1
     toggleEffectOptions: 1
     toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 1

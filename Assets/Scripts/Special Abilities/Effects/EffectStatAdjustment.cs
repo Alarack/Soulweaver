@@ -45,6 +45,10 @@ public class EffectStatAdjustment : Effect {
         base.Initialize(source, parent);
 
         //if(source.photonView.isMine)
+
+
+        //source.StartCoroutine(InitializeAdjustments());
+
             InitializeAdjustments();
     }
 
@@ -84,7 +88,7 @@ public class EffectStatAdjustment : Effect {
 
     public void InitializeAdjustments() {
         for (int i = 0; i < adjustments.Count; i++) {
-            adjustments[i].uniqueID = IDFactory.GenerateAdjID() + 1000;
+            adjustments[i].uniqueID = IDFactory.GenerateAdjID(source.owner);
             adjustments[i].source = source;
 
             //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName, source.cardData.cardName);

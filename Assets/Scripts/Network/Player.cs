@@ -353,6 +353,11 @@ public class Player : Photon.MonoBehaviour {
     public void DrawFromGrimoire() {
         if (firstTurn) {
             firstTurn = false;
+
+            if (player2) {
+                activeGrimoire.GetComponent<Deck>().DrawCard();
+            }
+
             gameState = GameStates.Main;
         }
         else {

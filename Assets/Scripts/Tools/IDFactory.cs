@@ -6,16 +6,31 @@ public static class IDFactory  {
 
 
     public static int uniqueAdjID = 0;
+    public static int uniqueAdjID2 = 0;
+
+
+
     public static int uniqueAttID = 0;
 
 
-    public static int GenerateAdjID() {
+    public static int GenerateAdjID(Player player) {
 
-        //Debug.Log(uniqueAdjID.ToString() + " is the global id for adjustments before incramenting");
+        if (player.player2) {
+            Debug.Log(uniqueAdjID2.ToString() + " is an adj ID for player 2");
 
-        uniqueAdjID++;
+            uniqueAdjID2++;
 
-        return uniqueAdjID;
+            return uniqueAdjID2;
+        }
+        else {
+
+            Debug.Log(uniqueAdjID.ToString() + " is an adj ID for player 1");
+
+            uniqueAdjID++;
+
+            return uniqueAdjID;
+
+        }
     }
 
     public static int GenerateAttID() {

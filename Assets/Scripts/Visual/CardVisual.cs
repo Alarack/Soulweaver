@@ -216,7 +216,7 @@ public class CardVisual : Photon.MonoBehaviour {
             multiTargetAbiliies[i].Initialize(this);
         }
 
-
+        //InitAllStatAdjustments();
     }
 
     private void ResetSpecialAttributes() {
@@ -439,6 +439,15 @@ public class CardVisual : Photon.MonoBehaviour {
 
         return results;
     }
+
+    //public void InitAllStatAdjustments() {
+    //    List<SpecialAbility.StatAdjustment> adjs = GatherAllSpecialAbilityStatAdjustments();
+
+    //    for (int i = 0; i < adjs.Count; i++) {
+    //        adjs[i].SetID();
+    //    }
+    //}
+
 
     public List<SpecialAttribute> GatherAllSpecialAbilitySpecialAttributes() {
         List<SpecialAttribute> results = new List<SpecialAttribute>();
