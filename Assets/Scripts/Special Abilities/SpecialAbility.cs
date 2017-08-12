@@ -1273,6 +1273,12 @@ public abstract class SpecialAbility {
 
                 break;
 
+            case ConstraintType.CardAdjacentToSource:
+                if (!IsCardAdjacentToSource(target))
+                    return null;
+
+                break;
+
             case ConstraintType.StatMaximum:
                 return CreatureStatConstraint(constraint.maxStats, false, target);
 
@@ -1684,6 +1690,13 @@ public abstract class SpecialAbility {
 
     }
 
+    public bool IsCardAdjacentToSource(CardVisual target) {
+        return source.owner.battleFieldManager.IsCardAdjacent(source, target);
+    }
+
+
+
+
     public bool DoesTargetExistInOtherAbilityTargetList(CardVisual target, ConstraintList constraint) {
 
         List<CardVisual> otherTargets = FindTargetsFromAnotherAbility(constraint);
@@ -1813,7 +1826,7 @@ public abstract class SpecialAbility {
         public Constants.CardStats stat;
         public int value;
         public bool nonStacking;
-        public bool temporary;
+        public bool temporary = true;
         public CardVisual source;
         public int uniqueID = -1;
 

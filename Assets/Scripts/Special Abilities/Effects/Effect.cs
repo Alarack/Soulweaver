@@ -16,7 +16,7 @@ public abstract class Effect {
         parentAbility = parent;
 
 
-        Debug.Log(this + " is being initialized for " + parentAbility.source.cardData.cardName);
+        //Debug.Log(this + " is being initialized for " + parentAbility.source.cardData.cardName);
     }
 
     public abstract void Apply(CardVisual target);

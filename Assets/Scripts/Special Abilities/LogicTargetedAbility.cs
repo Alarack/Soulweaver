@@ -14,7 +14,8 @@ public class LogicTargetedAbility : SpecialAbility {
         OnlyTargetTriggeringCard,
         UseTargetsFromOtherAbility,
         TriggeringCardsOwner,
-        AdjacentTagets
+        AdjacentToTarget,
+        AdjacentToSource
     }
 
 
@@ -117,7 +118,7 @@ public class LogicTargetedAbility : SpecialAbility {
 
                 break;
 
-            case LogicTargeting.AdjacentTagets:
+            case LogicTargeting.AdjacentToTarget:
                 //CardVisual rightOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheRight(damageTaker);
                 List<CardVisual> otherTargets2 = FindTargetsFromAnotherAbility();
 
@@ -132,6 +133,21 @@ public class LogicTargetedAbility : SpecialAbility {
                 if (rightCard != null && CheckConstraints(targetConstraints, rightCard) != null) {
                     Effect(rightCard);
                 }
+
+                break;
+
+            case LogicTargeting.AdjacentToSource:
+                CardVisual leftcard2 = source.owner.battleFieldManager.GetCardToTheLeft(source);
+                CardVisual rightCard2 = source.owner.battleFieldManager.GetCardToTheRight(source);
+
+                if (leftcard2 != null && CheckConstraints(targetConstraints, leftcard2) != null) {
+                    Effect(leftcard2);
+                }
+
+                if (rightCard2 != null && CheckConstraints(targetConstraints, rightCard2) != null) {
+                    Effect(rightCard2);
+                }
+
 
                 break;
         }

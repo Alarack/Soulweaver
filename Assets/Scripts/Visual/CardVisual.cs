@@ -496,7 +496,8 @@ public class CardVisual : Photon.MonoBehaviour {
                 if (Input.GetMouseButton(0)) {
                     ActivateGlow(Color.cyan);
 
-                    //Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
+                    if(this is CreatureCardVisual)
+                        owner.battleFieldManager.GetNearestCardPosition(transform.position);
                     //Debug.Log(nearest.gameObject.name);
                 }
 
@@ -534,11 +535,13 @@ public class CardVisual : Photon.MonoBehaviour {
             if (currentDeck.decktype != Constants.DeckType.Hand)
                 return;
 
+            if(this is CreatureCardVisual) {
+                Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
 
-            Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
+                if (nearest == null)
+                    return;
+            }
 
-            if (nearest == null)
-                return;
 
             owner.gameResourceDisplay.RPCRemoveResource(PhotonTargets.All, GameResource.ResourceType.Essence, essenceCost);
 

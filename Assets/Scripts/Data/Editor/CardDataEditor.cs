@@ -437,9 +437,32 @@ public class CardDataEditor : Editor {
 
             lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.AllValidTargets;
         }
+    }
 
+    private void DrawPhalanxOtherEnterPreset(SpecialAbility entry) {
+        entry.trigger.Add(AbilityActivationTrigger.EntersZone);
+        entry.triggerConstraints.types.Add(ConstraintType.CardAdjacentToSource);
+
+        if(entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.OnlyTargetTriggeringCard;
+        }
 
     }
+
+    private void DrawPhalanxInspirePreset(SpecialAbility entry) {
+        DrawInspirePreset(entry);
+
+        if (entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.AdjacentToSource;
+        }
+
+    }
+
+
 
 
 
@@ -690,7 +713,7 @@ public class CardDataEditor : Editor {
                     logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
                     break;
 
-                case LogicTargetedAbility.LogicTargeting.AdjacentTagets:
+                case LogicTargetedAbility.LogicTargeting.AdjacentToTarget:
                     logicTargeted.targetAbilityName = EditorGUILayout.TextField("Ability Name", logicTargeted.targetAbilityName);
                     break;
             }
@@ -792,8 +815,21 @@ public class CardDataEditor : Editor {
             DrawArtifactPreset(entry);
         }
 
+        EditorGUILayout.EndHorizontal();
+
+        //Second Row
+        EditorGUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("PhalanxInspire")) {
+            DrawPhalanxInspirePreset(entry);
+        }
+
+        if (GUILayout.Button("PhalanxOthersEnter")) {
+            DrawPhalanxOtherEnterPreset(entry);
+        }
 
         EditorGUILayout.EndHorizontal();
+
     }
 
 

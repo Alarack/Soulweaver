@@ -345,6 +345,18 @@ public class CreatureCardVisual : CardVisual {
                 }
 
                 break;
+
+            case Keywords.Pacifist:
+                if (add) {
+                    if (keywords.Contains(Constants.Keywords.Interceptor)) {
+                        ToggleKeyword(false, (int)Constants.Keywords.Interceptor);
+                    }
+
+                }
+
+                break;
+
+
         }
     }
     #endregion

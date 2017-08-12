@@ -11,7 +11,7 @@ public static class IDFactory  {
 
     public static int GenerateAdjID() {
 
-        Debug.Log(uniqueAdjID.ToString() + " is the global id for adjustments before incramenting");
+        //Debug.Log(uniqueAdjID.ToString() + " is the global id for adjustments before incramenting");
 
         uniqueAdjID++;
 
@@ -20,7 +20,7 @@ public static class IDFactory  {
 
     public static int GenerateAttID() {
 
-        Debug.Log(uniqueAttID.ToString() + " is the global id for Attributes before incramenting");
+        //Debug.Log(uniqueAttID.ToString() + " is the global id for Attributes before incramenting");
 
         uniqueAttID++;
 

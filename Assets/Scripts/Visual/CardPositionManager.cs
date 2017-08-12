@@ -149,6 +149,26 @@ public class CardPositionManager : MonoBehaviour {
 
     }
 
+
+    public bool IsCardAdjacent(CardVisual target, CardVisual testcard) {
+
+        CardVisual leftTest = GetCardToTheLeft(target);
+
+        CardVisual rightTest = GetCardToTheRight(target);
+
+
+        if (leftTest != null && leftTest == testcard)
+            return true;
+
+        if (rightTest != null && rightTest == testcard)
+            return true;
+
+        return false;
+
+    }
+
+
+
     public Transform GetNearestCardPosition(Vector3 currentPosition) {
         Transform result = null;
 

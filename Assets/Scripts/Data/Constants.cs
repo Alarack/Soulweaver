@@ -182,7 +182,8 @@ public class Constants {
         WhosTurn,
         SpecialAttribute,
         CanAttack,
-        OtherTargets
+        OtherTargets,
+        CardAdjacentToSource
 
 
 
