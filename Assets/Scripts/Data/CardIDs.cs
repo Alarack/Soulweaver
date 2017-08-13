@@ -251,6 +251,40 @@ public class CardIDs {
         //Children of Illia 50000
         COI_DOM_Sentinel = 50000,
         COI_AvengeTheHost = 50001,
+        COI_CurseOfStone = 50002,
+        COI_CrumblingStones = 50003,
+        COI_TKN_Pebble = 50004,
+        COI_WallOfRoots = 50005,
+        COI_ForceOfNature = 50006,
+        COI_TKN_Leafling = 50007,
+        COI_IlliasAvatar = 50008,
+        COI_IlliasBargain = 50009,
+        COI_NaturesBlessing = 50010,
+        COI_MossyStoneBulwark = 50011,
+        COI_CareeningBoulder = 50012,
+        COI_EarthShield = 50013,
+        COI_EarthenEmbrace = 50014,
+        COI_DenseCanopy = 50015,
+        COI_HealingWaters = 50016,
+        COI_GalebornGoliath = 50017,
+        COI_GalebornGuardian = 50018,
+        COI_GalebornGladewalker = 50019,
+        COI_GalebornGeneral = 50020,
+        COI_HowlingWoodcrawler = 50021,
+        COI_WoodcrawlerSentinel = 50022,
+        COI_DisturbTheWeb = 50023,
+        COI_TKN_Woodcrawler = 50024,
+        COI_Spiderpult = 50025,
+        COI_ArcosTheCarrier = 50026,
+        COI_VolthekForestCrawler = 50027,
+        COI_SpiderShipment = 50028,
+        COI_WebcloakAmbusher = 50029,
+        COI_SilkCollector = 50030,
+        COI_BriarBind = 50031,
+        COI_Infest = 50032,
+        COI_CrumblingElemental = 50033,
+        COI_ForestGuardian = 50034,
+
 
 
 
@@ -320,6 +354,10 @@ public class CardIDs {
         NEU_SkeletalMinions = 80000,
         NEU_FireElemental = 80001,
         NEU_Emberstone = 80002,
+        NEU_EartElemental = 80003,
+        NEU_WallOfStone = 80004,
+
+
 
     }
 

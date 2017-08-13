@@ -139,7 +139,9 @@ public class Constants {
         Reach,
         Cleave,
         NoAttack,
-        Stun
+        Stun,
+        Ranged,
+        Token
     }
 
 

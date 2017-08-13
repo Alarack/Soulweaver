@@ -532,7 +532,7 @@ public class Deck : Photon.MonoBehaviour {
         CardData cardData = Finder.FindCardDataFromDatabase(dataID);
 
         CardVisual tokenCard = CardFactory(cardData, prefabName, targetLocation);
-        tokenCard.isToken = true;
+        //tokenCard.isToken = true;
 
 
     }

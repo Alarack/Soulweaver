@@ -44,25 +44,27 @@ public class CombatManager : Photon.MonoBehaviour {
     private RaycastHit clickRayHit;
     private Player owner;
 
-    void Start () {
+    private List<CardVisual> currentInterceptors = new List<CardVisual>();
+
+    void Start() {
         combatManager = this;
         owner = GetComponentInParent<Player>();
         //Debug.Log(combatManager.gameObject.name + " is where combat manager is assigned");
         Grid.EventManager.RegisterListener(Constants.GameEvent.TurnStarted, OnTurnStart);
     }
 
-	void Update () {
+    void Update() {
         if (Camera.main != null)
             clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         else {
             Debug.LogError("Camera is null");
         }
 
-        if(Input.GetMouseButtonDown(1) && isInCombat && owner.myTurn) {
+        if (Input.GetMouseButtonDown(1) && isInCombat && owner.myTurn) {
             EndCombat();
         }
 
-        if(isInCombat && attacker != null) {
+        if (isInCombat && attacker != null) {
 
             lineDrawer.BeginDrawing(attacker.battleToken.incomingEffectLocation.position, Input.mousePosition);
             //lineDrawer.RPCBeginDrawing(PhotonTargets.Others, attacker.battleToken.incomingEffectLocation.position, Input.mousePosition);
@@ -74,7 +76,7 @@ public class CombatManager : Photon.MonoBehaviour {
             DoStuffOnTarget();
         }
 
-        if(Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && !isChoosingTarget && !isInCombat && owner.myTurn) {
+        if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && !isChoosingTarget && !isInCombat && owner.myTurn) {
             SelectAttacker();
         }
 
@@ -136,13 +138,15 @@ public class CombatManager : Photon.MonoBehaviour {
         //    Debug.LogError("That has no attack value");
         //    return;
         //}
-            
+
 
         attacker = currentTarget;
         isInCombat = true;
         selectingDefender = true;
 
         attacker.battlefieldPos.position += selectedPos;
+
+        currentInterceptors = SortInterceptors();
 
     }
 
@@ -160,23 +164,23 @@ public class CombatManager : Photon.MonoBehaviour {
             return;
         }
 
-        if(Finder.CardHasKeyword(currentTarget, Keywords.Invisible)){
+        if (Finder.CardHasKeyword(currentTarget, Keywords.Invisible)) {
             Debug.Log("That Soul is invisible");
             return;
         }
 
-        if(attacker.keywords.Contains(Keywords.Rush) && currentTarget.primaryCardType == CardType.Player) {
+        if (attacker.keywords.Contains(Keywords.Rush) && currentTarget.primaryCardType == CardType.Player) {
             Debug.Log("Rush Souls cannot attack Generals the turn they're played");
             return;
         }
 
 
-        List<CardVisual> potentialInterceptors = Finder.FindAllCardsInZone(DeckType.Battlefield, Keywords.Interceptor, OwnerConstraints.Theirs);
+        //List<CardVisual> potentialInterceptors = Finder.FindAllCardsInZone(DeckType.Battlefield, Keywords.Interceptor, OwnerConstraints.Theirs);
 
-        List<CardVisual> resultingInterceptors = SortInterceptors(potentialInterceptors);
 
-        if(resultingInterceptors.Count > 0) {
-            if (!resultingInterceptors.Contains(currentTarget)) {
+
+        if (currentInterceptors.Count > 0) {
+            if (!currentInterceptors.Contains(currentTarget)) {
                 Debug.Log("You must select an Interceptor");
                 return;
             }
@@ -192,40 +196,53 @@ public class CombatManager : Photon.MonoBehaviour {
 
     }
 
-    private List<CardVisual> SortInterceptors(List<CardVisual> potentalBlockers) {
-        List<CardVisual> results = potentalBlockers;
+    private List<CardVisual> SortInterceptors() {
+        currentInterceptors.Clear();
 
-        for (int i = 0; i < results.Count; i++) {
-            CreatureCardVisual interceptor = potentalBlockers[i] as CreatureCardVisual;
+        List<CardVisual> allInterceptors = Finder.FindAllCardsInZone(DeckType.Battlefield, Keywords.Interceptor, OwnerConstraints.Theirs);
+
+        for (int i = allInterceptors.Count - 1; i >= 0; i--) {
+            CreatureCardVisual interceptor = allInterceptors[i] as CreatureCardVisual;
 
             if (Finder.CardHasKeyword(attacker, Keywords.Invisible)) {
-                results.Remove(interceptor);
+                allInterceptors.Remove(interceptor);
+                //Debug.Log("attcker is invisable, removeing all interceptors");
+                continue;
             }
 
             if (interceptor.size < attacker.size) {
-                results.Remove(interceptor);
+                //Debug.Log(interceptor.cardData.cardName + " is smaller than " + attacker.cardData.cardName + ". Removeing");
+                allInterceptors.Remove(interceptor);
+                continue;
             }
 
-            if (Finder.CardHasKeyword(attacker, Keywords.Flight) && !Finder.CardHasKeyword(interceptor, Keywords.Flight) && !Finder.CardHasKeyword(interceptor, Keywords.Reach ))
-                results.Remove(interceptor);
+            if (Finder.CardHasKeyword(attacker, Keywords.Flight) && !Finder.CardHasKeyword(interceptor, Keywords.Flight) && !Finder.CardHasKeyword(interceptor, Keywords.Reach)) {
+                //Debug.Log(interceptor.cardData.cardName + " does not have flight or reach and " + attacker.cardData.cardName + " does. Removeing");
+                allInterceptors.Remove(interceptor);
+                continue;
+            }
         }
 
-        return results;
+        //for (int i = 0; i < allInterceptors.Count; i++) {
+        //    Debug.Log(allInterceptors[i].cardData.name + " is a valid interceptor");
+        //}
+
+        return allInterceptors;
     }
 
     private void DoCombat() {
 
-        //TODO: Combat Events happen first for stuff like OnAttack: Effect
-
         RPCBroadcastAttacker(PhotonTargets.All, attacker);
         RPCBroadcastDefender(PhotonTargets.All, defender);
+
+        RPCBroadcastCombat(PhotonTargets.All, attacker, defender);
 
         if (CheckForCombatEventDeaths()) {
             EndCombat();
             return;
         }
-        
-        if(!Finder.CardHasKeyword(attacker, Keywords.Tireless)) {
+
+        if (!Finder.CardHasKeyword(attacker, Keywords.Tireless)) {
             attacker.RPCToggleExhaust(PhotonTargets.All, true);
         }
 
@@ -234,6 +251,48 @@ public class CombatManager : Photon.MonoBehaviour {
         if (attacker.battleToken.battleTokenGlow.activeInHierarchy) {
             attacker.battleToken.battleTokenGlow.SetActive(false);
         }
+
+
+        if (attacker.keywords.Contains(Keywords.FirstStrike) && !defender.keywords.Contains(Keywords.FirstStrike)) {
+            CombatHelper(attacker, defender);
+
+            if (defender.health <= 0) {
+                EndCombat();
+                return;
+            }
+            else {
+                CombatHelper(defender, attacker);
+                EndCombat();
+                return;
+            }
+        }
+
+        if (!attacker.keywords.Contains(Keywords.FirstStrike) && defender.keywords.Contains(Keywords.FirstStrike)) {
+            CombatHelper(defender, attacker);
+
+            if (attacker.health <= 0) {
+                EndCombat();
+                return;
+            }
+            else {
+                CombatHelper(attacker, defender);
+                EndCombat();
+                return;
+            }
+        }
+
+        if (attacker.keywords.Contains(Keywords.Ranged)) {
+            CombatHelper(attacker, defender);
+            EndCombat();
+            return;
+        }
+
+        if (defender.keywords.Contains(Keywords.Ranged)) {
+            CombatHelper(attacker, defender);
+            EndCombat();
+            return;
+        }
+
 
         CombatHelper(attacker, defender);
         CombatHelper(defender, attacker);
@@ -246,7 +305,7 @@ public class CombatManager : Photon.MonoBehaviour {
 
         int tempAttackvalue = 0;
 
-        if(damageDealer.attack < 0) {
+        if (damageDealer.attack < 0) {
             tempAttackvalue = 0;
         }
         else {
@@ -254,68 +313,31 @@ public class CombatManager : Photon.MonoBehaviour {
         }
 
         SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, tempAttackvalue, false, false, damageDealer);
+
         bool hasVFX = String.IsNullOrEmpty(damageDealer.attackEffect);
 
         if (damageDealer == attacker) {
             if (damageDealer.keywords.Contains(Keywords.Cleave)) {
                 CardVisual rightOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheRight(damageTaker);
                 CardVisual leftOfTarget = damageTaker.owner.battleFieldManager.GetCardToTheLeft(damageTaker);
-                
-
 
                 if (rightOfTarget != null) {
                     rightOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, false);
                 }
-                    //Debug.Log(rightOfTarget.cardData.name);
 
                 if (leftOfTarget != null) {
                     leftOfTarget.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, false);
                 }
-                    //Debug.Log(leftOfTarget.cardData.name);
             }
         }
+
 
         damageTaker.RPCApplyUntrackedStatAdjustment(PhotonTargets.All, adj, damageDealer, !hasVFX);
 
         if (!hasVFX) {
-            GameObject atkVFX;
-            if (damageDealer.cardData.movingVFX) {
-                atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageDealer.transform.position, Quaternion.identity, 0) as GameObject;
-            }
-            else {
-                atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
-            }
-
-            CardVFX vfx = atkVFX.GetComponent<CardVFX>();
-
-            if (vfx.photonView.isMine) {
-                vfx.Initialize(damageTaker, damageDealer.cardData.movingVFX);
-
-                if (damageDealer.cardData.movingVFX) {
-                    atkVFX.transform.SetParent(damageDealer.transform, false);
-                    atkVFX.transform.localPosition = Vector3.zero;
-                    //vfx.target = damageTaker.battleToken.incomingEffectLocation;
-                    //vfx.beginMovement = true;
-                }
-                else {
-                    atkVFX.transform.SetParent(damageTaker.battleToken.incomingEffectLocation, false);
-                    atkVFX.transform.localPosition = Vector3.zero;
-                }
-            }
-
-            vfx.RPCSetVFXAciveState(PhotonTargets.Others, true);
-
-
-            //damageDealer.RPCDeployAttackEffect(PhotonTargets.All, atkVFX.GetPhotonView().viewID, damageTaker, damageDealer.cardData.movingVFX);
+            LaunchVFX(damageDealer, damageTaker);
         }
-        //else {
 
-        //    //damageDealer.RPCBroadCastNoVFXImpactEvent(PhotonTargets.All, damageTaker);
-
-        //    //EventData data = new EventData();
-        //    //data.AddMonoBehaviour("Card", damageTaker);
-        //    //Grid.EventManager.SendEvent(Constants.GameEvent.VFXLanded, data);
-        //}
 
     }
 
@@ -342,28 +364,15 @@ public class CombatManager : Photon.MonoBehaviour {
 
 
     public void EndCombat() {
-
         attacker.battlefieldPos.position -= selectedPos;
         //TODO: End of Combat Events
 
         if (attacker != null && defender != null) {
-            //bool attackerHasVFX = String.IsNullOrEmpty(attacker.attackEffect);
-            //bool defenderHasVFX = String.IsNullOrEmpty(defender.attackEffect);
-
-            //attacker.RPCCheckDeath(PhotonTargets.All, defender, false, !defenderHasVFX);
-            //defender.RPCCheckDeath(PhotonTargets.All, attacker, false, !attackerHasVFX);
-
             defender.RPCTargetCard(PhotonTargets.All, false);
-        }
 
-
-        //Debug.Log("Ending Combat");
-
-        if (attacker != null)
             attacker = null;
-
-        if (defender != null)
             defender = null;
+        }
 
         isInCombat = false;
         selectingDefender = false;
@@ -371,18 +380,17 @@ public class CombatManager : Photon.MonoBehaviour {
         if (lineDrawer.lineRenderer.enabled) {
             lineDrawer.RPCStopDrawing(PhotonTargets.All);
         }
-
     }
 
     private void DoStuffOnTarget() {
         CardVisual currentTarget = CardClicked();
 
         if (!ConfirmCardClicked(currentTarget, DeckType.Battlefield))
-            return ;
+            return;
 
         //TargetingHandler.CreateTargetInfoListing(sourceOfTargetingEffect, currentTarget);
 
-        if(confirmedTargetCallback != null) {
+        if (confirmedTargetCallback != null) {
 
             if (confirmedTargetCallback(currentTarget)) {
 
@@ -442,31 +450,13 @@ public class CombatManager : Photon.MonoBehaviour {
 
     }
 
-    //public bool CheckForAttackPreventionEffects(CardVisual attacker) {
-    //    bool result = true;
 
-    //    if (attacker.keywords.Contains(Keywords.Defender))
-    //        return false;
-
-    //    if (attacker.keywords.Contains(Keywords.NoAttack))
-    //        return false;
-
-    //    if (attacker.keywords.Contains(Keywords.Pacifist))
-    //        return false;
-
-    //    if (attacker.keywords.Contains(Keywords.Stun))
-    //        return false;
-
-
-
-    //    return result;
-    //}
 
     #region Events
 
     public void OnTurnStart(EventData data) {
         Player p = data.GetMonoBehaviour("Player") as Player;
-        if(p == owner) {
+        if (p == owner) {
             HandleFusion();
         }
 
@@ -484,7 +474,7 @@ public class CombatManager : Photon.MonoBehaviour {
     public void HandleFusion() {
         List<CardVisual> targets = Finder.FindAllCardsInZone(DeckType.Battlefield, Keywords.Fusion, OwnerConstraints.Mine);
 
-        if(targets.Count < 2) {
+        if (targets.Count < 2) {
             return;
         }
 
@@ -537,6 +527,47 @@ public class CombatManager : Photon.MonoBehaviour {
 
 
 
+    #region VFX
+
+    public void LaunchVFX(CreatureCardVisual damageDealer, CreatureCardVisual damageTaker) {
+
+        GameObject atkVFX;
+        if (damageDealer.cardData.movingVFX) {
+            atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageDealer.transform.position, Quaternion.identity, 0) as GameObject;
+        }
+        else {
+            atkVFX = PhotonNetwork.Instantiate(damageDealer.attackEffect, damageTaker.transform.position, Quaternion.identity, 0) as GameObject;
+        }
+
+        CardVFX vfx = atkVFX.GetComponent<CardVFX>();
+
+        if (vfx.photonView.isMine) {
+            vfx.Initialize(damageTaker, damageDealer.cardData.movingVFX);
+
+            if (damageDealer.cardData.movingVFX) {
+                atkVFX.transform.SetParent(damageDealer.transform, false);
+                atkVFX.transform.localPosition = Vector3.zero;
+                //vfx.target = damageTaker.battleToken.incomingEffectLocation;
+                //vfx.beginMovement = true;
+            }
+            else {
+                atkVFX.transform.SetParent(damageTaker.battleToken.incomingEffectLocation, false);
+                atkVFX.transform.localPosition = Vector3.zero;
+            }
+        }
+
+        vfx.RPCSetVFXAciveState(PhotonTargets.Others, true);
+    }
+
+
+
+    #endregion
+
+
+
+
+
+
 
     #region RPCs
 
@@ -544,7 +575,7 @@ public class CombatManager : Photon.MonoBehaviour {
     public void RPCBroadcastAttacker(PhotonTargets targets, CardVisual attacker) {
         int attackerID = attacker.photonView.viewID;
 
-       owner.photonView.RPC("BroadcastAttacker", targets, attackerID);
+        owner.photonView.RPC("BroadcastAttacker", targets, attackerID);
     }
 
     public void RPCBroadcastDefender(PhotonTargets targets, CardVisual defender) {

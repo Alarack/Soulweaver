@@ -51,7 +51,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public List<SpecialAbility.StatAdjustment> statAdjustments = new List<SpecialAbility.StatAdjustment>();
     [Header("Types and Attunements")]
     public int essenceCost;
-    public bool isToken;
+    //public bool isToken;
     public bool isMulligand;
     public bool isBeingChosen;
     public Constants.CardType primaryCardType;

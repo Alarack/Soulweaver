@@ -11,6 +11,7 @@ public static class IDFactory  {
 
 
     public static int uniqueAttID = 0;
+    public static int uniqueAttID2 = 0;
 
 
     public static int GenerateAdjID(Player player) {
@@ -33,13 +34,19 @@ public static class IDFactory  {
         }
     }
 
-    public static int GenerateAttID() {
+    public static int GenerateAttID(Player player) {
 
-        //Debug.Log(uniqueAttID.ToString() + " is the global id for Attributes before incramenting");
+        if (player.player2) {
+            uniqueAttID2++;
 
-        uniqueAttID++;
+            return uniqueAttID2;
+        }
+        else {
+            uniqueAttID++;
 
-        return uniqueAttID;
+            return uniqueAttID;
+        }
+
     }
 
 

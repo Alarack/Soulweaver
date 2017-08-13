@@ -583,6 +583,16 @@ public class CardDataEditor : Editor {
 
                     break;
 
+                case AbilityActivationTrigger.Defends:
+                    if(!entry.triggerConstraints.thisCardAttacks)
+                        entry.triggerConstraints.thisCardDefends = EditorGUILayout.Toggle("This card is Defender?", entry.triggerConstraints.thisCardDefends);
+
+                    if(!entry.triggerConstraints.thisCardDefends)
+                        entry.triggerConstraints.thisCardAttacks = EditorGUILayout.Toggle("This card is Attacker?", entry.triggerConstraints.thisCardAttacks);
+
+                    entry.processTriggerOnWhom = EditorHelper.EnumPopup("Process on Which card?", entry.processTriggerOnWhom);
+                    break;
+
             }
         }
 

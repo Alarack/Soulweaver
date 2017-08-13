@@ -8,34 +8,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: __TestSubject1
+  m_Script: {fileID: 11500000, guid: 74753322d7479ab4da1d2ba5cfefc6d3, type: 3}
+  m_Name: COI_CrumblingStones
   m_EditorClassIdentifier: 
-  cardID: 111
-  cardName: Test Subject 01
-  cardText: Draw all Souls from your soulcrpyt.
-  cardCost: 1
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
-  attackEffect: VFX_Ball_Lightning
-  movingVFX: 1
+  cardID: 50003
+  cardName: Crumbling Stones
+  cardText: Whenever a friendly, non-token, Earth Stone takes damage, summon a Pebble
+  cardCost: 4
+  cardImage: {fileID: 0}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
+  movingVFX: 0
   deathVFX: 
-  primaryCardType: 1
+  primaryCardType: 3
   otherCardTypes: 
-  attunements: 0b000000
-  subTypes: 05000000
-  keywords: 26000000
+  attunements: 02000000
+  subTypes: 37000000
+  keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 01000000
+  - trigger: 08000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
-      owner: 0
+      types: 04000000020000000100000007000000
+      owner: 2
       whosTurn: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
       notKeyword: 0
       specialAttributes: 
       notSpecialAttribute: 0
-      attunement: 
+      attunement: 02000000
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -66,10 +66,12 @@ MonoBehaviour:
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
-      statGainedOrLost: 0
-      statChanged: 0
+      statGainedOrLost: 1
+      statChanged: 4
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -124,6 +126,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -139,16 +143,16 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 2
-    abilityName: Draw all souls
+    effect: 0
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 010000000400000002000000
-      owner: 2
+      types: 
+      owner: 0
       whosTurn: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -160,7 +164,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 04000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -183,6 +187,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -242,6 +248,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -258,10 +266,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effectHolder:
-      zoneChanges:
-      - effectType: 0
-        source: {fileID: 0}
-        targetLocation: 3
+      zoneChanges: []
       tokenSpanws: []
       statAdjustments: []
       generateResources: []
@@ -270,17 +275,15 @@ MonoBehaviour:
       chooseOne: []
       bestowAbility: []
     togglePresets: 1
-    toggleTriggerOptions: 0
+    toggleTriggerOptions: 1
     toggleSourceOptions: 0
     toggleEffectOptions: 0
-    toggleTargetOptions: 0
+    toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 1
+    logicTargetingMethod: 0
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  attack: 3
-  size: 2
-  health: 2
+  supportValue: 0

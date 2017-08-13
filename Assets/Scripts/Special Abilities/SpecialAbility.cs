@@ -127,13 +127,7 @@ public abstract class SpecialAbility {
             return;
         }
 
-        //if(abilityName == "MakeDude") {
-        //    Debug.Log("Init " + abilityName);
-        //    Debug.Log(source.cardData.cardName + " is my source");
-        //}
-
         RegisterListeners();
-        //InitializeStatAdjusments();
         InitializeEffects();
         source.specialAbilities.Add(this);
     }
@@ -323,21 +317,12 @@ public abstract class SpecialAbility {
 
         if (clearTriggeringTargetFromOtherAbility) {
             RemoveTargetFromSpecificAbility(triggerConstraints.abilityToGatherTargetsFrom, card);
-
-            //List<CardVisual> otherTargets = FindTargetsFromAnotherAbility(triggerConstraints);
-            //if (otherTargets.Contains(card)) {
-            //}
         }
 
         if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateSingleTargetVFX(card);
         }
-        //else {
-        //    //Debug.Log(source.gameObject.name + " has an ability: " + abilityName + " that has no vfx. It is targeting " + card.gameObject.name);
 
-        //    //source.RPCBroadCastNoVFXImpactEvent(PhotonTargets.All, card);
-
-        //}
 
 
 
@@ -529,7 +514,7 @@ public abstract class SpecialAbility {
             Grid.EventManager.RegisterListener(GameEvent.CharacterAttacked, OnAttack);
 
         if (trigger.Contains(AbilityActivationTrigger.Defends))
-            Grid.EventManager.RegisterListener(GameEvent.CharacterDefends, OnCombatDefense);
+            Grid.EventManager.RegisterListener(GameEvent.CharacterDefends, OnCombat);
 
         if (source.primaryCardType != CardType.Domain && trigger.Contains(AbilityActivationTrigger.UserActivated))
             Grid.EventManager.RegisterListener(GameEvent.UserActivatedAbilityInitiated, OnUserActivation);
@@ -965,6 +950,63 @@ public abstract class SpecialAbility {
         ActivateTargeting();
     }
 
+    protected void OnCombat(EventData data) {
+        CardVisual attacker = data.GetMonoBehaviour("Attacker") as CardVisual;
+        CardVisual defender = data.GetMonoBehaviour("Defender") as CardVisual;
+
+        if (!source.photonView.isMine)
+            return;
+
+
+        if (triggerConstraints.thisCardAttacks && attacker != source)
+            return;
+
+        if (triggerConstraints.thisCardDefends && defender != source)
+            return;
+
+
+
+
+        CardVisual effectTarget = null;
+
+        if (trigger.Contains(AbilityActivationTrigger.Defends)){
+            switch (processTriggerOnWhom) {
+
+                case ApplyEffectToWhom.CauseOfTrigger:
+                    effectTarget = attacker;
+                    break;
+
+                case ApplyEffectToWhom.TriggeringCard:
+                    effectTarget = defender;
+                    break;
+
+                case ApplyEffectToWhom.Source:
+                    effectTarget = source;
+                    break;
+            }
+        }
+
+        if (trigger.Contains(AbilityActivationTrigger.Attacks)) {
+            effectTarget = attacker;
+        }
+
+
+
+        if (!ManageConstraints(effectTarget, this)) {
+            return;
+        }
+
+        if (this is LogicTargetedAbility && source.photonView.isMine) {
+            ProcessEffect(effectTarget);
+        }
+
+        ActivateTargeting();
+
+
+
+
+    }
+
     protected void OnCreatureStatAdjusted(EventData data) {
         CardStats stat = (CardStats)data.GetInt("Stat");
         int value = data.GetInt("Value");
@@ -973,25 +1015,6 @@ public abstract class SpecialAbility {
 
         if (!source.photonView.isMine)
             return;
-
-
-        if (source.currentDeck.decktype == DeckType.Battlefield) {
-
-            //if (source.photonView.isMine) {
-            //    Debug.Log("[Special Ability - MINE] " + abilityName + " " + target.gameObject.name + " :: " + target.cardData.cardName + " is the target");
-            //    Debug.Log("[Special Ability - MINE] " + abilityName + " " + sourceOfAdjustment.gameObject.name + " :: " + sourceOfAdjustment.cardData.cardName + " is the source");
-            //}
-            //else {
-            //    Debug.Log("[Special Ability - THEIRS] " + target.gameObject.name + " :: " + target.cardData.cardName + " is the target");
-            //    Debug.Log("[Special Ability - THEIRS] " + sourceOfAdjustment.gameObject.name + " :: " + sourceOfAdjustment.cardData.cardName + " is the source");
-            //}
-
-
-            //Debug.Log(target.gameObject.name + " :: " + target.cardData.cardName + " has had " + stat.ToString() + " altered by " + sourceOfAdjustment.gameObject.name + " :: " + sourceOfAdjustment.cardData.cardName);
-
-        }
-
-
 
         if (triggerConstraints.thisCardAdjusted && target != source)
             return;
@@ -1948,6 +1971,11 @@ public abstract class SpecialAbility {
         public CardStats statChanged;
         public bool thisCardAdjusts;
         public bool thisCardAdjusted;
+
+        //OnCombat
+        public bool thisCardAttacks;
+        public bool thisCardDefends;
+
 
         //Creature Can Attack
         public bool creatureCanAttack;
