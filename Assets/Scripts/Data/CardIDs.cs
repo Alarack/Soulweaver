@@ -259,7 +259,7 @@ public class CardIDs {
         COI_TKN_Leafling = 50007,
         COI_IlliasAvatar = 50008,
         COI_IlliasBargain = 50009,
-        COI_NaturesBlessing = 50010,
+        COI_StoneMothersBlessing = 50010,
         COI_MossyStoneBulwark = 50011,
         COI_CareeningBoulder = 50012,
         COI_EarthShield = 50013,
@@ -284,6 +284,7 @@ public class CardIDs {
         COI_Infest = 50032,
         COI_CrumblingElemental = 50033,
         COI_ForestGuardian = 50034,
+        COI_WoodcrawlerZelot = 50035,
 
 
 

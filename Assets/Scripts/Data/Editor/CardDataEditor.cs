@@ -462,6 +462,36 @@ public class CardDataEditor : Editor {
 
     }
 
+    private void DrawTargetSoulsOnBattlefieldPreset(SpecialAbility entry) {
+        entry.targetConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.targetConstraints.currentZone.Add(DeckType.Battlefield);
+        entry.targetConstraints.types.Add(ConstraintType.PrimaryType);
+        entry.targetConstraints.primaryType.Add(CardType.Soul);
+    }
+
+    private void DrawCardDrawPreset(SpecialAbility entry) {
+
+        entry.effect = EffectType.ZoneChange;
+
+        EffectZoneChange drawCards = new EffectZoneChange();
+        drawCards.targetLocation = DeckType.Hand;
+
+        entry.effectHolder.zoneChanges.Add(drawCards);
+
+        entry.targetConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.targetConstraints.types.Add(ConstraintType.Owner);
+
+        entry.targetConstraints.owner = OwnerConstraints.Mine;
+        entry.targetConstraints.currentZone.Add(DeckType.Grimoire);
+
+        if (entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.NumberOfValidTargets;
+            lta.numberofTargets = 1;
+        }
+    }
+
 
 
 
@@ -622,6 +652,15 @@ public class CardDataEditor : Editor {
     }
 
     private void DrawEffectOptions(SpecialAbility entry) {
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Draw Cards")) {
+            DrawCardDrawPreset(entry);
+        }
+        EditorGUILayout.EndHorizontal();
+
+
+
         EditorHelper.DrawInspectorSectionHeader("Effect:");
         entry.abilityVFX = EditorGUILayout.TextField("Effect VFX Name", entry.abilityVFX);
         entry.movingVFX = EditorGUILayout.Toggle("Moving VFX?", entry.movingVFX);
@@ -707,6 +746,16 @@ public class CardDataEditor : Editor {
             entry.targetConstraints.neverTargetSelf = EditorGUILayout.Toggle("This card can't target itself?", entry.targetConstraints.neverTargetSelf);
 
         //entry.targetConstraints.targetAdjacency = EditorGUILayout.Toggle("Include Adjacent Targets on Battlefield?", entry.targetConstraints.targetAdjacency);
+
+
+        EditorGUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Souls On Field")) {
+            DrawTargetSoulsOnBattlefieldPreset(entry);
+        }
+
+        EditorGUILayout.EndHorizontal();
+
         entry.targetConstraints.types = EditorHelper.DrawList("Target Constraints", entry.targetConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
 
         if (entry is LogicTargetedAbility) {
@@ -738,6 +787,9 @@ public class CardDataEditor : Editor {
 
             //}
         }
+
+
+
 
         for (int i = 0; i < entry.targetConstraints.types.Count; i++) {
             ShowConstraintsOfType(entry.targetConstraints.types[i], entry.targetConstraints, "Target");

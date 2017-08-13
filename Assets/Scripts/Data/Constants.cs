@@ -73,6 +73,7 @@ public class Constants {
         Ritual,
         Enchantment,
         Blessing,
+        Rat,
 
 
 

@@ -9,26 +9,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: __TestSubject2
+  m_Name: COI_WoodcrawlerZelot
   m_EditorClassIdentifier: 
-  cardID: 112
-  cardName: Test Subject 02
-  cardText: Just a dude
+  cardID: 50035
+  cardName: Woodcrawler Zelot
+  cardText: Volatile 3
   cardCost: 1
-  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
-  attackEffect: VFX_Primal_Slash
+  cardImage: {fileID: 0}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
   movingVFX: 0
   deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 0b000000
-  subTypes: 05000000
+  attunements: 07000000
+  subTypes: 0d000000
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
-  specialAttributes: []
-  attack: 3
-  size: 3
-  health: 3
+  specialAttributes:
+  - attributeType: 3
+    attributeValue: 3
+    uniqueID: -1
+  attack: 1
+  size: 1
+  health: 1

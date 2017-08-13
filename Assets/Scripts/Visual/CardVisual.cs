@@ -366,8 +366,11 @@ public class CardVisual : Photon.MonoBehaviour {
                 }
 
                 TextTools.AlterTextColor(value, cardData.cardCost, cardCostText, true);
-                //Debug.Log("altering cost " + value);
                 essenceCost += value;
+
+                if (essenceCost <= 0)
+                    essenceCost = 0;
+
                 cardCostText.text = essenceCost.ToString();
                 break;
         }
