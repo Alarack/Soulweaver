@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114210287118003034}
   - component: {fileID: 114408855425483394}
   m_Layer: 0
-  m_Name: DefaultGrimoire
+  m_Name: COI_Illia_Grimoire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

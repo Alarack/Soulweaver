@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: OTH_TKN_AmorphousVestige
+  m_Name: OTH_TKN_Thoughtform
   m_EditorClassIdentifier: 
-  cardID: 40016
-  cardName: Amorphous Vestige
+  cardID: 40058
+  cardName: Thoughtform
   cardText: 
-  cardCost: 1
+  cardCost: 3
   cardImage: {fileID: 21300000, guid: e7f230209e17d204489d5d1684d86ebe, type: 3}
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
@@ -23,12 +23,12 @@ MonoBehaviour:
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0b000000
-  subTypes: 19000000
-  keywords: 1700000027000000
+  subTypes: 
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes: []
-  attack: 1
-  size: 1
-  health: 1
+  attack: 3
+  size: 3
+  health: 3

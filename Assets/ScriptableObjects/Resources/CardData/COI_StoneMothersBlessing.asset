@@ -14,7 +14,7 @@ MonoBehaviour:
   cardID: 50010
   cardName: Stone Mother's Blessing
   cardText: Give a soul +2/+0+/4 and Tireless
-  cardCost: 0
+  cardCost: 3
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 

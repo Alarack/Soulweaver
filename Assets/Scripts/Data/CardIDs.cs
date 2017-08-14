@@ -246,6 +246,24 @@ public class CardIDs {
         OTH_BloatedButcher = 40038,
         OTH_RedEyedVoidling = 40039,
         OTH_PrimalHorror = 40040,
+        OTH_VestigalNodule = 40041,
+        OTH_Mindwarper = 40042,
+        OTH_MindLink = 40043,
+        OTH_MindParasite = 40044,
+        OTH_ErrantThought = 40045,
+        OTH_BarbedMindleech = 40046,
+        OTH_TKN_Mindbarb = 40047,
+        OTH_Tulpa = 40048,
+        OTH_TheRetentacling = 40049,
+        OTH_TKN_Tentacle = 40050,
+        OTH_ViolentMindthrust = 40051,
+        OTH_NeuralLash = 40052,
+        OTH_EncephalonArcaneMind = 40053,
+        OTH_RapidEvolution = 40054,
+        OTH_UnwillingAssimlation = 40055,
+        OTH_AdaptiveRegeneration = 40056,
+        OTH_LivingHusk = 40057,
+        OTH_TKN_Thoughtform = 40058,
 
 
         //Children of Illia 50000
@@ -285,6 +303,21 @@ public class CardIDs {
         COI_CrumblingElemental = 50033,
         COI_ForestGuardian = 50034,
         COI_WoodcrawlerZelot = 50035,
+        COI_DOM_Swarmlord = 50036,
+        COI_DOM_Creep = 50037,
+        COI_DOM_Skitter = 50038,
+        COI_DOM_Ironskin = 50039,
+        COI_DOM_Stonemeld = 50040,
+        COI_DOM_Regrowth = 50041,
+        COI_DOM_Treeinforce = 50042,
+        COI_DOM_IvyKnightsInstinct = 50043,
+        COI_LifesurgeElemental = 50044,
+        COI_AncientStonewoodSage = 50045,
+        COI_SeismicHammer = 50046,
+        COI_SpiderPouch = 50047,
+        COI_OvergrowthPendant = 50048,
+
+
 
 
 
@@ -357,7 +390,7 @@ public class CardIDs {
         NEU_Emberstone = 80002,
         NEU_EartElemental = 80003,
         NEU_WallOfStone = 80004,
-
+        NEU_MysticHealer = 80005,
 
 
     }

@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 114352039197342412}
   - component: {fileID: 114388036817121000}
   m_Layer: 0
-  m_Name: DefaultDomain
+  m_Name: COI_Spider_Domain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

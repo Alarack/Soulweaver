@@ -384,6 +384,8 @@ public class CardDataEditor : Editor {
     }
 
     private void DrawExhaustSelfPreset(SpecialAbility entry) {
+        entry.abilityName = "Exhaust Self";
+
         entry.trigger.Add(AbilityActivationTrigger.SecondaryEffect);
         entry.effect = EffectType.AddOrRemoveKeywordAbilities;
 
@@ -467,6 +469,30 @@ public class CardDataEditor : Editor {
         entry.targetConstraints.currentZone.Add(DeckType.Battlefield);
         entry.targetConstraints.types.Add(ConstraintType.PrimaryType);
         entry.targetConstraints.primaryType.Add(CardType.Soul);
+
+        if (entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.AllValidTargets;
+        }
+    }
+
+    private void DrawTargetOwnGeneralPreset(SpecialAbility entry) {
+        entry.targetConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.targetConstraints.currentZone.Add(DeckType.Battlefield);
+        entry.targetConstraints.types.Add(ConstraintType.PrimaryType);
+        entry.targetConstraints.primaryType.Add(CardType.Player);
+        entry.targetConstraints.types.Add(ConstraintType.Owner);
+        entry.targetConstraints.owner = OwnerConstraints.Mine;
+
+        if (entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.AllValidTargets;
+        }
+
+
+
     }
 
     private void DrawCardDrawPreset(SpecialAbility entry) {
@@ -490,6 +516,55 @@ public class CardDataEditor : Editor {
             lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.NumberOfValidTargets;
             lta.numberofTargets = 1;
         }
+    }
+
+    private void DrawStatAdjustmentPreset(SpecialAbility entry) {
+        entry.effect = EffectType.StatAdjustment;
+
+        EffectStatAdjustment adj = new EffectStatAdjustment();
+        adj.valueSetmethod = EffectStatAdjustment.ValueSetMethod.Manual;
+
+        SpecialAbility.StatAdjustment newADJ = new SpecialAbility.StatAdjustment();
+
+        adj.adjustments.Add(newADJ);
+
+        entry.effectHolder.statAdjustments.Add(adj);
+    }
+
+    private void DrawDiscardPreset(SpecialAbility entry) {
+
+        entry.effect = EffectType.ZoneChange;
+
+        EffectZoneChange discard = new EffectZoneChange();
+        discard.targetLocation = DeckType.SoulCrypt;
+
+        entry.effectHolder.zoneChanges.Add(discard);
+
+        entry.targetConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.targetConstraints.currentZone.Add(DeckType.Hand);
+        entry.targetConstraints.types.Add(ConstraintType.Owner);
+        entry.targetConstraints.owner = OwnerConstraints.Mine;
+
+        if (entry is LogicTargetedAbility) {
+            LogicTargetedAbility lta = entry as LogicTargetedAbility;
+
+            lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.NumberOfValidTargets;
+            lta.numberofTargets = 1;
+        }
+    }
+
+    private void DrawSpawnTokenPreset(SpecialAbility entry) {
+        entry.effect = EffectType.SpawnToken;
+
+        EffectSpawnToken spawner = new EffectSpawnToken();
+
+        spawner.spawnMethod = EffectSpawnToken.SpawnMethod.Basic;
+        spawner.numberOfSpawns = 1;
+        spawner.spawnCardType = CardType.Soul;
+        spawner.spawnTokenLocation = DeckType.Battlefield;
+
+        entry.effectHolder.tokenSpanws.Add(spawner);
+
     }
 
 
@@ -657,6 +732,18 @@ public class CardDataEditor : Editor {
         if (GUILayout.Button("Draw Cards")) {
             DrawCardDrawPreset(entry);
         }
+
+        if (GUILayout.Button("Discard Cards")) {
+            DrawDiscardPreset(entry);
+        }
+
+        if (GUILayout.Button("Stat Adjustment")) {
+            DrawStatAdjustmentPreset(entry);
+        }
+
+        if (GUILayout.Button("Spawn Token")) {
+            DrawSpawnTokenPreset(entry);
+        }
         EditorGUILayout.EndHorizontal();
 
 
@@ -752,6 +839,10 @@ public class CardDataEditor : Editor {
 
         if (GUILayout.Button("Souls On Field")) {
             DrawTargetSoulsOnBattlefieldPreset(entry);
+        }
+
+        if (GUILayout.Button("My General")) {
+            DrawTargetOwnGeneralPreset(entry);
         }
 
         EditorGUILayout.EndHorizontal();

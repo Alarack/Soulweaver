@@ -93,7 +93,7 @@ public static class Finder {
     private static Dictionary<int, int> StatCollector(CardStats stat, DeckType zone, OwnerConstraints owner) {
         Dictionary<int, int> results = new Dictionary<int, int>();
 
-        List<CardVisual> cardsToSearch = FindAllCardsOfType(CardType.Soul, zone, owner);
+        List<CardVisual> cardsToSearch = FindAllCardsInZone(zone, owner); //FindAllCardsOfType(CardType.Soul, zone, owner);
 
         //foreach(CardVisual card in cardsToSearch) {
         //    Debug.Log(card.gameObject.name + " is " + card.cardData.cardName);
@@ -109,6 +109,10 @@ public static class Finder {
 
             case CardStats.Attack:
                 for (int i = 0; i < cardsToSearch.Count; i++) {
+                    if (cardsToSearch[i].primaryCardType != CardType.Soul)
+                        continue;
+
+
                     CreatureCardVisual soul = cardsToSearch[i] as CreatureCardVisual;
 
                     results.Add(soul.photonView.viewID, soul.attack);
@@ -117,6 +121,9 @@ public static class Finder {
 
             case CardStats.Size:
                 for (int i = 0; i < cardsToSearch.Count; i++) {
+                    if (cardsToSearch[i].primaryCardType != CardType.Soul)
+                        continue;
+
                     CreatureCardVisual soul = cardsToSearch[i] as CreatureCardVisual;
 
                     results.Add(soul.photonView.viewID, soul.size);
@@ -125,6 +132,9 @@ public static class Finder {
 
             case CardStats.Health:
                 for (int i = 0; i < cardsToSearch.Count; i++) {
+                    if (cardsToSearch[i].primaryCardType != CardType.Soul)
+                        continue;
+
                     CreatureCardVisual soul = cardsToSearch[i] as CreatureCardVisual;
 
                     results.Add(soul.photonView.viewID, soul.health);

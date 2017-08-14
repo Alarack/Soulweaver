@@ -74,6 +74,7 @@ public class Constants {
         Enchantment,
         Blessing,
         Rat,
+        Spirit,
 
 
 

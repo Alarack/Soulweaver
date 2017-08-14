@@ -14,7 +14,7 @@ MonoBehaviour:
   cardID: 50028
   cardName: Spider Shipment
   cardText: Summon 2 Woodcrawlers. Draw a card.
-  cardCost: 0
+  cardCost: 3
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
