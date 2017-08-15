@@ -238,7 +238,7 @@ public class CardIDs {
         OTH_SpontaneousGenesis = 40027,
         OTH_ViolentSeparation = 40028,
         OTH_MindShred = 40029,
-        OTH_Brainworms = 40030,
+        OTH_BrainCollector = 40030,
         OTH_ChaoticSpawn = 40034,
         OTH_ParasiticFlyer = 40035,
         OTH_PrimalMutator = 40036,

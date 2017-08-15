@@ -886,6 +886,14 @@ public class CardDataEditor : Editor {
             ShowConstraintsOfType(entry.targetConstraints.types[i], entry.targetConstraints, "Target");
         }
 
+
+        EditorGUILayout.Separator();
+        EditorHelper.DrawInspectorSectionHeader("Manual Triggers:");
+        entry.manualTriggerAbilityNames = EditorHelper.DrawList("Manual Triggers", entry.manualTriggerAbilityNames, true, "", true, DrawListOfStrings);
+
+        EditorHelper.DrawInspectorSectionFooter();
+        EditorGUILayout.Separator();
+
         EditorHelper.DrawInspectorSectionFooter();
 
     }

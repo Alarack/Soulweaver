@@ -49,6 +49,8 @@ public abstract class SpecialAbility {
     //Effects
     public EffectHolder effectHolder = new EffectHolder();
 
+    //ManualTriggers
+    public List<string> manualTriggerAbilityNames;
 
 
     //Editor Foldouts
@@ -295,9 +297,34 @@ public abstract class SpecialAbility {
 
 
             case EffectType.None:
-                Debug.Log("No effect is set to happen for " + source.gameObject.name);
+                Debug.Log("No effect is set to happen for " + abilityName + " on" + source.gameObject.name);
                 break;
         }
+
+
+
+
+
+
+
+
+        triggeringCards.Clear();
+
+        if (clearTargetsOnEffectComplete)
+            source.ClearAllSpecialAbilityTargets();
+
+
+        if (clearTriggeringTargetFromOtherAbility) {
+            RemoveTargetFromSpecificAbility(triggerConstraints.abilityToGatherTargetsFrom, card);
+        }
+
+
+        if(manualTriggerAbilityNames.Count > 0) {
+            for(int i = 0; i < manualTriggerAbilityNames.Count; i++) {
+                ManualTriggerEffect(manualTriggerAbilityNames[i]);
+            }
+        }
+
 
 
         if (!trigger.Contains(AbilityActivationTrigger.SecondaryEffect)) {
@@ -309,15 +336,6 @@ public abstract class SpecialAbility {
             Grid.EventManager.SendEvent(GameEvent.TriggerSecondaryEffect, data);
         }
 
-        triggeringCards.Clear();
-
-        if (clearTargetsOnEffectComplete)
-            source.ClearAllSpecialAbilityTargets();
-
-
-        if (clearTriggeringTargetFromOtherAbility) {
-            RemoveTargetFromSpecificAbility(triggerConstraints.abilityToGatherTargetsFrom, card);
-        }
 
         if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateSingleTargetVFX(card);
@@ -452,6 +470,38 @@ public abstract class SpecialAbility {
 
             target.ActivateTargeting();
         }
+    }
+
+    protected void ManualTriggerEffect(string abilityToTrigger) {
+        if (!source.photonView.isMine)
+            return;
+
+        SpecialAbility target = null;
+
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == abilityToTrigger)
+                target = source.specialAbilities[i];
+        }
+
+        if (target != null) {
+
+            Debug.Log(abilityName + " is manually triggering " + abilityToTrigger);
+
+            if (target is LogicTargetedAbility) {
+                LogicTargetedAbility lta = target as LogicTargetedAbility;
+
+                if (!ManageConstraints(lta.source, lta)) {
+                    return;
+                }
+
+                lta.ProcessEffect(lta.source);
+            }
+
+            target.ActivateTargeting();
+        }
+
+
+
     }
 
     public void UnregisterListeners() {
@@ -714,6 +764,9 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
+        if (!ManageConstraints(card, this)) {
+            return;
+        }
 
         //Debug.Log(abilityName + " is triggering");
 

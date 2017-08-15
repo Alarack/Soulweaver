@@ -1473,6 +1473,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     public virtual void RPCCheckDeath(PhotonTargets targets, CardVisual source, bool forceDeath, bool waitForVFX) {
+        if (forceDeath) {
+            StartCoroutine(RemoveCardVisualFromField(this));
+
+        }
 
     }
 
