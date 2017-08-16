@@ -63,7 +63,7 @@ public class EffectSpawnToken : Effect {
         CardData tokenData = Resources.Load<CardData>("CardData/" + target.cardData.name) as CardData;
         CardVisual tokenCard = SpawnBaseToken(tokenData, GetCardPrefabName(spawnCardType));
 
-        Debug.Log(tokenCard.cardData.cardName + " is being copied");
+        //Debug.Log(tokenCard.cardData.cardName + " is being copied");
 
         return tokenCard;
     }

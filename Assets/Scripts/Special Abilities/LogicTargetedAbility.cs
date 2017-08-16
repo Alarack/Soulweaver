@@ -152,6 +152,10 @@ public class LogicTargetedAbility : SpecialAbility {
                 break;
         }
 
+        Debug.Log(abilityName + " on " + source.cardData.cardName + " is firing");
+
+        SendManualTrigger();
+
         return true;
     }
 

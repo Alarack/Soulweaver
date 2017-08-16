@@ -113,7 +113,13 @@ public abstract class SpecialAbility {
         if (!check)
             return false;
 
+        Debug.Log(abilityName + " on " + source.cardData.cardName + " is firing");
+
         Effect(card);
+
+        
+        SendManualTrigger();
+
         return check;
     }
 
@@ -319,11 +325,7 @@ public abstract class SpecialAbility {
         }
 
 
-        if(manualTriggerAbilityNames.Count > 0) {
-            for(int i = 0; i < manualTriggerAbilityNames.Count; i++) {
-                ManualTriggerEffect(manualTriggerAbilityNames[i]);
-            }
-        }
+
 
 
 
@@ -426,6 +428,14 @@ public abstract class SpecialAbility {
 
     private void ApplySpellDamge(StatAdjustment adjustment, int spellDamage) {
         adjustment.ModifyValue(spellDamage);
+    }
+
+    protected void SendManualTrigger() {
+        if (manualTriggerAbilityNames.Count > 0) {
+            for (int i = 0; i < manualTriggerAbilityNames.Count; i++) {
+                ManualTriggerEffect(manualTriggerAbilityNames[i]);
+            }
+        }
     }
 
     protected void RemoveOtherEffect(ConstraintList constraint) {

@@ -91,6 +91,8 @@ public class EffectStatAdjustment : Effect {
             adjustments[i].uniqueID = IDFactory.GenerateAdjID(source.owner);
             adjustments[i].source = source;
 
+            source.CheckAdjID(adjustments[i].uniqueID, parentAbility.abilityName, source.cardData.cardName);
+
             //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName, source.cardData.cardName);
         }
     }

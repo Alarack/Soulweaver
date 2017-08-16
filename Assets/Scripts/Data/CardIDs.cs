@@ -249,7 +249,7 @@ public class CardIDs {
         OTH_VestigalNodule = 40041,
         OTH_Mindwarper = 40042,
         OTH_MindLink = 40043,
-        OTH_MindParasite = 40044,
+        OTH_Headworm = 40044,
         OTH_ErrantThought = 40045,
         OTH_BarbedMindleech = 40046,
         OTH_TKN_Mindbarb = 40047,
@@ -264,6 +264,7 @@ public class CardIDs {
         OTH_AdaptiveRegeneration = 40056,
         OTH_LivingHusk = 40057,
         OTH_TKN_Thoughtform = 40058,
+        OTH_TKN_LivingHusk = 40059,
 
 
         //Children of Illia 50000

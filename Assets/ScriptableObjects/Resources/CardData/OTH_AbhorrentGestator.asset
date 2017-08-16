@@ -28,13 +28,13 @@ MonoBehaviour:
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 01000000
+  - trigger: 06000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 0400000005000000
+      types: 0c000000
       owner: 0
-      whosTurn: 0
+      whosTurn: 2
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -57,7 +57,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -103,7 +103,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 3
-    abilityName: 
+    abilityName: Spawn Dude
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -274,7 +274,7 @@ MonoBehaviour:
         spawnableTokenDataName: OTH_TKN_AmorphousVestige
         spawnTokenLocation: 5
         spawnCardType: 1
-        numberOfSpawns: 6
+        numberOfSpawns: 1
         spawnForOpponent: 0
         tokenSeriesNames: []
       statAdjustments: []
@@ -283,9 +283,10 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 0
+    toggleSourceOptions: 1
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0

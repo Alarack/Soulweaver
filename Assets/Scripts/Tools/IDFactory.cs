@@ -17,7 +17,7 @@ public static class IDFactory  {
     public static int GenerateAdjID(Player player) {
 
         if (player.player2) {
-            Debug.Log(uniqueAdjID2.ToString() + " is an adj ID for player 2");
+            //Debug.Log(uniqueAdjID2.ToString() + " is an adj ID for player 2");
 
             uniqueAdjID2++;
 
@@ -25,7 +25,7 @@ public static class IDFactory  {
         }
         else {
 
-            Debug.Log(uniqueAdjID.ToString() + " is an adj ID for player 1");
+            //Debug.Log(uniqueAdjID.ToString() + " is an adj ID for player 1");
 
             uniqueAdjID++;
 

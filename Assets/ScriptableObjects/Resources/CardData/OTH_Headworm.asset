@@ -145,7 +145,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 1
-    abilityName: 
+    abilityName: Buff headworm
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -356,6 +356,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 1
@@ -483,12 +484,12 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 2
-    abilityName: 
+    abilityName: discard
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0400000001000000
+      types: 04000000010000000b000000
       owner: 2
       whosTurn: 0
       primaryType: 
@@ -507,12 +508,12 @@ MonoBehaviour:
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
-      creatureStatus: 
+      creatureStatus: 04000000
       resources: 
       minStats: []
       maxStats: []
       mostStat: 0
-      leastStat: 0
+      leastStat: 1
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
@@ -616,6 +617,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 1

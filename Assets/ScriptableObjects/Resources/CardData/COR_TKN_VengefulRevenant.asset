@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
   m_Name: COR_TKN_VengefulRevenant
   m_EditorClassIdentifier: 
-  cardID: 10031
+  cardID: 10032
   cardName: Restless Dead
   cardText: Reanimaor 4. If this soul is banished from your Soulcrypt, add a Vengeful
     Revenant to your hand.
@@ -32,6 +32,7 @@ MonoBehaviour:
   specialAttributes:
   - attributeType: 5
     attributeValue: 4
+    uniqueID: -1
   attack: 4
   size: 3
   health: 3

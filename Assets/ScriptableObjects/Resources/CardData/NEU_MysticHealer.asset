@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
   m_Name: NEU_MysticHealer
   m_EditorClassIdentifier: 
-  cardID: 80003
+  cardID: 80005
   cardName: Mystic Healer
   cardText: 'Inspire: Restore 2 Health'
   cardCost: 2
@@ -347,6 +347,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
