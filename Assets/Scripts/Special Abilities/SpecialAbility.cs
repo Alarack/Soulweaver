@@ -828,6 +828,9 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
+        if (card != source)
+            return;
+
         //if (card.primaryCardType == CardType.Domain)
         //    return;
 

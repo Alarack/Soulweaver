@@ -16911,7 +16911,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -17472,7 +17471,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -18760,7 +18758,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65023022782939826}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -19155,7 +19152,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -20205,7 +20201,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -20920,7 +20915,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65999928091047164}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -22057,7 +22051,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65901740609085418}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -22762,7 +22755,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -22997,7 +22989,7 @@ MonoBehaviour:
     filled: 0
     card: {fileID: 0}
     highlight: {fileID: 0}
-  offset: 0.3
+  offset: 0.5
   owner: {fileID: 0}
 --- !u!114 &114270425448713766
 MonoBehaviour:
@@ -23655,7 +23647,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -24172,7 +24163,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -24415,7 +24405,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65076819653533560}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -26930,7 +26919,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65170750735235424}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -27862,7 +27850,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -30319,7 +30306,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65763954175744972}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -30623,7 +30609,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65872003044077268}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -31732,7 +31717,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -32630,7 +32614,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65797203859876148}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -34323,7 +34306,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65770221634829370}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -35041,7 +35023,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65930834343848736}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -35870,7 +35851,6 @@ MonoBehaviour:
   cardCollider: {fileID: 65041761452507408}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -36355,7 +36335,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0
@@ -37142,7 +37121,6 @@ MonoBehaviour:
   cardCollider: {fileID: 0}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
   isMulligand: 0
   isBeingChosen: 0
   primaryCardType: 0

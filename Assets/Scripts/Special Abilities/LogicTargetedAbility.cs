@@ -203,6 +203,10 @@ public class LogicTargetedAbility : SpecialAbility {
             }
         }
 
+        results.Shuffle();
+
+
+
         return results;
     }
 

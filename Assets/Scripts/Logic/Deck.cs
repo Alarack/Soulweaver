@@ -148,7 +148,7 @@ public class Deck : Photon.MonoBehaviour {
 
         int index = 0;
         foreach (CardData card in cards) {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
 
             //Debug.Log(card.cardName);
 
