@@ -11,8 +11,7 @@ public class SpecialAttribute {
         Regeneration,
         Volatile,
         SpellDamage,
-        Reanimator
-
+        Reanimator,
     }
 
     public AttributeType attributeType;

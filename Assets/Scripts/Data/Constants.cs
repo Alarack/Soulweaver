@@ -143,7 +143,8 @@ public class Constants {
         NoAttack,
         Stun,
         Ranged,
-        Token
+        Token,
+        Lightforged
     }
 
 

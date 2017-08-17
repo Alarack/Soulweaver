@@ -584,6 +584,29 @@ public class CardDataEditor : Editor {
 
     }
 
+    private void DrawLightforgedPreset(SpecialAbility entry) {
+        entry.abilityName = "Lightforged";
+
+        entry.trigger.Add(AbilityActivationTrigger.EntersZone);
+        entry.triggerConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.triggerConstraints.types.Add(ConstraintType.PreviousZone);
+        entry.triggerConstraints.currentZone.Add(DeckType.SoulCrypt);
+        entry.triggerConstraints.previousZone.Add(DeckType.Battlefield);
+        entry.triggerConstraints.thisCardOnly = true;
+
+
+        entry.effect = EffectType.GenerateResource;
+
+        EffectGenerateResource genResource = new EffectGenerateResource();
+        genResource.amount = 1;
+        genResource.resourceType = GameResource.ResourceType.Hardlight;
+        genResource.resourceName = "Hardlight";
+
+        entry.effectHolder.generateResources.Add(genResource);
+
+
+    }
+
 
 
 
@@ -1004,6 +1027,10 @@ public class CardDataEditor : Editor {
 
         if (GUILayout.Button("PhalanxOthersEnter")) {
             DrawPhalanxOtherEnterPreset(entry);
+        }
+
+        if (GUILayout.Button("Lightforged")) {
+            DrawLightforgedPreset(entry);
         }
 
         EditorGUILayout.EndHorizontal();
