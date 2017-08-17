@@ -75,7 +75,7 @@ public class EffectSpawnToken : Effect {
         if (target is CreatureCardVisual) {
             CreatureCardVisual soul = target as CreatureCardVisual;
 
-            tokenCard.RPCSetCardStats(PhotonTargets.All, soul.essenceCost, soul.attack, soul.size, soul.health);
+            tokenCard.RPCSetCardStats(PhotonTargets.All, soul.essenceCost, soul.attack, soul.size, soul.maxHealth);
         }
 
         return tokenCard;

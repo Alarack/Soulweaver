@@ -28,6 +28,7 @@ public class CreatureCardVisual : CardVisual {
     public int attack;
     public int size;
     public int health;
+    public int maxHealth;
     [Header("VFX")]
     public string damageVFX;
     public CardVFX damageToken;
@@ -56,6 +57,8 @@ public class CreatureCardVisual : CardVisual {
 
         int tempHealth = _creatureData.health;
         health = tempHealth;
+
+        maxHealth = health;
 
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Attack, attack);
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Size, size);
@@ -91,6 +94,8 @@ public class CreatureCardVisual : CardVisual {
 
         int tempHealth = _creatureData.health;
         health = tempHealth;
+
+        maxHealth = health;
 
         //Debug.Log("Reseting card data visual");
 

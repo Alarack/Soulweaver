@@ -267,6 +267,7 @@ public class CardIDs {
         OTH_TKN_LivingHusk = 40059,
 
 
+
         //Children of Illia 50000
         COI_DOM_Sentinel = 50000,
         COI_AvengeTheHost = 50001,

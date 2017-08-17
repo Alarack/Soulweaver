@@ -14,7 +14,7 @@ MonoBehaviour:
   cardID: 40043
   cardName: Mind Link
   cardText: Whenever the enemy General Draws a card, Draw a card
-  cardCost: 4
+  cardCost: 5
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 

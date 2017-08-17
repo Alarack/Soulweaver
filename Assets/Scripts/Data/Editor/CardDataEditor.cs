@@ -445,7 +445,15 @@ public class CardDataEditor : Editor {
         entry.trigger.Add(AbilityActivationTrigger.EntersZone);
         entry.triggerConstraints.types.Add(ConstraintType.CardAdjacentToSource);
 
-        if(entry is LogicTargetedAbility) {
+        entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.sourceConstraints.currentZone.Add(DeckType.Battlefield);
+
+
+        entry.effectDuration = Constants.Duration.WhileInZone;
+        entry.targetConstraints.types.Add(ConstraintType.PrimaryType);
+        entry.targetConstraints.primaryType.Add(CardType.Soul);
+
+        if (entry is LogicTargetedAbility) {
             LogicTargetedAbility lta = entry as LogicTargetedAbility;
 
             lta.logicTargetingMethod = LogicTargetedAbility.LogicTargeting.OnlyTargetTriggeringCard;
@@ -455,6 +463,15 @@ public class CardDataEditor : Editor {
 
     private void DrawPhalanxInspirePreset(SpecialAbility entry) {
         DrawInspirePreset(entry);
+
+        entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.sourceConstraints.currentZone.Add(DeckType.Battlefield);
+
+
+        entry.effectDuration = Constants.Duration.WhileInZone;
+
+        entry.targetConstraints.types.Add(ConstraintType.PrimaryType);
+        entry.targetConstraints.primaryType.Add(CardType.Soul);
 
         if (entry is LogicTargetedAbility) {
             LogicTargetedAbility lta = entry as LogicTargetedAbility;
@@ -847,7 +864,7 @@ public class CardDataEditor : Editor {
 
         EditorGUILayout.EndHorizontal();
 
-        entry.targetConstraints.types = EditorHelper.DrawList("Target Constraints", entry.targetConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
+
 
         if (entry is LogicTargetedAbility) {
             LogicTargetedAbility logicTargeted = entry as LogicTargetedAbility;
@@ -879,7 +896,7 @@ public class CardDataEditor : Editor {
             //}
         }
 
-
+        entry.targetConstraints.types = EditorHelper.DrawList("Target Constraints", entry.targetConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
 
 
         for (int i = 0; i < entry.targetConstraints.types.Count; i++) {
