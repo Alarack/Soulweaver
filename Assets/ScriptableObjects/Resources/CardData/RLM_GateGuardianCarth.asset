@@ -23,16 +23,16 @@ MonoBehaviour:
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0f00000005000000
-  subTypes: 28000000
-  keywords: 1900000008000000
+  subTypes: 27000000
+  keywords: 08000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 01000000
-    effectDuration: 1
-    triggerDuration: 1
+  - trigger: 
+    effectDuration: 0
+    triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -47,7 +47,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -68,6 +68,11 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
+      creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
       numberOfcardsInZone: 0
@@ -81,6 +86,7 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
+      abilityToGatherTargetsFrom: 
     sourceConstraints:
       types: 
       owner: 0
@@ -118,6 +124,11 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
+      creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
       numberOfcardsInZone: 0
@@ -131,13 +142,14 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
-    effect: 5
-    abilityName: Elite Training
+      abilityToGatherTargetsFrom: 
+    effect: 0
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 00000000
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -165,7 +177,7 @@ MonoBehaviour:
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
-      neverTargetSelf: 1
+      neverTargetSelf: 0
       suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
@@ -173,6 +185,11 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
+      creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
       numberOfcardsInZone: 0
@@ -186,8 +203,11 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
+      abilityToGatherTargetsFrom: 
     abilityVFX: 
     movingVFX: 0
+    clearTargetsOnEffectComplete: 0
+    clearTriggeringTargetFromOtherAbility: 0
     additionalRequirements: 
     additionalRequirementConstraints:
       types: 
@@ -226,6 +246,11 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
+      creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
       numberOfcardsInZone: 0
@@ -239,18 +264,23 @@ MonoBehaviour:
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
+      abilityToGatherTargetsFrom: 
     effectHolder:
       zoneChanges: []
       tokenSpanws: []
       statAdjustments: []
       generateResources: []
-      addOrRemoveKeywords:
-      - effectType: 0
-        source: {fileID: 0}
-        keywords: 1c000000
-        addOrRemove: 0
+      addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+      bestowAbility: []
+    manualTriggerAbilityNames: []
+    togglePresets: 1
+    toggleTriggerOptions: 1
+    toggleSourceOptions: 0
+    toggleEffectOptions: 0
+    toggleTargetOptions: 1
+    toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0
@@ -259,6 +289,7 @@ MonoBehaviour:
   specialAttributes:
   - attributeType: 1
     attributeValue: 1
-  attack: 3
-  size: 3
-  health: 3
+    uniqueID: -1
+  attack: 2
+  size: 4
+  health: 5
