@@ -162,8 +162,8 @@ public class CreatureCardVisual : CardVisual {
 
                 health += value;
 
-                if (value > 0 && health > _creatureData.health) {
-                    health = _creatureData.health;
+                if (value > 0 && health > maxHealth) {
+                    health = maxHealth;
                 } //TODO: Make max health properly
 
                 if (value < 1) {
@@ -172,7 +172,16 @@ public class CreatureCardVisual : CardVisual {
 
                 if (value < 0) {
                     CheckDeath(source.photonView.viewID, false, waitForVFX);
+
+                    if (source.keywords.Contains(Keywords.Deathtouch) && health > 0) {
+                        health = 0;
+                        CheckDeath(source.photonView.viewID, true, waitForVFX);
+                    }
+
                 }
+
+
+
 
                 if (!waitForVFX) {
 
@@ -406,7 +415,7 @@ public class CreatureCardVisual : CardVisual {
                 ShowDamage(lastStatAdjustment.value);
                 cardHealthText.text = health.ToString();
                 battleToken.UpdateBattleTokenTokenText(lastStatAdjustment.stat, health);
-                TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
+                TextTools.AlterTextColor(health, maxHealth, cardHealthText);
                 break;
 
             case Constants.CardStats.MaxHealth:

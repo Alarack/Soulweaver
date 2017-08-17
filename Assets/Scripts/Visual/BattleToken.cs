@@ -22,7 +22,7 @@ public class BattleToken : BoardToken {
         base.Initialize(data, card);
 
         _creatureData = parentCardData as CardCreatureData;
-        //_parentCard = parentCard as CreatureCardVisual;
+        _parentCard = parentCard as CreatureCardVisual;
 
         SetUpTokenText();
     }
@@ -55,7 +55,7 @@ public class BattleToken : BoardToken {
                 break;
 
             case Constants.CardStats.Health:
-                TextTools.AlterTextColor(value, _creatureData.health, health);
+                TextTools.AlterTextColor(value, _parentCard.maxHealth, health);
                 health.text = value.ToString();
                 break;
 

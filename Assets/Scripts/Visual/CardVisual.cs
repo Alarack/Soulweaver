@@ -1037,6 +1037,8 @@ public class CardVisual : Photon.MonoBehaviour {
             soul.cardHealthText.text = health.ToString();
             soul.battleToken.UpdateBattleTokenTokenText(Constants.CardStats.MaxHealth, health);
 
+            soul.maxHealth = health;
+
         }
     }
 
