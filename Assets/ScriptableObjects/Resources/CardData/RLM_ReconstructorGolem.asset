@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: RLM_UndyingGolem
+  m_Name: RLM_ReconstructorGolem
   m_EditorClassIdentifier: 
   cardID: 30022
-  cardName: Undying Golem
-  cardText: Reanimator [2H]. Tireless
+  cardName: Reconstructor Golem
+  cardText: Reanimator 3
   cardCost: 2
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
@@ -30,7 +30,7 @@ MonoBehaviour:
   multiTargetAbilities: []
   specialAttributes:
   - attributeType: 5
-    attributeValue: 2
+    attributeValue: 3
     uniqueID: -1
   attack: 2
   size: 4
