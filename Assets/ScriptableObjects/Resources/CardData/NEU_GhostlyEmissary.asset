@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: NEU_MysticHealer
+  m_Name: NEU_GhostlyEmissary
   m_EditorClassIdentifier: 
-  cardID: 80005
-  cardName: Mystic Healer
-  cardText: 'Inspire: Restore 2 Health'
+  cardID: 80030
+  cardName: Ghostly Emisarry
+  cardText: 'Finale: Restore 3 Health to your General'
   cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
@@ -22,16 +22,17 @@ MonoBehaviour:
   deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 07000000
-  subTypes: 3a000000
+  attunements: 080000000f000000
+  subTypes: 40000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
+  userTargtedAbilities: []
+  multiTargetAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 0400000005000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -46,9 +47,9 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 04000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 05000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -148,10 +149,10 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0400000002000000
-      owner: 0
+      types: 040000000200000001000000
+      owner: 2
       whosTurn: 0
-      primaryType: 0100000006000000
+      primaryType: 06000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -176,7 +177,7 @@ MonoBehaviour:
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
-      neverTargetSelf: 1
+      neverTargetSelf: 0
       suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
@@ -273,7 +274,7 @@ MonoBehaviour:
         valueSetmethod: 0
         adjustments:
         - stat: 4
-          value: 2
+          value: 3
           nonStacking: 0
           temporary: 1
           source: {fileID: 0}
@@ -340,7 +341,10 @@ MonoBehaviour:
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
         targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
@@ -355,7 +359,10 @@ MonoBehaviour:
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-  multiTargetAbilities: []
+    logicTargetingMethod: 1
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
   attack: 2
   size: 3

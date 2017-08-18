@@ -316,7 +316,7 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
-    public virtual void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true) {
+    public virtual void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true, bool setStats = false) {
 
         if (!waitForVFX) {
             if (animationManager != null) {
@@ -324,7 +324,7 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
 
-        if (this is CreatureCardVisual) {
+        if (this is CreatureCardVisual && stat == Constants.CardStats.Health) {
             CreatureCardVisual soul = this as CreatureCardVisual;
             value = soul.CalcProtection(value);
 
@@ -338,18 +338,6 @@ public class CardVisual : Photon.MonoBehaviour {
             data.AddInt("Value", value);
             data.AddMonoBehaviour("Target", this);
             data.AddMonoBehaviour("Source", source);
-
-            //Debug.Log(owner.gameObject.name + " is the owner of " + gameObject.name + " :: " + cardData.cardName);
-
-            //if (photonView.isMine) {
-            //    //Debug.Log("[Card Visual - MINE] " + gameObject.name + " :: " + cardData.cardName + " is the target");
-            //    Debug.Log("[Card Visual - MINE] " + source.gameObject.name + " :: " + source.cardData.cardName + " is the source");
-            //}
-            //else {
-            //    //Debug.Log("[Card Visual - THEIRS] " + gameObject.name + " :: " + cardData.cardName + " is the target");
-            //    Debug.Log("[Card Visual - THEIRS] " + source.gameObject.name + " :: " + source.cardData.cardName + " is the source");
-            //}
-
           
 
             //Debug.Log(gameObject.name + " :: " + cardData.cardName + " has had " + stat.ToString() + " alterd by " + source.gameObject.name + " :: " + source.cardData.cardName);
@@ -366,7 +354,11 @@ public class CardVisual : Photon.MonoBehaviour {
                 }
 
                 TextTools.AlterTextColor(value, cardData.cardCost, cardCostText, true);
-                essenceCost += value;
+
+                if (setStats) 
+                    essenceCost = value;
+                else
+                    essenceCost += value;
 
                 if (essenceCost <= 0)
                     essenceCost = 0;
@@ -443,15 +435,6 @@ public class CardVisual : Photon.MonoBehaviour {
         return results;
     }
 
-    //public void InitAllStatAdjustments() {
-    //    List<SpecialAbility.StatAdjustment> adjs = GatherAllSpecialAbilityStatAdjustments();
-
-    //    for (int i = 0; i < adjs.Count; i++) {
-    //        adjs[i].SetID();
-    //    }
-    //}
-
-
     public List<SpecialAttribute> GatherAllSpecialAbilitySpecialAttributes() {
         List<SpecialAttribute> results = new List<SpecialAttribute>();
 
@@ -493,6 +476,52 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
     }
+
+    public int GetStatValue(Constants.CardStats stat, bool current = false) {
+        int result = 0;
+
+
+        if (this is CreatureCardVisual) {
+            CreatureCardVisual soul = this as CreatureCardVisual;
+
+            switch (stat) {
+                case Constants.CardStats.Attack:
+                    if (current)
+                        result = soul.attack;
+                    else
+                        result = soul._creatureData.attack;
+                    break;
+
+                case Constants.CardStats.Size:
+
+                    if (current)
+                        result = soul.size;
+                    else
+                        result = soul._creatureData.size;
+                    break;
+
+                case Constants.CardStats.Health:
+                    if (current)
+                        result = soul.health;
+                    else
+                        result = soul._creatureData.health;
+                    break;
+            }
+        }
+
+        switch (stat) {
+            case Constants.CardStats.Cost:
+                if (current)
+                    result = essenceCost;
+                else
+                    result = cardData.cardCost;
+                break;
+
+        }
+
+        return result;
+    }
+
 
     #region Private Methods
 
@@ -742,6 +771,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
         return result;
     }
+
+
+
+   
 
     #endregion
 
@@ -1064,7 +1097,7 @@ public class CardVisual : Photon.MonoBehaviour {
         AlterCardStats(stat, value, source, waitForVFX);
     }
 
-    public virtual void RPCApplySpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, bool waitForVFX) {
+    public virtual void RPCApplySpecialAbilityStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, CardVisual source, bool waitForVFX, bool setStat = false) {
         int sourceID;
 
         if (source != null)
@@ -1074,7 +1107,9 @@ public class CardVisual : Photon.MonoBehaviour {
             //Debug.Log("I'm the source of me!");
         }
 
-        photonView.RPC("ApplySpecialAbilityStatAdjustment", targets, sourceID, adjustment.uniqueID, waitForVFX);
+        Debug.Log(setStat + " is the status of SetStatToValue in RPC Apply Special Ability Adj");
+
+        photonView.RPC("ApplySpecialAbilityStatAdjustment", targets, sourceID, adjustment.uniqueID, waitForVFX, setStat);
     }
 
 
@@ -1109,10 +1144,10 @@ public class CardVisual : Photon.MonoBehaviour {
     //}
 
     [PunRPC]
-    public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID, bool waitForVFX) {
+    public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID, bool waitForVFX, bool setStat) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment with ID: " + adjID +". Should it Wait for FVX::: " + waitForVFX);
+        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment with ID: " + adjID +". Should it Wait for FVX::: " + waitForVFX + ". is it Setting Stats::: " + setStat);
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
@@ -1131,7 +1166,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 targetAdj = allAdjustments[i];
                 //Debug.Log("Match Found!");
 
-                AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
+                AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source, waitForVFX, !setStat, setStat);
                 statAdjustments.Add(allAdjustments[i]);
             }
 
@@ -1145,16 +1180,16 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
-    public virtual void RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets targets, int adjID, CardVisual source, bool waitForVFX) {
+    public virtual void RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets targets, int adjID, CardVisual source, bool waitForVFX, bool setStats = false) {
         int sourceID = source.photonView.viewID;
 
         //Debug.Log(adjID + " is the ID I'm Sending");
 
-        photonView.RPC("RemoveSpecialAbilityStatAdjustment", targets, adjID, sourceID, waitForVFX);
+        photonView.RPC("RemoveSpecialAbilityStatAdjustment", targets, adjID, sourceID, waitForVFX, setStats);
     }
 
     [PunRPC]
-    public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX) {
+    public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX, bool setStats) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
         //Debug.Log(source.gameObject.name + " is removeing stat adjustments");
@@ -1171,7 +1206,16 @@ public class CardVisual : Photon.MonoBehaviour {
 
                 //Debug.Log(source.gameObject.name + " is SUCCESSFULLY removeing stat adjustments");
 
-                AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
+                if (setStats) {
+                    AlterCardStats(allAdjustments[i].stat, GetStatValue(allAdjustments[i].stat), allAdjustments[i].source, waitForVFX, false, true);
+                }
+                else {
+                    AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
+                }
+
+
+
+
 
                 statAdjustments.Remove(allAdjustments[i]);
             }

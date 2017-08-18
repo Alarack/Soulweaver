@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: NEU_MysticHealer
+  m_Name: NEU_IneffableEmissary
   m_EditorClassIdentifier: 
-  cardID: 80005
-  cardName: Mystic Healer
-  cardText: 'Inspire: Restore 2 Health'
+  cardID: 80028
+  cardName: Ineffable Emisarry
+  cardText: 'Inspire: Add a Tentacle to your hand.'
   cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
@@ -22,11 +22,12 @@ MonoBehaviour:
   deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 07000000
-  subTypes: 3a000000
+  attunements: 0b00000010000000
+  subTypes: 25000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
+  userTargtedAbilities: []
+  multiTargetAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
@@ -142,16 +143,16 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 1
+    effect: 3
     abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0400000002000000
+      types: 
       owner: 0
       whosTurn: 0
-      primaryType: 0100000006000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -163,7 +164,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -176,7 +177,7 @@ MonoBehaviour:
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
-      neverTargetSelf: 1
+      neverTargetSelf: 0
       suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
@@ -266,82 +267,17 @@ MonoBehaviour:
       abilityToGatherTargetsFrom: 
     effectHolder:
       zoneChanges: []
-      tokenSpanws: []
-      statAdjustments:
+      tokenSpanws:
       - effectType: 0
         source: {fileID: 0}
-        valueSetmethod: 0
-        adjustments:
-        - stat: 4
-          value: 2
-          nonStacking: 0
-          temporary: 1
-          source: {fileID: 0}
-          uniqueID: -1
-          spellDamage: 0
-        deriveStatsFromWhom: 0
-        targetStat: 0
-        targetAbilityName: 
-        zoneToCount: 0
-        constraints:
-          types: 
-          owner: 0
-          whosTurn: 0
-          primaryType: 
-          notPrimaryType: 0
-          additionalType: 
-          notAdditionalType: 0
-          subtype: 
-          notSubtype: 0
-          keyword: 
-          notKeyword: 0
-          specialAttributes: 
-          notSpecialAttribute: 0
-          attunement: 
-          notAttunement: 0
-          currentZone: 
-          notCurrentZone: 0
-          previousZone: 
-          notPreviousZone: 0
-          creatureStatus: 
-          resources: 
-          minStats: []
-          maxStats: []
-          mostStat: 0
-          leastStat: 0
-          thisCardOnly: 0
-          oncePerTurn: 0
-          triggeredThisTurn: 0
-          neverTargetSelf: 0
-          suspendTrigger: 0
-          triggerbySpecificAbility: 0
-          triggerablePrimaryAbilityName: 
-          abilityToRemove: 
-          abilityToRetrigger: 
-          statGainedOrLost: 0
-          statChanged: 0
-          thisCardAdjusts: 0
-          thisCardAdjusted: 0
-          thisCardAttacks: 0
-          thisCardDefends: 0
-          creatureCanAttack: 0
-          zoneToCheckForNumberOfCards: 0
-          moreOrLessCards: 0
-          numberOfcardsInZone: 0
-          requireMultipleTriggers: 0
-          resetCountAtTurnEnd: 0
-          triggersRequired: 0
-          counter: 0
-          requiredResourceType: 0
-          moreOrlessResource: 0
-          amountOfResourceRequried: 0
-          consumeResource: 0
-          resourceThatChanged: 0
-          resourceGainedOrLost: 0
-          abilityToGatherTargetsFrom: 
-        targetResource: 0
-        invertValue: 0
-        maxValue: 0
+        spawnMethod: 0
+        spawnableTokenDataName: OTH_TKN_Tentacle
+        spawnTokenLocation: 3
+        spawnCardType: 1
+        numberOfSpawns: 1
+        spawnForOpponent: 0
+        tokenSeriesNames: []
+      statAdjustments: []
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
@@ -355,8 +291,11 @@ MonoBehaviour:
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-  multiTargetAbilities: []
+    logicTargetingMethod: 0
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
-  attack: 2
+  attack: 3
   size: 3
-  health: 3
+  health: 2

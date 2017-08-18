@@ -20,16 +20,12 @@ public class EffectZoneChange : Effect {
         switch (targetLocation) {
             case DeckType.SoulCrypt:
 
-                
-
                 if (target is CreatureCardVisual || target is SupportCardVisual)
                     target.RPCCheckDeath(PhotonTargets.All, source, true, !hasVFX);
                 else {
                     target.RPCCheckDeath(PhotonTargets.All, source, true, !hasVFX);
                     target.currentDeck.RPCTransferCard(PhotonTargets.All, target, GetDeckFromType(targetLocation, target));
-
                 }
-
 
                 break;
 

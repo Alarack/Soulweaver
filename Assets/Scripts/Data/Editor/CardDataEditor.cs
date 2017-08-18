@@ -148,6 +148,7 @@ public class CardDataEditor : Editor {
 
 
             adjustment.valueSetmethod = EditorHelper.EnumPopup("Stat Adjustment Method", adjustment.valueSetmethod);
+            adjustment.setStatToValue = EditorGUILayout.Toggle("Set stat to BE Value?", adjustment.setStatToValue);
             //adjustment.adjustments = EditorHelper.DrawExtendedList("Stat Adjustments", )
 
             switch (adjustment.valueSetmethod) {
@@ -186,6 +187,14 @@ public class CardDataEditor : Editor {
                     adjustment.maxValue = EditorGUILayout.IntField("Max Value? Leave 0 if Infinite", adjustment.maxValue);
                     adjustment.invertValue = EditorGUILayout.Toggle("Invert Value?", adjustment.invertValue);
                     adjustment.adjustments = EditorHelper.DrawExtendedList("Adjustments", adjustment.adjustments, "Adjustment", DrawDerivedStatAdjustment);
+
+                    break;
+
+                case EffectStatAdjustment.ValueSetMethod.SwapStats:
+                    adjustment.sourceStat = EditorHelper.EnumPopup("First Stat", adjustment.sourceStat);
+                    adjustment.destinationStat = EditorHelper.EnumPopup("Second Stat", adjustment.destinationStat);
+
+
 
                     break;
 

@@ -50,14 +50,17 @@ public class SupportCardVisual : CardVisual {
 
     }
 
-    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true) {
-        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent);
+    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true, bool setStats = false) {
+        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent, setStats);
 
 
         switch (stat) {
             case Constants.CardStats.SupportValue:
 
-                supportValue += value;
+                if (setStats)
+                    supportValue = value;
+                else
+                    supportValue += value;
 
                 if(supportValue > _supportData.supportValue) {
                     supportValue = _supportData.supportValue;

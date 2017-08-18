@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: NEU_MysticHealer
+  m_Name: NEU_DevoutHealer
   m_EditorClassIdentifier: 
-  cardID: 80005
-  cardName: Mystic Healer
-  cardText: 'Inspire: Restore 2 Health'
+  cardID: 80016
+  cardName: Devout Healer
+  cardText: 'Finale: GIve adjacent souls +4 Health'
   cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
@@ -26,12 +26,13 @@ MonoBehaviour:
   subTypes: 3a000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
+  userTargtedAbilities: []
+  multiTargetAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 0400000005000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -46,9 +47,9 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 04000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 05000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -148,10 +149,10 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0400000002000000
+      types: 02000000
       owner: 0
       whosTurn: 0
-      primaryType: 0100000006000000
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -163,7 +164,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -176,7 +177,7 @@ MonoBehaviour:
       thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
-      neverTargetSelf: 1
+      neverTargetSelf: 0
       suspendTrigger: 0
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
@@ -272,8 +273,8 @@ MonoBehaviour:
         source: {fileID: 0}
         valueSetmethod: 0
         adjustments:
-        - stat: 4
-          value: 2
+        - stat: 5
+          value: 4
           nonStacking: 0
           temporary: 1
           source: {fileID: 0}
@@ -341,6 +342,7 @@ MonoBehaviour:
           abilityToGatherTargetsFrom: 
         targetResource: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
@@ -355,8 +357,11 @@ MonoBehaviour:
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-  multiTargetAbilities: []
+    logicTargetingMethod: 7
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
   attack: 2
   size: 3
-  health: 3
+  health: 2

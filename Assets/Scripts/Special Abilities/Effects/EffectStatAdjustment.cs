@@ -13,7 +13,8 @@ public class EffectStatAdjustment : Effect {
         Manual,
         DeriveValueFromTargetStat,
         DeriveValueFromCardsInZone,
-        DeriveValueFromResource
+        DeriveValueFromResource,
+        SwapStats
     }
 
     public enum DeriveStatsFromWhom {
@@ -37,7 +38,13 @@ public class EffectStatAdjustment : Effect {
     //Derive Stats from Resource
     public GameResource.ResourceType targetResource;
 
+    //Swap Stats
+    public CardStats sourceStat;
+    public CardStats destinationStat;
+
+
     public bool invertValue;
+    public bool setStatToValue;
     public int maxValue;
 
 
@@ -79,6 +86,11 @@ public class EffectStatAdjustment : Effect {
 
                 break;
 
+            case ValueSetMethod.SwapStats:
+
+                SwapStats(target);
+
+                break;
         }
     }
 
@@ -103,12 +115,29 @@ public class EffectStatAdjustment : Effect {
         bool hasVFX = String.IsNullOrEmpty(parentAbility.abilityVFX);
 
         for (int i = 0; i < adjustments.Count; i++) {
-
-            //Debug.Log("Applying " + adjustments[i].stat.ToString() + " adjustment of value " + adjustments[i].value.ToString() + " to " + target.cardData.name);
             //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName);
-            target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source, !hasVFX);
+            target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source, !hasVFX, setStatToValue);
         }
     }
+
+
+    private void SwapStats(CardVisual target) {
+
+        int stat1 = target.GetStatValue(sourceStat, true);
+        int stat2 = target.GetStatValue(destinationStat, true);
+
+        StatAdjustment first = new StatAdjustment(sourceStat, stat2, false, true, source);
+        StatAdjustment second = new StatAdjustment(destinationStat, stat1, false, true, source);
+
+        adjustments.Add(first);
+        adjustments.Add(second);
+
+        ApplyStatAdjustment(target);
+
+        
+
+    }
+
 
 
     //When a stat adjustment is based on the value of another target's stat. Determine which target to derive that stat from.
@@ -249,7 +278,7 @@ public class EffectStatAdjustment : Effect {
         }
 
         for (int i = 0; i < targetAdjustments.Count; i++) {
-            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, false);
+            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, false, setStatToValue);
         }
 
 

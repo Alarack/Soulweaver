@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: NEU_MysticHealer
+  m_Name: NEU_IllarianDrillInstructor
   m_EditorClassIdentifier: 
-  cardID: 80005
-  cardName: Mystic Healer
-  cardText: 'Inspire: Restore 2 Health'
+  cardID: 80014
+  cardName: Illarian Drill Instructor
+  cardText: 'Inspire: Give a soul +2 Attack this turn.'
   cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
@@ -22,13 +22,13 @@ MonoBehaviour:
   deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 07000000
-  subTypes: 3a000000
+  attunements: 
+  subTypes: 060000000d000000
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities:
   - trigger: 01000000
-    effectDuration: 0
+    effectDuration: 2
     triggerDuration: 0
     triggerConstraints:
       types: 04000000
@@ -151,7 +151,7 @@ MonoBehaviour:
       types: 0400000002000000
       owner: 0
       whosTurn: 0
-      primaryType: 0100000006000000
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
         source: {fileID: 0}
         valueSetmethod: 0
         adjustments:
-        - stat: 4
+        - stat: 2
           value: 2
           nonStacking: 0
           temporary: 1
@@ -357,6 +357,6 @@ MonoBehaviour:
     processTriggerOnWhom: 0
   multiTargetAbilities: []
   specialAttributes: []
-  attack: 2
+  attack: 3
   size: 3
-  health: 3
+  health: 2

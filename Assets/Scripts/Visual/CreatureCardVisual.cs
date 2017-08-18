@@ -33,7 +33,7 @@ public class CreatureCardVisual : CardVisual {
     public string damageVFX;
     public CardVFX damageToken;
 
-    private CardCreatureData _creatureData;
+    public CardCreatureData _creatureData;
 
     public override void SetupCardData() {
         base.SetupCardData();
@@ -113,19 +113,17 @@ public class CreatureCardVisual : CardVisual {
 
     }
 
-    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true) {
-        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent);
-
-
+    public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true, bool setStats = false) {
+        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent, setStats);
 
         //Debug.Log("creature card alter stat");
         switch (stat) {
             case Constants.CardStats.Attack:
 
-                attack += value;
-
-                //if (attack <= 0)
-                //    attack = 0;
+                if (setStats)
+                    attack = value;
+                else
+                    attack += value;
 
                 if (!waitForVFX) {
 
@@ -144,7 +142,10 @@ public class CreatureCardVisual : CardVisual {
 
             case Constants.CardStats.Size:
 
-                size += value;
+                if (setStats)
+                    size = value;
+                else
+                    size += value;
 
                 if (size <= 0)
                     size = 0;
@@ -160,11 +161,14 @@ public class CreatureCardVisual : CardVisual {
             case Constants.CardStats.Health:
                 value = CalcProtection(value);
 
-                health += value;
+                if (setStats)
+                    health = value;
+                else
+                    health += value;
 
                 if (value > 0 && health > maxHealth) {
                     health = maxHealth;
-                } //TODO: Make max health properly
+                }
 
                 if (value < 1) {
                     Debug.Log(gameObject.name + " :: " + cardData.cardName + " has taken " + Mathf.Abs(value) + " point(s) of damage");
@@ -177,19 +181,12 @@ public class CreatureCardVisual : CardVisual {
                         health = 0;
                         CheckDeath(source.photonView.viewID, true, waitForVFX);
                     }
-
                 }
 
-
-
-
                 if (!waitForVFX) {
-
-                    //Debug.Log(source.gameObject.name + " :: " + source.cardData.cardName + " is the source of a stat adjustment which does not wait for VFX");
                     cardHealthText.text = health.ToString();
                     battleToken.UpdateBattleTokenTokenText(stat, health);
                     TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
-                    //Debug.Log("No VFX landed on " + gameObject.name + ". Value is: " + value);
                     ShowDamage(value);
                 }
 
@@ -197,7 +194,14 @@ public class CreatureCardVisual : CardVisual {
 
             case Constants.CardStats.MaxHealth:
 
-                health += value;
+                if (setStats) {
+                    maxHealth = value;
+                    health = value;
+                }
+                else {
+                    maxHealth += value;
+                    health += value;
+                }
 
                 if (value < 0) {
                     CheckDeath(source.photonView.viewID, false, waitForVFX);
@@ -209,23 +213,15 @@ public class CreatureCardVisual : CardVisual {
                     TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
                 }
 
-
                 break;
         }
 
-        //if (photonView.isMine) {
-        //lastStatChanged = stat;
         if (waitForVFX) {
             SpecialAbility.StatAdjustment latest = new SpecialAbility.StatAdjustment(stat, value, false, false, null);
             lastStatAdjustment = latest;
 
             Grid.EventManager.RegisterListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
         }
-
-
-        //}
-
-
     }
 
     public override void ActivateGlow(Color32 color) {
@@ -265,8 +261,6 @@ public class CreatureCardVisual : CardVisual {
                     value = 0;
             }
         }
-
-        //Debug.Log(prot + " is the amount of protection on " + gameObject.name);
 
         return value;
     }
@@ -384,11 +378,8 @@ public class CreatureCardVisual : CardVisual {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
         //CardVFX vfx = data.GetMonoBehaviour("VFX") as CardVFX;
 
-
         if (card != this)
             return;
-
-
 
         switch (lastStatAdjustment.stat) {
 
@@ -425,10 +416,6 @@ public class CreatureCardVisual : CardVisual {
                 TextTools.AlterTextColor(health, _creatureData.health, cardHealthText);
                 break;
         }
-
-        //Debug.Log(card.gameObject.name + " has been hit with a VFX: " + vfx.gameObject.name);
-
-
 
         Grid.EventManager.RemoveListener(Constants.GameEvent.VFXLanded, OnVFXLanded);
     }
@@ -495,18 +482,11 @@ public class CreatureCardVisual : CardVisual {
 
             }
 
-            //Debug.Log(forceDeath + " is the status of Force Death");
-
-            //Debug.Log(health + " is the current health");
-
             Debug.Log(causeOfDeath.cardData.cardName + " has killed " + cardData.cardName);
-
-
 
             if (CheckSpecialAttributes(SpecialAttribute.AttributeType.Volatile) > 0) {
                 HandleVolatile(causeOfDeath);
             }
-
 
             currentDeck.TransferCard(photonView.viewID, owner.activeCrypt.GetComponent<Deck>().photonView.viewID);
 
@@ -535,6 +515,10 @@ public class CreatureCardVisual : CardVisual {
 
 
     protected override IEnumerator DisplayDeathEffect() {
+        if (currentDeck.decktype != Constants.DeckType.Battlefield)
+            yield return null;
+
+
         yield return new WaitForSeconds(0.7f);
         GameObject deathVFX;
 

@@ -75,6 +75,12 @@ public class Constants {
         Blessing,
         Rat,
         Spirit,
+        Imp,
+        Gunner,
+        Dwarf,
+        Ooze,
+        Animal,
+        Ghost
 
 
 
@@ -144,7 +150,9 @@ public class Constants {
         Stun,
         Ranged,
         Token,
-        Lightforged
+        Lightforged,
+        Enrage,
+
     }
 
 
