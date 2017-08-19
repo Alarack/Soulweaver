@@ -80,7 +80,12 @@ public class Constants {
         Dwarf,
         Ooze,
         Animal,
-        Ghost
+        Ghost,
+        Thief,
+        Assassin,
+        Priest,
+        Innkeeper,
+        Shaman
 
 
 

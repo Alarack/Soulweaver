@@ -474,7 +474,13 @@ public class CardIDs {
         NEU_GiantScorpian = 80084,
         NEU_ValiantKnight = 80085,
         NEU_DomainAttendant = 80086,
-
+        NEU_AspectOfEnvy = 80087,
+        NEU_AspectOfGluttony = 80088,
+        NEU_AspectOfGreed = 80089,
+        NEU_AspectOfLust = 80090,
+        NEU_AspectOfPride = 80091,
+        NEU_AspectOfSloth = 80092,
+        NEU_AspectOfWrath = 80093,
 
 
 

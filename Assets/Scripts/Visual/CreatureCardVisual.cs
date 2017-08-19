@@ -320,11 +320,14 @@ public class CreatureCardVisual : CardVisual {
                     if (keywords.Contains(Constants.Keywords.Interceptor)) {
                         ToggleKeyword(false, (int)Constants.Keywords.Interceptor);
                     }
-
                 }
                 else {
                     cardImage.color = Color.white;
                     battleFrame.color = Color.white;
+
+                    if (hasAttacked)
+                        hasAttacked = false;
+
                 }
                 break;
 
