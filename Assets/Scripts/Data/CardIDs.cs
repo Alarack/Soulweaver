@@ -481,6 +481,8 @@ public class CardIDs {
         NEU_AspectOfPride = 80091,
         NEU_AspectOfSloth = 80092,
         NEU_AspectOfWrath = 80093,
+        NEU_FlameCaller = 80094,
+        NEU_TKN_FlameSpirit = 80095,
 
 
 

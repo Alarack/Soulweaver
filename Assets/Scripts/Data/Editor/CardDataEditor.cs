@@ -312,7 +312,9 @@ public class CardDataEditor : Editor {
 
         entry.trigger.Add(AbilityActivationTrigger.EntersZone);
         entry.triggerConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.triggerConstraints.types.Add(ConstraintType.PreviousZone);
         entry.triggerConstraints.currentZone.Add(DeckType.Battlefield);
+        entry.triggerConstraints.previousZone.Add(DeckType.Hand);
         entry.triggerConstraints.thisCardOnly = true;
     }
 

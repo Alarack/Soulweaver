@@ -85,7 +85,12 @@ public class Constants {
         Assassin,
         Priest,
         Innkeeper,
-        Shaman
+        Shaman,
+        Gravekeeper,
+        Dealer,
+        Mobster,
+        Alchemist,
+        Hydra
 
 
 
