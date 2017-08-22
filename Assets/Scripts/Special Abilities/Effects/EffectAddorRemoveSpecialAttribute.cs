@@ -28,7 +28,8 @@ public class EffectAddorRemoveSpecialAttribute : Effect {
 
     private void InitializeSpecialAttributes() {
         for(int i = 0; i < specialAttributes.Count; i++) {
-            specialAttributes[i].uniqueID = IDFactory.GenerateAttID(source.owner);
+            if(source.owner != null)
+                specialAttributes[i].uniqueID = IDFactory.GenerateAttID(source.owner);
         }
     }
 

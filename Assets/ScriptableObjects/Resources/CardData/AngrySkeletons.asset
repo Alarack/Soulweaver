@@ -24,7 +24,7 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 08000000
   subTypes: 02000000
-  keywords: 00000000
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []

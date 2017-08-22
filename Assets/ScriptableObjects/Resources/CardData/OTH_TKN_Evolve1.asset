@@ -24,7 +24,7 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 0b00000010000000
   subTypes: 
-  keywords: 
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities:
   - trigger: 01000000
@@ -340,7 +340,10 @@ MonoBehaviour:
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
         targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
@@ -669,7 +672,10 @@ MonoBehaviour:
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
         targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []

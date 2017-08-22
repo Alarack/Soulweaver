@@ -523,9 +523,21 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
+    public virtual void ShowDeckBuilderTooltip() {
+        CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
+    }
+
+    public virtual void HideDeckbuilderTooltip() {
+        CardTooltip.HideTooltip();
+    }
+
     #region Private Methods
 
     protected virtual void OnMouseOver() {
+
+        if (currentDeck.decktype == Constants.DeckType.NotInGame) {
+            return;
+        }
 
         if (photonView.isMine || currentDeck.decktype == Constants.DeckType.Battlefield)
             CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
@@ -720,6 +732,10 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
     protected virtual void OnMouseExit() {
+
+        if (currentDeck.decktype == Constants.DeckType.NotInGame) {
+            return;
+        }
 
         if (CardTooltip.cardTooltip.tooltipContainer.activeInHierarchy)
             CardTooltip.HideTooltip();

@@ -20,11 +20,11 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  primaryCardType: 0
+  primaryCardType: 2
   otherCardTypes: 
   attunements: 
   subTypes: 
-  keywords: 
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -68,6 +68,10 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -120,6 +124,10 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -177,6 +185,10 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -234,6 +246,10 @@ MonoBehaviour:
       abilityToRetrigger: 
       statGainedOrLost: 0
       statChanged: 0
+      thisCardAdjusts: 0
+      thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -257,6 +273,8 @@ MonoBehaviour:
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
+      bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 0
     toggleSourceOptions: 0
