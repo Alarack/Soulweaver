@@ -91,8 +91,8 @@ public class DeckBuilder : MonoBehaviour {
 
     private void SpawnAllCards(int startIndex, int numToSpawn) {
 
-        Debug.Log(startIndex + " is the start index");
-        Debug.Log(numToSpawn + " is the number to spawn");
+        //Debug.Log(startIndex + " is the start index");
+        //Debug.Log(numToSpawn + " is the number to spawn");
 
         if (startIndex < 0)
             startIndex = 0;
