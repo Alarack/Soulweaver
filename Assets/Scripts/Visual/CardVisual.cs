@@ -531,6 +531,16 @@ public class CardVisual : Photon.MonoBehaviour {
         CardTooltip.HideTooltip();
     }
 
+    public virtual void SendSelectionEvent() {
+        EventData data = new EventData();
+        data.AddMonoBehaviour("Card", this);
+
+        //Debug.Log(cardData.cardName + " has been clicked");
+
+        Grid.EventManager.SendEvent(Constants.GameEvent.CardSelected, data);
+
+    }
+
     #region Private Methods
 
     protected virtual void OnMouseOver() {
