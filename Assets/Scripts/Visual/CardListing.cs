@@ -13,17 +13,12 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
 
     public Image cardArt;
 
-    //public DeckBuilder deckBuilder;
     public CardData card;
     public int cardQuantity;
     public GameObject quantityImage;
 
     private DeckBuilder deckbuilder;
 
-
-	void Start () {
-		
-	}
 
     public void Initialize(CardData card, DeckBuilder parent) {
         this.card = card;
@@ -33,8 +28,6 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
         cardArt.sprite = card.cardImage;
         cardQuantity++;
         deckbuilder.deckInProgress.Add((int)this.card.cardID);
-
-        //Debug.Log(card.cardName + " is being created as a listing");
     }
 
     public bool AddCard() {
@@ -43,7 +36,6 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
         else {
             cardQuantity++;
             deckbuilder.deckInProgress.Add((int)card.cardID);
-            //Debug.Log(card.cardName + " is being Added to the set of listings");
 
             if (!quantityImage.activeInHierarchy) {
                 quantityImage.SetActive(true);

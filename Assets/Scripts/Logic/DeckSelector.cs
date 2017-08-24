@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class DeckSelector : MonoBehaviour {
 
@@ -23,6 +26,11 @@ public class DeckSelector : MonoBehaviour {
     public GameObject keepersGrimoire;
     public GameObject keepersDomain;
 
+    [Header("Custom1")]
+    public GameObject custom1Grimoire;
+    public GameObject custom1Domain;
+    public List<CardData> customDeckData = new List<CardData>();
+
     [Space(10)]
     public GameObject startGameButton;
 
@@ -42,9 +50,6 @@ public class DeckSelector : MonoBehaviour {
         player.SetUpDecks();
 
         ShowStartGame();
-        //startGameButton.SetActive(true);
-        //gameObject.SetActive(false);
-
     }
 
     public void AssignRillockDeck() {
@@ -68,12 +73,30 @@ public class DeckSelector : MonoBehaviour {
         ShowStartGame();
     }
 
+    public void AssignCustom1Deck() {
+        LoadDeck();
+
+        DeckAssignmentHelper(custom1Grimoire, custom1Domain, defaultSoulCrypt);
+
+        player.SetUpDecks();
+
+        for (int i = 0; i < customDeckData.Count; i++) {
+            player.activeGrimoire.GetComponent<Deck>().cards.Add(customDeckData[i]);
+        }
+
+
+
+        ShowStartGame();
+
+    }
+
 
 
     private void ShowStartGame() {
         startGameButton.SetActive(true);
         gameObject.SetActive(false);
     }
+
 
     private void DeckAssignmentHelper(GameObject grimoire, GameObject domain, GameObject soulcrypt) {
         for(int i = 0; i < player.deckInfo.Count; i++) {
@@ -92,4 +115,40 @@ public class DeckSelector : MonoBehaviour {
             }
         }
     }
+
+
+
+    public void LoadDeck() {
+
+        if (File.Exists(Application.persistentDataPath + "/deckData.dat")) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/deckData.dat", FileMode.Open);
+
+            DeckBuilder.DeckData data = (DeckBuilder.DeckData)bf.Deserialize(file);
+            file.Close();
+
+            List<int> listToLoad = new List<int>();
+
+            for (int i = 0; i < data.savedDeckInProgress.Count; i++) {
+                //Debug.Log(data.savedDeckInProgress[i] + " is an id being copied to LOAD");
+                listToLoad.Add(data.savedDeckInProgress[i]);
+            }
+
+            List<CardData> deckList = new List<CardData>();
+
+            for (int i = 0; i < listToLoad.Count; i++) {
+
+                CardIDs.CardID id = (CardIDs.CardID)listToLoad[i];
+                CardData cardData = Finder.FindCardDataFromDatabase(id);
+
+                deckList.Add(cardData);
+            }
+
+            customDeckData = deckList;
+
+
+        }
+    }
+
+
 }

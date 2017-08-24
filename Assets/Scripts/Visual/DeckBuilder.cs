@@ -152,8 +152,6 @@ public class DeckBuilder : MonoBehaviour {
     }
 
     public void CreateOrAddCardListing(CardData card) {
-        //Debug.Log("Creating " + card.cardName);
-
         CardListing existingListing = null;
         for (int i = 0; i < currentListings.Count; i++) {
             if (currentListings[i].card == card) {
@@ -175,9 +173,6 @@ public class DeckBuilder : MonoBehaviour {
         }
     }
 
-
-
-
     public void SaveDeck() {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/deckData.dat");
@@ -187,33 +182,18 @@ public class DeckBuilder : MonoBehaviour {
         List<int> listToSave = new List<int>();
 
         for (int i = 0; i < deckInProgress.Count; i++) {
-            Debug.Log(deckInProgress[i] + " is an id being copied to SAVE");
+            //Debug.Log(deckInProgress[i] + " is an id being copied to SAVE");
             listToSave.Add(deckInProgress[i]);
         }
 
-
         data.savedDeckInProgress = listToSave;
-
-        //Debug.Log(deckInProgress.Count + " SAVING: is the number of items in hte deck");
-        for (int i = 0; i < data.savedDeckInProgress.Count; i++) {
-            Debug.Log(data.savedDeckInProgress[i].ToString() + " is the id of a card while SAVING");
-        }
-
-
 
         bf.Serialize(file, data);
         file.Close();
-
-        //SceneManager.LoadScene("main");
     }
 
     public void LoadDeck() {
-        //Debug.Log("Loading Clicked");
         DestroyAllListings();
-
-        for (int i = 0; i < deckInProgress.Count; i++) {
-            Debug.Log(deckInProgress[i].ToString() + " is the id of a card in the deckinprogress list before loading");
-        }
 
         if (File.Exists(Application.persistentDataPath + "/deckData.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
@@ -222,25 +202,16 @@ public class DeckBuilder : MonoBehaviour {
             DeckData data = (DeckData)bf.Deserialize(file);
             file.Close();
 
-
-            //for(int i = 0; i < data.deckInProgress.Count; i++) {
-            //    Debug.Log(data.deckInProgress[i].ToString() + " is the id of a card from the saved data");
-            //}
-
             List<int> listToLoad = new List<int>();
 
             for(int i = 0; i < data.savedDeckInProgress.Count; i++) {
-                Debug.Log(data.savedDeckInProgress[i] + " is an id being copied to LOAD");
+                //Debug.Log(data.savedDeckInProgress[i] + " is an id being copied to LOAD");
                 listToLoad.Add(data.savedDeckInProgress[i]);
             }
-
-           // deckInProgress = listToLoad;
-
 
             List<CardData> deckList = new List<CardData>();
 
             for (int i = 0; i < listToLoad.Count; i++) {
-                //Debug.Log(deckInProgress[i].ToString() + " is the id of a card while LOADING");
 
                 CardIDs.CardID id = (CardIDs.CardID)listToLoad[i];
                 CardData cardData = Finder.FindCardDataFromDatabase(id);
@@ -254,13 +225,9 @@ public class DeckBuilder : MonoBehaviour {
     }
 
     private void PopulateLoadedDeck(List<CardData> cards) {
-
-        //Debug.Log(deckInProgress.Count + " is the deck count");
-
         for (int i = 0; i < cards.Count; i++) {
             CreateOrAddCardListing(cards[i]);
         }
-
     }
 
 
@@ -268,7 +235,7 @@ public class DeckBuilder : MonoBehaviour {
 
 
     [Serializable]
-    private class DeckData {
+    public class DeckData {
 
         public List<int> savedDeckInProgress = new List<int>();
 
