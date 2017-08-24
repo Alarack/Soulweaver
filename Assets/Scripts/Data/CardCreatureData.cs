@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(menuName = "Creature Card")]
+[System.Serializable]
 public class CardCreatureData : CardData {
 
     [Header("Creature Stats")]

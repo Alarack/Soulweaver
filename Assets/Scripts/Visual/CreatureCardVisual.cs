@@ -64,7 +64,7 @@ public class CreatureCardVisual : CardVisual {
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Size, size);
         battleToken.UpdateBattleTokenTokenText(Constants.CardStats.Health, health);
 
-        if (owner.player2) {
+        if (owner != null && owner.player2) {
             interceptPos = new Vector3(interceptPos.x, -interceptPos.y, interceptPos.z);
         }
 

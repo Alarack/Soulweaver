@@ -24,13 +24,14 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 03000000
   subTypes: 05000000
-  keywords: 
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes:
   - attributeType: 3
     attributeValue: 2
+    uniqueID: -1
   attack: 1
   size: 1
   health: 1

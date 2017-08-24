@@ -100,10 +100,13 @@ public class EffectStatAdjustment : Effect {
 
     public void InitializeAdjustments() {
         for (int i = 0; i < adjustments.Count; i++) {
-            adjustments[i].uniqueID = IDFactory.GenerateAdjID(source.owner);
+
+            if(source.owner != null)
+                adjustments[i].uniqueID = IDFactory.GenerateAdjID(source.owner);
+
             adjustments[i].source = source;
 
-            source.CheckAdjID(adjustments[i].uniqueID, parentAbility.abilityName, source.cardData.cardName);
+            //source.CheckAdjID(adjustments[i].uniqueID, parentAbility.abilityName, source.cardData.cardName);
 
             //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName, source.cardData.cardName);
         }

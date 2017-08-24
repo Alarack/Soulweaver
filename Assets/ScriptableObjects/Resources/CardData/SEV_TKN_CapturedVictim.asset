@@ -19,11 +19,12 @@ MonoBehaviour:
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Ball_Lightning
   movingVFX: 1
+  deathVFX: 
   primaryCardType: 1
   otherCardTypes: 
   attunements: 
   subTypes: 06000000
-  keywords: 20000000
+  keywords: 2000000027000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []

@@ -13,8 +13,10 @@ public class GlobalSettings : MonoBehaviour {
     public GameObject supportCard;
     public GameObject playerCard;
     public GameObject domainCard;
-
-
+    [Header("Deckbuilder")]
+    public GameObject spellDeckBuilder;
+    public GameObject creatureDeckbuilder;
+    public GameObject supportDeckbuilder;
 
     void Awake() {
         _globalSettings = this;

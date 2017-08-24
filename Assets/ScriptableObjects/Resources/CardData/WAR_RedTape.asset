@@ -20,11 +20,11 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  primaryCardType: 0
+  primaryCardType: 3
   otherCardTypes: 
   attunements: 
   subTypes: 
-  keywords: 
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []

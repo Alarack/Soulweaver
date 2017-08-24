@@ -326,8 +326,12 @@ public class Constants {
 
         TriggerSecondaryEffect = 500,
 
-
         VFXLanded = 600,
+
+
+        //DeckBuilder
+        CardSelected = 1000,
+        CardDeselected = 1001,
     }
 
 

@@ -4,7 +4,9 @@ using UnityEngine;
 
 using CardID = CardIDs.CardID;
 
+
 [CreateAssetMenu(menuName = "Card")]
+[System.Serializable]
 public class CardData : ScriptableObject {
     [Header("Basic Card Info")]
     public CardID cardID;
