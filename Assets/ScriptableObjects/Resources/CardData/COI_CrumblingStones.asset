@@ -13,13 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 50003
   cardName: Crumbling Stones
-  cardText: Whenever a friendly, non-token, Earth Stone takes damage, summon a Pebble
+  cardText: Whenever a friendly, non-token, Earth-Attuned Soul takes damage, summon
+    a Pebble
   cardCost: 4
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  faction: 2
   primaryCardType: 3
   otherCardTypes: 
   attunements: 02000000
@@ -274,6 +276,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0

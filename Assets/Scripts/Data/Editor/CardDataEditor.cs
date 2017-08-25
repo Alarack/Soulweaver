@@ -28,6 +28,8 @@ public class CardDataEditor : Editor {
         EditorGUILayout.LabelField("Card Info", EditorStyles.boldLabel);
 
         _cardData.cardID = (CardIDs.CardID)EditorGUILayout.EnumPopup("CardID", _cardData.cardID);
+        _cardData.faction = EditorHelper.EnumPopup("Faction", _cardData.faction);
+        
         _cardData.cardName = EditorGUILayout.TextField("Card Name", _cardData.cardName);
         _cardData.cardText = EditorGUILayout.TextField("Card Text", _cardData.cardText);
         _cardData.cardCost = EditorGUILayout.IntField("Card Cost", _cardData.cardCost);

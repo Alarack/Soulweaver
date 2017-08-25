@@ -5,15 +5,27 @@ using SoulWeaver;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Linq;
+using UnityEngine.UI;
 
 public class DeckBuilder : MonoBehaviour {
 
+
+    public int cardCount;
+    public Text cardCountText;
     public RectTransform cardList;
     public Deck allCards;
     private int currentIndex;
+
     public GameObject cardListingTemplate;
     public List<CardListing> currentListings = new List<CardListing>();
     public List<int> deckInProgress = new List<int>();
+
+    public List<CardFilter> filterButtons = new List<CardFilter>();
+
+    public CardFilterConstraints filters;
+
+    public List<CardData> filteredCards = new List<CardData>();
 
 	void Start () {
         allCards = GetComponent<Deck>();
@@ -30,6 +42,16 @@ public class DeckBuilder : MonoBehaviour {
 
             allCards.cards.Add(CardDB.cardDB.allCardData[i]);
         }
+
+        cardCount = 0;
+        UpdateCardText();
+        filteredCards = FilterCards();
+
+
+        for (int i = 0; i < filterButtons.Count; i++) {
+            filterButtons[i].Initialize(this);
+        }
+
 
         PageRight();
 
@@ -69,15 +91,17 @@ public class DeckBuilder : MonoBehaviour {
 
         currentListings.Clear();
         deckInProgress.Clear();
+        cardCount = 0;
+        UpdateCardText();
     }
 
     private void PageRight() {
 
-        if (currentIndex >= allCards.cards.Count)
+        if (currentIndex >= filteredCards.Count)
             return;
 
         DestroyAllDisplays();
-        SpawnAllCards(currentIndex, currentIndex + 7);
+        SpawnCards(currentIndex, currentIndex + 7);
     }
 
     private void PageLeft() {
@@ -87,16 +111,16 @@ public class DeckBuilder : MonoBehaviour {
 
         DestroyAllDisplays();
         currentIndex -= 16;
-        SpawnAllCards(currentIndex, currentIndex + 7);
+        SpawnCards(currentIndex, currentIndex + 7);
     }
 
-    private void SpawnAllCards(int startIndex, int numToSpawn) {
+    private void SpawnCards(int startIndex, int numToSpawn) {
 
         if (startIndex < 0)
             startIndex = 0;
 
-        if (numToSpawn > allCards.cards.Count)
-            numToSpawn = allCards.cards.Count -1;
+        if (numToSpawn > filteredCards.Count)
+            numToSpawn = filteredCards.Count -1;
 
         if (numToSpawn < 7)
             numToSpawn = 7;
@@ -104,17 +128,17 @@ public class DeckBuilder : MonoBehaviour {
         for (int i = startIndex; i <= numToSpawn; i++) {
             //yield return new WaitForSeconds(0.01f);
 
-            switch (allCards.cards[i].primaryCardType) {
+            switch (filteredCards[i].primaryCardType) {
                 case Constants.CardType.Soul:
-                    CardFactory(allCards.cards[i], GlobalSettings._globalSettings.creatureDeckbuilder);
+                    CardFactory(filteredCards[i], GlobalSettings._globalSettings.creatureDeckbuilder);
                     break;
 
                 case Constants.CardType.Spell:
-                    CardFactory(allCards.cards[i], GlobalSettings._globalSettings.spellDeckBuilder);
+                    CardFactory(filteredCards[i], GlobalSettings._globalSettings.spellDeckBuilder);
                     break;
 
                 case Constants.CardType.Support:
-                    CardFactory(allCards.cards[i], GlobalSettings._globalSettings.supportDeckbuilder);
+                    CardFactory(filteredCards[i], GlobalSettings._globalSettings.supportDeckbuilder);
 
                     break;
             }
@@ -139,10 +163,11 @@ public class DeckBuilder : MonoBehaviour {
 
         activeCard.gameObject.name = cardVisual.cardData.cardName;
 
-
         return cardVisual;
     }
 
+
+    #region EVENTS
 
     public void OnCardSelected(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
@@ -151,7 +176,13 @@ public class DeckBuilder : MonoBehaviour {
         CreateOrAddCardListing(card.cardData);
     }
 
+    #endregion
+
+
     public void CreateOrAddCardListing(CardData card) {
+        if (cardCount >= 39)
+            return;
+
         CardListing existingListing = null;
         for (int i = 0; i < currentListings.Count; i++) {
             if (currentListings[i].card == card) {
@@ -172,6 +203,73 @@ public class DeckBuilder : MonoBehaviour {
             currentListings.Add(listing);
         }
     }
+
+    public void AddCardCount() {
+        cardCount++;
+        UpdateCardText();
+    }
+
+    public void RemoveCardCount() {
+        cardCount--;
+        UpdateCardText();
+    }
+
+    private void UpdateCardText() {
+        cardCountText.text = cardCount.ToString();
+    }
+
+
+
+    public List<CardData> FilterCards() {
+        List<CardData> results = new List<CardData>();
+
+        if (filters.faction != Constants.Faction.All) {
+            results = GetCardsByfaction();
+        }
+        else {
+            results = allCards.cards;
+        }
+
+        List<CardData> sortedList = results.OrderBy(o => o.cardCost).ToList();
+
+        //Dictionary<CardData, int> orderedCards = new Dictionary<CardData, int>();
+
+        //for(int i = 0; i < results.Count; i++) {
+        //    orderedCards.Add(results[i], results[i].cardCost);
+        //}
+
+
+
+        return sortedList;
+    }
+
+
+    private List<CardData> GetCardsByfaction() {
+        List<CardData> results = new List<CardData>();
+
+        for(int i = 0; i < allCards.cards.Count; i++) {
+            if (allCards.cards[i].faction == filters.faction) {
+                results.Add(allCards.cards[i]);
+            }
+            
+        }
+
+        return results;
+    }
+
+    public void SetFilterFaction(Constants.Faction faction) {
+        filters.faction = faction;
+
+        filteredCards = FilterCards();
+
+        currentIndex = 0;
+        PageRight();
+
+    }
+
+
+
+    #region SaveLoad
 
     public void SaveDeck() {
         BinaryFormatter bf = new BinaryFormatter();
@@ -231,14 +329,23 @@ public class DeckBuilder : MonoBehaviour {
     }
 
 
-
+    #endregion
 
 
     [Serializable]
     public class DeckData {
-
         public List<int> savedDeckInProgress = new List<int>();
+    }
+
+
+    [Serializable]
+    public class CardFilterConstraints {
+        public Constants.Faction faction;
+        public int cost;
+        
+
 
     }
+
 
 }

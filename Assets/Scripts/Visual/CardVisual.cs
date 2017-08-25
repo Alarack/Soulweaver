@@ -58,6 +58,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public List<Constants.CardType> otherCardTypes = new List<Constants.CardType>();
     public List<Constants.Attunements> attunements = new List<Constants.Attunements>();
     public List<Constants.SubTypes> subTypes = new List<Constants.SubTypes>();
+    public Constants.Faction faction;
     [Header("Keywords")]
     public List<Constants.Keywords> keywords = new List<Constants.Keywords>();
     [Header("Special Abilities")]
@@ -135,6 +136,9 @@ public class CardVisual : Photon.MonoBehaviour {
 
         Constants.CardType tempPrimaryType = cardData.primaryCardType;
         primaryCardType = tempPrimaryType;
+
+        Constants.Faction tempFaction = cardData.faction;
+        faction = tempFaction;
 
         List<Constants.CardType> tempOtherTypes = new List<Constants.CardType>(cardData.otherCardTypes);
         otherCardTypes = tempOtherTypes;

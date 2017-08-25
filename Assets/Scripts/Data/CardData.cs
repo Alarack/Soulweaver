@@ -22,6 +22,7 @@ public class CardData : ScriptableObject {
     public string deathVFX;
 
     [Header("Types and Attunements")]
+    public Constants.Faction faction;
     public Constants.CardType primaryCardType;
     public List<Constants.CardType> otherCardTypes = new List<Constants.CardType>();
     public List<Constants.Attunements> attunements = new List<Constants.Attunements>();

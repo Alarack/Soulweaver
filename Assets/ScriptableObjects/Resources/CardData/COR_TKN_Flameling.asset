@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  faction: 1
   primaryCardType: 1
   otherCardTypes: 
   attunements: 03000000

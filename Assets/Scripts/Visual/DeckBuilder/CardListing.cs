@@ -27,14 +27,16 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
         cardName.text = card.cardName;
         cardArt.sprite = card.cardImage;
         cardQuantity++;
+        deckbuilder.AddCardCount();
         deckbuilder.deckInProgress.Add((int)this.card.cardID);
     }
 
     public bool AddCard() {
-        if (cardQuantity >= 3)
+        if (cardQuantity >= 3 || deckbuilder.cardCount >= 39)
             return false;
         else {
             cardQuantity++;
+            deckbuilder.AddCardCount();
             deckbuilder.deckInProgress.Add((int)card.cardID);
 
             if (!quantityImage.activeInHierarchy) {
@@ -47,6 +49,7 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
 
     public void RemoveCard() {
         cardQuantity--;
+        deckbuilder.RemoveCardCount();
         deckbuilder.deckInProgress.Remove((int)card.cardID);
         deckbuilder.currentListings.Remove(this);
         quantityText.text = "x" + cardQuantity.ToString();

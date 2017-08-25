@@ -283,6 +283,18 @@ public class Constants {
 
     }
 
+    public enum Faction {
+        Neutral,
+        CultOfRillock,
+        ChildrenOfIllia,
+        BloodOfNok,
+        RealmKeepers,
+        Wardens,
+        Others,
+        Severed,
+        All
+    }
+
     public enum CardStats {
         None = 0,
         Cost,
