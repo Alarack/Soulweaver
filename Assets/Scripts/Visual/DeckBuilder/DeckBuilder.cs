@@ -64,15 +64,15 @@ public class DeckBuilder : MonoBehaviour {
     }
 
 
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.N)) {
-            PageRight();
-        }
+	//void Update () {
+ //       if (Input.GetKeyDown(KeyCode.N)) {
+ //           PageRight();
+ //       }
 
-        if (Input.GetKeyDown(KeyCode.P)) {
-            PageLeft();
-        }
-    }
+ //       if (Input.GetKeyDown(KeyCode.P)) {
+ //           PageLeft();
+ //       }
+ //   }
 
     private void DestroyAllDisplays() {
 
@@ -95,7 +95,7 @@ public class DeckBuilder : MonoBehaviour {
         UpdateCardText();
     }
 
-    private void PageRight() {
+    public void PageRight() {
 
         if (currentIndex >= filteredCards.Count)
             return;
@@ -104,7 +104,7 @@ public class DeckBuilder : MonoBehaviour {
         SpawnCards(currentIndex, currentIndex + 7);
     }
 
-    private void PageLeft() {
+    public void PageLeft() {
 
         if (currentIndex <= 8)
             return;
@@ -119,13 +119,13 @@ public class DeckBuilder : MonoBehaviour {
         if (startIndex < 0)
             startIndex = 0;
 
-        if (numToSpawn > filteredCards.Count)
+        if (numToSpawn >= filteredCards.Count)
             numToSpawn = filteredCards.Count -1;
 
         //if (numToSpawn < 7)
         //    numToSpawn = 7;
-
-        Debug.Log(numToSpawn + " is the numToSpawn");
+        //Debug.Log(filteredCards.Count + " is the number of cards in the filter");
+        //Debug.Log(numToSpawn + " is the numToSpawn");
 
         for (int i = startIndex; i <= numToSpawn; i++) {
             //yield return new WaitForSeconds(0.01f);
