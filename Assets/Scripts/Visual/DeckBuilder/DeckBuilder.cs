@@ -24,7 +24,7 @@ public class DeckBuilder : MonoBehaviour {
     public List<CardFilter> filterButtons = new List<CardFilter>();
 
     public CardFilterConstraints filters;
-
+    public InputField searchBar;
     public List<CardData> filteredCards = new List<CardData>();
 
 	void Start () {
@@ -122,11 +122,14 @@ public class DeckBuilder : MonoBehaviour {
         if (numToSpawn > filteredCards.Count)
             numToSpawn = filteredCards.Count -1;
 
-        if (numToSpawn < 7)
-            numToSpawn = 7;
+        //if (numToSpawn < 7)
+        //    numToSpawn = 7;
+
+        Debug.Log(numToSpawn + " is the numToSpawn");
 
         for (int i = startIndex; i <= numToSpawn; i++) {
             //yield return new WaitForSeconds(0.01f);
+            //Debug.Log(i + " is the numToSpawn");
 
             switch (filteredCards[i].primaryCardType) {
                 case Constants.CardType.Soul:
@@ -265,6 +268,33 @@ public class DeckBuilder : MonoBehaviour {
         currentIndex = 0;
         PageRight();
 
+    }
+
+    public void SearchCards(string value) {
+
+        ExecuteSearch(searchBar.text);
+
+    }
+
+
+    private void ExecuteSearch(string value) {
+
+        List<CardData> cards = FilterCards();
+        List<CardData> results = new List<CardData>();
+
+        foreach (CardData card in cards) {
+            if (card.cardName.Contains(value)) {
+                results.Add(card);
+            }
+            else if (card.cardText.Contains(value)) {
+                results.Add(card);
+            }
+        }
+
+        filteredCards = results;
+
+        currentIndex = 0;
+        PageRight();
     }
 
 
