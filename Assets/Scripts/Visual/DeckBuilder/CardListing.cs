@@ -28,7 +28,7 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
         cardArt.sprite = card.cardImage;
         cardQuantity++;
         deckbuilder.AddCardCount();
-        deckbuilder.deckInProgress.Add((int)this.card.cardID);
+        deckbuilder.deckInProgress.savedDecklist.Add((int)this.card.cardID);
     }
 
     public bool AddCard() {
@@ -37,7 +37,7 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
         else {
             cardQuantity++;
             deckbuilder.AddCardCount();
-            deckbuilder.deckInProgress.Add((int)card.cardID);
+            deckbuilder.deckInProgress.savedDecklist.Add((int)card.cardID);
 
             if (!quantityImage.activeInHierarchy) {
                 quantityImage.SetActive(true);
@@ -50,7 +50,7 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
     public void RemoveCard() {
         cardQuantity--;
         deckbuilder.RemoveCardCount();
-        deckbuilder.deckInProgress.Remove((int)card.cardID);
+        deckbuilder.deckInProgress.savedDecklist.Remove((int)card.cardID);
         deckbuilder.currentListings.Remove(this);
         quantityText.text = "x" + cardQuantity.ToString();
 

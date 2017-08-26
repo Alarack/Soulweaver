@@ -78,7 +78,9 @@ public class CardIDs {
         COR_Flamecaller = 10044,
         COR_WallOfCorpses = 10045,
         COR_ZombieHorde = 10046,
-
+        COR_GEN_RhazBlisterpox = 10047,
+        COR_GEN_EshBaal = 10048,
+        COR_GEN_Erebus = 10049,
 
 
 

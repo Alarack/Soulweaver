@@ -80,11 +80,22 @@ public class DeckSelector : MonoBehaviour {
 
         player.SetUpDecks();
 
+        CardPlayerData playerData = null;
+
         for (int i = 0; i < customDeckData.Count; i++) {
+            if(customDeckData[i].primaryCardType == Constants.CardType.Player) {
+                playerData = (CardPlayerData)customDeckData[i];
+            }
+
             player.activeGrimoire.GetComponent<Deck>().cards.Add(customDeckData[i]);
         }
 
+        if(playerData != null) {
+            for (int i = 0; i < playerData.domainPowers.Count; i++) {
+                player.activeDomain.GetComponent<Deck>().cards.Add(playerData.domainPowers[i]);
 
+            }
+        }
 
         ShowStartGame();
 
@@ -129,9 +140,9 @@ public class DeckSelector : MonoBehaviour {
 
             List<int> listToLoad = new List<int>();
 
-            for (int i = 0; i < data.savedDeckInProgress.Count; i++) {
+            for (int i = 0; i < data.savedDecklist.Count; i++) {
                 //Debug.Log(data.savedDeckInProgress[i] + " is an id being copied to LOAD");
-                listToLoad.Add(data.savedDeckInProgress[i]);
+                listToLoad.Add(data.savedDecklist[i]);
             }
 
             List<CardData> deckList = new List<CardData>();

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba6697fbc4c9ef41a3ff8bc39221e90, type: 3}
+  m_Name: COR_GEN_RhazBlisterpox1
+  m_EditorClassIdentifier: 
+  cardID: 10047
+  cardName: Rhaz Blisterpox
+  cardText: 
+  cardCost: 0
+  cardImage: {fileID: 21300000, guid: 011c77d5cfc6c76418f43cf4ead06f87, type: 3}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
+  movingVFX: 0
+  deathVFX: 
+  faction: 1
+  primaryCardType: 6
+  otherCardTypes: 
+  attunements: 
+  subTypes: 
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
+  specialAttributes: []
+  attack: 1
+  size: 3
+  health: 25
+  domainPowers:
+  - {fileID: 11400000, guid: 07a11e5f87560da44a24fc6f770f1b39, type: 2}
+  - {fileID: 11400000, guid: 342a110ab1acb9f4a92dfa8ac006216b, type: 2}
+  - {fileID: 11400000, guid: 57f8d9a07e695a54a9e53ff653d027d7, type: 2}

@@ -10,38 +10,73 @@ using UnityEngine.UI;
 
 public class DeckBuilder : MonoBehaviour {
 
+    public enum DeckBuilderSubPanel {
+        CardSearch,
+        GeneralSelector,
+        GrimoireSelector,
+        FactionSelector
+    }
+
 
     public int cardCount;
     public Text cardCountText;
+    public Text deckNameText;
     public RectTransform cardList;
     public Deck allCards;
+    public List<CardPlayerData> allGenerals = new List<CardPlayerData>();
     private int currentIndex;
 
     public GameObject cardListingTemplate;
     public List<CardListing> currentListings = new List<CardListing>();
-    public List<int> deckInProgress = new List<int>();
+
+
+    public DeckData deckInProgress = new DeckData();
+
+    //public List<int> deckInProgress = new List<int>();
+    public List<string> savedDecks = new List<string>();
 
     public List<CardFilter> filterButtons = new List<CardFilter>();
 
     public CardFilterConstraints filters;
     public InputField searchBar;
+    public InputField deckNameInput;
     public List<CardData> filteredCards = new List<CardData>();
 
-	void Start () {
+
+    public GrimoireListing CurrentDeck { get; set; }
+
+    [Header("Sub Panels")]
+    public List<SubPanel> subPanels = new List<SubPanel>();
+    public GeneralSelector generalSelector;
+    public GrimoireSelector grimoireSelector;
+    public FactionSelector factionSelector;
+
+    void Start() {
         allCards = GetComponent<Deck>();
 
         for (int i = 0; i < CardDB.cardDB.allCardData.Length; i++) {
             if (CardDB.cardDB.allCardData[i].primaryCardType == Constants.CardType.Domain)
                 continue;
 
-            if (CardDB.cardDB.allCardData[i].primaryCardType == Constants.CardType.Player)
+            if (CardDB.cardDB.allCardData[i].primaryCardType == Constants.CardType.Player) {
+                if(CardDB.cardDB.allCardData[i] is CardPlayerData) {
+                    Debug.Log(CardDB.cardDB.allCardData[i].cardName + " is a general");
+                    allGenerals.Add((CardPlayerData)CardDB.cardDB.allCardData[i]);
+                }
+
                 continue;
+            }
+
 
             if (CardDB.cardDB.allCardData[i].keywords.Contains(Constants.Keywords.Token))
                 continue;
 
             allCards.cards.Add(CardDB.cardDB.allCardData[i]);
         }
+
+        LoadLibraryList();
+
+        RegisterListeners();
 
         cardCount = 0;
         UpdateCardText();
@@ -53,10 +88,14 @@ public class DeckBuilder : MonoBehaviour {
         }
 
 
-        PageRight();
+        //PageRight();
 
-        RegisterListeners();
-	}
+        grimoireSelector.Initialize(this);
+        factionSelector.Initialize(this);
+        generalSelector.Initialize(this, Constants.Faction.All);
+        ShowSubPanel(DeckBuilderSubPanel.GrimoireSelector);
+
+    }
 
     private void RegisterListeners() {
         Grid.EventManager.RegisterListener(Constants.GameEvent.CardSelected, OnCardSelected);
@@ -64,19 +103,61 @@ public class DeckBuilder : MonoBehaviour {
     }
 
 
-	//void Update () {
- //       if (Input.GetKeyDown(KeyCode.N)) {
- //           PageRight();
- //       }
+    public void ShowSubPanel(DeckBuilderSubPanel panel, Constants.Faction faction = Constants.Faction.All) {
 
- //       if (Input.GetKeyDown(KeyCode.P)) {
- //           PageLeft();
- //       }
- //   }
+        SubPanel selectedPanel = null;
+
+        for (int i = 0; i < subPanels.Count; i++) {
+            if (subPanels[i].panel == panel) {
+                subPanels[i].container.gameObject.SetActive(true);
+                selectedPanel = subPanels[i];
+            }
+            else {
+                subPanels[i].container.gameObject.SetActive(false);
+            }
+        }
+
+
+        switch (panel) {
+            case DeckBuilderSubPanel.CardSearch:
+                if (CurrentDeck != null) {
+                    filters.faction = CurrentDeck.faction;
+                }
+                else {
+                    filters.faction = Constants.Faction.All;
+                }
+
+                filteredCards = FilterCards();
+                PageRight();
+
+                break;
+
+            case DeckBuilderSubPanel.GeneralSelector:
+                if (faction != Constants.Faction.All) {
+                    generalSelector.ResetListings(faction);
+                }
+
+
+                break;
+
+            case DeckBuilderSubPanel.GrimoireSelector:
+                LoadLibraryList();
+                grimoireSelector.RefreshLibrary();
+
+                break;
+
+            case DeckBuilderSubPanel.FactionSelector:
+
+                break;
+        }
+
+    }
+
+
 
     private void DestroyAllDisplays() {
 
-        for(int i = 0; i < allCards.activeCards.Count; i++) {
+        for (int i = 0; i < allCards.activeCards.Count; i++) {
             Destroy(allCards.activeCards[i].gameObject);
         }
 
@@ -85,12 +166,14 @@ public class DeckBuilder : MonoBehaviour {
     }
 
     private void DestroyAllListings() {
-        for(int i = 0; i < currentListings.Count; i++) {
+        for (int i = 0; i < currentListings.Count; i++) {
             Destroy(currentListings[i].gameObject);
         }
 
         currentListings.Clear();
-        deckInProgress.Clear();
+        deckInProgress.savedDecklist.Clear();
+        deckInProgress.deckName = "";
+        deckNameText.text = "";
         cardCount = 0;
         UpdateCardText();
     }
@@ -120,7 +203,7 @@ public class DeckBuilder : MonoBehaviour {
             startIndex = 0;
 
         if (numToSpawn >= filteredCards.Count)
-            numToSpawn = filteredCards.Count -1;
+            numToSpawn = filteredCards.Count - 1;
 
         //if (numToSpawn < 7)
         //    numToSpawn = 7;
@@ -250,11 +333,11 @@ public class DeckBuilder : MonoBehaviour {
     private List<CardData> GetCardsByfaction() {
         List<CardData> results = new List<CardData>();
 
-        for(int i = 0; i < allCards.cards.Count; i++) {
+        for (int i = 0; i < allCards.cards.Count; i++) {
             if (allCards.cards[i].faction == filters.faction) {
                 results.Add(allCards.cards[i]);
             }
-            
+
         }
 
         return results;
@@ -297,27 +380,58 @@ public class DeckBuilder : MonoBehaviour {
         PageRight();
     }
 
+    public void SetDeckName() {
 
+        deckNameText.text = deckNameInput.text;
+        deckInProgress.deckName = deckNameInput.text;
+
+
+    }
 
     #region SaveLoad
 
     public void SaveDeck() {
+
+        if (String.IsNullOrEmpty(deckInProgress.deckName)) {
+
+            Debug.LogError("You must name your Grimoire");
+            return;
+        }
+
+
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/deckData.dat");
+        FileStream file = File.Create(Application.persistentDataPath + "/" + deckInProgress.deckName + ".dat");
 
         DeckData data = new DeckData();
 
         List<int> listToSave = new List<int>();
 
-        for (int i = 0; i < deckInProgress.Count; i++) {
+        for (int i = 0; i < deckInProgress.savedDecklist.Count; i++) {
             //Debug.Log(deckInProgress[i] + " is an id being copied to SAVE");
-            listToSave.Add(deckInProgress[i]);
+            listToSave.Add(deckInProgress.savedDecklist[i]);
         }
 
-        data.savedDeckInProgress = listToSave;
+        data.savedDecklist = listToSave;
+        data.deckName = deckNameText.text;
 
         bf.Serialize(file, data);
         file.Close();
+
+        savedDecks.Add(deckNameText.text);
+        SaveLibraryList();
+    }
+
+    private void SaveLibraryList() {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/library.dat");
+
+        LibraryData data = new LibraryData();
+
+        data.savedDecks = savedDecks;
+
+        bf.Serialize(file, data);
+        file.Close();
+
     }
 
     public void LoadDeck() {
@@ -332,9 +446,9 @@ public class DeckBuilder : MonoBehaviour {
 
             List<int> listToLoad = new List<int>();
 
-            for(int i = 0; i < data.savedDeckInProgress.Count; i++) {
+            for (int i = 0; i < data.savedDecklist.Count; i++) {
                 //Debug.Log(data.savedDeckInProgress[i] + " is an id being copied to LOAD");
-                listToLoad.Add(data.savedDeckInProgress[i]);
+                listToLoad.Add(data.savedDecklist[i]);
             }
 
             List<CardData> deckList = new List<CardData>();
@@ -347,16 +461,46 @@ public class DeckBuilder : MonoBehaviour {
                 deckList.Add(cardData);
             }
 
-            PopulateLoadedDeck(deckList);
+            //PopulateLoadedDeck(data.deckName, deckList);
 
         }
     }
 
-    private void PopulateLoadedDeck(List<CardData> cards) {
-        for (int i = 0; i < cards.Count; i++) {
-            CreateOrAddCardListing(cards[i]);
+    private void LoadLibraryList() {
+        if (File.Exists(Application.persistentDataPath + "/library.dat")) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/library.dat", FileMode.Open);
+
+            LibraryData data = (LibraryData)bf.Deserialize(file);
+            file.Close();
+
+            savedDecks = data.savedDecks;
+
+        }
+
+    }
+
+
+
+
+    public void PopulateLoadedDeck(DeckData data) {
+        DestroyAllListings();
+
+
+        deckInProgress = data;
+        deckNameText.text = deckInProgress.deckName;
+
+        List<CardData> decklist = data.GetCardData();
+
+        for (int i = 0; i < decklist.Count; i++) {
+            CreateOrAddCardListing(decklist[i]);
         }
     }
+
+
+
+
+
 
 
     #endregion
@@ -364,18 +508,57 @@ public class DeckBuilder : MonoBehaviour {
 
     [Serializable]
     public class DeckData {
-        public List<int> savedDeckInProgress = new List<int>();
+        public string deckName;
+        public List<int> savedDecklist = new List<int>();
+
+
+        public List<CardData> GetCardData() {
+            List<CardData> results = new List<CardData>();
+
+            for (int i = 0; i < savedDecklist.Count; i++) {
+
+                CardIDs.CardID id = (CardIDs.CardID)savedDecklist[i];
+                CardData cardData = Finder.FindCardDataFromDatabase(id);
+
+                results.Add(cardData);
+            }
+            return results;
+        }
+
+        public CardPlayerData GetGeneral() {
+            CardPlayerData general = null;
+
+            List<CardData> deckList = GetCardData();
+
+            for (int i = 0; i < deckList.Count; i++) {
+                if(deckList[i] is CardPlayerData) {
+                    general = (CardPlayerData)deckList[i];
+                    break;
+                }
+            }
+            return general;
+        }
+
     }
+
+
+    [Serializable]
+    public class LibraryData {
+        public List<string> savedDecks = new List<string>();
+    }
+
 
 
     [Serializable]
     public class CardFilterConstraints {
         public Constants.Faction faction;
         public int cost;
-        
-
-
     }
 
+    [Serializable]
+    public class SubPanel {
+        public DeckBuilderSubPanel panel;
+        public RectTransform container;
+    }
 
 }

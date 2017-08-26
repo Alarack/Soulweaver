@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba6697fbc4c9ef41a3ff8bc39221e90, type: 3}
+  m_Name: COR_GEN_EshBaal
+  m_EditorClassIdentifier: 
+  cardID: 10048
+  cardName: Esh Baal
+  cardText: 
+  cardCost: 0
+  cardImage: {fileID: 21300000, guid: 55a505d36a79f234b9bcc755d0a1ba6a, type: 3}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
+  movingVFX: 0
+  deathVFX: 
+  faction: 1
+  primaryCardType: 6
+  otherCardTypes: 
+  attunements: 
+  subTypes: 
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
+  specialAttributes: []
+  attack: 1
+  size: 3
+  health: 25
+  domainPowers:
+  - {fileID: 11400000, guid: efcf6c7402e90b94eb200ac1f5c3a316, type: 2}
+  - {fileID: 11400000, guid: 6eaa8739e9deb0e47a3769e5742a1aea, type: 2}
+  - {fileID: 11400000, guid: 2d8895d77d3caa94088dfec53d4f89df, type: 2}
