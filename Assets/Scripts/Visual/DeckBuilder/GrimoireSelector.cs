@@ -36,8 +36,10 @@ public class GrimoireSelector : MonoBehaviour {
             DeckData loadedDeck = TryLoadDeck(_deckBuilder.savedDecks[i]);
 
             if (loadedDeck == null) {
+
                 Debug.LogError("Could not find a saved deck with name: " + _deckBuilder.savedDecks[i]);
-                return;
+                _deckBuilder.savedDecks.RemoveAt(i);
+                continue;
             }
 
             GameObject deck = Instantiate(grimoireTemplate.gameObject) as GameObject;

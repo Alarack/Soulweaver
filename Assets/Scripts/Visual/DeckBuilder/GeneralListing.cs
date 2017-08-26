@@ -32,6 +32,14 @@ public class GeneralListing : MonoBehaviour {
         }
     }
 
+    public void ShowDomainTooltip(int tileNumber) {
+        CardTooltip.ShowTooltip(generalData.domainPowers[tileNumber].cardText);
+    }
+
+    public void HideDomainTooltip() {
+        CardTooltip.HideTooltip();
+    }
+
 
     public void OnClick() {
 
@@ -39,7 +47,7 @@ public class GeneralListing : MonoBehaviour {
             _deckBuilder.CurrentDeck.general = generalData;
 
         _deckBuilder.CreateOrAddCardListing(generalData);
-        _deckBuilder.ShowSubPanel(DeckBuilder.DeckBuilderSubPanel.CardSearch);
+        _deckBuilder.ShowSubPanel(DeckBuilder.DeckBuilderSubPanel.CardSearch, generalData.faction);
     }
 
 }

@@ -60,7 +60,7 @@ public class DeckBuilder : MonoBehaviour {
 
             if (CardDB.cardDB.allCardData[i].primaryCardType == Constants.CardType.Player) {
                 if(CardDB.cardDB.allCardData[i] is CardPlayerData) {
-                    Debug.Log(CardDB.cardDB.allCardData[i].cardName + " is a general");
+                    //Debug.Log(CardDB.cardDB.allCardData[i].cardName + " is a general");
                     allGenerals.Add((CardPlayerData)CardDB.cardDB.allCardData[i]);
                 }
 
@@ -476,6 +476,30 @@ public class DeckBuilder : MonoBehaviour {
 
             savedDecks = data.savedDecks;
 
+        }
+
+    }
+
+
+    public void OnClickDelete() {
+        //Debug.Log(CurrentDeck.deckName);
+        DeleteDeck(CurrentDeck.deckName);
+    }
+
+    private void DeleteDeck(string deckName) {
+        if (File.Exists(Application.persistentDataPath + "/" + deckName + ".dat")) {
+            File.Delete(Application.persistentDataPath + "/" + deckName + ".dat");
+            savedDecks.Remove(deckName);
+            SaveLibraryList();
+
+            CurrentDeck = null;
+            DestroyAllListings();
+            ShowSubPanel(DeckBuilderSubPanel.GrimoireSelector);
+
+        }
+        else {
+            Debug.LogError("No deck with the name: " + deckName + " exists");
+            return;
         }
 
     }
