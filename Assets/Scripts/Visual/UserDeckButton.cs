@@ -7,11 +7,8 @@ public class UserDeckButton : MonoBehaviour {
 
     public Text deckNameText;
 
-
     private DeckSelector _deckSelector;
     private DeckBuilder.DeckData _deckData;
-
-
 
     public void Initialize(DeckSelector parent, DeckBuilder.DeckData deckData) {
         _deckSelector = parent;
@@ -20,11 +17,7 @@ public class UserDeckButton : MonoBehaviour {
         deckNameText.text = _deckData.deckName;
     }
 
-
-
-
     public void OnClick() {
-
         _deckSelector.AssignCustom1Deck(_deckData);
     }
 
