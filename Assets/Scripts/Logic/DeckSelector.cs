@@ -5,6 +5,9 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
+using DeckData = DeckBuilder.DeckData;
+using LibraryData = DeckBuilder.LibraryData;
+
 public class DeckSelector : MonoBehaviour {
 
 
@@ -34,16 +37,27 @@ public class DeckSelector : MonoBehaviour {
     [Space(10)]
     public GameObject startGameButton;
 
+    [Header("Templates")]
+    public UserDeckButton userDeckTemplate;
+    public RectTransform userDeckContainer;
+
+    List<UserDeckButton> userDecks = new List<UserDeckButton>();
+
     private Player player;
+
+    private List<string> savedDecks = new List<string>();
 
 
     void Start () {
         player = GetComponentInParent<Player>();
+
+
+        savedDecks = LoadLibraryList();
+
+        LoadAllCustomDecks();
 	}
 
-	void Update () {
-		
-	}
+
 
     public void AssignDefaultDeck() {
         DeckAssignmentHelper(defaultGrimoire, defaultDomain, defaultSoulCrypt);
@@ -73,24 +87,29 @@ public class DeckSelector : MonoBehaviour {
         ShowStartGame();
     }
 
-    public void AssignCustom1Deck() {
-        LoadDeck();
+    public void AssignCustom1Deck(DeckData data) {
+        //LoadDeck();
 
         DeckAssignmentHelper(custom1Grimoire, custom1Domain, defaultSoulCrypt);
 
         player.SetUpDecks();
 
-        CardPlayerData playerData = null;
+        CardPlayerData playerData = data.GetGeneral();
 
-        for (int i = 0; i < customDeckData.Count; i++) {
-            if(customDeckData[i].primaryCardType == Constants.CardType.Player) {
-                playerData = (CardPlayerData)customDeckData[i];
-            }
+        List<CardData> decklist = data.GetCardData();
 
-            player.activeGrimoire.GetComponent<Deck>().cards.Add(customDeckData[i]);
+        StartCoroutine(FillCustomDeckLists(playerData, decklist));
+
+    }
+
+    private IEnumerator FillCustomDeckLists(CardPlayerData playerData, List<CardData> decklist) {
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < decklist.Count; i++) {
+            player.activeGrimoire.GetComponent<Deck>().cards.Add(decklist[i]);
         }
 
-        if(playerData != null) {
+        if (playerData != null) {
             for (int i = 0; i < playerData.domainPowers.Count; i++) {
                 player.activeDomain.GetComponent<Deck>().cards.Add(playerData.domainPowers[i]);
 
@@ -102,7 +121,6 @@ public class DeckSelector : MonoBehaviour {
     }
 
 
-
     private void ShowStartGame() {
         startGameButton.SetActive(true);
         gameObject.SetActive(false);
@@ -110,10 +128,21 @@ public class DeckSelector : MonoBehaviour {
 
 
     private void DeckAssignmentHelper(GameObject grimoire, GameObject domain, GameObject soulcrypt) {
+
+        
+
         for(int i = 0; i < player.deckInfo.Count; i++) {
+
+            //Debug.Log(player.deckInfo[i].deckType.ToString() + " is being assigned");
+
             switch (player.deckInfo[i].deckType) {
                 case Constants.DeckType.Grimoire:
+
+                    //Debug.Log("Assigning " + grimoire.gameObject.name + " as active grimoire");
+
                     player.deckInfo[i].deck = grimoire;
+
+                    //Debug.Log(player.activeGrimoire.gameObject.name);
                     break;
 
                 case Constants.DeckType.Domain:
@@ -128,6 +157,64 @@ public class DeckSelector : MonoBehaviour {
     }
 
 
+
+    private void LoadAllCustomDecks() {
+
+        for(int i = 0; i < savedDecks.Count; i++) {
+            DeckData loadedDeck = TryLoadDeck(savedDecks[i]);
+
+            if (loadedDeck == null) {
+
+                Debug.LogError("Could not find a saved deck with name: " + savedDecks[i]);
+                savedDecks.RemoveAt(i);
+                continue;
+            }
+
+            GameObject deck = Instantiate(userDeckTemplate.gameObject) as GameObject;
+            deck.transform.SetParent(userDeckContainer, false);
+            deck.SetActive(true);
+            UserDeckButton grimoire = deck.GetComponent<UserDeckButton>();
+
+            userDecks.Add(grimoire);
+            grimoire.Initialize(this, loadedDeck);
+        }
+    }
+
+
+
+    private DeckData TryLoadDeck(string deckName) {
+        DeckData deck = null;
+
+        if (File.Exists(Application.persistentDataPath + "/" + deckName + ".dat")) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/" + deckName + ".dat", FileMode.Open);
+
+            DeckData data = (DeckData)bf.Deserialize(file);
+            file.Close();
+
+            deck = data;
+        }
+
+        return deck;
+    }
+
+
+
+    private List<string> LoadLibraryList() {
+        List<string> savedDecks = new List<string>();
+
+        if (File.Exists(Application.persistentDataPath + "/library.dat")) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/library.dat", FileMode.Open);
+
+            LibraryData data = (LibraryData)bf.Deserialize(file);
+            file.Close();
+
+            savedDecks = data.savedDecks;
+        }
+
+        return savedDecks;
+    }
 
     public void LoadDeck() {
 
@@ -160,6 +247,7 @@ public class DeckSelector : MonoBehaviour {
 
         }
     }
+
 
 
 }

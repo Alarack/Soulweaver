@@ -59,7 +59,7 @@ public class DeckBuilder : MonoBehaviour {
                 continue;
 
             if (CardDB.cardDB.allCardData[i].primaryCardType == Constants.CardType.Player) {
-                if(CardDB.cardDB.allCardData[i] is CardPlayerData) {
+                if (CardDB.cardDB.allCardData[i] is CardPlayerData) {
                     //Debug.Log(CardDB.cardDB.allCardData[i].cardName + " is a general");
                     allGenerals.Add((CardPlayerData)CardDB.cardDB.allCardData[i]);
                 }
@@ -103,6 +103,7 @@ public class DeckBuilder : MonoBehaviour {
     }
 
 
+
     public void ShowSubPanel(DeckBuilderSubPanel panel, Constants.Faction faction = Constants.Faction.All) {
 
         SubPanel selectedPanel = null;
@@ -120,12 +121,10 @@ public class DeckBuilder : MonoBehaviour {
 
         switch (panel) {
             case DeckBuilderSubPanel.CardSearch:
-                if (CurrentDeck != null) {
-                    filters.faction = CurrentDeck.faction;
-                }
-                else {
-                    filters.faction = Constants.Faction.All;
-                }
+                //DestroyAllListings();
+                currentIndex = 0;
+
+                filters.faction = faction;
 
                 filteredCards = FilterCards();
                 PageRight();
@@ -266,7 +265,7 @@ public class DeckBuilder : MonoBehaviour {
 
 
     public void CreateOrAddCardListing(CardData card) {
-        if (cardCount >= 39)
+        if (cardCount >= 40)
             return;
 
         CardListing existingListing = null;
@@ -391,13 +390,10 @@ public class DeckBuilder : MonoBehaviour {
     #region SaveLoad
 
     public void SaveDeck() {
-
         if (String.IsNullOrEmpty(deckInProgress.deckName)) {
-
             Debug.LogError("You must name your Grimoire");
             return;
         }
-
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/" + deckInProgress.deckName + ".dat");
@@ -417,8 +413,13 @@ public class DeckBuilder : MonoBehaviour {
         bf.Serialize(file, data);
         file.Close();
 
-        savedDecks.Add(deckNameText.text);
-        SaveLibraryList();
+
+        if (!savedDecks.Contains(deckNameText.text)) {
+            savedDecks.Add(deckNameText.text);
+            SaveLibraryList();
+        }
+
+
     }
 
     private void SaveLibraryList() {
@@ -434,37 +435,37 @@ public class DeckBuilder : MonoBehaviour {
 
     }
 
-    public void LoadDeck() {
-        DestroyAllListings();
+    //public void LoadDeck() {
+    //    DestroyAllListings();
 
-        if (File.Exists(Application.persistentDataPath + "/deckData.dat")) {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/deckData.dat", FileMode.Open);
+    //    if (File.Exists(Application.persistentDataPath + "/deckData.dat")) {
+    //        BinaryFormatter bf = new BinaryFormatter();
+    //        FileStream file = File.Open(Application.persistentDataPath + "/deckData.dat", FileMode.Open);
 
-            DeckData data = (DeckData)bf.Deserialize(file);
-            file.Close();
+    //        DeckData data = (DeckData)bf.Deserialize(file);
+    //        file.Close();
 
-            List<int> listToLoad = new List<int>();
+    //        List<int> listToLoad = new List<int>();
 
-            for (int i = 0; i < data.savedDecklist.Count; i++) {
-                //Debug.Log(data.savedDeckInProgress[i] + " is an id being copied to LOAD");
-                listToLoad.Add(data.savedDecklist[i]);
-            }
+    //        for (int i = 0; i < data.savedDecklist.Count; i++) {
+    //            //Debug.Log(data.savedDeckInProgress[i] + " is an id being copied to LOAD");
+    //            listToLoad.Add(data.savedDecklist[i]);
+    //        }
 
-            List<CardData> deckList = new List<CardData>();
+    //        List<CardData> deckList = new List<CardData>();
 
-            for (int i = 0; i < listToLoad.Count; i++) {
+    //        for (int i = 0; i < listToLoad.Count; i++) {
 
-                CardIDs.CardID id = (CardIDs.CardID)listToLoad[i];
-                CardData cardData = Finder.FindCardDataFromDatabase(id);
+    //            CardIDs.CardID id = (CardIDs.CardID)listToLoad[i];
+    //            CardData cardData = Finder.FindCardDataFromDatabase(id);
 
-                deckList.Add(cardData);
-            }
+    //            deckList.Add(cardData);
+    //        }
 
-            //PopulateLoadedDeck(data.deckName, deckList);
+    //        //PopulateLoadedDeck(data.deckName, deckList);
 
-        }
-    }
+    //    }
+    //}
 
     private void LoadLibraryList() {
         if (File.Exists(Application.persistentDataPath + "/library.dat")) {
@@ -478,12 +479,6 @@ public class DeckBuilder : MonoBehaviour {
 
         }
 
-    }
-
-
-    public void OnClickDelete() {
-        //Debug.Log(CurrentDeck.deckName);
-        DeleteDeck(CurrentDeck.deckName);
     }
 
     private void DeleteDeck(string deckName) {
@@ -504,15 +499,12 @@ public class DeckBuilder : MonoBehaviour {
 
     }
 
-
-
-
     public void PopulateLoadedDeck(DeckData data) {
         DestroyAllListings();
 
 
-        deckInProgress = data;
-        deckNameText.text = deckInProgress.deckName;
+        //deckInProgress = data;
+        deckNameText.text = data.deckName;
 
         List<CardData> decklist = data.GetCardData();
 
@@ -521,14 +513,22 @@ public class DeckBuilder : MonoBehaviour {
         }
     }
 
-
-
-
-
-
-
     #endregion
 
+
+    #region GUICallbacks
+
+    public void OnClickDelete() {
+        DeleteDeck(CurrentDeck.deckName);
+    }
+
+    public void OnLibraryClick() {
+        DestroyAllListings();
+
+        ShowSubPanel(DeckBuilderSubPanel.GrimoireSelector);
+    }
+
+    #endregion
 
     [Serializable]
     public class DeckData {
@@ -555,7 +555,7 @@ public class DeckBuilder : MonoBehaviour {
             List<CardData> deckList = GetCardData();
 
             for (int i = 0; i < deckList.Count; i++) {
-                if(deckList[i] is CardPlayerData) {
+                if (deckList[i] is CardPlayerData) {
                     general = (CardPlayerData)deckList[i];
                     break;
                 }

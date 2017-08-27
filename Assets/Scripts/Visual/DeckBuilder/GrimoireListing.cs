@@ -42,7 +42,7 @@ public class GrimoireListing : MonoBehaviour {
             _deckBuilder.ShowSubPanel(DeckBuilder.DeckBuilderSubPanel.FactionSelector);
         }
         else {
-            _deckBuilder.ShowSubPanel(DeckBuilder.DeckBuilderSubPanel.CardSearch);
+            _deckBuilder.ShowSubPanel(DeckBuilder.DeckBuilderSubPanel.CardSearch, general.faction);
             _deckBuilder.PopulateLoadedDeck(_deckData);
         }
     }

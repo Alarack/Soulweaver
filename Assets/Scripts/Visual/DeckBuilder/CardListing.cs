@@ -32,7 +32,7 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
     }
 
     public bool AddCard() {
-        if (cardQuantity >= 3 || deckbuilder.cardCount >= 39)
+        if (cardQuantity >= 3 || deckbuilder.cardCount >= 40)
             return false;
         else {
             cardQuantity++;
@@ -48,6 +48,10 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
     }
 
     public void RemoveCard() {
+        if(card.primaryCardType == Constants.CardType.Player) {
+            return;
+        }
+
         cardQuantity--;
         deckbuilder.RemoveCardCount();
         deckbuilder.deckInProgress.savedDecklist.Remove((int)card.cardID);

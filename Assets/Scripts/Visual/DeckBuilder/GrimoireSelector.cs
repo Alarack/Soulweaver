@@ -70,8 +70,6 @@ public class GrimoireSelector : MonoBehaviour {
             deck = data;
         }
 
-
-
         return deck;
     }
 

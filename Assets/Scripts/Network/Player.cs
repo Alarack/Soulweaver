@@ -398,6 +398,9 @@ public class Player : Photon.MonoBehaviour {
     //}
 
     public void SetUpDecks() {
+
+        //Debug.Log("Setting up Decks");
+
         GameObject battleField = PhotonNetwork.Instantiate("Battlefield", transform.position, Quaternion.identity, 0) as GameObject;
         battleField.transform.SetParent(transform, false);
         battleField.GetComponent<Deck>().owner = this;
@@ -405,6 +408,9 @@ public class Player : Photon.MonoBehaviour {
         battlefield = battleField.GetComponent<Deck>();
 
         for (int i = 0; i < deckInfo.Count; i++) {
+
+            Debug.Log("Setting up " + deckInfo[i].deckType.ToString());
+
             GameObject activeDeck = PhotonNetwork.Instantiate(deckInfo[i].deck.name, transform.position, Quaternion.identity, 0) as GameObject;
             activeDeck.transform.SetParent(transform, false);
             activeDeck.GetComponent<Deck>().owner = this;
