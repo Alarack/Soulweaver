@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
-  m_Name: COI_DOM_Stonemeld
+  m_Name: COI_DOM_Lifeweave
   m_EditorClassIdentifier: 
-  cardID: 50040
-  cardName: Stonemeld
-  cardText: '(1)(E): Restore 3 health to your General.'
+  cardID: 50055
+  cardName: Lifeweave
+  cardText: 'Whenever you summon a soul with 1 Health, Restore 1 health to your General. '
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
@@ -23,20 +23,20 @@ MonoBehaviour:
   faction: 2
   primaryCardType: 5
   otherCardTypes: 
-  attunements: 0200000007000000
+  attunements: 07000000
   subTypes: 
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 09000000
+  - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 
-      owner: 0
+      types: 0400000002000000010000000a000000
+      owner: 2
       whosTurn: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -48,14 +48,21 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
       creatureStatus: 
       resources: 
       minStats: []
-      maxStats: []
+      maxStats:
+      - stat: 4
+        value: 1
+        nonStacking: 0
+        temporary: 1
+        source: {fileID: 0}
+        uniqueID: -1
+        spellDamage: 0
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
@@ -89,7 +96,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 0400000008000000
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -98,8 +105,8 @@ MonoBehaviour:
       notAdditionalType: 0
       subtype: 
       notSubtype: 0
-      keyword: 16000000
-      notKeyword: 1
+      keyword: 
+      notKeyword: 0
       specialAttributes: 
       notSpecialAttribute: 0
       attunement: 
@@ -145,7 +152,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 1
-    abilityName: Heal self
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -176,341 +183,6 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
-      oncePerTurn: 0
-      triggeredThisTurn: 0
-      neverTargetSelf: 0
-      suspendTrigger: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
-      abilityToRemove: 
-      abilityToRetrigger: 
-      statGainedOrLost: 0
-      statChanged: 0
-      thisCardAdjusts: 0
-      thisCardAdjusted: 0
-      thisCardAttacks: 0
-      thisCardDefends: 0
-      creatureCanAttack: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLessCards: 0
-      numberOfcardsInZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      requiredResourceType: 0
-      moreOrlessResource: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
-      resourceThatChanged: 0
-      resourceGainedOrLost: 0
-      abilityToGatherTargetsFrom: 
-    abilityVFX: 
-    movingVFX: 0
-    clearTargetsOnEffectComplete: 0
-    clearTriggeringTargetFromOtherAbility: 0
-    additionalRequirements: 02000000
-    additionalRequirementConstraints:
-      types: 
-      owner: 0
-      whosTurn: 0
-      primaryType: 
-      notPrimaryType: 0
-      additionalType: 
-      notAdditionalType: 0
-      subtype: 
-      notSubtype: 0
-      keyword: 
-      notKeyword: 0
-      specialAttributes: 
-      notSpecialAttribute: 0
-      attunement: 
-      notAttunement: 0
-      currentZone: 
-      notCurrentZone: 0
-      previousZone: 
-      notPreviousZone: 0
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-      oncePerTurn: 0
-      triggeredThisTurn: 0
-      neverTargetSelf: 0
-      suspendTrigger: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
-      abilityToRemove: 
-      abilityToRetrigger: 
-      statGainedOrLost: 0
-      statChanged: 0
-      thisCardAdjusts: 0
-      thisCardAdjusted: 0
-      thisCardAttacks: 0
-      thisCardDefends: 0
-      creatureCanAttack: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLessCards: 0
-      numberOfcardsInZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      requiredResourceType: 1
-      moreOrlessResource: 0
-      amountOfResourceRequried: 1
-      consumeResource: 1
-      resourceThatChanged: 0
-      resourceGainedOrLost: 0
-      abilityToGatherTargetsFrom: 
-    effectHolder:
-      zoneChanges: []
-      tokenSpanws: []
-      statAdjustments:
-      - effectType: 0
-        source: {fileID: 0}
-        valueSetmethod: 0
-        adjustments:
-        - stat: 4
-          value: 3
-          nonStacking: 0
-          temporary: 1
-          source: {fileID: 0}
-          uniqueID: -1
-          spellDamage: 0
-        deriveStatsFromWhom: 0
-        targetStat: 0
-        targetAbilityName: 
-        zoneToCount: 0
-        constraints:
-          types: 
-          owner: 0
-          whosTurn: 0
-          primaryType: 
-          notPrimaryType: 0
-          additionalType: 
-          notAdditionalType: 0
-          subtype: 
-          notSubtype: 0
-          keyword: 
-          notKeyword: 0
-          specialAttributes: 
-          notSpecialAttribute: 0
-          attunement: 
-          notAttunement: 0
-          currentZone: 
-          notCurrentZone: 0
-          previousZone: 
-          notPreviousZone: 0
-          creatureStatus: 
-          resources: 
-          minStats: []
-          maxStats: []
-          mostStat: 0
-          leastStat: 0
-          thisCardOnly: 0
-          oncePerTurn: 0
-          triggeredThisTurn: 0
-          neverTargetSelf: 0
-          suspendTrigger: 0
-          triggerbySpecificAbility: 0
-          triggerablePrimaryAbilityName: 
-          abilityToRemove: 
-          abilityToRetrigger: 
-          statGainedOrLost: 0
-          statChanged: 0
-          thisCardAdjusts: 0
-          thisCardAdjusted: 0
-          thisCardAttacks: 0
-          thisCardDefends: 0
-          creatureCanAttack: 0
-          zoneToCheckForNumberOfCards: 0
-          moreOrLessCards: 0
-          numberOfcardsInZone: 0
-          requireMultipleTriggers: 0
-          resetCountAtTurnEnd: 0
-          triggersRequired: 0
-          counter: 0
-          requiredResourceType: 0
-          moreOrlessResource: 0
-          amountOfResourceRequried: 0
-          consumeResource: 0
-          resourceThatChanged: 0
-          resourceGainedOrLost: 0
-          abilityToGatherTargetsFrom: 
-        targetResource: 0
-        sourceStat: 0
-        destinationStat: 0
-        invertValue: 0
-        setStatToValue: 0
-        maxValue: 0
-      generateResources: []
-      addOrRemoveKeywords: []
-      addOrRemoveSpecialAttribute: []
-      chooseOne: []
-      bestowAbility: []
-    manualTriggerAbilityNames: []
-    togglePresets: 1
-    toggleTriggerOptions: 1
-    toggleSourceOptions: 0
-    toggleEffectOptions: 0
-    toggleTargetOptions: 0
-    toggleAdditonalRequirementOptions: 0
-    processTriggerOnWhom: 0
-    logicTargetingMethod: 1
-    numberofTargets: 0
-    processEffectOnPrimaryEffectTargets: 0
-    targetAbilityName: 
-  - trigger: 0a000000
-    effectDuration: 0
-    triggerDuration: 0
-    triggerConstraints:
-      types: 
-      owner: 0
-      whosTurn: 0
-      primaryType: 
-      notPrimaryType: 0
-      additionalType: 
-      notAdditionalType: 0
-      subtype: 
-      notSubtype: 0
-      keyword: 
-      notKeyword: 0
-      specialAttributes: 
-      notSpecialAttribute: 0
-      attunement: 
-      notAttunement: 0
-      currentZone: 
-      notCurrentZone: 0
-      previousZone: 
-      notPreviousZone: 0
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-      oncePerTurn: 0
-      triggeredThisTurn: 0
-      neverTargetSelf: 0
-      suspendTrigger: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
-      abilityToRemove: 
-      abilityToRetrigger: 
-      statGainedOrLost: 0
-      statChanged: 0
-      thisCardAdjusts: 0
-      thisCardAdjusted: 0
-      thisCardAttacks: 0
-      thisCardDefends: 0
-      creatureCanAttack: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLessCards: 0
-      numberOfcardsInZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      requiredResourceType: 0
-      moreOrlessResource: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
-      resourceThatChanged: 0
-      resourceGainedOrLost: 0
-      abilityToGatherTargetsFrom: 
-    sourceConstraints:
-      types: 
-      owner: 0
-      whosTurn: 0
-      primaryType: 
-      notPrimaryType: 0
-      additionalType: 
-      notAdditionalType: 0
-      subtype: 
-      notSubtype: 0
-      keyword: 
-      notKeyword: 0
-      specialAttributes: 
-      notSpecialAttribute: 0
-      attunement: 
-      notAttunement: 0
-      currentZone: 
-      notCurrentZone: 0
-      previousZone: 
-      notPreviousZone: 0
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 0
-      oncePerTurn: 0
-      triggeredThisTurn: 0
-      neverTargetSelf: 0
-      suspendTrigger: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
-      abilityToRemove: 
-      abilityToRetrigger: 
-      statGainedOrLost: 0
-      statChanged: 0
-      thisCardAdjusts: 0
-      thisCardAdjusted: 0
-      thisCardAttacks: 0
-      thisCardDefends: 0
-      creatureCanAttack: 0
-      zoneToCheckForNumberOfCards: 0
-      moreOrLessCards: 0
-      numberOfcardsInZone: 0
-      requireMultipleTriggers: 0
-      resetCountAtTurnEnd: 0
-      triggersRequired: 0
-      counter: 0
-      requiredResourceType: 0
-      moreOrlessResource: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
-      resourceThatChanged: 0
-      resourceGainedOrLost: 0
-      abilityToGatherTargetsFrom: 
-    effect: 5
-    abilityName: Exhaust Self
-    source: {fileID: 0}
-    targets: []
-    triggeringCards: []
-    targetConstraints:
-      types: 
-      owner: 0
-      whosTurn: 0
-      primaryType: 
-      notPrimaryType: 0
-      additionalType: 
-      notAdditionalType: 0
-      subtype: 
-      notSubtype: 0
-      keyword: 
-      notKeyword: 0
-      specialAttributes: 
-      notSpecialAttribute: 0
-      attunement: 
-      notAttunement: 0
-      currentZone: 
-      notCurrentZone: 0
-      previousZone: 
-      notPreviousZone: 0
-      creatureStatus: 
-      resources: 
-      minStats: []
-      maxStats: []
-      mostStat: 0
-      leastStat: 0
-      thisCardOnly: 1
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -604,22 +276,95 @@ MonoBehaviour:
     effectHolder:
       zoneChanges: []
       tokenSpanws: []
-      statAdjustments: []
-      generateResources: []
-      addOrRemoveKeywords:
+      statAdjustments:
       - effectType: 0
         source: {fileID: 0}
-        keywords: 16000000
-        addOrRemove: 0
+        valueSetmethod: 0
+        adjustments:
+        - stat: 4
+          value: 1
+          nonStacking: 0
+          temporary: 1
+          source: {fileID: 0}
+          uniqueID: -1
+          spellDamage: 0
+        deriveStatsFromWhom: 0
+        targetStat: 0
+        targetAbilityName: 
+        zoneToCount: 0
+        constraints:
+          types: 
+          owner: 0
+          whosTurn: 0
+          primaryType: 
+          notPrimaryType: 0
+          additionalType: 
+          notAdditionalType: 0
+          subtype: 
+          notSubtype: 0
+          keyword: 
+          notKeyword: 0
+          specialAttributes: 
+          notSpecialAttribute: 0
+          attunement: 
+          notAttunement: 0
+          currentZone: 
+          notCurrentZone: 0
+          previousZone: 
+          notPreviousZone: 0
+          creatureStatus: 
+          resources: 
+          minStats: []
+          maxStats: []
+          mostStat: 0
+          leastStat: 0
+          thisCardOnly: 0
+          oncePerTurn: 0
+          triggeredThisTurn: 0
+          neverTargetSelf: 0
+          suspendTrigger: 0
+          triggerbySpecificAbility: 0
+          triggerablePrimaryAbilityName: 
+          abilityToRemove: 
+          abilityToRetrigger: 
+          statGainedOrLost: 0
+          statChanged: 0
+          thisCardAdjusts: 0
+          thisCardAdjusted: 0
+          thisCardAttacks: 0
+          thisCardDefends: 0
+          creatureCanAttack: 0
+          zoneToCheckForNumberOfCards: 0
+          moreOrLessCards: 0
+          numberOfcardsInZone: 0
+          requireMultipleTriggers: 0
+          resetCountAtTurnEnd: 0
+          triggersRequired: 0
+          counter: 0
+          requiredResourceType: 0
+          moreOrlessResource: 0
+          amountOfResourceRequried: 0
+          consumeResource: 0
+          resourceThatChanged: 0
+          resourceGainedOrLost: 0
+          abilityToGatherTargetsFrom: 
+        targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
+        invertValue: 0
+        setStatToValue: 0
+        maxValue: 0
+      generateResources: []
+      addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
-    toggleTriggerOptions: 0
-    toggleSourceOptions: 0
-    toggleEffectOptions: 0
-    toggleTargetOptions: 0
+    toggleTriggerOptions: 1
+    toggleSourceOptions: 1
+    toggleEffectOptions: 1
+    toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
@@ -627,4 +372,4 @@ MonoBehaviour:
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  domainIcon: {fileID: 21300056, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}
+  domainIcon: {fileID: 21300050, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

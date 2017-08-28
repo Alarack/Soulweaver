@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba6697fbc4c9ef41a3ff8bc39221e90, type: 3}
+  m_Name: COI_GEN_Roux
+  m_EditorClassIdentifier: 
+  cardID: 50051
+  cardName: Roux Chevalier
+  cardText: 
+  cardCost: 0
+  cardImage: {fileID: 21300000, guid: 045bc6027787f924e856cb0fac642e08, type: 3}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
+  movingVFX: 0
+  deathVFX: 
+  faction: 2
+  primaryCardType: 0
+  otherCardTypes: 
+  attunements: 0700000002000000
+  subTypes: 
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
+  specialAttributes: []
+  attack: 1
+  size: 3
+  health: 25
+  domainPowers:
+  - {fileID: 11400000, guid: 00d749ce0d82b8d4383b28cfccf86ed5, type: 2}
+  - {fileID: 11400000, guid: 821935e2a9ffd4c41886312a0f7126b7, type: 2}
+  - {fileID: 11400000, guid: 3d57ea2916fa9f54089d040cf347b3ba, type: 2}

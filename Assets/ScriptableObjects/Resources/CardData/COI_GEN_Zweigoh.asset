@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba6697fbc4c9ef41a3ff8bc39221e90, type: 3}
+  m_Name: COI_GEN_Zweigoh
+  m_EditorClassIdentifier: 
+  cardID: 50049
+  cardName: Zweigoh Dhorn
+  cardText: 
+  cardCost: 0
+  cardImage: {fileID: 21300000, guid: f541cb4e250f8c54582fb462b1a660e4, type: 3}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
+  movingVFX: 0
+  deathVFX: 
+  faction: 2
+  primaryCardType: 0
+  otherCardTypes: 
+  attunements: 0700000002000000
+  subTypes: 
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
+  specialAttributes: []
+  attack: 1
+  size: 3
+  health: 25
+  domainPowers:
+  - {fileID: 11400000, guid: a6435c766c2960f49a7014415acdf2f2, type: 2}
+  - {fileID: 11400000, guid: 1d210271c7c3d16439c7599117663621, type: 2}
+  - {fileID: 11400000, guid: 9c501b238d3763e4cb8052c2de334e17, type: 2}

@@ -9,34 +9,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
-  m_Name: SEV_DOM_CollectSpecimen
+  m_Name: COI_DOM_Regrowth
   m_EditorClassIdentifier: 
-  cardID: 20013
-  cardName: Collect Specimen
-  cardText: Whenever Dimitry kills a Soul, summon a 2/2/3 Tortured Victim
+  cardID: 50041
+  cardName: Regrowth
+  cardText: Your general has Regeneration 1.
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  faction: 0
+  faction: 2
   primaryCardType: 5
   otherCardTypes: 
-  attunements: 
+  attunements: 0200000007000000
   subTypes: 
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 0b000000
+  - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 020000000100000004000000
-      owner: 2
+      types: 0400000005000000
+      owner: 0
       whosTurn: 0
-      primaryType: 06000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 03000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -58,7 +58,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 0
+      thisCardOnly: 1
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0
-      statChanged: 4
+      statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
       thisCardAttacks: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 04000000
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -104,7 +104,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -144,13 +144,13 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 3
+    effect: 6
     abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0200000001000000
+      types: 040000000200000001000000
       owner: 2
       whosTurn: 0
       primaryType: 06000000
@@ -165,7 +165,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -268,33 +268,32 @@ MonoBehaviour:
       abilityToGatherTargetsFrom: 
     effectHolder:
       zoneChanges: []
-      tokenSpanws:
-      - effectType: 0
-        source: {fileID: 0}
-        spawnMethod: 0
-        spawnableTokenDataName: SEV_TKN_CapturedVictim
-        spawnTokenLocation: 5
-        spawnCardType: 1
-        numberOfSpawns: 1
-        spawnForOpponent: 0
-        tokenSeriesNames: []
+      tokenSpanws: []
       statAdjustments: []
       generateResources: []
       addOrRemoveKeywords: []
-      addOrRemoveSpecialAttribute: []
+      addOrRemoveSpecialAttribute:
+      - effectType: 0
+        source: {fileID: 0}
+        attributeAction: 0
+        specialAttributes:
+        - attributeType: 2
+          attributeValue: 1
+          uniqueID: -1
+        modificationValue: 0
       chooseOne: []
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
-    processTriggerOnWhom: 1
-    logicTargetingMethod: 0
+    processTriggerOnWhom: 0
+    logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  domainIcon: {fileID: 21300072, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}
+  domainIcon: {fileID: 21300060, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

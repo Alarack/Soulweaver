@@ -9,34 +9,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
-  m_Name: SEV_DOM_CollectSpecimen
+  m_Name: COI_DOM_LivingStone
   m_EditorClassIdentifier: 
-  cardID: 20013
-  cardName: Collect Specimen
-  cardText: Whenever Dimitry kills a Soul, summon a 2/2/3 Tortured Victim
+  cardID: 50052
+  cardName: Living Stone
+  cardText: 'Whenever a friendly character is healed, summon a Pebble. '
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  faction: 0
+  faction: 2
   primaryCardType: 5
   otherCardTypes: 
-  attunements: 
+  attunements: 0200000007000000
   subTypes: 
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 0b000000
+  - trigger: 08000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 020000000100000004000000
+      types: 0400000001000000
       owner: 2
       whosTurn: 0
-      primaryType: 06000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -150,10 +150,10 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0200000001000000
-      owner: 2
+      types: 
+      owner: 0
       whosTurn: 0
-      primaryType: 06000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
       - effectType: 0
         source: {fileID: 0}
         spawnMethod: 0
-        spawnableTokenDataName: SEV_TKN_CapturedVictim
+        spawnableTokenDataName: COI_TKN_Pebble
         spawnTokenLocation: 5
         spawnCardType: 1
         numberOfSpawns: 1
@@ -287,14 +287,14 @@ MonoBehaviour:
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleSourceOptions: 1
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
-    processTriggerOnWhom: 1
+    processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  domainIcon: {fileID: 21300072, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}
+  domainIcon: {fileID: 21300056, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

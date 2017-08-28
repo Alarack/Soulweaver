@@ -103,6 +103,10 @@ public class CardIDs {
         SEV_TNK_CapturedVictim = 20015,
         SEV_DOM_GluttonousFeasting = 20016,
         SEV_DOM_Wasting = 20017,
+        SEV_GEN_Valusei = 20018,
+        SEV_GEN_Dimitri = 20019,
+        SEV_GEN_InessaBlightmaw = 20020,
+
 
         //The Realm Keepers 30000
         RLM_DrillmanGorman = 30000,
@@ -204,7 +208,9 @@ public class CardIDs {
         RLM_Alarm = 30096,
         RLM_TemporalConstruct = 30097,
         RLM_OolakTheSpireOfLight = 30098,
-
+        RLM_GEN_Alexia = 30099,
+        RLM_GEN_DurianQin = 30100,
+        RLM_GEN_Helseth = 30101,
 
 
 
@@ -267,6 +273,9 @@ public class CardIDs {
         OTH_LivingHusk = 40057,
         OTH_TKN_Thoughtform = 40058,
         OTH_TKN_LivingHusk = 40059,
+        OTH_GEN_RethXoth = 40060,
+        OTH_GEN_Nitholash = 40061,
+        OTH_GEN_Yogthul = 40062,
 
 
 
@@ -320,13 +329,22 @@ public class CardIDs {
         COI_SeismicHammer = 50046,
         COI_SpiderPouch = 50047,
         COI_OvergrowthPendant = 50048,
-
-
-
+        COI_GEN_Zweigoh = 50049,
+        COI_GEN_Cybele = 50050,
+        COI_GEN_Roux = 50051,
+        COI_DOM_LivingStone = 50052,
+        COI_TKN_GnarledKnight = 50053,
+        COI_DOM_RouxsWarning = 50054,
+        COI_DOM_Lifeweave = 50055,
 
 
 
         //Blood of Nok 60000
+        BON_GEN_Levenbrand = 60000,
+        BON_GEN_Mezenir = 60001,
+        BON_GEN_Faust = 60002,
+
+
 
 
         //The Wardens 70000
@@ -387,6 +405,9 @@ public class CardIDs {
 		WAR_DOM_GraveyardShift = 79007,
 		WAR_DOM_SoulExchange = 79008,
 		WAR_DOM_Micromanage = 79009,
+        WAR_GEN_Urteil = 79010,
+        WAR_GEN_Argen = 79011,
+        WAR_GEN_Benif = 79012,
 
         //Neutral 80000
         NEU_SkeletalMinions = 80000,
