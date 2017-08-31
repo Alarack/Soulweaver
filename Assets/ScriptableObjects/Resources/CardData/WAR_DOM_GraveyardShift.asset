@@ -8,24 +8,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: __TestSubject2
+  m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
+  m_Name: WAR_DOM_GraveyardShift
   m_EditorClassIdentifier: 
-  cardID: 112
-  cardName: Test Subject 02
-  cardText: Just a dude
-  cardCost: 1
-  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
-  attackEffect: VFX_Primal_Slash
+  cardID: 79007
+  cardName: Graveyard Shift
+  cardText: Whenever a friendly soul dies, gain a Lost Soul
+  cardCost: 0
+  cardImage: {fileID: 0}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
   movingVFX: 0
   deathVFX: 
-  faction: 0
-  primaryCardType: 1
+  faction: 5
+  primaryCardType: 5
   otherCardTypes: 
-  attunements: 0b000000
-  subTypes: 05000000
-  keywords: 27000000
+  attunements: 
+  subTypes: 
+  keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -33,10 +33,10 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 0400000005000000
-      owner: 0
+      types: 04000000050000000100000002000000
+      owner: 2
       whosTurn: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -48,9 +48,9 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 04000000
       notCurrentZone: 0
-      previousZone: 03000000
+      previousZone: 05000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -58,7 +58,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -104,7 +104,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -144,16 +144,16 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 2
+    effect: 4
     abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 040000000100000002000000
-      owner: 2
+      types: 
+      owner: 0
       whosTurn: 0
-      primaryType: 02000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 04000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -267,13 +267,16 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effectHolder:
-      zoneChanges:
-      - effectType: 0
-        source: {fileID: 0}
-        targetLocation: 3
+      zoneChanges: []
       tokenSpanws: []
       statAdjustments: []
-      generateResources: []
+      generateResources:
+      - effectType: 0
+        source: {fileID: 0}
+        resourceType: 3
+        amount: 1
+        cap: 0
+        resourceName: Lost Souls
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
@@ -281,16 +284,14 @@ MonoBehaviour:
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 0
+    toggleSourceOptions: 1
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 1
-    numberofTargets: 1
+    logicTargetingMethod: 0
+    numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  attack: 3
-  size: 3
-  health: 3
+  domainIcon: {fileID: 21300022, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

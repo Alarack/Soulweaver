@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  faction: 0
   primaryCardType: 3
   otherCardTypes: 
   attunements: 
@@ -698,5 +699,8 @@ MonoBehaviour:
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
-  specialAttributes: []
+  specialAttributes:
+  - attributeType: 4
+    attributeValue: 1
+    uniqueID: -1
   supportValue: 3

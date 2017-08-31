@@ -18,12 +18,11 @@ public class Deck : Photon.MonoBehaviour {
     //public static Deck _battlefield;
     public static Deck _allCards;
     public static Deck _void;
+    public static Deck _removed;
     public static List<Deck> _allDecks = new List<Deck>();
 
 
     void Awake() {
-
-
 
         if (decktype == DeckType.AllCards) {
             _allCards = this;
@@ -31,6 +30,10 @@ public class Deck : Photon.MonoBehaviour {
 
         if (decktype == DeckType.Void) {
             _void = this;
+        }
+
+        if(decktype == DeckType.NotInGame) {
+            _removed = this;
         }
 
         RegisterDeck();

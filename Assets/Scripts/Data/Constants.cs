@@ -90,7 +90,10 @@ public class Constants {
         Dealer,
         Mobster,
         Alchemist,
-        Hydra
+        Hydra,
+        Engineer,
+        Starlifter,
+        Scientist
 
 
 

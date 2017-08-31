@@ -242,6 +242,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
             multiTargetAbiliies.Add(clone);
             newSpecialAbilities.Add(clone);
+            specialAbilities.Add(clone);
 
             clone.Initialize(this);
         }
@@ -253,6 +254,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
             userTargtedAbilities.Add(clone);
             newSpecialAbilities.Add(clone);
+            specialAbilities.Add(clone);
 
             clone.Initialize(this);
 
@@ -274,25 +276,25 @@ public class CardVisual : Photon.MonoBehaviour {
 
         //List<SpecialAbility> abilitiesToRemove = new List<SpecialAbility>();
 
-        for (int i = 0; i < newSpecialAbilities.Count; i++) {
+        for (int i = 0; i < specialAbilities.Count; i++) {
             //Debug.Log("Unreging " + newSpecialAbilities[i].abilityName);
-            UnregisterSpecialAbility(FindSpecialAbilityByName(newSpecialAbilities[i].abilityName));
+            UnregisterSpecialAbility(FindSpecialAbilityByName(specialAbilities[i].abilityName));
 
-            if (specialAbilities.Contains(newSpecialAbilities[i])) {
-                //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
-                specialAbilities.Remove(newSpecialAbilities[i]);
-            }
+            //if (specialAbilities.Contains(newSpecialAbilities[i])) {
+            //    //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
+            //    specialAbilities.Remove(newSpecialAbilities[i]);
+            //}
 
-            if (newSpecialAbilities[i] is LogicTargetedAbility) {
-                LogicTargetedAbility lta = newSpecialAbilities[i] as LogicTargetedAbility;
+            if (specialAbilities[i] is LogicTargetedAbility) {
+                LogicTargetedAbility lta = specialAbilities[i] as LogicTargetedAbility;
                 if (multiTargetAbiliies.Contains(lta)) {
                     //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
                     multiTargetAbiliies.Remove(lta);
                 }
             }
 
-            if (newSpecialAbilities[i] is EffectOnTarget) {
-                EffectOnTarget uta = newSpecialAbilities[i] as EffectOnTarget;
+            if (specialAbilities[i] is EffectOnTarget) {
+                EffectOnTarget uta = specialAbilities[i] as EffectOnTarget;
                 if (userTargtedAbilities.Contains(uta)) {
                     //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
                     userTargtedAbilities.Remove(uta);
@@ -301,9 +303,10 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         newSpecialAbilities.Clear();
+        specialAbilities.Clear();
 
         statAdjustments.Clear();
-
+        SetUpSpecialAbilities();
     }
 
 

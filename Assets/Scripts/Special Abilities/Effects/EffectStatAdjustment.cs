@@ -51,12 +51,7 @@ public class EffectStatAdjustment : Effect {
     public override void Initialize(CardVisual source, SpecialAbility parent) {
         base.Initialize(source, parent);
 
-        //if(source.photonView.isMine)
-
-
-        //source.StartCoroutine(InitializeAdjustments());
-
-            InitializeAdjustments();
+        InitializeAdjustments();
     }
 
 
@@ -101,7 +96,7 @@ public class EffectStatAdjustment : Effect {
     public void InitializeAdjustments() {
         for (int i = 0; i < adjustments.Count; i++) {
 
-            if(source.owner != null)
+            if (source.owner != null)
                 adjustments[i].uniqueID = IDFactory.GenerateAdjID(source.owner);
 
             adjustments[i].source = source;
@@ -119,6 +114,16 @@ public class EffectStatAdjustment : Effect {
 
         for (int i = 0; i < adjustments.Count; i++) {
             //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName);
+
+            if (adjustments[i].spellDamage) {
+                int spellDamage = Finder.FindTotalSpellDamage(Constants.OwnerConstraints.Mine);
+
+                adjustments[i].value += -spellDamage;
+
+                source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value + -spellDamage);
+            }
+
+
             target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source, !hasVFX, setStatToValue);
         }
     }
@@ -137,7 +142,7 @@ public class EffectStatAdjustment : Effect {
 
         ApplyStatAdjustment(target);
 
-        
+
 
     }
 
@@ -218,7 +223,7 @@ public class EffectStatAdjustment : Effect {
 
     //Set all my stat adjustment values to be based on the number ofcards in a zone.
     private void SetAdjustmentValuesByCardsInZone() {
-        for(int i = 0; i < adjustments.Count; i++) {
+        for (int i = 0; i < adjustments.Count; i++) {
             adjustments[i].value = SetValueBasedOnCardsInZone(invertValue);
             source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
         }

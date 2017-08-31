@@ -318,6 +318,9 @@ public class CardDataEditor : Editor {
         entry.triggerConstraints.currentZone.Add(DeckType.Battlefield);
         entry.triggerConstraints.previousZone.Add(DeckType.Hand);
         entry.triggerConstraints.thisCardOnly = true;
+
+        //entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        //entry.sourceConstraints.previousZone.Add(DeckType.Hand);
     }
 
     private void DrawFinalePreset(SpecialAbility entry) {
@@ -617,6 +620,33 @@ public class CardDataEditor : Editor {
 
         entry.effectHolder.generateResources.Add(genResource);
 
+
+    }
+
+    private void DrawLuminousEnginePreset(SpecialAbility entry) {
+        entry.abilityName = "Luminous Engine";
+
+        entry.trigger.Add(AbilityActivationTrigger.TurnStarts);
+        entry.triggerConstraints.types.Add(ConstraintType.WhosTurn);
+        entry.triggerConstraints.whosTurn = OwnerConstraints.Mine;
+
+        entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.sourceConstraints.currentZone.Add(DeckType.Battlefield);
+
+        entry.additionalRequirements.Add(Constants.AdditionalRequirement.RequireResource);
+        entry.additionalRequirementConstraints.requiredResourceType = GameResource.ResourceType.Hardlight;
+        entry.additionalRequirementConstraints.consumeResource = true;
+
+
+    }
+
+    private void DrawLightfusedPreset(SpecialAbility entry) {
+
+        DrawInspirePreset(entry);
+
+        entry.additionalRequirements.Add(Constants.AdditionalRequirement.RequireResource);
+        entry.additionalRequirementConstraints.requiredResourceType = GameResource.ResourceType.Hardlight;
+        entry.additionalRequirementConstraints.consumeResource = true;
 
     }
 
@@ -1042,8 +1072,12 @@ public class CardDataEditor : Editor {
             DrawPhalanxOtherEnterPreset(entry);
         }
 
-        if (GUILayout.Button("Lightforged")) {
-            DrawLightforgedPreset(entry);
+        if (GUILayout.Button("Lightfused")) {
+            DrawLightfusedPreset(entry);
+        }
+
+        if (GUILayout.Button("LuminousEngine")) {
+            DrawLuminousEnginePreset(entry);
         }
 
         EditorGUILayout.EndHorizontal();

@@ -174,6 +174,11 @@ public class CombatManager : Photon.MonoBehaviour {
             return;
         }
 
+        if(currentTarget.keywords.Contains(Keywords.Flight) && !attacker.keywords.Contains(Keywords.Flight) && !attacker.keywords.Contains(Keywords.Reach)){
+            Debug.Log("That target is flying");
+            return;
+        }
+
 
         //List<CardVisual> potentialInterceptors = Finder.FindAllCardsInZone(DeckType.Battlefield, Keywords.Interceptor, OwnerConstraints.Theirs);
 

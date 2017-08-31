@@ -9,23 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: __TestSubject2
+  m_Name: RLM_LiftingEngineer
   m_EditorClassIdentifier: 
-  cardID: 112
-  cardName: Test Subject 02
-  cardText: Just a dude
-  cardCost: 1
-  cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
+  cardID: 30043
+  cardName: Lifting Engineer
+  cardText: 'Inspire: Summon a Starlifter'
+  cardCost: 2
+  cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
-  faction: 0
+  faction: 4
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 0b000000
-  subTypes: 05000000
-  keywords: 27000000
+  attunements: 0f00000005000000
+  subTypes: 4b000000
+  keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -144,16 +144,16 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 2
+    effect: 3
     abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 040000000100000002000000
-      owner: 2
+      types: 
+      owner: 0
       whosTurn: 0
-      primaryType: 02000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 04000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -267,11 +267,17 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effectHolder:
-      zoneChanges:
+      zoneChanges: []
+      tokenSpanws:
       - effectType: 0
         source: {fileID: 0}
-        targetLocation: 3
-      tokenSpanws: []
+        spawnMethod: 0
+        spawnableTokenDataName: RLM_TKN_Starlifter
+        spawnTokenLocation: 5
+        spawnCardType: 1
+        numberOfSpawns: 1
+        spawnForOpponent: 0
+        tokenSeriesNames: []
       statAdjustments: []
       generateResources: []
       addOrRemoveKeywords: []
@@ -286,11 +292,11 @@ MonoBehaviour:
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 1
-    numberofTargets: 1
+    logicTargetingMethod: 0
+    numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  attack: 3
+  attack: 2
   size: 3
   health: 3

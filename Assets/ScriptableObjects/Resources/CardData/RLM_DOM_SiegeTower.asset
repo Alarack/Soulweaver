@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
+  m_Name: RLM_DOM_SiegeTower
+  m_EditorClassIdentifier: 
+  cardID: 30102
+  cardName: Siege Tower
+  cardText: Your spells that deal damage deal 1 extra damage.
+  cardCost: 0
+  cardImage: {fileID: 0}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
+  movingVFX: 0
+  deathVFX: 
+  faction: 4
+  primaryCardType: 5
+  otherCardTypes: 
+  attunements: 0f000000
+  subTypes: 
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
+  specialAttributes:
+  - attributeType: 4
+    attributeValue: 1
+    uniqueID: -1
+  domainIcon: {fileID: 21300146, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

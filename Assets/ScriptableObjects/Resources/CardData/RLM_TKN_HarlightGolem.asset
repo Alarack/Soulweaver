@@ -13,13 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30007
   cardName: Hardlight Golem
-  cardText: Vangaurd. Berserker. Destroy this card after it Attacks
+  cardText: Vangaurd. Berserker.
   cardCost: 0
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  faction: 4
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0f00000005000000

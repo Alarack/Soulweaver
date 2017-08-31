@@ -21,11 +21,12 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  faction: 0
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0f00000005000000
   subTypes: 2600000027000000
-  keywords: 08000000
+  keywords: 0800000027000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -33,7 +34,7 @@ MonoBehaviour:
     effectDuration: 2
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -89,7 +90,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 0400000006000000
+      types: 
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -342,7 +343,10 @@ MonoBehaviour:
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
         targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
@@ -352,7 +356,7 @@ MonoBehaviour:
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 1
+    toggleSourceOptions: 0
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
