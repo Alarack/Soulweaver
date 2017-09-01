@@ -1140,7 +1140,7 @@ public class CardVisual : Photon.MonoBehaviour {
             //Debug.Log("I'm the source of me!");
         }
 
-        Debug.Log(setStat + " is the status of SetStatToValue in RPC Apply Special Ability Adj");
+        //Debug.Log(setStat + " is the status of SetStatToValue in RPC Apply Special Ability Adj");
 
         photonView.RPC("ApplySpecialAbilityStatAdjustment", targets, sourceID, adjustment.uniqueID, waitForVFX, setStat);
     }

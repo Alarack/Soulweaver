@@ -9,27 +9,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: __TestSubject1
+  m_Name: RLM_VoidStrider
   m_EditorClassIdentifier: 
-  cardID: 111
-  cardName: Test Subject 01
-  cardText: Draw all Souls from your soulcrpyt.
-  cardCost: 1
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
-  attackEffect: VFX_Ball_Lightning
-  movingVFX: 1
+  cardID: 30080
+  cardName: Void Strider
+  cardText: First Strike, Invisible
+  cardCost: 3
+  cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  cardImagePos: {x: 0, y: 36.7}
+  attackEffect: VFX_Primal_Slash
+  movingVFX: 0
   deathVFX: 
-  faction: 0
+  faction: 4
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 0b000000
-  subTypes: 0f000000
-  keywords: 27000000
+  attunements: 0f000000
+  subTypes: 42000000
+  keywords: 0c0000000a000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes: []
   attack: 3
-  size: 2
-  health: 2
+  size: 3
+  health: 1

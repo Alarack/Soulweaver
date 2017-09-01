@@ -9,23 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: RLM_OrthaneTheMountainFortress
+  m_Name: RLM_SignalTower
   m_EditorClassIdentifier: 
-  cardID: 30031
-  cardName: Orthane the Mountain Fortress
-  cardText: Protection 2, Reach, Tireless, All Structures gain +0/+0/+5. Final [>]
-    Generate 2 Hardlight
-  cardCost: 10
+  cardID: 30048
+  cardName: Signal Tower
+  cardText: Whenever you cast a spell, draw a card.
+  cardCost: 4
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  faction: 4
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 0f00000005000000
-  subTypes: 1d00000021000000
-  keywords: 0800000022000000
+  attunements: 0f000000
+  subTypes: 2100000008000000
+  keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -33,14 +33,14 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 020000000600000001000000
+      types: 010000000400000002000000
       owner: 2
       whosTurn: 0
-      primaryType: 01000000
+      primaryType: 02000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
-      subtype: 21000000
+      subtype: 
       notSubtype: 0
       keyword: 
       notKeyword: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -71,6 +71,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -87,7 +89,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -102,7 +104,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -125,6 +127,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -140,14 +144,14 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 0
-    abilityName: Fortification
+    effect: 2
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 
-      owner: 0
+      types: 0400000001000000
+      owner: 2
       whosTurn: 0
       primaryType: 
       notPrimaryType: 0
@@ -161,7 +165,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 01000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -184,6 +188,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -243,6 +249,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -259,7 +267,10 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effectHolder:
-      zoneChanges: []
+      zoneChanges:
+      - effectType: 0
+        source: {fileID: 0}
+        targetLocation: 3
       tokenSpanws: []
       statAdjustments: []
       generateResources: []
@@ -267,21 +278,19 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 1
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 0
-    numberofTargets: 0
+    logicTargetingMethod: 2
+    numberofTargets: 1
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
-  specialAttributes:
-  - attributeType: 1
-    attributeValue: 2
-    uniqueID: -1
-  attack: 5
-  size: 10
-  health: 15
+  specialAttributes: []
+  attack: 0
+  size: 6
+  health: 6

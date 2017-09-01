@@ -13,8 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30024
   cardName: Kaima, Warshaper
-  cardText: Reduce the cost of your Golems and Structures by 1
-  cardCost: 2
+  cardText: 'Luminous Engine 3: Summon a Hardlight Golem. Friendly Golems have +1
+    Attack.'
+  cardCost: 4
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
@@ -890,6 +891,6 @@ MonoBehaviour:
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  attack: 2
+  attack: 3
   size: 3
   health: 3

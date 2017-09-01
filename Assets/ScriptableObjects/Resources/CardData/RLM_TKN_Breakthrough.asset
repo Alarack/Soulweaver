@@ -145,7 +145,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 3
-    abilityName: 
+    abilityName: Spawn starlifter
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -284,7 +284,8 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
-    manualTriggerAbilityNames: []
+    manualTriggerAbilityNames:
+    - draw cards
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
@@ -296,7 +297,7 @@ MonoBehaviour:
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
-  - trigger: 0a000000
+  - trigger: 
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
@@ -412,7 +413,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 2
-    abilityName: 
+    abilityName: draw cards
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -591,8 +592,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
+      triggerbySpecificAbility: 1
+      triggerablePrimaryAbilityName: Spawn starlifter
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0

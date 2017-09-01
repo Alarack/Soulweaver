@@ -284,7 +284,7 @@ MonoBehaviour:
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
     toggleEffectOptions: 0
-    toggleTargetOptions: 1
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 2

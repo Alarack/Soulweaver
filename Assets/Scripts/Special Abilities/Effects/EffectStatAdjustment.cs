@@ -118,9 +118,11 @@ public class EffectStatAdjustment : Effect {
             if (adjustments[i].spellDamage) {
                 int spellDamage = Finder.FindTotalSpellDamage(Constants.OwnerConstraints.Mine);
 
+                //Debug.Log(spellDamage + " is the amount of spelldamage reported");
+
                 adjustments[i].value += -spellDamage;
 
-                source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value + -spellDamage);
+                source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
             }
 
 
