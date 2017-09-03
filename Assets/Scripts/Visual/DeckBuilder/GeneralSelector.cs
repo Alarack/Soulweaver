@@ -41,7 +41,7 @@ public class GeneralSelector : MonoBehaviour {
             listing.transform.SetParent(listingsContainer, false);
             listing.SetActive(true);
             GeneralListing general = listing.GetComponent<GeneralListing>();
-
+            generalListings.Add(general);
             general.Initialize(_deckBuilder, generals[i]);
         }
 

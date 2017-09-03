@@ -139,8 +139,10 @@ public class EffectStatAdjustment : Effect {
         StatAdjustment first = new StatAdjustment(sourceStat, stat2, false, true, source);
         StatAdjustment second = new StatAdjustment(destinationStat, stat1, false, true, source);
 
-        adjustments.Add(first);
-        adjustments.Add(second);
+        //adjustments.Add(first);
+        //adjustments.Add(second);
+        source.RPCCreateStatAdjustment(PhotonTargets.All, first, parentAbility.abilityName);
+        source.RPCCreateStatAdjustment(PhotonTargets.All, second, parentAbility.abilityName);
 
         ApplyStatAdjustment(target);
 

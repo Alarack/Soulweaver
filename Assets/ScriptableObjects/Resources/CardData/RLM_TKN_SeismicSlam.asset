@@ -9,30 +9,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: COI_CareeningBoulder
+  m_Name: RLM_TKN_SeismicSlam
   m_EditorClassIdentifier: 
-  cardID: 50012
-  cardName: Careening Boulder
-  cardText: Deal 3 damage and Exhaust the target of this spell.
-  cardCost: 3
+  cardID: 30104
+  cardName: Seismic Slam
+  cardText: Deal 2 damage and summon a 2/3/2 Earth Elemental
+  cardCost: 4
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  faction: 2
+  faction: 4
   primaryCardType: 2
   otherCardTypes: 
-  attunements: 02000000
+  attunements: 03000000
   subTypes: 
-  keywords: 
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 0400000005000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -49,7 +49,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 03000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -144,12 +144,12 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 1
-    abilityName: Deal Damage
+    abilityName: Stone
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0200000004000000
+      types: 0400000002000000
       owner: 0
       whosTurn: 0
       primaryType: 0100000006000000
@@ -274,7 +274,7 @@ MonoBehaviour:
         valueSetmethod: 0
         adjustments:
         - stat: 4
-          value: -3
+          value: -2
           nonStacking: 0
           temporary: 1
           source: {fileID: 0}
@@ -352,16 +352,16 @@ MonoBehaviour:
       chooseOne: []
       bestowAbility: []
     manualTriggerAbilityNames:
-    - Send to Crypt
+    - Summon
     togglePresets: 1
-    toggleTriggerOptions: 0
+    toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
   multiTargetAbilities:
-  - trigger: 0a000000
+  - trigger: 
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
@@ -395,8 +395,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
-      triggerbySpecificAbility: 1
-      triggerablePrimaryAbilityName: Deal Damage
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0
@@ -476,8 +476,8 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 5
-    abilityName: Exhaust Target
+    effect: 3
+    abilityName: Summon
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -600,14 +600,19 @@ MonoBehaviour:
       abilityToGatherTargetsFrom: 
     effectHolder:
       zoneChanges: []
-      tokenSpanws: []
-      statAdjustments: []
-      generateResources: []
-      addOrRemoveKeywords:
+      tokenSpanws:
       - effectType: 0
         source: {fileID: 0}
-        keywords: 16000000
-        addOrRemove: 0
+        spawnMethod: 0
+        spawnableTokenDataName: RLM_TKN_LesserEarthMelon
+        spawnTokenLocation: 5
+        spawnCardType: 1
+        numberOfSpawns: 1
+        spawnForOpponent: 0
+        tokenSeriesNames: []
+      statAdjustments: []
+      generateResources: []
+      addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
@@ -615,15 +620,15 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 4
+    logicTargetingMethod: 0
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
-    targetAbilityName: Deal Damage
-  - trigger: 
+    targetAbilityName: 
+  - trigger: 0a000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
@@ -658,7 +663,7 @@ MonoBehaviour:
       neverTargetSelf: 0
       suspendTrigger: 0
       triggerbySpecificAbility: 1
-      triggerablePrimaryAbilityName: Exhaust Target
+      triggerablePrimaryAbilityName: Stone
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0
@@ -801,7 +806,7 @@ MonoBehaviour:
       abilityToGatherTargetsFrom: 
     abilityVFX: 
     movingVFX: 0
-    clearTargetsOnEffectComplete: 1
+    clearTargetsOnEffectComplete: 0
     clearTriggeringTargetFromOtherAbility: 0
     additionalRequirements: 
     additionalRequirementConstraints:

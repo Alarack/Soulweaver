@@ -890,6 +890,7 @@ MonoBehaviour:
   lerpSmoothing: 10
   active: 0
   beginMovement: 0
+  impactParticle: {fileID: 0}
   target: {fileID: 0}
   optionalText: {fileID: 114903534907359116}
   animMain: {fileID: 95606870996624962}
@@ -1213,11 +1214,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 114856733758317724}
+  incomingEffectLocation: {fileID: 224775926934418870}
   attack: {fileID: 114248757318455336}
   size: {fileID: 114358862556072744}
   health: {fileID: 114771451426901998}
   battleTokenGlow: {fileID: 1004944210037982}
-  incomingEffectLocation: {fileID: 224775926934418870}
 --- !u!114 &114264396139610792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1267,6 +1268,7 @@ MonoBehaviour:
   cardFront: {fileID: 1696130777971320}
   cardBack: {fileID: 1812900754405404}
   attackEffect: 
+  deathEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -1286,14 +1288,18 @@ MonoBehaviour:
   cardCollider: {fileID: 65124979451756100}
   statAdjustments: []
   essenceCost: 0
-  isToken: 0
+  isMulligand: 0
+  isBeingChosen: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
   subTypes: 
+  faction: 0
   keywords: 
+  specialAttributes: []
   userTargtedAbilities: []
   multiTargetAbiliies: []
+  domainTile: {fileID: 0}
   cardAttackText: {fileID: 114573520174807894}
   cardSizeText: {fileID: 114774396572043598}
   cardHealthText: {fileID: 114234402383070808}
@@ -1303,14 +1309,17 @@ MonoBehaviour:
     rgba: 4283256141
   interceptingColor:
     serializedVersion: 2
-    rgba: 0
+    rgba: 4292869888
+  interceptPos: {x: 0, y: 2, z: 0}
   battleFrame: {fileID: 114703790359613432}
   hasAttacked: 0
   attack: 0
   size: 0
   health: 0
+  maxHealth: 0
   damageVFX: VFX_Damage_Taken_Text
   damageToken: {fileID: 114071920390238380}
+  _creatureData: {fileID: 0}
 --- !u!114 &114358862556072744
 MonoBehaviour:
   m_ObjectHideFlags: 1

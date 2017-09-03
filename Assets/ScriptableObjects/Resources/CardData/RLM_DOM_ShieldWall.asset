@@ -8,26 +8,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: RLM_TKN_SummonEarth
+  m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
+  m_Name: RLM_DOM_ShieldWall
   m_EditorClassIdentifier: 
-  cardID: 30005
-  cardName: Stone Golem
-  cardText: Summon a 2/3/2 Stone Golem
-  cardCost: 2
+  cardID: 30110
+  cardName: Shield Wall
+  cardText: Your General can Intercept.
+  cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  faction: 0
-  primaryCardType: 2
+  faction: 4
+  primaryCardType: 5
   otherCardTypes: 
-  attunements: 02000000
+  attunements: 0f000000
   subTypes: 
-  keywords: 27000000
+  keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
+  userTargtedAbilities: []
+  multiTargetAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
@@ -49,7 +50,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 03000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -143,16 +144,16 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 1
-    abilityName: Blast
+    effect: 5
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0200000004000000
-      owner: 0
+      types: 040000000200000001000000
+      owner: 2
       whosTurn: 0
-      primaryType: 0100000006000000
+      primaryType: 06000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -204,8 +205,8 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    abilityVFX: VFX_Ball_Lightning
-    movingVFX: 1
+    abilityVFX: 
+    movingVFX: 0
     clearTargetsOnEffectComplete: 0
     clearTriggeringTargetFromOtherAbility: 0
     additionalRequirements: 
@@ -270,7 +271,11 @@ MonoBehaviour:
       tokenSpanws: []
       statAdjustments: []
       generateResources: []
-      addOrRemoveKeywords: []
+      addOrRemoveKeywords:
+      - effectType: 0
+        source: {fileID: 0}
+        keywords: 2a000000
+        addOrRemove: 0
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
@@ -282,5 +287,9 @@ MonoBehaviour:
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-  multiTargetAbilities: []
+    logicTargetingMethod: 1
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   specialAttributes: []
+  domainIcon: {fileID: 21300156, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

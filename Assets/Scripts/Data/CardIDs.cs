@@ -212,7 +212,20 @@ public class CardIDs {
         RLM_GEN_DurianQin = 30100,
         RLM_GEN_Helseth = 30101,
         RLM_DOM_SiegeTower = 30102,
-
+        RLM_TKN_IgnitionBlast = 30103,
+        RLM_TKN_SeismicSlam = 30104,
+        RLM_TKN_Comet = 30105,
+        RLM_TKN_GaleBurst =30106,
+        RLM_TKN_LesserEarthMelon = 30107,
+        RLM_DOM_Fortified = 30108,
+        RLM_DOM_Parapet = 30109,
+        RLM_DOM_ShieldWall = 30110,
+        RLM_DOM_InTheFray = 30111,
+        RLM_DOM_VoidGlimpse = 30112,
+        RLM_DOM_Frenzy = 30113,
+        RLM_TKN_AdrenalineRush = 30114,
+        RLM_TKN_Voidspawn = 30115,
+        RLM_TKN_ShieldSpire = 30116,
 
 
 

@@ -1614,11 +1614,6 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114921991416364142, guid: 6eae34f2f1fd51b4d9a8c5c14bda43a5,
-        type: 2}
-      propertyPath: synchronization
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6eae34f2f1fd51b4d9a8c5c14bda43a5, type: 2}
   m_IsPrefabParent: 0

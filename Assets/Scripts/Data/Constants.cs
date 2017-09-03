@@ -165,6 +165,7 @@ public class Constants {
         Token,
         Lightforged,
         Enrage,
+        GeneralIntercept
 
     }
 

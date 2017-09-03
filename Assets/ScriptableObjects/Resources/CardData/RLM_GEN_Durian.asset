@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba6697fbc4c9ef41a3ff8bc39221e90, type: 3}
+  m_Name: RLM_GEN_Durian
+  m_EditorClassIdentifier: 
+  cardID: 30100
+  cardName: Durian Qin, The Unbroken Pillar
+  cardText: 
+  cardCost: 0
+  cardImage: {fileID: 21300000, guid: f541cb4e250f8c54582fb462b1a660e4, type: 3}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
+  movingVFX: 0
+  deathVFX: 
+  faction: 4
+  primaryCardType: 6
+  otherCardTypes: 
+  attunements: 
+  subTypes: 
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
+  specialAttributes: []
+  attack: 1
+  size: 3
+  health: 25
+  domainPowers:
+  - {fileID: 11400000, guid: f73c942db8bb8bf4c80198c96ce02b48, type: 2}
+  - {fileID: 11400000, guid: 67a8aff45990b744f9039b0c9f413b8d, type: 2}
+  - {fileID: 11400000, guid: 394685d5568152c46b56808cad1cfbdb, type: 2}

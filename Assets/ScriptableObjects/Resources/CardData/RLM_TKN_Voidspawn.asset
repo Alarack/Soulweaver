@@ -9,30 +9,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: NEU_WallOfStone
+  m_Name: RLM_TKN_Voidspawn
   m_EditorClassIdentifier: 
-  cardID: 80004
-  cardName: Wall of Stone
-  cardText: Defender, Protection 1
-  cardCost: 2
-  cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
+  cardID: 30115
+  cardName: Voidspawn
+  cardText: 
+  cardCost: 1
+  cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
-  faction: 0
+  faction: 4
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 02000000
-  subTypes: 08000000
-  keywords: 0e000000
+  attunements: 100000000b000000
+  subTypes: 25000000
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
-  specialAttributes:
-  - attributeType: 1
-    attributeValue: 1
-    uniqueID: -1
-  attack: 0
-  size: 7
-  health: 7
+  specialAttributes: []
+  attack: 1
+  size: 2
+  health: 1

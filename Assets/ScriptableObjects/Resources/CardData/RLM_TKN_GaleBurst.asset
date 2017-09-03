@@ -9,23 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: COI_CareeningBoulder
+  m_Name: RLM_TKN_GaleBurst
   m_EditorClassIdentifier: 
-  cardID: 50012
-  cardName: Careening Boulder
-  cardText: Deal 3 damage and Exhaust the target of this spell.
-  cardCost: 3
+  cardID: 30106
+  cardName: Gale Blast
+  cardText: Deal 1 damage to a Soul and Exhaust it.
+  cardCost: 2
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  faction: 2
+  faction: 4
   primaryCardType: 2
   otherCardTypes: 
-  attunements: 02000000
+  attunements: 01000000
   subTypes: 
-  keywords: 
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities:
   - trigger: 01000000
@@ -274,7 +274,7 @@ MonoBehaviour:
         valueSetmethod: 0
         adjustments:
         - stat: 4
-          value: -3
+          value: -1
           nonStacking: 0
           temporary: 1
           source: {fileID: 0}
@@ -357,7 +357,7 @@ MonoBehaviour:
     toggleTriggerOptions: 0
     toggleSourceOptions: 0
     toggleEffectOptions: 0
-    toggleTargetOptions: 1
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
   multiTargetAbilities:
@@ -616,7 +616,7 @@ MonoBehaviour:
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
     toggleEffectOptions: 0
-    toggleTargetOptions: 1
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 4

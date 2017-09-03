@@ -107,4 +107,5 @@ MonoBehaviour:
   - ApplySpecialAttribute
   - RemoveSpecialAttribute
   - SetCardPosition
+  - CreateStatAdjustment
   DisableAutoOpenWizard: 1

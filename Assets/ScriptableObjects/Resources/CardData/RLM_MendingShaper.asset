@@ -27,8 +27,7 @@ MonoBehaviour:
   subTypes: 29000000
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities: []
-  multiTargetAbilities:
+  userTargtedAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
@@ -150,7 +149,7 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 04000000020000000600000001000000
+      types: 04000000020000000100000006000000
       owner: 2
       whosTurn: 0
       primaryType: 01000000
@@ -354,16 +353,13 @@ MonoBehaviour:
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
-    toggleTriggerOptions: 1
+    toggleTriggerOptions: 0
     toggleSourceOptions: 0
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 1
-    numberofTargets: 0
-    processEffectOnPrimaryEffectTargets: 0
-    targetAbilityName: 
+  multiTargetAbilities: []
   specialAttributes: []
   attack: 2
   size: 3

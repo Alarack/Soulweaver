@@ -656,7 +656,9 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         //Intercepting
-        if (Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat && primaryCardType == Constants.CardType.Soul && currentDeck.decktype == Constants.DeckType.Battlefield) {
+        if (Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat 
+            && (primaryCardType == Constants.CardType.Soul || (primaryCardType == Constants.CardType.Player && keywords.Contains(Constants.Keywords.GeneralIntercept)) 
+            && currentDeck.decktype == Constants.DeckType.Battlefield)) {
 
             if (!CheckForInterceptionPrevention())
                 return;
@@ -1609,6 +1611,39 @@ public class CardVisual : Photon.MonoBehaviour {
     public void SetCardPosition(float x, float y, float z) {
         transform.position = new Vector3(x, y, z);
         RPCSetCardAciveState(PhotonTargets.All, true);
+    }
+
+
+    public void RPCCreateStatAdjustment(PhotonTargets targets, SpecialAbility.StatAdjustment adjustment, string sourceAbilityName) {
+
+        Constants.CardStats stat = adjustment.stat;
+        int value = adjustment.value;
+        bool nonStack = adjustment.nonStacking;
+        bool temp = adjustment.temporary;
+        int cardID = adjustment.source.photonView.viewID;
+
+
+        photonView.RPC("CreateStatAdjustment", targets, stat, value, nonStack, temp, cardID, sourceAbilityName);
+    }
+
+
+    [PunRPC]
+    public void CreateStatAdjustment(int statEnum, int value, bool nonStack, bool temp, int cardID, string sourceAbilityName) {
+        Constants.CardStats stat = (Constants.CardStats)statEnum;
+        int statValue = value;
+        bool statNonStack = nonStack;
+        bool statTemp = temp;
+        CardVisual source = Finder.FindCardByID(cardID);
+        SpecialAbility ability = Finder.FindSpecialAbilityOnCardByName(source, sourceAbilityName);
+
+        SpecialAbility.StatAdjustment newAdj = new SpecialAbility.StatAdjustment(stat, statValue, statNonStack, statTemp, source);
+
+        newAdj.uniqueID = IDFactory.GenerateAdjID(source.owner);
+
+        ability.effectHolder.statAdjustments[0].adjustments.Add(newAdj);
+
+
+
     }
 
 

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba6697fbc4c9ef41a3ff8bc39221e90, type: 3}
+  m_Name: RLM_GEN_Helseth
+  m_EditorClassIdentifier: 
+  cardID: 30101
+  cardName: Helseth, The Voidspire
+  cardText: 
+  cardCost: 0
+  cardImage: {fileID: 21300000, guid: 816a14a4b6f3b874db785540ea00dad9, type: 3}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
+  movingVFX: 0
+  deathVFX: 
+  faction: 4
+  primaryCardType: 6
+  otherCardTypes: 
+  attunements: 
+  subTypes: 
+  keywords: 
+  specialAbilityTypes: 
+  userTargtedAbilities: []
+  multiTargetAbilities: []
+  specialAttributes: []
+  attack: 1
+  size: 3
+  health: 25
+  domainPowers:
+  - {fileID: 11400000, guid: bd95f7a7a3379d84cb0318a3be45062f, type: 2}
+  - {fileID: 11400000, guid: f9eab862a728e3c40b6730460133bd55, type: 2}
+  - {fileID: 11400000, guid: 8bcd39033122f1843adbb56e3050c4f0, type: 2}
