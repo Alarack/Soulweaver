@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30032
   cardName: Hardlight Barrier
-  cardText: Defender. Ar the end of your turn, gain +1 Health
+  cardText: Defender, Protection 1. At the end of your turn, gain +1 Health
   cardCost: 2
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}

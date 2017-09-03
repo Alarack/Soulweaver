@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  faction: 5
   primaryCardType: 2
   otherCardTypes: 
   attunements: 
