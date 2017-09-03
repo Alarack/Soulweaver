@@ -1236,7 +1236,7 @@ public class CardVisual : Photon.MonoBehaviour {
         for (int i = 0; i < allAdjustments.Count; i++) {
             if (allAdjustments[i].uniqueID == adjID) {
                 if (!allAdjustments[i].temporary) {
-                    return;
+                    continue;
                 }
 
                 //Debug.Log(source.gameObject.name + " is SUCCESSFULLY removeing stat adjustments");

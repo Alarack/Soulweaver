@@ -354,8 +354,8 @@ MonoBehaviour:
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 0
-    toggleEffectOptions: 1
+    toggleSourceOptions: 1
+    toggleEffectOptions: 0
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
@@ -949,7 +949,7 @@ MonoBehaviour:
     toggleTriggerOptions: 0
     toggleSourceOptions: 0
     toggleEffectOptions: 0
-    toggleTargetOptions: 1
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
