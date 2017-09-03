@@ -24,7 +24,7 @@ MonoBehaviour:
   primaryCardType: 1
   otherCardTypes: 
   attunements: 02000000
-  subTypes: 08000000
+  subTypes: 0800000021000000
   keywords: 0e000000
   specialAbilityTypes: 
   userTargtedAbilities: []

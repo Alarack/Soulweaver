@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 76006
   cardName: Soul-Light Lantern
-  cardText: 'Threshold (5): Friendly Souls have +1 Health.'
+  cardText: 'Threshold (5): Friendly Souls have +2 Health.'
   cardCost: 2
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}

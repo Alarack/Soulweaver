@@ -8,28 +8,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: OTH_TKN_LivingHusk
+  m_Script: {fileID: 11500000, guid: 9ba6697fbc4c9ef41a3ff8bc39221e90, type: 3}
+  m_Name: OTH_GEN_Yogthul
   m_EditorClassIdentifier: 
-  cardID: 40059
-  cardName: Living Husk
+  cardID: 40062
+  cardName: "Yogthul, Comprehension\u2019s End"
   cardText: 
-  cardCost: 3
+  cardCost: 0
   cardImage: {fileID: 21300000, guid: e7f230209e17d204489d5d1684d86ebe, type: 3}
-  cardImagePos: {x: 0, y: 16.8}
-  attackEffect: VFX_Primal_Slash
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
   movingVFX: 0
   deathVFX: 
   faction: 6
-  primaryCardType: 1
+  primaryCardType: 6
   otherCardTypes: 
-  attunements: 0b000000
+  attunements: 
   subTypes: 
-  keywords: 27000000
+  keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities: []
   specialAttributes: []
-  attack: 5
+  attack: 1
   size: 3
-  health: 5
+  health: 25
+  domainPowers:
+  - {fileID: 11400000, guid: 99f8f7b6b5560554da218428a75594f4, type: 2}
+  - {fileID: 11400000, guid: 79bf77e158e783e449c2225df2b8e2ef, type: 2}
+  - {fileID: 11400000, guid: b83a962846bea93459a0223538ed676e, type: 2}

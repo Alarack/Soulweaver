@@ -21,6 +21,7 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  faction: 6
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0b000000
@@ -278,6 +279,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
@@ -544,6 +546,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 0
     toggleSourceOptions: 0
@@ -805,6 +808,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0

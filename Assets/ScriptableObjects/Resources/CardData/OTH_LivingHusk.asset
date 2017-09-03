@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  faction: 6
   primaryCardType: 2
   otherCardTypes: 
   attunements: 0b00000010000000
@@ -341,7 +342,10 @@ MonoBehaviour:
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
         targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
