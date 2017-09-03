@@ -82,6 +82,8 @@ public class CardIDs {
         COR_GEN_EshBaal = 10048,
         COR_GEN_Erebus = 10049,
         COR_BlisteringPyroburst = 10050,
+        COR_BurningRemnanats = 10051,
+
 
 
 
