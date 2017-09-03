@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  faction: 5
   primaryCardType: 5
   otherCardTypes: 
   attunements: 
@@ -70,6 +71,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -124,6 +127,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -183,6 +188,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -242,6 +249,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -315,6 +324,8 @@ MonoBehaviour:
           statChanged: 0
           thisCardAdjusts: 0
           thisCardAdjusted: 0
+          thisCardAttacks: 0
+          thisCardDefends: 0
           creatureCanAttack: 0
           zoneToCheckForNumberOfCards: 0
           moreOrLessCards: 0
@@ -331,13 +342,17 @@ MonoBehaviour:
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
         targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 1
@@ -391,6 +406,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -445,6 +462,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -504,6 +523,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -563,6 +584,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -587,6 +610,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
@@ -640,6 +664,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -694,6 +720,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -753,6 +781,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -812,6 +842,8 @@ MonoBehaviour:
       statChanged: 0
       thisCardAdjusts: 0
       thisCardAdjusted: 0
+      thisCardAttacks: 0
+      thisCardDefends: 0
       creatureCanAttack: 0
       zoneToCheckForNumberOfCards: 0
       moreOrLessCards: 0
@@ -836,6 +868,7 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 1
