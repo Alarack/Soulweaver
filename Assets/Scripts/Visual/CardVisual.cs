@@ -263,6 +263,9 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     public virtual void ResetCardData() {
+
+        Debug.Log(cardData.cardName + " is being reset");
+
         List<Constants.Keywords> tempKeywords = new List<Constants.Keywords>(cardData.keywords);
         keywords = tempKeywords;
 
@@ -855,10 +858,25 @@ public class CardVisual : Photon.MonoBehaviour {
         if (card != this)
             return;
 
-        if (deck.decktype != Constants.DeckType.Battlefield)
-            return;
 
-        //Debug.Log(cardData.cardName + " has left the battlefield");
+        switch (primaryCardType) {
+
+            case Constants.CardType.Soul:
+            case Constants.CardType.Player:
+            case Constants.CardType.Domain:
+            case Constants.CardType.Support:
+                if (deck.decktype != Constants.DeckType.Battlefield)
+                    return;
+
+                break;
+
+
+            case Constants.CardType.Spell:
+                if (deck.decktype != Constants.DeckType.SoulCrypt)
+                    return;
+
+                break;
+        }
 
         ResetCardData();
 
@@ -1227,7 +1245,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX, bool setStats) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        //Debug.Log(source.gameObject.name + " is removeing stat adjustments");
+        Debug.Log(source.gameObject.name + " is removeing stat adjustments");
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
@@ -1236,7 +1254,7 @@ public class CardVisual : Photon.MonoBehaviour {
         for (int i = 0; i < allAdjustments.Count; i++) {
             if (allAdjustments[i].uniqueID == adjID) {
                 if (!allAdjustments[i].temporary) {
-                    return;
+                    continue;
                 }
 
                 //Debug.Log(source.gameObject.name + " is SUCCESSFULLY removeing stat adjustments");

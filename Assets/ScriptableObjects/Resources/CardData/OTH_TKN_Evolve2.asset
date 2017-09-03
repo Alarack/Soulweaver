@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  faction: 6
   primaryCardType: 2
   otherCardTypes: 
   attunements: 0b00000010000000
@@ -616,7 +617,7 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0

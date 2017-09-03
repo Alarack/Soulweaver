@@ -135,9 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   decktype: 2
   cards:
-  - {fileID: 11400000, guid: 8d31205f9c3f1df40811e06070d26947, type: 2}
-  - {fileID: 11400000, guid: 03b4fbfa5fe516048b386880cf2ddb18, type: 2}
-  - {fileID: 11400000, guid: bd8d2a6e92deafd458a797760669bfc9, type: 2}
+  - {fileID: 11400000, guid: d4a743dad2a0a624291f9aa98543e40d, type: 2}
+  - {fileID: 11400000, guid: 9263b69c44db67641b5ec3b8073d5a9c, type: 2}
+  - {fileID: 11400000, guid: c95414bd40a05fd48bb0b6855e21f017, type: 2}
   activeCards: []
   owner: {fileID: 0}
 --- !u!114 &114126457312744794

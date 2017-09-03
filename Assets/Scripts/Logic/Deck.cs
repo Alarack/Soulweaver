@@ -727,7 +727,7 @@ public class Deck : Photon.MonoBehaviour {
             creature.RPCToggleExhaust(PhotonTargets.All, false);
         }
 
-        card.ResetCardData();
+        //card.ResetCardData();
         //card.RPCSetUpCardData(PhotonTargets.All);
         //card.SetupCardData();
         if (card.photonView.isMine)
