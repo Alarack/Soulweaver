@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30025
   cardName: Mending Shaper
-  cardText: 'Lightfused 2: Give a friendly Structure or Golem +2 Health'
+  cardText: 'Lightfused 1: Give a friendly Structure or Golem +2 Health'
   cardCost: 2
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
@@ -208,7 +208,7 @@ MonoBehaviour:
     movingVFX: 0
     clearTargetsOnEffectComplete: 0
     clearTriggeringTargetFromOtherAbility: 0
-    additionalRequirements: 
+    additionalRequirements: 02000000
     additionalRequirementConstraints:
       types: 
       owner: 0
@@ -258,10 +258,10 @@ MonoBehaviour:
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      requiredResourceType: 0
+      requiredResourceType: 2
       moreOrlessResource: 0
-      amountOfResourceRequried: 0
-      consumeResource: 0
+      amountOfResourceRequried: 1
+      consumeResource: 1
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
@@ -357,7 +357,7 @@ MonoBehaviour:
     toggleSourceOptions: 0
     toggleEffectOptions: 1
     toggleTargetOptions: 1
-    toggleAdditonalRequirementOptions: 0
+    toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
   multiTargetAbilities: []
   specialAttributes: []

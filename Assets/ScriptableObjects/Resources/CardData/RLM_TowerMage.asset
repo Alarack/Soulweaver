@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30071
   cardName: Tower Mage
-  cardText: 'Ragned, Reach. Luminous Engine 3: Gain +3 Attack.'
+  cardText: 'Ragned, Reach. Luminous Engine 2: Gain +3 Attack.'
   cardCost: 6
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
@@ -261,7 +261,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 2
       moreOrlessResource: 0
-      amountOfResourceRequried: 3
+      amountOfResourceRequried: 2
       consumeResource: 1
       resourceThatChanged: 0
       resourceGainedOrLost: 0

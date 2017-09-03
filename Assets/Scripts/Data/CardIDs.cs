@@ -81,6 +81,7 @@ public class CardIDs {
         COR_GEN_RhazBlisterpox = 10047,
         COR_GEN_EshBaal = 10048,
         COR_GEN_Erebus = 10049,
+        COR_BlisteringPyroburst = 10050,
 
 
 
@@ -226,6 +227,10 @@ public class CardIDs {
         RLM_TKN_AdrenalineRush = 30114,
         RLM_TKN_Voidspawn = 30115,
         RLM_TKN_ShieldSpire = 30116,
+        RLM_Vanquish = 30117,
+        RLM_SolarFlare = 30118,
+        RLM_OrbitalBombardment = 30119,
+        RLM_RadiantLance = 30120,
 
 
 

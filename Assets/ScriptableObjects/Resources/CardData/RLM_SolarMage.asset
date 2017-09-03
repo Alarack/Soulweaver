@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30088
   cardName: Solar Mage
-  cardText: 'Flight, Lightfused 4: Deal 3 damage.'
+  cardText: 'Flight, Lightfused 2: Deal 3 damage.'
   cardCost: 4
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
@@ -260,7 +260,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 2
       moreOrlessResource: 0
-      amountOfResourceRequried: 4
+      amountOfResourceRequried: 2
       consumeResource: 1
       resourceThatChanged: 0
       resourceGainedOrLost: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   cardID: 30042
   cardName: Starlifter
   cardText: Pacifist. At the end of your turn, Generate 1 Hardlight
-  cardCost: 2
+  cardCost: 1
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
