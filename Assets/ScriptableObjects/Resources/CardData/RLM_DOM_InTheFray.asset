@@ -33,7 +33,7 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 0400000005000000
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -358,7 +358,7 @@ MonoBehaviour:
     toggleSourceOptions: 0
     toggleEffectOptions: 1
     toggleTargetOptions: 0
-    toggleAdditonalRequirementOptions: 0
+    toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
@@ -873,7 +873,7 @@ MonoBehaviour:
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
     toggleEffectOptions: 1
-    toggleTargetOptions: 0
+    toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 0
