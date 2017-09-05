@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: RLM_StarlightArmorsmith
+  m_Name: RLM_TKN_GolemFragment
   m_EditorClassIdentifier: 
-  cardID: 30026
-  cardName: Starlight Armorsmith
-  cardText: 'Lightfused 1: Give a friendly soul Protection 1'
+  cardID: 30097
+  cardName: Golem Fragment
+  cardText: 
   cardCost: 2
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
@@ -23,9 +23,9 @@ MonoBehaviour:
   faction: 4
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 0f00000005000000
-  subTypes: 29000000
-  keywords: 
+  attunements: 0f000000
+  subTypes: 27000000
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -33,7 +33,7 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 0400000005000000
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -144,20 +144,20 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 6
+    effect: 5
     abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 040000000200000001000000
-      owner: 2
+      types: 
+      owner: 0
       whosTurn: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
-      subtype: 2100000027000000
+      subtype: 
       notSubtype: 0
       keyword: 
       notKeyword: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 0
+      thisCardOnly: 1
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
     movingVFX: 0
     clearTargetsOnEffectComplete: 0
     clearTriggeringTargetFromOtherAbility: 0
-    additionalRequirements: 02000000
+    additionalRequirements: 
     additionalRequirementConstraints:
       types: 
       owner: 0
@@ -259,10 +259,10 @@ MonoBehaviour:
       resetCountAtTurnEnd: 0
       triggersRequired: 0
       counter: 0
-      requiredResourceType: 2
+      requiredResourceType: 0
       moreOrlessResource: 0
-      amountOfResourceRequried: 1
-      consumeResource: 1
+      amountOfResourceRequried: 0
+      consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
@@ -271,16 +271,12 @@ MonoBehaviour:
       tokenSpanws: []
       statAdjustments: []
       generateResources: []
-      addOrRemoveKeywords: []
-      addOrRemoveSpecialAttribute:
+      addOrRemoveKeywords:
       - effectType: 0
         source: {fileID: 0}
-        attributeAction: 0
-        specialAttributes:
-        - attributeType: 1
-          attributeValue: 1
-          uniqueID: -1
-        modificationValue: 0
+        keywords: 15000000
+        addOrRemove: 0
+      addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
     manualTriggerAbilityNames: []
@@ -289,13 +285,13 @@ MonoBehaviour:
     toggleSourceOptions: 0
     toggleEffectOptions: 1
     toggleTargetOptions: 1
-    toggleAdditonalRequirementOptions: 1
+    toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  attack: 1
-  size: 3
-  health: 3
+  attack: 2
+  size: 4
+  health: 2

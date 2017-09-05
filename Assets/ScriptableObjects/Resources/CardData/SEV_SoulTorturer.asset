@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: VFX_Ball_Lightning
   movingVFX: 1
   deathVFX: 
+  faction: 7
   primaryCardType: 1
   otherCardTypes: 
   attunements: 080000000e000000
@@ -347,7 +348,10 @@ MonoBehaviour:
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
         targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []

@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: RLM_SpikedFortifications
+  m_Name: RLM_SolarFlare
   m_EditorClassIdentifier: 
-  cardID: 30040
-  cardName: Spiked Fortifications
-  cardText: Give a friendly soul with Defender +1 Attack and First Strike
-  cardCost: 1
+  cardID: 30118
+  cardName: Solar Flare
+  cardText: Deal 10 damage to a soul and stun all enemy Souls.
+  cardCost: 9
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
@@ -23,7 +23,7 @@ MonoBehaviour:
   faction: 4
   primaryCardType: 2
   otherCardTypes: 
-  attunements: 0f000000
+  attunements: 05000000
   subTypes: 
   keywords: 
   specialAbilityTypes: 
@@ -32,7 +32,7 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 0400000005000000
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -49,7 +49,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 03000000
+      previousZone: 
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -144,13 +144,13 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 1
-    abilityName: Buff
+    abilityName: Blast
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 04000000020000000100000008000000
-      owner: 2
+      types: 0200000004000000
+      owner: 0
       whosTurn: 0
       primaryType: 01000000
       notPrimaryType: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
       notAdditionalType: 0
       subtype: 
       notSubtype: 0
-      keyword: 0e000000
+      keyword: 
       notKeyword: 0
       specialAttributes: 
       notSpecialAttribute: 0
@@ -204,8 +204,8 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    abilityVFX: 
-    movingVFX: 0
+    abilityVFX: VFX_Ball_Lightning
+    movingVFX: 1
     clearTargetsOnEffectComplete: 0
     clearTriggeringTargetFromOtherAbility: 0
     additionalRequirements: 
@@ -273,13 +273,13 @@ MonoBehaviour:
         source: {fileID: 0}
         valueSetmethod: 0
         adjustments:
-        - stat: 2
-          value: 1
+        - stat: 4
+          value: -10
           nonStacking: 0
-          temporary: 1
+          temporary: 0
           source: {fileID: 0}
           uniqueID: -1
-          spellDamage: 0
+          spellDamage: 1
         deriveStatsFromWhom: 0
         targetStat: 0
         targetAbilityName: 
@@ -356,12 +356,12 @@ MonoBehaviour:
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
     toggleEffectOptions: 1
-    toggleTargetOptions: 0
+    toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
   multiTargetAbilities:
   - trigger: 0a000000
-    effectDuration: 0
+    effectDuration: 3
     triggerDuration: 0
     triggerConstraints:
       types: 
@@ -395,7 +395,7 @@ MonoBehaviour:
       neverTargetSelf: 0
       suspendTrigger: 0
       triggerbySpecificAbility: 1
-      triggerablePrimaryAbilityName: Buff
+      triggerablePrimaryAbilityName: Blast
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0
@@ -476,15 +476,15 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 5
-    abilityName: First strike
+    abilityName: Stun
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 
-      owner: 0
+      types: 040000000200000001000000
+      owner: 3
       whosTurn: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -496,7 +496,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -605,13 +605,12 @@ MonoBehaviour:
       addOrRemoveKeywords:
       - effectType: 0
         source: {fileID: 0}
-        keywords: 0a000000
+        keywords: 25000000
         addOrRemove: 0
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
-    manualTriggerAbilityNames:
-    - Send to Crypt
+    manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
@@ -619,11 +618,11 @@ MonoBehaviour:
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 0
+    logicTargetingMethod: 1
     numberofTargets: 0
-    processEffectOnPrimaryEffectTargets: 1
+    processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
-  - trigger: 
+  - trigger: 0a000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
@@ -657,8 +656,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
-      triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: 
+      triggerbySpecificAbility: 1
+      triggerablePrimaryAbilityName: Blast
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0
@@ -739,7 +738,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 2
-    abilityName: Send to Crypt
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -876,7 +875,7 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0

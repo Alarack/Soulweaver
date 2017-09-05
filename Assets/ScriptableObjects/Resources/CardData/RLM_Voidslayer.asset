@@ -8,33 +8,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: RLM_SpikedFortifications
+  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
+  m_Name: RLM_Voidslayer
   m_EditorClassIdentifier: 
-  cardID: 30040
-  cardName: Spiked Fortifications
-  cardText: Give a friendly soul with Defender +1 Attack and First Strike
-  cardCost: 1
-  cardImage: {fileID: 0}
-  cardImagePos: {x: 0, y: 0}
-  attackEffect: 
+  cardID: 30089
+  cardName: Voidslayer
+  cardText: 'First Strike on your turn. Slay: Draw a card.'
+  cardCost: 3
+  cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  cardImagePos: {x: 0, y: 36.7}
+  attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
   faction: 4
-  primaryCardType: 2
+  primaryCardType: 1
   otherCardTypes: 
-  attunements: 0f000000
-  subTypes: 
-  keywords: 
+  attunements: 0f0000000b000000
+  subTypes: 2f000000
+  keywords: 0a000000
   specialAbilityTypes: 
-  userTargtedAbilities:
-  - trigger: 01000000
+  userTargtedAbilities: []
+  multiTargetAbilities:
+  - trigger: 06000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 0400000005000000
+      types: 0c000000
       owner: 0
-      whosTurn: 0
+      whosTurn: 2
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -47,9 +48,9 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
-      previousZone: 03000000
+      previousZone: 
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -57,7 +58,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -143,28 +144,28 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 1
-    abilityName: Buff
+    effect: 5
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 04000000020000000100000008000000
-      owner: 2
+      types: 
+      owner: 0
       whosTurn: 0
-      primaryType: 01000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
       subtype: 
       notSubtype: 0
-      keyword: 0e000000
+      keyword: 
       notKeyword: 0
       specialAttributes: 
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 05000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -174,7 +175,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 0
+      thisCardOnly: 1
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -268,105 +269,35 @@ MonoBehaviour:
     effectHolder:
       zoneChanges: []
       tokenSpanws: []
-      statAdjustments:
+      statAdjustments: []
+      generateResources: []
+      addOrRemoveKeywords:
       - effectType: 0
         source: {fileID: 0}
-        valueSetmethod: 0
-        adjustments:
-        - stat: 2
-          value: 1
-          nonStacking: 0
-          temporary: 1
-          source: {fileID: 0}
-          uniqueID: -1
-          spellDamage: 0
-        deriveStatsFromWhom: 0
-        targetStat: 0
-        targetAbilityName: 
-        zoneToCount: 0
-        constraints:
-          types: 
-          owner: 0
-          whosTurn: 0
-          primaryType: 
-          notPrimaryType: 0
-          additionalType: 
-          notAdditionalType: 0
-          subtype: 
-          notSubtype: 0
-          keyword: 
-          notKeyword: 0
-          specialAttributes: 
-          notSpecialAttribute: 0
-          attunement: 
-          notAttunement: 0
-          currentZone: 
-          notCurrentZone: 0
-          previousZone: 
-          notPreviousZone: 0
-          creatureStatus: 
-          resources: 
-          minStats: []
-          maxStats: []
-          mostStat: 0
-          leastStat: 0
-          thisCardOnly: 0
-          oncePerTurn: 0
-          triggeredThisTurn: 0
-          neverTargetSelf: 0
-          suspendTrigger: 0
-          triggerbySpecificAbility: 0
-          triggerablePrimaryAbilityName: 
-          abilityToRemove: 
-          abilityToRetrigger: 
-          statGainedOrLost: 0
-          statChanged: 0
-          thisCardAdjusts: 0
-          thisCardAdjusted: 0
-          thisCardAttacks: 0
-          thisCardDefends: 0
-          creatureCanAttack: 0
-          zoneToCheckForNumberOfCards: 0
-          moreOrLessCards: 0
-          numberOfcardsInZone: 0
-          requireMultipleTriggers: 0
-          resetCountAtTurnEnd: 0
-          triggersRequired: 0
-          counter: 0
-          requiredResourceType: 0
-          moreOrlessResource: 0
-          amountOfResourceRequried: 0
-          consumeResource: 0
-          resourceThatChanged: 0
-          resourceGainedOrLost: 0
-          abilityToGatherTargetsFrom: 
-        targetResource: 0
-        sourceStat: 0
-        destinationStat: 0
-        invertValue: 0
-        setStatToValue: 0
-        maxValue: 0
-      generateResources: []
-      addOrRemoveKeywords: []
+        keywords: 0a000000
+        addOrRemove: 1
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
-    toggleTriggerOptions: 1
+    toggleTriggerOptions: 0
     toggleSourceOptions: 0
-    toggleEffectOptions: 1
+    toggleEffectOptions: 0
     toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-  multiTargetAbilities:
-  - trigger: 0a000000
+    logicTargetingMethod: 1
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
+  - trigger: 05000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 
+      types: 0c000000
       owner: 0
-      whosTurn: 0
+      whosTurn: 2
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -394,8 +325,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
-      triggerbySpecificAbility: 1
-      triggerablePrimaryAbilityName: Buff
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0
@@ -476,7 +407,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 5
-    abilityName: First strike
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -506,7 +437,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 0
+      thisCardOnly: 1
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -610,20 +541,19 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
-    manualTriggerAbilityNames:
-    - Send to Crypt
+    manualTriggerAbilityNames: []
     togglePresets: 1
-    toggleTriggerOptions: 1
+    toggleTriggerOptions: 0
     toggleSourceOptions: 0
-    toggleEffectOptions: 1
-    toggleTargetOptions: 1
+    toggleEffectOptions: 0
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 0
+    logicTargetingMethod: 1
     numberofTargets: 0
-    processEffectOnPrimaryEffectTargets: 1
+    processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
-  - trigger: 
+  - trigger: 0b000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
@@ -739,13 +669,13 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 2
-    abilityName: Send to Crypt
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 
-      owner: 0
+      types: 0400000001000000
+      owner: 2
       whosTurn: 0
       primaryType: 
       notPrimaryType: 0
@@ -759,7 +689,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 01000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -769,7 +699,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -864,7 +794,7 @@ MonoBehaviour:
       zoneChanges:
       - effectType: 0
         source: {fileID: 0}
-        targetLocation: 4
+        targetLocation: 3
       tokenSpanws: []
       statAdjustments: []
       generateResources: []
@@ -880,8 +810,11 @@ MonoBehaviour:
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 1
-    numberofTargets: 0
+    logicTargetingMethod: 2
+    numberofTargets: 1
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
+  attack: 4
+  size: 3
+  health: 2

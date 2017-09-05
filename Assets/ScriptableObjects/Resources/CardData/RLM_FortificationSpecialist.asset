@@ -8,23 +8,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
-  m_Name: SEV_DOM_GluttonousFeasting
+  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
+  m_Name: RLM_FortificationSpecialist
   m_EditorClassIdentifier: 
-  cardID: 20016
-  cardName: Gluttonous Feasting
-  cardText: 'Deathwatch: Inessa gains +1 Attack and Restores 1 Health'
-  cardCost: 0
-  cardImage: {fileID: 0}
-  cardImagePos: {x: 0, y: 0}
-  attackEffect: 
+  cardID: 30095
+  cardName: Fortification Specialist
+  cardText: Whenever you Summon a Structure, give it +1 Attack.
+  cardCost: 2
+  cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  cardImagePos: {x: 0, y: 36.7}
+  attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
-  faction: 7
-  primaryCardType: 5
+  faction: 4
+  primaryCardType: 1
   otherCardTypes: 
-  attunements: 
-  subTypes: 
+  attunements: 0f00000005000000
+  subTypes: 29000000
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
@@ -33,14 +33,14 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 040000000500000002000000
-      owner: 0
+      types: 01000000020000000400000006000000
+      owner: 2
       whosTurn: 0
       primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
-      subtype: 
+      subtype: 21000000
       notSubtype: 0
       keyword: 
       notKeyword: 0
@@ -48,9 +48,9 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 04000000
+      currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 05000000
+      previousZone: 
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -150,10 +150,10 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0100000002000000
-      owner: 2
+      types: 
+      owner: 0
       whosTurn: 0
-      primaryType: 06000000
+      primaryType: 
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -277,14 +277,7 @@ MonoBehaviour:
         - stat: 2
           value: 1
           nonStacking: 0
-          temporary: 0
-          source: {fileID: 0}
-          uniqueID: -1
-          spellDamage: 0
-        - stat: 4
-          value: 1
-          nonStacking: 0
-          temporary: 0
+          temporary: 1
           source: {fileID: 0}
           uniqueID: -1
           spellDamage: 0
@@ -363,13 +356,15 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 1
+    logicTargetingMethod: 3
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  domainIcon: {fileID: 21300136, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}
+  attack: 1
+  size: 3
+  health: 3
