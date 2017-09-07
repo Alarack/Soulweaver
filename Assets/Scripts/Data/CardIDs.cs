@@ -83,6 +83,20 @@ public class CardIDs {
         COR_GEN_Erebus = 10049,
         COR_BlisteringPyroburst = 10050,
         COR_BurningRemnanats = 10051,
+        COR_DemonCaller = 10052,
+        COR_LichfieldArsonist = 10053,
+        COR_CrimsonTemptress = 10054,
+        COR_CacklingImp = 10055,
+        COR_BenevolentNecromancer = 10056,
+        COR_Treachery = 10057,
+        COR_SealedNecrotitan = 10058,
+        COR_TKN_Necrotitan = 10059,
+        COR_BatheInFlames = 10060,
+        COR_HellbringerRite = 10061,
+        COR_PurgatoryGate = 10062,
+        COR_Hellfire = 10063,
+        COR_FillTheGraves = 10064,
+        COR_LeylaPhreng = 10065,
 
 
 
