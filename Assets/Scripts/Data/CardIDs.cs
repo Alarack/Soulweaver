@@ -97,8 +97,27 @@ public class CardIDs {
         COR_Hellfire = 10063,
         COR_FillTheGraves = 10064,
         COR_LeylaPhreng = 10065,
+        COR_ClingyDead = 10066,
+        COR_ReusableZombie = 10067,
+        COR_PurgatusDemon = 10068,
+        COR_VeteranDemonologizt = 10069,
+        COR_PortalKeeper = 10070,
+        COR_PurgatusHound = 10071,
+        COR_ContractedFiend = 10072,
+        COR_CrimsonConsort = 10073,
+        COR_Lemegeton = 10074,
+        COR_InfernalRevenant = 10075,
+        COR_ReaverDemon = 10076,
+        COR_SpitefulNetherFiend = 10077,
+        COR_BloodMoonSoulStealer = 10078,
+        COR_DieInAFire = 10079,
+        COR_TKN_PitDemon = 10080,
+        COR_FiendTamer = 10081,
+        COR_Denera = 10082,
+        COR_RiteOfSummons = 10083,
 
 
+        
 
 
         //The Severed 20000
@@ -399,9 +418,12 @@ public class CardIDs {
 		WAR_SoulstoneGolem = 70011,
 		WAR_SoulstoneTitan = 70012,
 		WAR_LibrarianRoki = 70013,
+        WAR_CouncilAttendant = 70014,
+        WAR_CouncilAttendantOp1 = 70015,
+        WAR_CouncilAttendantOp2 = 70016,
 
-		//Guardian Sub Faction 73001 - 76000
-		WAR_ArgensStrikes = 73001,
+        //Guardian Sub Faction 73001 - 76000
+        WAR_ArgensStrikes = 73001,
 		WAR_StormAssault = 73002,
 		WAR_Thunderslam = 73003,
 		WAR_DeathDefied = 73004,
@@ -415,6 +437,8 @@ public class CardIDs {
 		WAR_ShieldWarden = 73012,
 		WAR_LurikTheShadow = 73013,
 		WAR_TKN_ShadowOfLurik = 73014,
+        WAR_Enforcer = 73015,
+        WAR_VeteranHavocCaptain = 73016,
 
 		//Ferryman Sub Faction 76001 - 79000
 		WAR_TavernOfSouls = 76001,
@@ -542,8 +566,11 @@ public class CardIDs {
         NEU_AspectOfWrath = 80093,
         NEU_FlameCaller = 80094,
         NEU_TKN_FlameSpirit = 80095,
-
-
+        NEU_FuriousBodyguard = 80096,
+        NEU_PriestessOfSublimeAgony = 80097,
+        NEU_Negate = 80098,
+        NEU_DisruptiveVoidCaster = 80099,
+        NEU_AetherStorm = 80100,
 
     }
 

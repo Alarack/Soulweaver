@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 10045
   cardName: Wall of Corpses
-  cardText: 'Defender. Protection 1. Vengence: Gain +1/+1/+0'
+  cardText: Defender. Protection 1. Whenever a friendly soul dies, gain +1/+1/+0
   cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}

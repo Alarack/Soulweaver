@@ -20,10 +20,11 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  faction: 0
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0e000000
-  subTypes: 1100000012000000
+  subTypes: 12000000
   keywords: 0d000000
   specialAbilityTypes: 
   userTargtedAbilities:

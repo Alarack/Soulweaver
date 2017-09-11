@@ -93,7 +93,9 @@ public class Constants {
         Hydra,
         Engineer,
         Starlifter,
-        Scientist
+        Scientist,
+        Undead,
+        Beast
 
 
 
@@ -165,7 +167,8 @@ public class Constants {
         Token,
         Lightforged,
         Enrage,
-        GeneralIntercept
+        GeneralIntercept,
+        ImmuneToGenerals,
 
     }
 

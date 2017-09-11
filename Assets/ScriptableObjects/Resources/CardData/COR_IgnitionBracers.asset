@@ -14,7 +14,7 @@ MonoBehaviour:
   cardID: 10039
   cardName: Ignition Bracers
   cardText: +1 Attack. Whenevre your General takes damage, deal 1 damage to ALL souls.
-  cardCost: 3
+  cardCost: 2
   cardImage: {fileID: 21300000, guid: 7b51c7be96a20eb49a194503f04f837b, type: 3}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
@@ -25,7 +25,7 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 
   subTypes: 36000000
-  keywords: 
+  keywords: 27000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:

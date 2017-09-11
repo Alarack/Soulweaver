@@ -273,7 +273,7 @@ MonoBehaviour:
       generateResources:
       - effectType: 0
         source: {fileID: 0}
-        resourceType: 0
+        resourceType: 2
         amount: 1
         cap: 0
         resourceName: Hardlight
