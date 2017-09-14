@@ -28,16 +28,19 @@ public class DomainManager : Photon.MonoBehaviour {
 
 
 
-            domainTiles[i].myDomainCard = GetComponent<Deck>().activeCards[i];
+            //domainTiles[i].myDomainCard = GetComponent<Deck>().activeCards[i];
+
+            domainTiles[i].InitIalize(GetComponent<Deck>().activeCards[i]);
 
 
-            Debug.Log(domainTiles[i].myDomainCard.cardData.cardName + " is a domain being loaded");
 
-            CardDomainData data = domainTiles[i].myDomainCard.cardData as CardDomainData;
+            //Debug.Log(domainTiles[i].myDomainCard.cardData.cardName + " is a domain being loaded");
 
-            domainTiles[i].myDomainCard.domainTile = domainTiles[i];
+            //CardDomainData data = domainTiles[i].myDomainCard.cardData as CardDomainData;
 
-            domainTiles[i].domainImage.sprite = data.domainIcon;
+            //domainTiles[i].myDomainCard.domainTile = domainTiles[i];
+
+            //domainTiles[i].domainImage.sprite = data.domainIcon;
         }
     }
 

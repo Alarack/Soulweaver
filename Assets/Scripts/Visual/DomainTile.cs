@@ -24,6 +24,22 @@ public class DomainTile : Photon.MonoBehaviour {
 	}
 
 
+    public void InitIalize(CardVisual myCard) {
+
+        myDomainCard = myCard;
+
+        domainImage.sprite = ((CardDomainData)myDomainCard.cardData).domainIcon;
+        myDomainCard.domainTile = this;
+
+        Debug.Log(myDomainCard.cardData.cardName + " has been initalized");
+
+
+    }
+
+
+
+
+
     public void ActivateDomainAbility() {
 
         if (myDomainCard == null) {
