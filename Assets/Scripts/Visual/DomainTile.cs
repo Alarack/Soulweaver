@@ -26,6 +26,14 @@ public class DomainTile : Photon.MonoBehaviour {
 
     public void ActivateDomainAbility() {
 
+        if (myDomainCard == null) {
+
+            Debug.LogError("My card is null, dickhead");
+            return;
+        }
+
+
+
         Debug.Log(myDomainCard.cardData.cardName + "'s domain tile has been clicked");
 
         EventData data = new EventData();
