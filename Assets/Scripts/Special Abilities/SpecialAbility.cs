@@ -1704,13 +1704,26 @@ public abstract class SpecialAbility {
         }
 
         if (constraint.consumeResource) {
-            result = targetResource.RemoveResource(constraint.amountOfResourceRequried);
 
-            for (int i = 0; i < source.owner.gameResourceDisplay.resourceDisplayInfo.Count; i++) {
-                if (source.owner.gameResourceDisplay.resourceDisplayInfo[i].resource == targetResource) {
-                    source.owner.gameResourceDisplay.RPCUpdateResourceText(PhotonTargets.All, targetResource.resourceType);
-                }
+            if(targetResource.currentValue - constraint.amountOfResourceRequried < 0) {
+                return false;
             }
+            else {
+                source.owner.gameResourceDisplay.RPCRemoveResource(PhotonTargets.All, targetResource.resourceType, constraint.amountOfResourceRequried);
+                result = true;
+            }
+
+            //for (int i = 0; i < source.owner.gameResourceDisplay.resourceDisplayInfo.Count; i++) {
+            //    Debug.Log(source.owner.gameResourceDisplay.resourceDisplayInfo[i].resource.resourceType.ToString() + 
+            //        " is the type of a resource belonging to the owner of " + source.gameObject.name);
+
+            //    if (source.owner.gameResourceDisplay.resourceDisplayInfo[i].resource == targetResource) {
+
+            //        Debug.Log("Match found");
+
+            //        source.owner.gameResourceDisplay.RPCUpdateResourceText(PhotonTargets.All, targetResource.resourceType);
+            //    }
+            //}
         }
 
         return result;

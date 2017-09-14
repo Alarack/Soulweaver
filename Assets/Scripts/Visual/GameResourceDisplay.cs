@@ -123,6 +123,8 @@ public class GameResourceDisplay : Photon.MonoBehaviour {
     public void UpdateResourceText(int resourceTypeEnum) {
         GameResource.ResourceType resourceType = (GameResource.ResourceType)resourceTypeEnum;
 
+        //Debug.Log(resourceType.ToString() + " has been sent to update resource text");
+
         for (int i = 0; i < resourceDisplayInfo.Count; i++) {
             if (resourceDisplayInfo[i].resource.resourceType == resourceType) {
 
