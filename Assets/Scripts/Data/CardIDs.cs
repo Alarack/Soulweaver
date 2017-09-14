@@ -421,6 +421,7 @@ public class CardIDs {
         WAR_CouncilAttendant = 70014,
         WAR_CouncilAttendantOp1 = 70015,
         WAR_CouncilAttendantOp2 = 70016,
+        WAR_ConduitStrike = 70017,
 
         //Guardian Sub Faction 73001 - 76000
         WAR_ArgensStrikes = 73001,

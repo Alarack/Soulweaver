@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  faction: 0
   primaryCardType: 1
   otherCardTypes: 
   attunements: 0b00000010000000
@@ -273,7 +274,7 @@ MonoBehaviour:
         spawnMethod: 0
         spawnableTokenDataName: OTH_TKN_Tentacle
         spawnTokenLocation: 3
-        spawnCardType: 1
+        spawnCardType: 2
         numberOfSpawns: 1
         spawnForOpponent: 0
         tokenSeriesNames: []
