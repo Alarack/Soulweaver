@@ -101,11 +101,7 @@ public class DeckSelector : MonoBehaviour {
     }
 
     private IEnumerator FillCustomDeckLists(CardPlayerData playerData, List<CardData> decklist) {
-        yield return new WaitForSeconds(1.5f);
-
-        for (int i = 0; i < decklist.Count; i++) {
-            player.activeGrimoire.GetComponent<Deck>().cards.Add(decklist[i]);
-        }
+        yield return new WaitForSeconds(1f);
 
         if (playerData != null) {
             for (int i = 0; i < playerData.domainPowers.Count; i++) {
@@ -113,6 +109,13 @@ public class DeckSelector : MonoBehaviour {
 
             }
         }
+
+
+        for (int i = 0; i < decklist.Count; i++) {
+            player.activeGrimoire.GetComponent<Deck>().cards.Add(decklist[i]);
+        }
+
+        yield return new WaitForSeconds(1f);
 
         ShowStartGame();
     }
