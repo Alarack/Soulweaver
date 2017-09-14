@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: WAR_CouncilAttendant
   m_EditorClassIdentifier: 
   cardID: 70014
-  cardName: Enforcer
-  cardText: 'Inspire: Set a soul''s Attack to 1.'
+  cardName: Council Attendant
+  cardText: 'Choose 1: Your General is Immune this turn. OR Give your general +2 Attack
+    this turn.'
   cardCost: 3
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
