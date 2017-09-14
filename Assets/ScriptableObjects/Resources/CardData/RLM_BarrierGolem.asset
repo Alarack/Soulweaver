@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30019
   cardName: Barrier Golem
-  cardText: 'Protection 1, Phalanx: Gain Invisible'
+  cardText: 'Defender, Protection 1, Phalanx: Gain Invisible'
   cardCost: 5
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
