@@ -24,7 +24,14 @@ public class DomainManager : Photon.MonoBehaviour {
     [PunRPC]
     public void InitializeDomain() {
         for(int i = 0; i < domainTiles.Count; i++) {
+
+
+
+
             domainTiles[i].myDomainCard = GetComponent<Deck>().activeCards[i];
+
+
+            Debug.Log(domainTiles[i].myDomainCard.cardData.cardName + " is a domain being loaded");
 
             CardDomainData data = domainTiles[i].myDomainCard.cardData as CardDomainData;
 
