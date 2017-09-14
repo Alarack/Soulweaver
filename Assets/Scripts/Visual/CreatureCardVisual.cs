@@ -161,6 +161,10 @@ public class CreatureCardVisual : CardVisual {
             case Constants.CardStats.Health:
                 value = CalcProtection(value);
 
+                if (value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
+                    value = 0;
+                }
+
                 if (setStats)
                     health = value;
                 else

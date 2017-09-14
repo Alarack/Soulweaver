@@ -13,8 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 10010
   cardName: Blaze-Go-Round
-  cardText: ' At the start of your turn, deal 1 damage to the Soul with the least
-    Health. '
+  cardText: 'At the start of your turn, deal 1 damage to the Soul with the least Health. '
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
@@ -34,9 +33,9 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 
+      types: 0c000000
       owner: 0
-      whosTurn: 0
+      whosTurn: 2
       primaryType: 
       notPrimaryType: 0
       additionalType: 
@@ -90,7 +89,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 040000000c000000
+      types: 04000000
       owner: 0
       whosTurn: 2
       primaryType: 
@@ -151,8 +150,8 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 02000000040000000b000000
-      owner: 0
+      types: 02000000040000000b00000001000000
+      owner: 1
       whosTurn: 0
       primaryType: 01000000
       notPrimaryType: 0
@@ -356,8 +355,8 @@ MonoBehaviour:
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleSourceOptions: 1
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0

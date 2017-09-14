@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 40016
   cardName: Amorphous Vestige
-  cardText: 
+  cardText: Fusion
   cardCost: 1
   cardImage: {fileID: 21300000, guid: e7f230209e17d204489d5d1684d86ebe, type: 3}
   cardImagePos: {x: 0, y: 16.8}

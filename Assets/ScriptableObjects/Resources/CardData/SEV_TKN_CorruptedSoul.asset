@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: VFX_Ball_Lightning
   movingVFX: 1
   deathVFX: 
+  faction: 7
   primaryCardType: 1
   otherCardTypes: 
   attunements: 080000000e000000

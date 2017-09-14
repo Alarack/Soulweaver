@@ -606,7 +606,7 @@ MonoBehaviour:
         valueSetmethod: 0
         adjustments:
         - stat: 4
-          value: -6
+          value: -4
           nonStacking: 0
           temporary: 1
           source: {fileID: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 10023
   cardName: Fuel For the Fire
-  cardText: Whenevre a Soul dies this turn, draw a card.
+  cardText: Whenever a Soul dies this turn, draw a card.
   cardCost: 2
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}

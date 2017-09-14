@@ -14,7 +14,7 @@ MonoBehaviour:
   cardID: 30031
   cardName: Orthane, The Mountain Fortress
   cardText: 'Tireless, Protection 2, Reach. Inspire: Give other friendly Structures
-    get + 5 Health.'
+    +5 Health.'
   cardCost: 10
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}

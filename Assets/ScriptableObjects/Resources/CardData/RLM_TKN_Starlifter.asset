@@ -13,8 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30042
   cardName: Starlifter
-  cardText: Pacifist. At the end of your turn, Generate 1 Hardlight
-  cardCost: 2
+  cardText: 'Pacifist. At the end of your turn, Generate 1 Hardlight. (E): Destroy
+    this soul and generate 1 Hardlight'
+  cardCost: 1
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
   attackEffect: VFX_Primal_Slash
@@ -283,10 +284,10 @@ MonoBehaviour:
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
-    toggleTriggerOptions: 1
-    toggleSourceOptions: 1
-    toggleEffectOptions: 1
-    toggleTargetOptions: 1
+    toggleTriggerOptions: 0
+    toggleSourceOptions: 0
+    toggleEffectOptions: 0
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 0

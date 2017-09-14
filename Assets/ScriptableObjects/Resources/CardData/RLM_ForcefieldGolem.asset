@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30069
   cardName: Forcefield Golem
-  cardText: 'Lightfused 5: Gain Protection 2'
+  cardText: 'Lightfused 4: Gain Protection 2'
   cardCost: 5
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   cardImagePos: {x: 0, y: 36.7}
@@ -261,7 +261,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 2
       moreOrlessResource: 0
-      amountOfResourceRequried: 5
+      amountOfResourceRequried: 4
       consumeResource: 1
       resourceThatChanged: 0
       resourceGainedOrLost: 0

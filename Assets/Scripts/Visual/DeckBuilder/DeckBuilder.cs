@@ -370,6 +370,8 @@ public class DeckBuilder : MonoBehaviour {
             }
             else if (card.cardText.Contains(value)) {
                 results.Add(card);
+            }else if(card.subTypes.Count > 0 && card.subTypes[0].ToString() == value) {
+                results.Add(card);
             }
         }
 

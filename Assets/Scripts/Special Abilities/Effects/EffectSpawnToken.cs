@@ -115,6 +115,7 @@ public class EffectSpawnToken : Effect {
 
         CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(data, prefabName, GetDeckFromType(spawnTokenLocation, source));
         //tokenCard.isToken = true;
+        parentAbility.targets.Add(tokenCard);
 
         return tokenCard;
     }

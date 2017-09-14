@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30063
   cardName: Illumination Engine
-  cardText: 'Inspire: Draw a card. Luminous Engine 4: Draw a card.'
+  cardText: 'Inspire: Draw a card. Luminous Engine 2: Draw a card.'
   cardCost: 2
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
@@ -261,7 +261,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 2
       moreOrlessResource: 0
-      amountOfResourceRequried: 4
+      amountOfResourceRequried: 2
       consumeResource: 1
       resourceThatChanged: 0
       resourceGainedOrLost: 0
@@ -284,7 +284,7 @@ MonoBehaviour:
     toggleSourceOptions: 0
     toggleEffectOptions: 1
     toggleTargetOptions: 1
-    toggleAdditonalRequirementOptions: 0
+    toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 2
     numberofTargets: 1

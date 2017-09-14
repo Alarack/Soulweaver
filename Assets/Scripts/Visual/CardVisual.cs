@@ -338,6 +338,10 @@ public class CardVisual : Photon.MonoBehaviour {
             CreatureCardVisual soul = this as CreatureCardVisual;
             value = soul.CalcProtection(value);
 
+            if(value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
+                value = 0;
+            }
+
             //Debug.Log(value + " is the value of the stat adjustment being applied to " + gameObject.name);
         }
 
@@ -791,7 +795,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 return cardData.otherCardTypes[0].ToString();
             else {
                 //Debug.LogError("[Visual Card] " + cardData.cardName + " Has no types or subtypes");
-                return "";
+                return cardData.primaryCardType.ToString();
             }
         }
 

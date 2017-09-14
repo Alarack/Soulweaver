@@ -34,6 +34,6 @@ MonoBehaviour:
   size: 3
   health: 25
   domainPowers:
-  - {fileID: 11400000, guid: 97666541f3fe2a34ca4056979b4def88, type: 2}
   - {fileID: 11400000, guid: 5782658e660970b45b5bb92fc2863b5f, type: 2}
   - {fileID: 11400000, guid: 3f2122c31a6f6d0499a8d60b5a45f1ed, type: 2}
+  - {fileID: 11400000, guid: 97666541f3fe2a34ca4056979b4def88, type: 2}

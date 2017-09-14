@@ -731,7 +731,7 @@ public class Deck : Photon.MonoBehaviour {
         //card.RPCSetUpCardData(PhotonTargets.All);
         //card.SetupCardData();
         if (card.photonView.isMine)
-            card.transform.localPosition = new Vector3(-40f, 20f, -40f);
+            card.transform.localPosition = new Vector3(-80f, 20f, -40f);
 
 
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 30024
   cardName: Kaima, Warshaper
-  cardText: 'Luminous Engine 3: Summon a Hardlight Golem. Friendly Golems have +1
+  cardText: 'Luminous Engine 2: Summon a Hardlight Golem. Friendly Golems have +1
     Attack.'
   cardCost: 4
   cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
@@ -262,7 +262,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 2
       moreOrlessResource: 0
-      amountOfResourceRequried: 3
+      amountOfResourceRequried: 2
       consumeResource: 1
       resourceThatChanged: 0
       resourceGainedOrLost: 0
@@ -289,9 +289,9 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 0
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 0
-    toggleAdditonalRequirementOptions: 0
+    toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0
