@@ -628,5 +628,5 @@ MonoBehaviour:
     targetAbilityName: 
   specialAttributes: []
   attack: 0
-  size: 6
+  size: 5
   health: 6

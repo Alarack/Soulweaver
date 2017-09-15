@@ -9,25 +9,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7275719288346104b9a894c89dacce2b, type: 3}
-  m_Name: __TestSpell
+  m_Name: WAR_MassSubdual
   m_EditorClassIdentifier: 
-  cardID: 114
-  cardName: Silence
-  cardText: Dispel a Soul
-  cardCost: 0
+  cardID: 70020
+  cardName: Mass Subdual
+  cardText: Set all enemy soul's Attack to 1
+  cardCost: 4
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
-  faction: 0
+  faction: 5
   primaryCardType: 2
   otherCardTypes: 
-  attunements: 
+  attunements: 0f000000
   subTypes: 
-  keywords: 27000000
+  keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities:
+  userTargtedAbilities: []
+  multiTargetAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
@@ -143,14 +144,14 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 5
-    abilityName: Dispel
+    effect: 1
+    abilityName: 
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0400000002000000
-      owner: 0
+      types: 040000000200000001000000
+      owner: 3
       whosTurn: 0
       primaryType: 01000000
       notPrimaryType: 0
@@ -273,8 +274,8 @@ MonoBehaviour:
         source: {fileID: 0}
         valueSetmethod: 0
         adjustments:
-        - stat: 4
-          value: -3
+        - stat: 2
+          value: 1
           nonStacking: 0
           temporary: 1
           source: {fileID: 0}
@@ -344,14 +345,10 @@ MonoBehaviour:
         sourceStat: 0
         destinationStat: 0
         invertValue: 0
-        setStatToValue: 0
+        setStatToValue: 1
         maxValue: 0
       generateResources: []
-      addOrRemoveKeywords:
-      - effectType: 0
-        source: {fileID: 0}
-        keywords: 2c000000
-        addOrRemove: 0
+      addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
@@ -360,10 +357,13 @@ MonoBehaviour:
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
     toggleEffectOptions: 1
-    toggleTargetOptions: 0
+    toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-  multiTargetAbilities:
+    logicTargetingMethod: 1
+    numberofTargets: 0
+    processEffectOnPrimaryEffectTargets: 0
+    targetAbilityName: 
   - trigger: 0a000000
     effectDuration: 0
     triggerDuration: 0
@@ -399,7 +399,7 @@ MonoBehaviour:
       neverTargetSelf: 0
       suspendTrigger: 0
       triggerbySpecificAbility: 0
-      triggerablePrimaryAbilityName: Deal Damage
+      triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0

@@ -34,5 +34,5 @@ MonoBehaviour:
     attributeValue: 1
     uniqueID: -1
   attack: 0
-  size: 7
-  health: 7
+  size: 6
+  health: 6

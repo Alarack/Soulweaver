@@ -393,6 +393,14 @@ public abstract class SpecialAbility {
                         effectHolder.addOrRemoveSpecialAttribute[j].Remove(cards[i]);
                     }
                     break;
+
+
+                case EffectType.BestowAbility:
+                    for (int j = 0; j < effectHolder.bestowAbility.Count; j++) {
+                        effectHolder.bestowAbility[j].Remove(cards[i]);
+                    }
+
+                    break;
             }
         }
 

@@ -244,6 +244,9 @@ public class CardVisual : Photon.MonoBehaviour {
             newSpecialAbilities.Add(clone);
             specialAbilities.Add(clone);
 
+
+            Debug.Log(clone.abilityName + " is being added.");
+
             clone.Initialize(this);
         }
 
@@ -262,6 +265,47 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
+    public void RemoveSpecialAbility(string specialAbilityName) {
+
+        SpecialAbility targetAbility = FindSpecialAbilityByName(specialAbilityName);
+
+        //Debug.Log("Searching for " + targetAbility + " ability");
+
+        UnregisterSpecialAbility(targetAbility);
+
+        if (specialAbilities.Contains(targetAbility)) {
+            specialAbilities.Remove(targetAbility);
+        }
+        else {
+            Debug.Log(targetAbility.abilityName + " not found in special abilities");
+        }
+
+        if (targetAbility is LogicTargetedAbility) {
+            LogicTargetedAbility lta = targetAbility as LogicTargetedAbility;
+            if (multiTargetAbiliies.Contains(lta)) {
+                //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
+                multiTargetAbiliies.Remove(lta);
+            }
+            else {
+                Debug.Log(targetAbility.abilityName + " not found in logic abilities");
+            }
+        }
+
+        if (targetAbility is EffectOnTarget) {
+            EffectOnTarget uta = targetAbility as EffectOnTarget;
+            if (userTargtedAbilities.Contains(uta)) {
+                //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
+                userTargtedAbilities.Remove(uta);
+            }
+            else {
+                Debug.Log(targetAbility.abilityName + " not found in targeted abilities");
+            }
+        }
+    }
+
+
+
+
     public virtual void ResetCardData() {
 
         Debug.Log(cardData.cardName + " is being reset");
@@ -269,7 +313,7 @@ public class CardVisual : Photon.MonoBehaviour {
         List<Constants.Keywords> tempKeywords = new List<Constants.Keywords>(cardData.keywords);
         keywords = tempKeywords;
 
-        ResetSpecialAttributes();
+        //ResetSpecialAttributes();
 
         StartCoroutine(ResetSpecials());
     }
@@ -309,6 +353,7 @@ public class CardVisual : Photon.MonoBehaviour {
         specialAbilities.Clear();
 
         statAdjustments.Clear();
+        specialAttributes.Clear();
         SetUpSpecialAbilities();
     }
 
@@ -426,17 +471,6 @@ public class CardVisual : Photon.MonoBehaviour {
         int maxValue = allValuesOfType.Max();
 
         return maxValue;
-
-
-
-
-        //for (int i = 0; i < specialAttributes.Count; i++) {
-        //    if (specialAttributes[i].attributeType == attribute) {
-        //        return specialAttributes[i].attributeValue;
-        //    }
-        //}
-
-        //return 0;
     }
 
     public List<SpecialAbility.StatAdjustment> GatherAllSpecialAbilityStatAdjustments() {
@@ -1270,10 +1304,6 @@ public class CardVisual : Photon.MonoBehaviour {
                     AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
                 }
 
-
-
-
-
                 statAdjustments.Remove(allAdjustments[i]);
             }
         }
@@ -1516,6 +1546,11 @@ public class CardVisual : Photon.MonoBehaviour {
 
     protected virtual void KeywordHelper(Constants.Keywords keyword, bool add) {
 
+        if (keyword == Constants.Keywords.Dispel) {
+            Dispel();
+        }
+
+
         if (cardData is CardDomainData) {
 
             if (add) {
@@ -1535,6 +1570,8 @@ public class CardVisual : Photon.MonoBehaviour {
                 }
             }
         }
+
+
     }
 
 
@@ -1620,6 +1657,16 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
+    public void RPCRemoveSpecialAbility(PhotonTargets targets, string abilityName) {
+        photonView.RPC("RemoteRemoveSpecialAbility", targets, abilityName);
+    }
+
+    [PunRPC]
+    public void RemoteRemoveSpecialAbility(string abilityName) {
+
+        RemoveSpecialAbility(abilityName);
+    }
+
 
     public void RPCSetCardPosition(PhotonTargets targets, Vector3 position) {
         float xpos = position.x;
@@ -1663,9 +1710,30 @@ public class CardVisual : Photon.MonoBehaviour {
         newAdj.uniqueID = IDFactory.GenerateAdjID(source.owner);
 
         ability.effectHolder.statAdjustments[0].adjustments.Add(newAdj);
+    }
+
+
+    public void RPCDispel(PhotonTargets targets) {
+
+        photonView.RPC("Dispel", targets);
+
+    }
+
+    [PunRPC]
+    public void Dispel() {
+        for (int i = statAdjustments.Count -1; i >= 0; i--) {
+            Debug.Log("removing " + (i + 1) + " adjustments");
+            RemoveSpecialAbilityStatAdjustment(statAdjustments[i].uniqueID, statAdjustments[i].source.photonView.viewID, false, false);
+        }
+
+        for (int i = 0; i < specialAbilities.Count; i++) {
+            RemoveSpecialAbility(specialAbilities[i].abilityName);
+        }
 
 
 
+        keywords.Clear();
+        specialAttributes.Clear();
     }
 
 

@@ -399,7 +399,7 @@ public class CombatManager : Photon.MonoBehaviour {
 
             if (confirmedTargetCallback(currentTarget)) {
 
-                Debug.Log(currentTarget.cardData.cardName + " has been clicked");
+                //Debug.Log(currentTarget.cardData.cardName + " has been clicked");
                 if (isChoosingTarget)
                     isChoosingTarget = false;
 
