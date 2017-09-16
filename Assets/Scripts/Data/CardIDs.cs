@@ -427,6 +427,10 @@ public class CardIDs {
         WAR_MassSubdual = 70020,
         WAR_SpectralShieldMaiden = 70021,
         WAR_SoulstoneSentinel = 70022,
+        WAR_RequiemsVigil = 70023,
+        WAR_LifeConduitSentinel = 70024,
+        WAR_Repremand = 70025,
+
 
 
         //Guardian Sub Faction 73001 - 76000

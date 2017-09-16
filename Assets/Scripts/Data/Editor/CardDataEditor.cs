@@ -641,13 +641,16 @@ public class CardDataEditor : Editor {
     }
 
     private void DrawLightfusedPreset(SpecialAbility entry) {
-
         DrawInspirePreset(entry);
 
         entry.additionalRequirements.Add(Constants.AdditionalRequirement.RequireResource);
         entry.additionalRequirementConstraints.requiredResourceType = GameResource.ResourceType.Hardlight;
         entry.additionalRequirementConstraints.consumeResource = true;
+    }
 
+    private void DrawOnBattlefieldPreset(SpecialAbility entry) {
+        entry.sourceConstraints.types.Add(ConstraintType.CurrentZone);
+        entry.sourceConstraints.currentZone.Add(DeckType.Battlefield);
     }
 
 
@@ -799,6 +802,15 @@ public class CardDataEditor : Editor {
     }
 
     private void DrawSourceOptions(SpecialAbility entry) {
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Battlefield")) {
+            DrawOnBattlefieldPreset(entry);
+        }
+
+        EditorGUILayout.EndHorizontal();
+
+
         EditorHelper.DrawInspectorSectionHeader("Source of Effect:");
         entry.sourceConstraints.types = EditorHelper.DrawList("Source Constraints", entry.sourceConstraints.types, true, ConstraintType.None, true, DrawConstraintTypes);
         for (int i = 0; i < entry.sourceConstraints.types.Count; i++) {
