@@ -1722,17 +1722,24 @@ public class CardVisual : Photon.MonoBehaviour {
     [PunRPC]
     public void Dispel() {
         for (int i = statAdjustments.Count -1; i >= 0; i--) {
-            Debug.Log("removing " + (i + 1) + " adjustments");
             RemoveSpecialAbilityStatAdjustment(statAdjustments[i].uniqueID, statAdjustments[i].source.photonView.viewID, false, false);
         }
 
         for (int i = 0; i < specialAbilities.Count; i++) {
+
+            if(specialAbilities[i].effectDuration == Constants.Duration.WhileInZone) {
+                specialAbilities[i].Dispel();
+            }
+
             RemoveSpecialAbility(specialAbilities[i].abilityName);
         }
 
+        for(int i = 0; i < keywords.Count; i++) {
+            if(keywords[i] != Constants.Keywords.Interceptor && keywords[i] != Constants.Keywords.Token) {
+                ToggleKeyword(false, (int)keywords[i]);
+            }
+        }
 
-
-        keywords.Clear();
         specialAttributes.Clear();
     }
 

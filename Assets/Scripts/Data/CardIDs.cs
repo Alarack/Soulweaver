@@ -425,6 +425,8 @@ public class CardIDs {
         WAR_ChannelTheLost = 70018,
         WAR_HavocCaptain = 70019,
         WAR_MassSubdual = 70020,
+        WAR_SpectralShieldMaiden = 70021,
+        WAR_SoulstoneSentinel = 70022,
 
 
         //Guardian Sub Faction 73001 - 76000

@@ -307,27 +307,14 @@ public abstract class SpecialAbility {
                 break;
         }
 
-
-
-
-
-
-
-
         triggeringCards.Clear();
 
         if (clearTargetsOnEffectComplete)
             source.ClearAllSpecialAbilityTargets();
 
-
         if (clearTriggeringTargetFromOtherAbility) {
             RemoveTargetFromSpecificAbility(triggerConstraints.abilityToGatherTargetsFrom, card);
         }
-
-
-
-
-
 
         if (!trigger.Contains(AbilityActivationTrigger.SecondaryEffect)) {
             EventData data = new EventData();
@@ -342,9 +329,6 @@ public abstract class SpecialAbility {
         if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateSingleTargetVFX(card);
         }
-
-
-
 
     }
 
@@ -407,36 +391,11 @@ public abstract class SpecialAbility {
         ClearTargets();
         Unsubscribe();
     }
-    //protected void ApplyStatAdjustments(CardVisual card) {
-    //    for (int i = 0; i < statAdjustments.Count; i++) {
 
-    //        if (statAdjustments[i].valueSetBytargetStat) {
-
-    //            switch (statAdjustments[i].deriveStatsFromWhom) {
-    //                case DeriveStatsFromWhom.SourceOfEffect:
-    //                    statAdjustments[i].AlterValueBasedOnTarget(source as CreatureCardVisual);
-    //                    break;
-
-    //                case DeriveStatsFromWhom.TargetOFEffect:
-    //                    statAdjustments[i].AlterValueBasedOnTarget(card as CreatureCardVisual);
-    //                    break;
-    //            }
-    //        }
-
-    //        int spelldamage = Finder.FindTotalSpellDamage();
-
-    //        if (statAdjustments[i].spellDamage) {
-    //            ApplySpellDamge(statAdjustments[i], -spelldamage);
-    //        }
-
-    //        card.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
-
-    //    }
-    //}
-
-    private void ApplySpellDamge(StatAdjustment adjustment, int spellDamage) {
-        adjustment.ModifyValue(spellDamage);
+    public void Dispel() {
+        RemoveEffect(targets);
     }
+
 
     protected void SendManualTrigger() {
         if (manualTriggerAbilityNames.Count > 0) {
