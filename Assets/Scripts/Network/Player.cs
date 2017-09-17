@@ -61,6 +61,11 @@ public class Player : Photon.MonoBehaviour {
     public GameObject activeDomain;
     public GameObject activeCrypt;
     public Deck battlefield;
+    public Deck grimoire;
+    public Deck domain;
+    public Deck crypt;
+    public Deck theVoid;
+    public Deck notInGame;
 
 
     [Header("Resources")]
@@ -401,21 +406,51 @@ public class Player : Photon.MonoBehaviour {
 
         //Debug.Log("Setting up Decks");
 
-        GameObject battleField = PhotonNetwork.Instantiate("Battlefield", transform.position, Quaternion.identity, 0) as GameObject;
-        battleField.transform.SetParent(transform, false);
-        battleField.GetComponent<Deck>().owner = this;
-        battleField.GetComponent<Deck>().RPCAssignDeckInfo(PhotonTargets.AllBufferedViaServer, photonView.viewID);
-        battlefield = battleField.GetComponent<Deck>();
+        //GameObject battleField = PhotonNetwork.Instantiate("Battlefield", transform.position, Quaternion.identity, 0) as GameObject;
+        //battleField.transform.SetParent(transform, false);
+        //battleField.GetComponent<Deck>().owner = this;
+        //battleField.GetComponent<Deck>().RPCAssignDeckInfo(PhotonTargets.AllBufferedViaServer, photonView.viewID);
+        //battlefield = battleField.GetComponent<Deck>();
 
         for (int i = 0; i < deckInfo.Count; i++) {
+
             //Debug.Log("Setting up " + deckInfo[i].deckType.ToString());
             GameObject activeDeck = PhotonNetwork.Instantiate(deckInfo[i].deck.name, transform.position, Quaternion.identity, 0) as GameObject;
             activeDeck.transform.SetParent(transform, false);
             activeDeck.GetComponent<Deck>().owner = this;
             activeDeck.GetComponent<Deck>().RPCAssignDeckInfo(PhotonTargets.AllBufferedViaServer, photonView.viewID);
+
+            switch (deckInfo[i].deckType) {
+                case Constants.DeckType.Battlefield:
+                    battlefield = activeDeck.GetComponent<Deck>();
+                    break;
+
+                case Constants.DeckType.Grimoire:
+                    grimoire = activeDeck.GetComponent<Deck>();
+                    break;
+
+                case Constants.DeckType.Void:
+                    theVoid = activeDeck.GetComponent<Deck>();
+                    break;
+
+                case Constants.DeckType.Domain:
+                    domain = activeDeck.GetComponent<Deck>();
+                    break;
+
+                case Constants.DeckType.NotInGame:
+                    notInGame = activeDeck.GetComponent<Deck>();
+                    break;
+
+                case Constants.DeckType.SoulCrypt:
+                    crypt = activeDeck.GetComponent<Deck>();
+                    break;
+
+            }
+
+
         }
 
-        Deck._removed.owner = this;
+        //Deck._removed.owner = this;
     }
 
 

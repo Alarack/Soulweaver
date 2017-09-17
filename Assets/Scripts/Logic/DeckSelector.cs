@@ -16,6 +16,9 @@ public class DeckSelector : MonoBehaviour {
     public GameObject defaultGrimoire;
     public GameObject defaultDomain;
     public GameObject defaultSoulCrypt;
+    public GameObject defaultVoid;
+    public GameObject defaultNotInGame;
+    public GameObject defaultBattlefield;
 
     [Header("Rillock")]
     public GameObject rillockGrimoire;
@@ -146,9 +149,10 @@ public class DeckSelector : MonoBehaviour {
                     player.deckInfo[i].deck = domain;
                     break;
 
-                case Constants.DeckType.SoulCrypt:
-                    player.deckInfo[i].deck = soulcrypt;
-                    break;
+                //case Constants.DeckType.SoulCrypt:
+                //    player.deckInfo[i].deck = defaultSoulCrypt;
+                //    break;
+
             }
         }
     }

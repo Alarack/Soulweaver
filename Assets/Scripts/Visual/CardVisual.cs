@@ -595,13 +595,21 @@ public class CardVisual : Photon.MonoBehaviour {
         //Choose One
         if (isBeingChosen) {
             if (Input.GetMouseButtonDown(0)) {
+
+                Debug.Log(cardData.cardName + " has been choosen");
+
+                //Debug.Log(currentDeck.gameObject.name + " is my current deck");
+
+                //Debug.Log(owner.battlefield.gameObject.name + " is the battlefield");
+
                 isBeingChosen = false;
                 currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
 
                 List<CardVisual> others = Finder.FindAllCardsBeingChosen();
 
                 for (int i = 0; i < others.Count; i++) {
-                    others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], Deck._removed);
+                    //others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], owner.notInGame);
+                    others[i].transform.position = new Vector3(-100f, 20f, -40f);
                 }
             }
         }
@@ -986,6 +994,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
     [PunRPC]
     public void SetParentDeck(string deck) {
+
+        Debug.Log(deck + " was sent to set Parent Deck");
+
+
         switch (deck) {
             case "Grimoire":
                 currentDeck = owner.activeGrimoire.GetComponent<Deck>();
@@ -1005,6 +1017,16 @@ public class CardVisual : Photon.MonoBehaviour {
             case "Battlefield":
                 //currentDeck = Deck._battlefield;
                 currentDeck = owner.battlefield;
+                currentDeck.activeCards.Add(this);
+                break;
+
+            case "Void":
+                currentDeck = owner.theVoid;
+                currentDeck.activeCards.Add(this);
+                break;
+
+            case "NotInGame":
+                currentDeck = owner.notInGame;
                 currentDeck.activeCards.Add(this);
                 break;
         }

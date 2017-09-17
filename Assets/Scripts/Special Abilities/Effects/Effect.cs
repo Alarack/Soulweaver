@@ -41,10 +41,10 @@ public abstract class Effect {
                 return card.owner.activeCrypt.GetComponent<Deck>();
 
             case DeckType.Void:
-                return Deck._void;
+                return card.owner.theVoid;
 
             case DeckType.NotInGame:
-                return Deck._removed;
+                return card.owner.notInGame;
 
             case DeckType.None:
                 return null;

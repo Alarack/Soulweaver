@@ -17,8 +17,8 @@ public class Deck : Photon.MonoBehaviour {
 
     //public static Deck _battlefield;
     public static Deck _allCards;
-    public static Deck _void;
-    public static Deck _removed;
+    //public static Deck _void;
+    //public static Deck _removed;
     public static List<Deck> _allDecks = new List<Deck>();
 
 
@@ -28,13 +28,13 @@ public class Deck : Photon.MonoBehaviour {
             _allCards = this;
         }
 
-        if (decktype == DeckType.Void) {
-            _void = this;
-        }
+        //if (decktype == DeckType.Void) {
+        //    _void = this;
+        //}
 
-        if(decktype == DeckType.NotInGame) {
-            _removed = this;
-        }
+        //if(decktype == DeckType.NotInGame) {
+        //    _removed = this;
+        //}
 
         RegisterDeck();
     }
@@ -331,7 +331,7 @@ public class Deck : Photon.MonoBehaviour {
                 return owner.activeCrypt.GetComponent<Deck>();
 
             case DeckType.Void:
-                return Deck._void;
+                return owner.theVoid;
 
             case DeckType.None:
                 return null;
@@ -381,13 +381,25 @@ public class Deck : Photon.MonoBehaviour {
             case DeckType.SoulCrypt:
                 owner.activeCrypt = gameObject;
                 break;
+
+            case DeckType.Void:
+                owner.theVoid = gameObject.GetComponent<Deck>();
+                break;
+
+            case DeckType.NotInGame:
+                owner.notInGame = gameObject.GetComponent<Deck>();
+                break;
+
+            case DeckType.Battlefield:
+                owner.battlefield = gameObject.GetComponent<Deck>();
+                break;
         }
     }
 
 
     public void RPCTransferCard(PhotonTargets targets, CardVisual card, Deck targetLocation) {
 
-        //Debug.Log(targetLocation);
+        Debug.Log(card.cardData.cardName + " is being sent from " + card.currentDeck.decktype.ToString() + " to " + targetLocation.decktype.ToString());
 
         int cardID = card.photonView.viewID;
         int deckID = targetLocation.photonView.viewID;

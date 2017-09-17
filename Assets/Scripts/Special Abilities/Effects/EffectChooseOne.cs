@@ -51,7 +51,7 @@ public class EffectChooseOne : Effect {
 
         //CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(data, prefabName);
 
-        CardVisual tokenCard = Deck._removed.CardFactory(data, prefabName);
+        CardVisual tokenCard = source.owner.notInGame.CardFactory(data, prefabName);
 
 
         return tokenCard;
