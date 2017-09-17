@@ -592,6 +592,20 @@ public class CardVisual : Photon.MonoBehaviour {
 
     protected virtual void OnMouseOver() {
 
+        //Choose One
+        if (isBeingChosen) {
+            if (Input.GetMouseButtonDown(0)) {
+                isBeingChosen = false;
+                currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
+
+                List<CardVisual> others = Finder.FindAllCardsBeingChosen();
+
+                for (int i = 0; i < others.Count; i++) {
+                    others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], Deck._removed);
+                }
+            }
+        }
+
         if (currentDeck.decktype == Constants.DeckType.NotInGame) {
             return;
         }
@@ -728,21 +742,7 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
 
-        //Choose One
-        if (isBeingChosen) {
-            if (Input.GetMouseButtonDown(0)) {
-                isBeingChosen = false;
-                currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
 
-                List<CardVisual> others = Finder.FindAllCardsBeingChosen();
-
-                for (int i = 0; i < others.Count; i++) {
-                    others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], Deck._removed);
-                }
-            }
-
-
-        }
 
     }
 

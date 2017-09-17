@@ -113,7 +113,10 @@ public class EffectSpawnToken : Effect {
             return null;
         }
 
-        CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(data, prefabName, GetDeckFromType(spawnTokenLocation, source));
+        //CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(data, prefabName, GetDeckFromType(spawnTokenLocation, source));
+
+        CardVisual tokenCard = Deck._removed.CardFactory(data, prefabName, GetDeckFromType(spawnTokenLocation, source));
+
         //tokenCard.isToken = true;
         parentAbility.targets.Add(tokenCard);
 
