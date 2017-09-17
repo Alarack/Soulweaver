@@ -1237,8 +1237,8 @@ public class CardVisual : Photon.MonoBehaviour {
     public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID, bool waitForVFX, bool setStat) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment with ID: " + adjID +". Should it Wait for FVX::: " + waitForVFX + ". is it Setting Stats::: " + setStat);
-
+        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment with ID: " + adjID /*+". Should it Wait for FVX::: " + waitForVFX + ". is it Setting Stats::: " + setStat*/);
+        Debug.Log("The stat adjustment is being applied to " + gameObject.name + " ::: " + cardData.cardName);
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
         SpecialAbility.StatAdjustment targetAdj = null;

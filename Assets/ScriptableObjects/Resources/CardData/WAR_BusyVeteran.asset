@@ -745,7 +745,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 7
-    abilityName: 
+    abilityName: Check Loss
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -877,10 +877,10 @@ MonoBehaviour:
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
-    toggleTriggerOptions: 0
-    toggleSourceOptions: 0
-    toggleEffectOptions: 0
-    toggleTargetOptions: 0
+    toggleTriggerOptions: 1
+    toggleSourceOptions: 1
+    toggleEffectOptions: 1
+    toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 0

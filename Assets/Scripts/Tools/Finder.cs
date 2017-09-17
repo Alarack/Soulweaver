@@ -70,11 +70,11 @@ public static class Finder {
         Dictionary<int, int> cardsByStat = StatCollector(stat, zone, owner);
         List<int> sortedStats = cardsByStat.Values.ToList();
 
-        Debug.Log(sortedStats.Count + " is the number of stats found");
+        //Debug.Log(sortedStats.Count + " is the number of stats found");
 
-        for (int i = 0; i < sortedStats.Count; i++) {
-            Debug.Log(sortedStats[i].ToString() + " is the value of a stat on a soul");
-        }
+        //for (int i = 0; i < sortedStats.Count; i++) {
+        //    Debug.Log(sortedStats[i].ToString() + " is the value of a stat on a soul");
+        //}
 
 
 

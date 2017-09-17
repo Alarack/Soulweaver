@@ -215,6 +215,12 @@ public class CombatManager : Photon.MonoBehaviour {
                 continue;
             }
 
+            if(Finder.CardHasKeyword(interceptor, Keywords.Invisible)) {
+                allInterceptors.Remove(interceptor);
+                //Debug.Log("Defender is invisable, removeing");
+                continue;
+            }
+
             if (interceptor.size < attacker.size) {
                 //Debug.Log(interceptor.cardData.cardName + " is smaller than " + attacker.cardData.cardName + ". Removeing");
                 allInterceptors.Remove(interceptor);

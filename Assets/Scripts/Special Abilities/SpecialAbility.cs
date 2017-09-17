@@ -656,6 +656,7 @@ public abstract class SpecialAbility {
         //GameResource.ResourceType type = (GameResource.ResourceType)data.GetInt("ResourceType");
         int value = data.GetInt("Value");
         Player player = data.GetMonoBehaviour("Player") as Player;
+        GameResource.ResourceType resource = (GameResource.ResourceType)data.GetInt("ResourceType");
 
         //Debug.Log(type.ToString() + " has changed by a value of " + value);
 
@@ -665,7 +666,7 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
-        if (!CheckForResourceGainedOrLost(triggerConstraints, value))
+        if (!CheckForResourceGainedOrLost(triggerConstraints, value, resource))
             return;
 
         //Debug.Log(type.ToString() + " change has passed constraints");
@@ -1696,8 +1697,16 @@ public abstract class SpecialAbility {
         return result;
     }
 
-    protected bool CheckForResourceGainedOrLost(ConstraintList constraints, int value) {
+    protected bool CheckForResourceGainedOrLost(ConstraintList constraints, int value, GameResource.ResourceType resourceType) {
         bool result = false;
+
+        //Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is reporting: " + resourceType.ToString() + " is the type that has been reported initially");
+
+
+        if(resourceType != constraints.resourceThatChanged) {
+            //Debug.Log(resourceType.ToString() + " is not what " + source.gameObject.name + " is looking for " + "(" + constraints.resourceThatChanged + ")");
+            return false;
+        }
 
         GameResource targetResource = null;
 
@@ -1711,6 +1720,7 @@ public abstract class SpecialAbility {
         if (targetResource == null)
             return false;
 
+        //Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is reporting: " +  targetResource.resourceType.ToString() + " has changed by a value of " + value);
 
         switch (constraints.resourceGainedOrLost) {
             case GainedOrLost.Gained:
