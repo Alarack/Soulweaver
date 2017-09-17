@@ -415,7 +415,7 @@ public class Player : Photon.MonoBehaviour {
             activeDeck.GetComponent<Deck>().RPCAssignDeckInfo(PhotonTargets.AllBufferedViaServer, photonView.viewID);
         }
 
-
+        Deck._removed.owner = this;
     }
 
 
