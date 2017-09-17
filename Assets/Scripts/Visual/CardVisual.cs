@@ -412,8 +412,6 @@ public class CardVisual : Photon.MonoBehaviour {
                     animationManager.BounceText(stat);
                 }
 
-                TextTools.AlterTextColor(value, cardData.cardCost, cardCostText, true);
-
                 if (setStats) 
                     essenceCost = value;
                 else
@@ -422,6 +420,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 if (essenceCost <= 0)
                     essenceCost = 0;
 
+                TextTools.AlterTextColor(essenceCost, cardData.cardCost, cardCostText, true);
                 cardCostText.text = essenceCost.ToString();
                 break;
         }
@@ -738,7 +737,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 List<CardVisual> others = Finder.FindAllCardsBeingChosen();
 
                 for (int i = 0; i < others.Count; i++) {
-                    others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], Deck._void);
+                    others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], Deck._removed);
                 }
             }
 

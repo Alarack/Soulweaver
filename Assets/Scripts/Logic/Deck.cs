@@ -241,7 +241,7 @@ public class Deck : Photon.MonoBehaviour {
         cardVisual.RPCSetOwner(PhotonTargets.OthersBuffered);
         cardVisual.RPCSetParentDeck(PhotonTargets.OthersBuffered, decktype.ToString());
 
-        cardVisual.RPCSetUpCardData(PhotonTargets.AllBufferedViaServer);
+        cardVisual.RPCSetUpCardData(PhotonTargets.All);
         activeCard.name = cardVisual.cardData.cardName + " " + index;
 
         if (targetDeck != null) {
@@ -453,6 +453,11 @@ public class Deck : Photon.MonoBehaviour {
 
             case DeckType.Grimoire:
                 SendCardToGrimoire(card);
+
+                break;
+
+            case DeckType.NotInGame:
+                RemoveCardFromGame(card);
 
                 break;
 
@@ -733,6 +738,13 @@ public class Deck : Photon.MonoBehaviour {
         if (card.photonView.isMine)
             card.transform.localPosition = new Vector3(-80f, 20f, -40f);
 
+
+    }
+
+    private void RemoveCardFromGame(CardVisual card) {
+
+        if (card.photonView.isMine)
+            card.transform.localPosition = new Vector3(-100f, 20f, -40f);
 
     }
 

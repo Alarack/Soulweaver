@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Linq;
 
 using DeckData = DeckBuilder.DeckData;
 using LibraryData = DeckBuilder.LibraryData;
@@ -104,18 +105,21 @@ public class DeckSelector : MonoBehaviour {
         yield return new WaitForSeconds(1f);
 
         if (playerData != null) {
-            for (int i = 0; i < playerData.domainPowers.Count; i++) {
-                player.activeDomain.GetComponent<Deck>().cards.Add(playerData.domainPowers[i]);
+            player.activeDomain.GetComponent<Deck>().cards = playerData.domainPowers.Cast<CardData>().ToList();
 
-            }
+            //for (int i = 0; i < playerData.domainPowers.Count; i++) {
+            //    player.activeDomain.GetComponent<Deck>().cards.Add(playerData.domainPowers[i]);
+            //}
         }
 
 
-        for (int i = 0; i < decklist.Count; i++) {
-            player.activeGrimoire.GetComponent<Deck>().cards.Add(decklist[i]);
-        }
+        player.activeGrimoire.GetComponent<Deck>().cards = decklist;
 
-        yield return new WaitForSeconds(1f);
+        //for (int i = 0; i < decklist.Count; i++) {
+        //    player.activeGrimoire.GetComponent<Deck>().cards.Add(decklist[i]);
+        //}
+
+        //yield return new WaitForSeconds(1f);
 
         ShowStartGame();
     }
@@ -127,16 +131,10 @@ public class DeckSelector : MonoBehaviour {
 
 
     private void DeckAssignmentHelper(GameObject grimoire, GameObject domain, GameObject soulcrypt) {
-
-        
-
         for(int i = 0; i < player.deckInfo.Count; i++) {
-
             //Debug.Log(player.deckInfo[i].deckType.ToString() + " is being assigned");
-
             switch (player.deckInfo[i].deckType) {
                 case Constants.DeckType.Grimoire:
-
                     //Debug.Log("Assigning " + grimoire.gameObject.name + " as active grimoire");
 
                     player.deckInfo[i].deck = grimoire;
@@ -200,7 +198,7 @@ public class DeckSelector : MonoBehaviour {
 
 
     private List<string> LoadLibraryList() {
-        List<string> savedDecks = new List<string>();
+        List<string> library = new List<string>();
 
         if (File.Exists(Application.persistentDataPath + "/library.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
@@ -209,10 +207,10 @@ public class DeckSelector : MonoBehaviour {
             LibraryData data = (LibraryData)bf.Deserialize(file);
             file.Close();
 
-            savedDecks = data.savedDecks;
+            library = data.savedDecks;
         }
 
-        return savedDecks;
+        return library;
     }
 
     //public void LoadDeck() {

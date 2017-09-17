@@ -343,7 +343,7 @@ MonoBehaviour:
         targetResource: 3
         sourceStat: 0
         destinationStat: 0
-        invertValue: 0
+        invertValue: 1
         setStatToValue: 0
         maxValue: 0
       generateResources: []

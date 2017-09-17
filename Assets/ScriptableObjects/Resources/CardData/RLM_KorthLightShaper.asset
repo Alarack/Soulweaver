@@ -365,7 +365,7 @@ MonoBehaviour:
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   - trigger: 01000000
-    effectDuration: 0
+    effectDuration: 4
     triggerDuration: 0
     triggerConstraints:
       types: 020000000600000001000000

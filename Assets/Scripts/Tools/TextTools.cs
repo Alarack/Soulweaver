@@ -17,12 +17,19 @@ public static class TextTools {
                 text.color = Color.white;
         }
         else {
-            if (value < initValue)
+            if (value < initValue) {
                 text.color = Color.green;
-            else if (value < initValue)
+                //Debug.Log( value + " is the value comming in " + initValue  + " is the init value " +  "Reverse colors: Green");
+            }
+            else if (value < initValue) {
                 text.color = Color.red;
-            else
+            }
+
+            else {
                 text.color = Color.white;
+                //Debug.Log(value + " is the value comming in " + initValue + " is the init value " + "Reverse colors: White");
+            }
+
         }
 
 
