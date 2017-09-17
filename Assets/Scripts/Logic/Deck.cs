@@ -229,17 +229,17 @@ public class Deck : Photon.MonoBehaviour {
         CardVisual cardVisual = activeCard.GetComponent<CardVisual>();
 
         cardVisual.RegisterCard(cardVisual.photonView.viewID);
-        cardVisual.RPCRegisterCard(PhotonTargets.Others, cardVisual.photonView.viewID);
+        cardVisual.RPCRegisterCard(PhotonTargets.OthersBuffered, cardVisual.photonView.viewID);
 
         cardVisual.cardData = data;
-        RPCSetCardData(PhotonTargets.Others, data.cardID, cardVisual.photonView.viewID);
+        RPCSetCardData(PhotonTargets.OthersBuffered, data.cardID, cardVisual.photonView.viewID);
 
         activeCards.Add(cardVisual);
         activeCard.transform.SetParent(GameObject.FindGameObjectWithTag("AllCards").transform, false); //TODO: make this happen in the card itself.
 
         AssignCardLocationAndOwner(activeCard, owner, this);
-        cardVisual.RPCSetOwner(PhotonTargets.Others);
-        cardVisual.RPCSetParentDeck(PhotonTargets.Others, decktype.ToString());
+        cardVisual.RPCSetOwner(PhotonTargets.OthersBuffered);
+        cardVisual.RPCSetParentDeck(PhotonTargets.OthersBuffered, decktype.ToString());
 
         cardVisual.RPCSetUpCardData(PhotonTargets.All);
         activeCard.name = cardVisual.cardData.cardName + " " + index;
@@ -251,31 +251,31 @@ public class Deck : Photon.MonoBehaviour {
 
                     if (owner.battleFieldManager.IsCollectionFull()) {
                         if (owner.handManager.IsCollectionFull()) {
-                            RPCTransferCard(PhotonTargets.All, cardVisual, owner.activeCrypt.GetComponent<Deck>());
+                            RPCTransferCard(PhotonTargets.AllBufferedViaServer, cardVisual, owner.activeCrypt.GetComponent<Deck>());
                         }
                         else {
-                            RPCTransferCard(PhotonTargets.All, cardVisual, owner.myHand);
+                            RPCTransferCard(PhotonTargets.AllBufferedViaServer, cardVisual, owner.myHand);
                         }
                     }
                     else {
-                        RPCTransferCard(PhotonTargets.All, cardVisual, targetDeck);
+                        RPCTransferCard(PhotonTargets.AllBufferedViaServer, cardVisual, targetDeck);
                     }
 
                     break;
 
                 case DeckType.Hand:
                     if (owner.handManager.IsCollectionFull()) {
-                        RPCTransferCard(PhotonTargets.All, cardVisual, owner.activeCrypt.GetComponent<Deck>());
+                        RPCTransferCard(PhotonTargets.AllBufferedViaServer, cardVisual, owner.activeCrypt.GetComponent<Deck>());
                     }
                     else {
-                        RPCTransferCard(PhotonTargets.All, cardVisual, targetDeck);
+                        RPCTransferCard(PhotonTargets.AllBufferedViaServer, cardVisual, targetDeck);
                     }
 
                     break;
 
                 case DeckType.SoulCrypt:
 
-                    RPCTransferCard(PhotonTargets.All, cardVisual, targetDeck);
+                    RPCTransferCard(PhotonTargets.AllBufferedViaServer, cardVisual, targetDeck);
 
 
                     break;
@@ -287,7 +287,7 @@ public class Deck : Photon.MonoBehaviour {
             activeCard.transform.localRotation = owner.p2HandRot.localRotation;
         }
         else {
-            cardVisual.RPCRotateCard(PhotonTargets.Others);
+            cardVisual.RPCRotateCard(PhotonTargets.OthersBuffered);
         }
 
 
@@ -453,6 +453,11 @@ public class Deck : Photon.MonoBehaviour {
 
             case DeckType.Grimoire:
                 SendCardToGrimoire(card);
+
+                break;
+
+            case DeckType.NotInGame:
+                RemoveCardFromGame(card);
 
                 break;
 
@@ -733,6 +738,13 @@ public class Deck : Photon.MonoBehaviour {
         if (card.photonView.isMine)
             card.transform.localPosition = new Vector3(-80f, 20f, -40f);
 
+
+    }
+
+    private void RemoveCardFromGame(CardVisual card) {
+
+        if (card.photonView.isMine)
+            card.transform.localPosition = new Vector3(-100f, 20f, -40f);
 
     }
 

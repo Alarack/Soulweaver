@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: WAR_ConfidentProtector
+  m_Name: WAR_SpectralShieldMaiden
   m_EditorClassIdentifier: 
-  cardID: 73005
-  cardName: Confident Protector
-  cardText: 'Inspire: Gain +1 Health for each Lost Soul to a max of +3.'
-  cardCost: 1
+  cardID: 70021
+  cardName: 'Spectral Shield Maiden '
+  cardText: 'Flight, Inspire: Give a friendly Soul +5 Health.'
+  cardCost: 5
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
@@ -23,17 +23,16 @@ MonoBehaviour:
   faction: 5
   primaryCardType: 1
   otherCardTypes: 
-  attunements: 080000000d000000
-  subTypes: 1b000000
-  keywords: 
+  attunements: 07000000080000000f000000
+  subTypes: 130000004e000000
+  keywords: 01000000
   specialAbilityTypes: 
-  userTargtedAbilities: []
-  multiTargetAbilities:
+  userTargtedAbilities:
   - trigger: 01000000
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 0400000005000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -50,7 +49,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 03000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -150,10 +149,10 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 
-      owner: 0
+      types: 040000000200000001000000
+      owner: 2
       whosTurn: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -165,7 +164,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -175,7 +174,7 @@ MonoBehaviour:
       maxStats: []
       mostStat: 0
       leastStat: 0
-      thisCardOnly: 1
+      thisCardOnly: 0
       oncePerTurn: 0
       triggeredThisTurn: 0
       neverTargetSelf: 0
@@ -272,12 +271,12 @@ MonoBehaviour:
       statAdjustments:
       - effectType: 0
         source: {fileID: 0}
-        valueSetmethod: 3
+        valueSetmethod: 0
         adjustments:
         - stat: 5
-          value: 0
+          value: 5
           nonStacking: 0
-          temporary: 0
+          temporary: 1
           source: {fileID: 0}
           uniqueID: -1
           spellDamage: 0
@@ -341,12 +340,12 @@ MonoBehaviour:
           resourceThatChanged: 0
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
-        targetResource: 3
+        targetResource: 0
         sourceStat: 0
         destinationStat: 0
         invertValue: 0
         setStatToValue: 0
-        maxValue: 3
+        maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
@@ -360,11 +359,8 @@ MonoBehaviour:
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 1
-    numberofTargets: 0
-    processEffectOnPrimaryEffectTargets: 0
-    targetAbilityName: 
+  multiTargetAbilities: []
   specialAttributes: []
-  attack: 1
+  attack: 2
   size: 3
-  health: 2
+  health: 5

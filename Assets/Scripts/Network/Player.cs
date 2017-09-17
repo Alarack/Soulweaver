@@ -208,9 +208,9 @@ public class Player : Photon.MonoBehaviour {
         yield return new WaitForSeconds(1f);
         //yield return null;
         //domainManager.gameObject.GetPhotonView().RPC("InitDomain", PhotonTargets.All);
-        activeDomain.GetComponent<DomainManager>().RPCInitializeDomain(PhotonTargets.All);
+        activeDomain.GetComponent<DomainManager>().RPCInitializeDomain(PhotonTargets.AllBufferedViaServer);
 
-        RPCCheckOpponents(PhotonTargets.All);
+        RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
 
         if (myTurn) {
             

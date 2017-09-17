@@ -261,7 +261,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 3
       moreOrlessResource: 0
-      amountOfResourceRequried: 2
+      amountOfResourceRequried: 7
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
@@ -276,17 +276,20 @@ MonoBehaviour:
       - effectType: 0
         source: {fileID: 0}
         attributeAction: 0
-        specialAttributes: []
+        specialAttributes:
+        - attributeType: 1
+          attributeValue: 2
+          uniqueID: -1
         modificationValue: 0
       chooseOne: []
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleSourceOptions: 1
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
-    toggleAdditonalRequirementOptions: 0
+    toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
@@ -524,7 +527,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 3
       moreOrlessResource: 0
-      amountOfResourceRequried: 2
+      amountOfResourceRequried: 7
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
@@ -539,7 +542,10 @@ MonoBehaviour:
       - effectType: 0
         source: {fileID: 0}
         attributeAction: 0
-        specialAttributes: []
+        specialAttributes:
+        - attributeType: 1
+          attributeValue: 2
+          uniqueID: -1
         modificationValue: 0
       chooseOne: []
       bestowAbility: []
@@ -547,9 +553,9 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
-    toggleAdditonalRequirementOptions: 0
+    toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
@@ -787,7 +793,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 3
       moreOrlessResource: 1
-      amountOfResourceRequried: 1
+      amountOfResourceRequried: 6
       consumeResource: 0
       resourceThatChanged: 0
       resourceGainedOrLost: 0
@@ -802,7 +808,10 @@ MonoBehaviour:
       - effectType: 0
         source: {fileID: 0}
         attributeAction: 1
-        specialAttributes: []
+        specialAttributes:
+        - attributeType: 1
+          attributeValue: 0
+          uniqueID: -1
         modificationValue: 0
       chooseOne: []
       bestowAbility: []
@@ -810,9 +819,9 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
-    toggleAdditonalRequirementOptions: 0
+    toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0

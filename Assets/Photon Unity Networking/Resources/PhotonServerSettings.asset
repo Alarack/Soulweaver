@@ -108,4 +108,6 @@ MonoBehaviour:
   - RemoveSpecialAttribute
   - SetCardPosition
   - CreateStatAdjustment
+  - RemoteRemoveSpecialAbility
+  - Dispel
   DisableAutoOpenWizard: 1

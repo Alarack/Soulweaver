@@ -169,6 +169,7 @@ public class Constants {
         Enrage,
         GeneralIntercept,
         ImmuneToGenerals,
+        Dispel
 
     }
 

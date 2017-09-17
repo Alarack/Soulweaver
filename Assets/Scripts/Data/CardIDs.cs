@@ -422,6 +422,16 @@ public class CardIDs {
         WAR_CouncilAttendantOp1 = 70015,
         WAR_CouncilAttendantOp2 = 70016,
         WAR_ConduitStrike = 70017,
+        WAR_ChannelTheLost = 70018,
+        WAR_HavocCaptain = 70019,
+        WAR_MassSubdual = 70020,
+        WAR_SpectralShieldMaiden = 70021,
+        WAR_SoulstoneSentinel = 70022,
+        WAR_RequiemsVigil = 70023,
+        WAR_LifeConduitSentinel = 70024,
+        WAR_Repremand = 70025,
+
+
 
         //Guardian Sub Faction 73001 - 76000
         WAR_ArgensStrikes = 73001,
@@ -572,6 +582,8 @@ public class CardIDs {
         NEU_Negate = 80098,
         NEU_DisruptiveVoidCaster = 80099,
         NEU_AetherStorm = 80100,
+        NEU_EssenceFeeder = 80101,
+
 
     }
 

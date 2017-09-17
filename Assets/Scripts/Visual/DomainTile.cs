@@ -12,17 +12,17 @@ public class DomainTile : Photon.MonoBehaviour {
     public bool active;
 
 	void Start () {
-
         if (photonView.isMine) {
             RPCRotateTile(PhotonTargets.OthersBuffered);
         }
-
     }
 
-	void Update () {
-		
-	}
+    public void InitIalize(CardVisual myCard) {
+        myDomainCard = myCard;
 
+        domainImage.sprite = ((CardDomainData)myDomainCard.cardData).domainIcon;
+        myDomainCard.domainTile = this;
+    }
 
     public void ActivateDomainAbility() {
 

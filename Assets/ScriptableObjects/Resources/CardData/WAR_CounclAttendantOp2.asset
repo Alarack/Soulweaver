@@ -358,7 +358,7 @@ MonoBehaviour:
     toggleSourceOptions: 0
     toggleEffectOptions: 0
     toggleTargetOptions: 0
-    toggleAdditonalRequirementOptions: 0
+    toggleAdditonalRequirementOptions: 1
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
@@ -605,7 +605,7 @@ MonoBehaviour:
       zoneChanges:
       - effectType: 0
         source: {fileID: 0}
-        targetLocation: 6
+        targetLocation: 8
       tokenSpanws: []
       statAdjustments: []
       generateResources: []

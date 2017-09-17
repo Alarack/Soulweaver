@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 79008
   cardName: Reassignment
-  cardText: '(2)(E): Return a friendly Soul to your hand and draw a card.'
+  cardText: '(E): Return a friendly Soul to your hand and draw a card.'
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
@@ -280,7 +280,7 @@ MonoBehaviour:
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 0
+    toggleSourceOptions: 1
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
@@ -539,8 +539,8 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 1
-    toggleTargetOptions: 1
+    toggleEffectOptions: 0
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 2
@@ -799,10 +799,10 @@ MonoBehaviour:
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
-    toggleTriggerOptions: 1
+    toggleTriggerOptions: 0
     toggleSourceOptions: 0
     toggleEffectOptions: 0
-    toggleTargetOptions: 1
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 1

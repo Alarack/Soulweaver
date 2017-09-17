@@ -43,6 +43,9 @@ public abstract class Effect {
             case DeckType.Void:
                 return Deck._void;
 
+            case DeckType.NotInGame:
+                return Deck._removed;
+
             case DeckType.None:
                 return null;
 

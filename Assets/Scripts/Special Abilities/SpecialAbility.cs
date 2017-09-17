@@ -307,27 +307,14 @@ public abstract class SpecialAbility {
                 break;
         }
 
-
-
-
-
-
-
-
         triggeringCards.Clear();
 
         if (clearTargetsOnEffectComplete)
             source.ClearAllSpecialAbilityTargets();
 
-
         if (clearTriggeringTargetFromOtherAbility) {
             RemoveTargetFromSpecificAbility(triggerConstraints.abilityToGatherTargetsFrom, card);
         }
-
-
-
-
-
 
         if (!trigger.Contains(AbilityActivationTrigger.SecondaryEffect)) {
             EventData data = new EventData();
@@ -342,9 +329,6 @@ public abstract class SpecialAbility {
         if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateSingleTargetVFX(card);
         }
-
-
-
 
     }
 
@@ -393,42 +377,25 @@ public abstract class SpecialAbility {
                         effectHolder.addOrRemoveSpecialAttribute[j].Remove(cards[i]);
                     }
                     break;
+
+
+                case EffectType.BestowAbility:
+                    for (int j = 0; j < effectHolder.bestowAbility.Count; j++) {
+                        effectHolder.bestowAbility[j].Remove(cards[i]);
+                    }
+
+                    break;
             }
         }
 
         ClearTargets();
         Unsubscribe();
     }
-    //protected void ApplyStatAdjustments(CardVisual card) {
-    //    for (int i = 0; i < statAdjustments.Count; i++) {
 
-    //        if (statAdjustments[i].valueSetBytargetStat) {
-
-    //            switch (statAdjustments[i].deriveStatsFromWhom) {
-    //                case DeriveStatsFromWhom.SourceOfEffect:
-    //                    statAdjustments[i].AlterValueBasedOnTarget(source as CreatureCardVisual);
-    //                    break;
-
-    //                case DeriveStatsFromWhom.TargetOFEffect:
-    //                    statAdjustments[i].AlterValueBasedOnTarget(card as CreatureCardVisual);
-    //                    break;
-    //            }
-    //        }
-
-    //        int spelldamage = Finder.FindTotalSpellDamage();
-
-    //        if (statAdjustments[i].spellDamage) {
-    //            ApplySpellDamge(statAdjustments[i], -spelldamage);
-    //        }
-
-    //        card.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, statAdjustments[i], source);
-
-    //    }
-    //}
-
-    private void ApplySpellDamge(StatAdjustment adjustment, int spellDamage) {
-        adjustment.ModifyValue(spellDamage);
+    public void Dispel() {
+        RemoveEffect(targets);
     }
+
 
     protected void SendManualTrigger() {
         if (manualTriggerAbilityNames.Count > 0) {
@@ -689,6 +656,7 @@ public abstract class SpecialAbility {
         //GameResource.ResourceType type = (GameResource.ResourceType)data.GetInt("ResourceType");
         int value = data.GetInt("Value");
         Player player = data.GetMonoBehaviour("Player") as Player;
+        GameResource.ResourceType resource = (GameResource.ResourceType)data.GetInt("ResourceType");
 
         //Debug.Log(type.ToString() + " has changed by a value of " + value);
 
@@ -698,7 +666,7 @@ public abstract class SpecialAbility {
         if (!source.photonView.isMine)
             return;
 
-        if (!CheckForResourceGainedOrLost(triggerConstraints, value))
+        if (!CheckForResourceGainedOrLost(triggerConstraints, value, resource))
             return;
 
         //Debug.Log(type.ToString() + " change has passed constraints");
@@ -1729,8 +1697,16 @@ public abstract class SpecialAbility {
         return result;
     }
 
-    protected bool CheckForResourceGainedOrLost(ConstraintList constraints, int value) {
+    protected bool CheckForResourceGainedOrLost(ConstraintList constraints, int value, GameResource.ResourceType resourceType) {
         bool result = false;
+
+        //Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is reporting: " + resourceType.ToString() + " is the type that has been reported initially");
+
+
+        if(resourceType != constraints.resourceThatChanged) {
+            //Debug.Log(resourceType.ToString() + " is not what " + source.gameObject.name + " is looking for " + "(" + constraints.resourceThatChanged + ")");
+            return false;
+        }
 
         GameResource targetResource = null;
 
@@ -1744,6 +1720,7 @@ public abstract class SpecialAbility {
         if (targetResource == null)
             return false;
 
+        //Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is reporting: " +  targetResource.resourceType.ToString() + " has changed by a value of " + value);
 
         switch (constraints.resourceGainedOrLost) {
             case GainedOrLost.Gained:

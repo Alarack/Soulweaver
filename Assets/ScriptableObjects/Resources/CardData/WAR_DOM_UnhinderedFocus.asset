@@ -146,12 +146,12 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 1
-    abilityName: 
+    abilityName: Reduce cost
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0400000002000000010000000b000000
+      types: 04000000010000000b000000
       owner: 2
       whosTurn: 0
       primaryType: 01000000
@@ -357,8 +357,8 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 1
-    toggleEffectOptions: 1
-    toggleTargetOptions: 1
+    toggleEffectOptions: 0
+    toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 2

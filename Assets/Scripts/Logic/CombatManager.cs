@@ -215,6 +215,12 @@ public class CombatManager : Photon.MonoBehaviour {
                 continue;
             }
 
+            if(Finder.CardHasKeyword(interceptor, Keywords.Invisible)) {
+                allInterceptors.Remove(interceptor);
+                //Debug.Log("Defender is invisable, removeing");
+                continue;
+            }
+
             if (interceptor.size < attacker.size) {
                 //Debug.Log(interceptor.cardData.cardName + " is smaller than " + attacker.cardData.cardName + ". Removeing");
                 allInterceptors.Remove(interceptor);
@@ -399,7 +405,7 @@ public class CombatManager : Photon.MonoBehaviour {
 
             if (confirmedTargetCallback(currentTarget)) {
 
-                Debug.Log(currentTarget.cardData.cardName + " has been clicked");
+                //Debug.Log(currentTarget.cardData.cardName + " has been clicked");
                 if (isChoosingTarget)
                     isChoosingTarget = false;
 
