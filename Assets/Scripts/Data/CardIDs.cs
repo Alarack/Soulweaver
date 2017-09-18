@@ -153,16 +153,16 @@ public class CardIDs {
         RLM_TKN_StoneGolem = 30005,
         RLM_TKN_SecondWind = 30006,
         RLM_TKN_HardlightGolem = 30007,
-        //RLM_TKN_BigGirl = 30008,
-        //RLM_TKN_Trainee = 30009,
+        RLM_Flare = 30008,
+        RLM_InSPIRE = 30009,
         RLM_TKN_Hoplite = 30010,
         RLM_TKN_WarpedLightBaracade = 30011,
-        //RLM_DrillmanGormen = 30012,
+        RLM_LesserEruption = 30012,
         RLM_LightLanceCavalry = 30013,
         RLM_GateGuardianCarth = 30014,
         RLM_GateGuardian = 30015,
-        //RLM_HardlightLongBowman = 30016,
-        //RLM_HardlightRifleman = 30017,
+        RLM_ScribeScroll = 30016,
+        RLM_LingeringEssence = 30017,
         RLM_HopliteGolem = 30018,
         RLM_BarrierGolem = 30019,
         RLM_HardlightCavalry = 30020,
@@ -266,6 +266,7 @@ public class CardIDs {
         RLM_SolarFlare = 30118,
         RLM_OrbitalBombardment = 30119,
         RLM_RadiantLance = 30120,
+        
         
 
 

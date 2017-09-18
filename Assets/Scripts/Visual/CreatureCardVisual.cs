@@ -92,6 +92,9 @@ public class CreatureCardVisual : CardVisual {
         int tempSize = _creatureData.size;
         size = tempSize;
 
+        int cost = _creatureData.cardCost;
+        essenceCost = cost;
+
         int tempHealth = _creatureData.health;
         health = tempHealth;
 

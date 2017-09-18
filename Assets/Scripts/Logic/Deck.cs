@@ -399,7 +399,7 @@ public class Deck : Photon.MonoBehaviour {
 
     public void RPCTransferCard(PhotonTargets targets, CardVisual card, Deck targetLocation) {
 
-        Debug.Log(card.cardData.cardName + " is being sent from " + card.currentDeck.decktype.ToString() + " to " + targetLocation.decktype.ToString());
+        //Debug.Log(card.cardData.cardName + " is being sent from " + card.currentDeck.decktype.ToString() + " to " + targetLocation.decktype.ToString());
 
         int cardID = card.photonView.viewID;
         int deckID = targetLocation.photonView.viewID;

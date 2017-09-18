@@ -313,6 +313,9 @@ public class CardVisual : Photon.MonoBehaviour {
         List<Constants.Keywords> tempKeywords = new List<Constants.Keywords>(cardData.keywords);
         keywords = tempKeywords;
 
+        int cost = cardData.cardCost;
+        essenceCost = cost;
+
         //ResetSpecialAttributes();
 
         StartCoroutine(ResetSpecials());
@@ -1259,8 +1262,8 @@ public class CardVisual : Photon.MonoBehaviour {
     public void ApplySpecialAbilityStatAdjustment(int sourceID, int adjID, bool waitForVFX, bool setStat) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment with ID: " + adjID /*+". Should it Wait for FVX::: " + waitForVFX + ". is it Setting Stats::: " + setStat*/);
-        Debug.Log("The stat adjustment is being applied to " + gameObject.name + " ::: " + cardData.cardName);
+        //Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is applying a stat adjustment with ID: " + adjID /*+". Should it Wait for FVX::: " + waitForVFX + ". is it Setting Stats::: " + setStat*/);
+        //Debug.Log("The stat adjustment is being applied to " + gameObject.name + " ::: " + cardData.cardName);
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
         SpecialAbility.StatAdjustment targetAdj = null;
@@ -1304,7 +1307,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX, bool setStats) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(source.gameObject.name + " is removeing stat adjustments");
+        //Debug.Log(source.gameObject.name + " is removeing stat adjustments");
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
