@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeckBuilder : MonoBehaviour {
 
@@ -50,6 +51,7 @@ public class DeckBuilder : MonoBehaviour {
     public GeneralSelector generalSelector;
     public GrimoireSelector grimoireSelector;
     public FactionSelector factionSelector;
+    public ScrollRect cardView;
 
     void Start() {
         allCards = GetComponent<Deck>();
@@ -123,6 +125,7 @@ public class DeckBuilder : MonoBehaviour {
             case DeckBuilderSubPanel.CardSearch:
                 //DestroyAllListings();
                 currentIndex = 0;
+                cardView.verticalNormalizedPosition = 1;
 
                 filters.faction = faction;
 
@@ -277,6 +280,7 @@ public class DeckBuilder : MonoBehaviour {
         }
 
         if (existingListing != null) {
+            //Debug.Log(existingListing.card.cardName + " is already in the deck");
             existingListing.AddCard();
         }
         else {
@@ -531,6 +535,13 @@ public class DeckBuilder : MonoBehaviour {
     }
 
     #endregion
+
+
+    public void GoToMainMenu() {
+        NetworkManager._allDecks.Clear();
+        SceneManager.LoadScene("TitleScreen");
+    }
+
 
     [Serializable]
     public class DeckData {

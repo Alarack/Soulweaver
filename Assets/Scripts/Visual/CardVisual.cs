@@ -91,6 +91,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
     protected virtual void Update() {
 
+        if (photonView == null)
+            return;
+
+
         if (photonView.isMine) {
 
             if (!owner.dragger.moveableIsGrabbed && currentDeck.decktype == Constants.DeckType.Hand && handPos != null && Vector3.Distance(transform.position, handPos.position) > 0.2f) {
@@ -129,6 +133,10 @@ public class CardVisual : Photon.MonoBehaviour {
         cardImage.transform.localPosition = cardData.cardImagePos;
         attackEffect = cardData.attackEffect;
         deathEffect = cardData.deathVFX;
+
+        if (photonView == null)
+            return;
+
 
         // Initalizing Current Data
         int tempCost = cardData.cardCost;

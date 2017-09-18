@@ -1,0 +1,22 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MainMenu : MonoBehaviour {
+
+
+
+
+
+    public void GotoPlayMode() {
+        SceneManager.LoadScene("Main");
+    }
+
+    public void GoToDeckBuilder() {
+        SceneManager.LoadScene("DeckBuilder");
+    }
+
+
+
+}

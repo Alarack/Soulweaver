@@ -48,16 +48,26 @@ public static class Finder {
 
         for (int i = 0; i < allCards.Count; i++) {
             CreatureCardVisual soul = allCards[i] as CreatureCardVisual;
-            CardCreatureData soulData = soul.cardData as CardCreatureData;
+            //CardCreatureData soulData = soul.cardData as CardCreatureData;
 
-            if (soul.health < soulData.health && damaged) {
+            //Debug.Log("Checking to see if " + soul.cardData.cardName + " is damaged " + damaged);
+
+            //Debug.Log(soul.health + " is the heath of " + soul.cardData.cardName);
+
+            if (soul.health < soul.maxHealth && damaged) {
                 results.Add(soul);
+
+                //Debug.Log(soul.cardData.cardName + " is damaged");
+
             }
 
-            if (soul.health >= soulData.health && !damaged) {
+            if (soul.health >= soul.maxHealth && !damaged) {
                 results.Add(soul);
             }
         }
+
+
+
 
         return results;
     }
@@ -365,12 +375,26 @@ public static class Finder {
     public static Deck FindDeckByID(int id) {
         Deck deck = null;
 
-        for (int i = 0; i < Deck._allDecks.Count; i++) {
-            if (Deck._allDecks[i].photonView.viewID == id) {
-                deck = Deck._allDecks[i];
-                break;
+        //Debug.Log(Deck._allDecks);
+
+        try {
+            for (int i = 0; i < NetworkManager._allDecks.Count; i++) {
+                if (NetworkManager._allDecks[i].photonView.viewID == id) {
+                    deck = NetworkManager._allDecks[i];
+                    break;
+                }
             }
+
         }
+        catch (MissingReferenceException) {
+            for(int i = 0; i < NetworkManager._allDecks.Count; i++) {
+                Debug.Log(NetworkManager._allDecks[i].decktype.ToString() + " is a deck in all decks");
+                Debug.Log(NetworkManager._allDecks[i].photonView);
+            }
+
+        }
+
+
 
         return deck;
     }

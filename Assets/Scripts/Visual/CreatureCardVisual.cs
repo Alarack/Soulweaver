@@ -92,9 +92,6 @@ public class CreatureCardVisual : CardVisual {
         int tempSize = _creatureData.size;
         size = tempSize;
 
-        int cost = _creatureData.cardCost;
-        essenceCost = cost;
-
         int tempHealth = _creatureData.health;
         health = tempHealth;
 
@@ -117,7 +114,7 @@ public class CreatureCardVisual : CardVisual {
     }
 
     public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true, bool setStats = false) {
-        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent, setStats);
+        //base.AlterCardStats(stat, value, source, waitForVFX, sendEvent, setStats);
 
         //Debug.Log("creature card alter stat");
         switch (stat) {
@@ -222,6 +219,9 @@ public class CreatureCardVisual : CardVisual {
 
                 break;
         }
+
+
+        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent, setStats);
 
         if (waitForVFX) {
             SpecialAbility.StatAdjustment latest = new SpecialAbility.StatAdjustment(stat, value, false, false, null);

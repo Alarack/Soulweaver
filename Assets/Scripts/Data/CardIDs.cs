@@ -247,7 +247,7 @@ public class CardIDs {
         RLM_GEN_Alexia = 30099,
         RLM_GEN_DurianQin = 30100,
         RLM_GEN_Helseth = 30101,
-        RLM_DOM_SiegeTower = 30102,
+        RLM_DOM_EmbueWithPower = 30102,
         RLM_TKN_IgnitionBlast = 30103,
         RLM_TKN_SeismicSlam = 30104,
         RLM_TKN_Comet = 30105,

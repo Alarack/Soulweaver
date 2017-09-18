@@ -135,6 +135,9 @@ public abstract class SpecialAbility {
             return;
         }
 
+        if (source.photonView == null)
+            return;
+
         RegisterListeners();
         InitializeEffects();
         source.specialAbilities.Add(this);
@@ -487,7 +490,7 @@ public abstract class SpecialAbility {
 
     public virtual void RegisterListeners() {
 
-        if (!source.photonView.isMine)
+        if (source.photonView != null && !source.photonView.isMine)
             return;
 
 

@@ -19,13 +19,20 @@ public class Deck : Photon.MonoBehaviour {
     public static Deck _allCards;
     //public static Deck _void;
     //public static Deck _removed;
-    public static List<Deck> _allDecks = new List<Deck>();
+    //public static List<Deck> _allDecks = new List<Deck>();
 
 
     void Awake() {
 
+        //RegisterDeck();
+
         if (decktype == DeckType.AllCards) {
             _allCards = this;
+
+            //for(int i = 0; i < _allDecks.Count; i++) {
+            //    Debug.Log(_allDecks[i].decktype.ToString() + " is a deck in all decks");
+            //}
+            
         }
 
         //if (decktype == DeckType.Void) {
@@ -36,7 +43,7 @@ public class Deck : Photon.MonoBehaviour {
         //    _removed = this;
         //}
 
-        RegisterDeck();
+
     }
 
 
@@ -51,8 +58,15 @@ public class Deck : Photon.MonoBehaviour {
 
     }
 
+    void OnEnable() {
+
+        if (!NetworkManager._allDecks.Contains(this)) {
+            RegisterDeck();
+        }
+    }
+
     public void RegisterDeck() {
-        _allDecks.Add(this);
+        NetworkManager._allDecks.Add(this);
     }
 
     public void AddCard(CardVisual card) {

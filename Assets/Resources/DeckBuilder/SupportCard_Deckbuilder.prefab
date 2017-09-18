@@ -765,7 +765,6 @@ GameObject:
   m_Component:
   - component: {fileID: 224728340319217582}
   - component: {fileID: 114091772177183800}
-  - component: {fileID: 114489744011197338}
   - component: {fileID: 65969284043415014}
   - component: {fileID: 114342031984428310}
   - component: {fileID: 114696916192119298}
@@ -1228,6 +1227,7 @@ MonoBehaviour:
   otherCardTypes: 
   attunements: 
   subTypes: 
+  faction: 0
   keywords: 
   specialAttributes: []
   userTargtedAbilities: []
@@ -1601,32 +1601,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: -5
---- !u!114 &114489744011197338
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1976159120479880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerId: 0
-  group: 0
-  OwnerShipWasTransfered: 0
-  prefixBackup: -1
-  synchronization: 3
-  onSerializeTransformOption: 3
-  onSerializeRigidBodyOption: 2
-  ownershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 114091772177183800}
-  ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
-  currentMasterID: -1
-  isRuntimeInstantiated: 0
 --- !u!114 &114492438000120088
 MonoBehaviour:
   m_ObjectHideFlags: 1
