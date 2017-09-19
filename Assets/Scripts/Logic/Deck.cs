@@ -669,6 +669,7 @@ public class Deck : Photon.MonoBehaviour {
                     card.transform.position = card.battlefieldPos.position;
                     card.RPCSetCardAciveState(PhotonTargets.All, false);
                     card.RPCSetCardPosition(PhotonTargets.Others, card.battlefieldPos.position);
+                    card.DisplaySummoneEffect();
                 }
 
                 break;

@@ -48,6 +48,8 @@ public class GameResource {
         //    currentValue += value;
         //}
 
+        //Debug.Log(resourceType.ToString() + " is being increased in game resource");
+
         UpdateText();
 
         EventData data = new EventData();

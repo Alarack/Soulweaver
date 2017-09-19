@@ -101,10 +101,7 @@ public class DeckBuilder : MonoBehaviour {
 
     private void RegisterListeners() {
         Grid.EventManager.RegisterListener(Constants.GameEvent.CardSelected, OnCardSelected);
-
     }
-
-
 
     public void ShowSubPanel(DeckBuilderSubPanel panel, Constants.Faction faction = Constants.Faction.All) {
 

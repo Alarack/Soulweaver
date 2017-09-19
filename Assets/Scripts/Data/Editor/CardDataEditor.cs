@@ -50,6 +50,7 @@ public class CardDataEditor : Editor {
         _cardData.movingVFX = EditorGUILayout.Toggle("Moving VFX?", _cardData.movingVFX);
         EditorGUILayout.Separator();
         _cardData.deathVFX = EditorGUILayout.TextField("Death Effect Name", _cardData.deathVFX);
+        _cardData.summonVFX = EditorGUILayout.TextField("Summon Effect Name", _cardData.summonVFX);
 
         EditorGUILayout.Separator();
         EditorGUILayout.Separator();
@@ -728,6 +729,13 @@ public class CardDataEditor : Editor {
             entry.triggerConstraints.triggersRequired = EditorGUILayout.IntField("How many?", entry.triggerConstraints.triggersRequired);
             entry.triggerConstraints.resetCountAtTurnEnd = EditorGUILayout.Toggle("Reset Counter On Turn End?", entry.triggerConstraints.resetCountAtTurnEnd);
         }
+
+        entry.triggerConstraints.dependantOnOncePerTurnAbility = EditorGUILayout.Toggle("Dependant on another Once Per Turn Abilit?", entry.triggerConstraints.dependantOnOncePerTurnAbility);
+
+        if (entry.triggerConstraints.dependantOnOncePerTurnAbility) {
+            entry.triggerConstraints.oncePerTurnAbilityname = EditorGUILayout.TextField("Ability Name", entry.triggerConstraints.oncePerTurnAbilityname);
+        }
+
         entry.triggerDuration = EditorHelper.EnumPopup("Trigger Duration?", entry.triggerDuration);
 
         for (int i = 0; i < entry.trigger.Count; i++) {

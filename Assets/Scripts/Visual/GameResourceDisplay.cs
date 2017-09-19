@@ -84,10 +84,15 @@ public class GameResourceDisplay : Photon.MonoBehaviour {
 
         GameResource.ResourceType resourceType = (GameResource.ResourceType)resourceTypeEnum;
 
+        //Debug.Log(resourceType.ToString() + " is being increased");
+
         for (int i = 0; i < resourceDisplayInfo.Count; i++) {
             if(resourceDisplayInfo[i].resource.resourceType == resourceType) {
 
                 resourceDisplayInfo[i].resource.AddResource(value);
+
+
+
                 break;
             }
         }

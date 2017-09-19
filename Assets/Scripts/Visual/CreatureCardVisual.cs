@@ -547,6 +547,26 @@ public class CreatureCardVisual : CardVisual {
 
     }
 
+    public override void DisplaySummoneEffect() {
+        base.DisplaySummoneEffect();
+
+
+
+        GameObject summonVFX;
+
+        bool hasSummonEffect = string.IsNullOrEmpty(summonEffect);
+
+        if (!hasSummonEffect)
+            summonVFX = PhotonNetwork.Instantiate(summonEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        else {
+            summonVFX = PhotonNetwork.Instantiate("VFX_Summon_BasicBlue", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        }
+
+        summonVFX.GetComponent<CardVFX>().Initialize(this, false, false);
+
+
+    }
+
     public void RPCShowDamage(PhotonTargets targets, int damage) {
         //GameObject dmgVFX = PhotonNetwork.Instantiate(damageVFX, transform.position, Quaternion.identity, 0) as GameObject;
         //CardVFX vfx = dmgVFX.GetComponent<CardVFX>();

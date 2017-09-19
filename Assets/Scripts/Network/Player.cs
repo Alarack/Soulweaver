@@ -666,6 +666,16 @@ public class Player : Photon.MonoBehaviour {
 
             gameResourceDisplay.AddNewResource(newResource, newText, false);
 
+
+
+            EventData data = new EventData();
+            data.AddInt("ResourceType", (int)type);
+            data.AddInt("Value", current);
+            data.AddMonoBehaviour("Player", this);
+
+            Grid.EventManager.SendEvent(Constants.GameEvent.ResourceChanged, data);
+
+
         }
 
     }

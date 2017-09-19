@@ -20,6 +20,7 @@ public class CardData : ScriptableObject {
     public string attackEffect;
     public bool movingVFX;
     public string deathVFX;
+    public string summonVFX;
 
     [Header("Types and Attunements")]
     public Constants.Faction faction;
