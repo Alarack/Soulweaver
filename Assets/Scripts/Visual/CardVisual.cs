@@ -168,6 +168,7 @@ public class CardVisual : Photon.MonoBehaviour {
         SetUpSpecialAbilities();
 
         Grid.EventManager.RegisterListener(Constants.GameEvent.CardLeftZone, OnLeavesBattlefield);
+        Grid.EventManager.RegisterListener(Constants.GameEvent.CardEnteredZone, OnEntersBattlefield);
     }
 
 
@@ -369,7 +370,7 @@ public class CardVisual : Photon.MonoBehaviour {
             CreatureCardVisual soul = this as CreatureCardVisual;
             value = soul.CalcProtection(value);
 
-            if(value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
+            if (value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
                 value = 0;
             }
 
@@ -383,7 +384,7 @@ public class CardVisual : Photon.MonoBehaviour {
             data.AddInt("Value", value);
             data.AddMonoBehaviour("Target", this);
             data.AddMonoBehaviour("Source", source);
-          
+
 
             //Debug.Log(gameObject.name + " :: " + cardData.cardName + " has had " + stat.ToString() + " alterd by " + source.gameObject.name + " :: " + source.cardData.cardName);
 
@@ -398,7 +399,7 @@ public class CardVisual : Photon.MonoBehaviour {
                     animationManager.BounceText(stat);
                 }
 
-                if (setStats) 
+                if (setStats)
                     essenceCost = value;
                 else
                     essenceCost += value;
@@ -557,7 +558,8 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     public virtual void ShowDeckBuilderTooltip() {
-        CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
+        if(currentDeck != null)
+            CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
     }
 
     public virtual void HideDeckbuilderTooltip() {
@@ -565,10 +567,10 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
     public virtual void ShowVisualTooltip() {
-        if(visualTooltip == null) {
+        if (visualTooltip == null) {
             visualTooltip = CardTooltip.ShowVisualTooltip(cardData);
 
-            if(visualTooltip != null)
+            if (visualTooltip != null)
                 visualTooltip.transform.localScale *= 1.75f;
 
             SetVisualTokenLocation();
@@ -578,6 +580,19 @@ public class CardVisual : Photon.MonoBehaviour {
             visualTooltip.gameObject.SetActive(true);
             SetVisualTokenLocation();
         }
+    }
+
+    public void ShowcardPlayed() {
+
+        CardVisual tempTooltip = CardTooltip.ShowVisualTooltip(cardData);
+
+        tempTooltip.transform.localScale *= 1.75f;
+        tempTooltip.transform.localPosition = CardTooltip.cardTooltip.staticPosition.anchoredPosition;
+
+        Grid.EventManager.RemoveMyListeners(tempTooltip);
+        Destroy(tempTooltip.gameObject, 2f);
+
+
     }
 
     private void SetVisualTokenLocation() {
@@ -600,23 +615,39 @@ public class CardVisual : Photon.MonoBehaviour {
         temp.x -= canvasTransform.sizeDelta.x * canvasTransform.pivot.x;
         temp.y -= canvasTransform.sizeDelta.y * canvasTransform.pivot.y;
 
+        //Debug.Log(temp.y /*+ visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y*/ + " is the y pos");
 
-        if(temp.y - (visualTooltip.GetComponent<RectTransform>().sizeDelta.y /2) < 0) {
-            Debug.Log(temp.y + " is the y pos");
-            Debug.Log(visualTooltip.GetComponent<RectTransform>().sizeDelta.y + " is the card height");
+        if (temp.y - (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2) < -(canvasTransform.sizeDelta.y / 2)) {
+            float difference = (canvasTransform.sizeDelta.y / 2) - Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2));
+            float testValue = Mathf.Abs(difference - (canvasTransform.sizeDelta.y * canvasTransform.pivot.y));
 
+            if (visualTooltip != null) {
+                visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y + testValue);
+            }
 
-            Debug.Log("off bottom " + (temp.y - (visualTooltip.GetComponent<RectTransform>().sizeDelta.y / 2)));
+            return;
+        }
+
+        if (temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2) > canvasTransform.sizeDelta.y / 2) {
+            float difference = (canvasTransform.sizeDelta.y / 2) + Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2));
+            float testValue = Mathf.Abs(difference + (canvasTransform.sizeDelta.y * canvasTransform.pivot.y));
+
+            if (visualTooltip != null) {
+                visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y - testValue);
+            }
+
+            return;
         }
 
         if (visualTooltip != null) {
-            visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y + 150f);
+            visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y);
         }
+
 
     }
 
     public virtual void HideVisualTooltip() {
-        if(visualTooltip != null && visualTooltip.gameObject.activeInHierarchy) {
+        if (visualTooltip != null && visualTooltip.gameObject.activeInHierarchy) {
             visualTooltip.gameObject.SetActive(false);
             tooltipTimer = 0f;
         }
@@ -624,10 +655,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public virtual void ShowDelayedTooltip() {
 
-        if(tooltipTimer < 1f) {
+        if (tooltipTimer < 1f) {
             tooltipTimer += Time.deltaTime;
 
-            if(tooltipTimer >= 1f) {
+            if (tooltipTimer >= 1f) {
                 ShowVisualTooltip();
             }
 
@@ -670,15 +701,15 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         if (photonView.isMine || currentDeck.decktype == Constants.DeckType.Battlefield) {
-            CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
+            //CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
 
             if (Input.GetMouseButton(0)) {
                 HideVisualTooltip();
             }
             else {
-                if (!Mulligan.choosingMulligan ) {
+                if (!Mulligan.choosingMulligan) {
 
-                    if(currentDeck.decktype == Constants.DeckType.Hand) {
+                    if (currentDeck.decktype == Constants.DeckType.Hand) {
                         ShowVisualTooltip();
                     }
                     else {
@@ -698,7 +729,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 if (Input.GetMouseButton(0)) {
                     ActivateGlow(Color.cyan);
 
-                    if(this is CreatureCardVisual)
+                    if (this is CreatureCardVisual)
                         owner.battleFieldManager.GetNearestCardPosition(transform.position);
                     //Debug.Log(nearest.gameObject.name);
                 }
@@ -734,7 +765,7 @@ public class CardVisual : Photon.MonoBehaviour {
             if (currentDeck.decktype != Constants.DeckType.Hand)
                 return;
 
-            if(this is CreatureCardVisual) {
+            if (this is CreatureCardVisual) {
                 Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
 
                 if (nearest == null)
@@ -786,8 +817,8 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         //Intercepting
-        if (Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat 
-            && (primaryCardType == Constants.CardType.Soul || (primaryCardType == Constants.CardType.Player && keywords.Contains(Constants.Keywords.GeneralIntercept)) 
+        if (Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat
+            && (primaryCardType == Constants.CardType.Soul || (primaryCardType == Constants.CardType.Player && keywords.Contains(Constants.Keywords.GeneralIntercept))
             && currentDeck.decktype == Constants.DeckType.Battlefield)) {
 
             if (!CheckForInterceptionPrevention())
@@ -927,7 +958,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
 
-   
+
 
     #endregion
 
@@ -941,14 +972,11 @@ public class CardVisual : Photon.MonoBehaviour {
         if (card != this)
             return;
 
-
         if (animationManager != null) {
             //if(stat != Constants.CardStats.Health && value < 1)
             //Debug.Log(statAdjustments.Count + " is the current count of stat adjustments on " + cardData.cardName + " : " + gameObject.name);
-
             animationManager.BounceText(lastStatAdjustment.stat);
         }
-
     }
 
 
@@ -973,7 +1001,6 @@ public class CardVisual : Photon.MonoBehaviour {
         if (card != this)
             return;
 
-
         switch (primaryCardType) {
 
             case Constants.CardType.Soul:
@@ -994,6 +1021,34 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         ResetCardData();
+    }
+
+    protected void OnEntersBattlefield(EventData data) {
+        CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
+        Deck deck = data.GetMonoBehaviour("Deck") as Deck;
+
+        if (card != this)
+            return;
+
+        if (!photonView.isMine)
+            return;
+
+        if (!owner.photonView.isMine)
+            return;
+
+        if (deck.decktype != Constants.DeckType.Battlefield)
+            return;
+
+        if (keywords.Contains(Constants.Keywords.Token))
+            return;
+
+        if (primaryCardType == Constants.CardType.Player || primaryCardType == Constants.CardType.Domain)
+            return;
+
+        //Debug.Log(deck.decktype.ToString());
+        //Debug.Log(primaryCardType.ToString());
+
+        RPCDisplayCardPlayed();
 
     }
 
@@ -1070,7 +1125,7 @@ public class CardVisual : Photon.MonoBehaviour {
     [PunRPC]
     public void SetParentDeck(string deck) {
 
-        Debug.Log(deck + " was sent to set Parent Deck");
+        //Debug.Log(deck + " was sent to set Parent Deck");
 
 
         switch (deck) {
@@ -1359,7 +1414,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         }
 
-        if(targetAdj == null) {
+        if (targetAdj == null) {
             Debug.LogError("a stat adjustment with ID " + adjID + " could not be found on " + source.gameObject.name + " ::: " + source.cardData.cardName);
         }
 
@@ -1467,11 +1522,11 @@ public class CardVisual : Photon.MonoBehaviour {
 
     [PunRPC]
     public void RemoveSpecialAttribute(int sourceID, int attributeID) {
-      
+
         SpecialAttribute targetAttribute = GetSpecialAttributeFromSource(sourceID, attributeID);
 
-        if(targetAttribute != null) {
-            if(specialAttributes.Contains(targetAttribute))
+        if (targetAttribute != null) {
+            if (specialAttributes.Contains(targetAttribute))
                 specialAttributes.Remove(targetAttribute);
         }
     }
@@ -1817,26 +1872,42 @@ public class CardVisual : Photon.MonoBehaviour {
 
     [PunRPC]
     public void Dispel() {
-        for (int i = statAdjustments.Count -1; i >= 0; i--) {
+        for (int i = statAdjustments.Count - 1; i >= 0; i--) {
             RemoveSpecialAbilityStatAdjustment(statAdjustments[i].uniqueID, statAdjustments[i].source.photonView.viewID, false, false);
         }
 
         for (int i = 0; i < specialAbilities.Count; i++) {
 
-            if(specialAbilities[i].effectDuration == Constants.Duration.WhileInZone) {
+            if (specialAbilities[i].effectDuration == Constants.Duration.WhileInZone) {
                 specialAbilities[i].Dispel();
             }
 
             RemoveSpecialAbility(specialAbilities[i].abilityName);
         }
 
-        for(int i = 0; i < keywords.Count; i++) {
-            if(keywords[i] != Constants.Keywords.Interceptor && keywords[i] != Constants.Keywords.Token) {
+        for (int i = 0; i < keywords.Count; i++) {
+            if (keywords[i] != Constants.Keywords.Interceptor && keywords[i] != Constants.Keywords.Token) {
                 ToggleKeyword(false, (int)keywords[i]);
             }
         }
 
         specialAttributes.Clear();
+    }
+
+
+
+
+    public void RPCDisplayCardPlayed() {
+
+        photonView.RPC("DisplayCardPlayed", PhotonTargets.Others);
+    }
+
+    [PunRPC]
+    public void DisplayCardPlayed() {
+        //CardVisual card = Finder.FindCardByID(cardID);
+
+        ShowcardPlayed();
+
     }
 
 

@@ -8,6 +8,7 @@ public class CardTooltip : MonoBehaviour {
     public static CardTooltip cardTooltip;
     public static Canvas canvas;
     public RectTransform cardContainer;
+    public RectTransform staticPosition;
 
     public GameObject tooltipContainer;
     public Text toolTipText;
