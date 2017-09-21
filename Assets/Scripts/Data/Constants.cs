@@ -352,6 +352,9 @@ public class Constants {
         //DeckBuilder
         CardSelected = 1000,
         CardDeselected = 1001,
+
+        //End Game
+        GameEnding = 1200,
     }
 
 

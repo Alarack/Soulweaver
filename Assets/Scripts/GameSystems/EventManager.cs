@@ -74,6 +74,8 @@ public class EventManager {
             eventData = _defaultData;
 
 #if UNITY_EDITOR
+
+
         eventData.__delivered = true;
 #endif
 

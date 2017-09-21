@@ -15,13 +15,13 @@ public class ZoneManager : MonoBehaviour {
     }
 
 
-    private void OnEnable() {
-        Grid.EventManager.RegisterListener(Constants.GameEvent.CardEnteredZone, OnCardEnteringZone);
-    }
+    //private void OnEnable() {
+    //    Grid.EventManager.RegisterListener(Constants.GameEvent.CardEnteredZone, OnCardEnteringZone);
+    //}
 
-    private void OnDisable() {
-        Grid.EventManager.RemoveMyListeners(this);
-    }
+    //private void OnDisable() {
+    //    Grid.EventManager.RemoveMyListeners(this);
+    //}
 
 
 

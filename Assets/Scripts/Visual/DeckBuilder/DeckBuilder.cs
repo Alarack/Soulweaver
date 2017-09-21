@@ -535,7 +535,15 @@ public class DeckBuilder : MonoBehaviour {
 
 
     public void GoToMainMenu() {
+
+        for (int i = 0; i < allCards.activeCards.Count; i++) {
+            //Debug.Log(Deck._allCards.activeCards[i].gameObject.name + " is unreging");
+            allCards.activeCards[i].UnregisterEverything();
+        }
+
+
         NetworkManager._allDecks.Clear();
+        allCards.activeCards.Clear();
         SceneManager.LoadScene("TitleScreen");
     }
 

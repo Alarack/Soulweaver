@@ -169,6 +169,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         Grid.EventManager.RegisterListener(Constants.GameEvent.CardLeftZone, OnLeavesBattlefield);
         Grid.EventManager.RegisterListener(Constants.GameEvent.CardEnteredZone, OnEntersBattlefield);
+        //Grid.EventManager.RegisterListener(Constants.GameEvent.GameEnding, OnGameEnd);
     }
 
 
@@ -511,6 +512,15 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
+    public virtual void UnregisterEverything() {
+        Grid.EventManager.RemoveMyListeners(this);
+        for (int i = 0; i < specialAbilities.Count; i++) {
+            UnregisterSpecialAbility(specialAbilities[i]);
+        }
+
+
+    }
+
     public int GetStatValue(Constants.CardStats stat, bool current = false) {
         int result = 0;
 
@@ -707,7 +717,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 HideVisualTooltip();
             }
             else {
-                if (!Mulligan.choosingMulligan) {
+                if (!Mulligan.choosingMulligan && primaryCardType != Constants.CardType.Player) {
 
                     if (currentDeck.decktype == Constants.DeckType.Hand) {
                         ShowVisualTooltip();
@@ -1004,7 +1014,6 @@ public class CardVisual : Photon.MonoBehaviour {
         switch (primaryCardType) {
 
             case Constants.CardType.Soul:
-            case Constants.CardType.Player:
             case Constants.CardType.Domain:
             case Constants.CardType.Support:
                 if (deck.decktype != Constants.DeckType.Battlefield)
@@ -1018,6 +1027,14 @@ public class CardVisual : Photon.MonoBehaviour {
                     return;
 
                 break;
+
+            //case Constants.CardType.Player:
+            //    if (deck.decktype != Constants.DeckType.Battlefield)
+            //        return;
+
+            //    GameObject.FindGameObjectWithTag("MainMenu").SetActive(true);
+
+            //    break;
         }
 
         ResetCardData();
@@ -1029,6 +1046,12 @@ public class CardVisual : Photon.MonoBehaviour {
 
         if (card != this)
             return;
+
+        if (card.primaryCardType == Constants.CardType.Player && deck.decktype == Constants.DeckType.SoulCrypt) {
+            GameObject.FindGameObjectWithTag("MainMenu").GetComponent<MainMenu>().ShowMenu();
+            return;
+        }
+
 
         if (!photonView.isMine)
             return;
@@ -1050,6 +1073,15 @@ public class CardVisual : Photon.MonoBehaviour {
 
         RPCDisplayCardPlayed();
 
+    }
+
+    public void OnGameEnd(EventData data) {
+        StartCoroutine(EndGame());
+    }
+
+    private IEnumerator EndGame() {
+        yield return new WaitForSeconds(0.5f);
+        UnregisterEverything();
     }
 
 

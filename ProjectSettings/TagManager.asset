@@ -8,6 +8,7 @@ TagManager:
   - VFX
   - HUD
   - CardInfo
+  - MainMenu
   layers:
   - Default
   - TransparentFX

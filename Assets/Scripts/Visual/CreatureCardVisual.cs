@@ -74,11 +74,6 @@ public class CreatureCardVisual : CardVisual {
 
     public override void ResetCardData() {
         base.ResetCardData();
-
-
-
-
-
         StartCoroutine(ResetCardVisualData());
     }
 
@@ -444,6 +439,15 @@ public class CreatureCardVisual : CardVisual {
             hasAttacked = true;
 
     }
+
+    public override void UnregisterEverything() {
+        base.UnregisterEverything();
+
+        Grid.EventManager.RemoveMyListeners(this);
+
+        //Debug.Log(gameObject.name + " is unregistering");
+    }
+
 
     #endregion
 
