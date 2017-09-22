@@ -18,6 +18,10 @@ public class MainMenu : MonoBehaviour {
 
         if (PhotonNetwork.connected) {
             for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
+
+                if (Deck._allCards.activeCards[i] == null)
+                    continue;
+
                 Deck._allCards.activeCards[i].UnregisterEverything();
             }
 
@@ -35,6 +39,10 @@ public class MainMenu : MonoBehaviour {
     public void GoToTitleScene() {
         for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
             //Debug.Log(Deck._allCards.activeCards[i].gameObject.name + " is unreging");
+
+            if (Deck._allCards.activeCards[i] == null)
+                continue;
+
             Deck._allCards.activeCards[i].UnregisterEverything();
         }
 
