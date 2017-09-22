@@ -95,6 +95,10 @@ public class CardVisual : Photon.MonoBehaviour {
         combatManager = FindObjectOfType<CombatManager>();
     }
 
+    private void OnDisable() {
+        UnregisterEverything();
+    }
+
     protected virtual void Update() {
 
         if (photonView == null)

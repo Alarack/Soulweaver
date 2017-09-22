@@ -35,6 +35,12 @@ public class CreatureCardVisual : CardVisual {
 
     public CardCreatureData _creatureData;
 
+
+    private void OnDisable() {
+        UnregisterEverything();
+    }
+
+
     public override void SetupCardData() {
         base.SetupCardData();
 
