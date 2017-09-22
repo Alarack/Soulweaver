@@ -569,7 +569,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public virtual void ShowDeckBuilderTooltip() {
         if(currentDeck != null)
-            CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
+            CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + cardData.cardCost.ToString() + "\n" + cardData.cardText);
     }
 
     public virtual void HideDeckbuilderTooltip() {
