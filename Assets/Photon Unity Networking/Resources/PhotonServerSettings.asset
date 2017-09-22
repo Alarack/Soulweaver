@@ -110,4 +110,5 @@ MonoBehaviour:
   - CreateStatAdjustment
   - RemoteRemoveSpecialAbility
   - Dispel
+  - DisplayCardPlayed
   DisableAutoOpenWizard: 1

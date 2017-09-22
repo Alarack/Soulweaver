@@ -493,7 +493,12 @@ public class CombatManager : Photon.MonoBehaviour {
 
         for (int i = 0; i < targets.Count; i++) {
             totalStats.AddRange(SpecialAbility.StatAdjustment.CopyStats(targets[i] as CreatureCardVisual));
-            targets[i].currentDeck.RPCTransferCard(PhotonTargets.All, targets[i], Deck._void);
+
+            if (targets[i].keywords.Contains(Keywords.Interceptor)) {
+                ((CreatureCardVisual)targets[i]).battlefieldPos.position -= ((CreatureCardVisual)targets[i]).interceptPos;
+            }
+
+            targets[i].currentDeck.RPCTransferCard(PhotonTargets.All, targets[i], owner.theVoid);
         }
 
         totalStats.AddRange(SpecialAbility.StatAdjustment.CreateStatSet(1, 1, 1));

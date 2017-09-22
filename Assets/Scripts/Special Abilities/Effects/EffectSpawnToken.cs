@@ -109,13 +109,14 @@ public class EffectSpawnToken : Effect {
     private CardVisual SpawnBaseToken(CardData data, string prefabName) {
 
         if (spawnForOpponent) {
-            source.owner.opponent.activeGrimoire.GetComponent<Deck>().RPCSpawnCardRemote(PhotonTargets.Others, data.cardID, prefabName, spawnTokenLocation);
+            //source.owner.opponent.activeGrimoire.GetComponent<Deck>().RPCSpawnCardRemote(PhotonTargets.Others, data.cardID, prefabName, spawnTokenLocation);
+            source.owner.opponent.notInGame.RPCSpawnCardRemote(PhotonTargets.Others, data.cardID, prefabName, spawnTokenLocation);
             return null;
         }
 
         //CardVisual tokenCard = source.owner.activeGrimoire.GetComponent<Deck>().CardFactory(data, prefabName, GetDeckFromType(spawnTokenLocation, source));
 
-        CardVisual tokenCard = Deck._removed.CardFactory(data, prefabName, GetDeckFromType(spawnTokenLocation, source));
+        CardVisual tokenCard = source.owner.notInGame.CardFactory(data, prefabName, GetDeckFromType(spawnTokenLocation, source));
 
         //tokenCard.isToken = true;
         parentAbility.targets.Add(tokenCard);

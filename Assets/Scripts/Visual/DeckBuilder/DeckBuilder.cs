@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeckBuilder : MonoBehaviour {
 
@@ -50,6 +51,7 @@ public class DeckBuilder : MonoBehaviour {
     public GeneralSelector generalSelector;
     public GrimoireSelector grimoireSelector;
     public FactionSelector factionSelector;
+    public ScrollRect cardView;
 
     void Start() {
         allCards = GetComponent<Deck>();
@@ -99,10 +101,7 @@ public class DeckBuilder : MonoBehaviour {
 
     private void RegisterListeners() {
         Grid.EventManager.RegisterListener(Constants.GameEvent.CardSelected, OnCardSelected);
-
     }
-
-
 
     public void ShowSubPanel(DeckBuilderSubPanel panel, Constants.Faction faction = Constants.Faction.All) {
 
@@ -123,6 +122,7 @@ public class DeckBuilder : MonoBehaviour {
             case DeckBuilderSubPanel.CardSearch:
                 //DestroyAllListings();
                 currentIndex = 0;
+                cardView.verticalNormalizedPosition = 1;
 
                 filters.faction = faction;
 
@@ -277,6 +277,7 @@ public class DeckBuilder : MonoBehaviour {
         }
 
         if (existingListing != null) {
+            //Debug.Log(existingListing.card.cardName + " is already in the deck");
             existingListing.AddCard();
         }
         else {
@@ -531,6 +532,21 @@ public class DeckBuilder : MonoBehaviour {
     }
 
     #endregion
+
+
+    public void GoToMainMenu() {
+
+        for (int i = 0; i < allCards.activeCards.Count; i++) {
+            //Debug.Log(Deck._allCards.activeCards[i].gameObject.name + " is unreging");
+            allCards.activeCards[i].UnregisterEverything();
+        }
+
+
+        NetworkManager._allDecks.Clear();
+        allCards.activeCards.Clear();
+        SceneManager.LoadScene("TitleScreen");
+    }
+
 
     [Serializable]
     public class DeckData {

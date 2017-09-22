@@ -17,26 +17,33 @@ public class Deck : Photon.MonoBehaviour {
 
     //public static Deck _battlefield;
     public static Deck _allCards;
-    public static Deck _void;
-    public static Deck _removed;
-    public static List<Deck> _allDecks = new List<Deck>();
+    //public static Deck _void;
+    //public static Deck _removed;
+    //public static List<Deck> _allDecks = new List<Deck>();
 
 
     void Awake() {
 
+        //RegisterDeck();
+
         if (decktype == DeckType.AllCards) {
             _allCards = this;
+
+            //for(int i = 0; i < _allDecks.Count; i++) {
+            //    Debug.Log(_allDecks[i].decktype.ToString() + " is a deck in all decks");
+            //}
+            
         }
 
-        if (decktype == DeckType.Void) {
-            _void = this;
-        }
+        //if (decktype == DeckType.Void) {
+        //    _void = this;
+        //}
 
-        if(decktype == DeckType.NotInGame) {
-            _removed = this;
-        }
+        //if(decktype == DeckType.NotInGame) {
+        //    _removed = this;
+        //}
 
-        RegisterDeck();
+
     }
 
 
@@ -51,8 +58,15 @@ public class Deck : Photon.MonoBehaviour {
 
     }
 
+    void OnEnable() {
+
+        if (!NetworkManager._allDecks.Contains(this)) {
+            RegisterDeck();
+        }
+    }
+
     public void RegisterDeck() {
-        _allDecks.Add(this);
+        NetworkManager._allDecks.Add(this);
     }
 
     public void AddCard(CardVisual card) {
@@ -331,7 +345,7 @@ public class Deck : Photon.MonoBehaviour {
                 return owner.activeCrypt.GetComponent<Deck>();
 
             case DeckType.Void:
-                return Deck._void;
+                return owner.theVoid;
 
             case DeckType.None:
                 return null;
@@ -381,13 +395,25 @@ public class Deck : Photon.MonoBehaviour {
             case DeckType.SoulCrypt:
                 owner.activeCrypt = gameObject;
                 break;
+
+            case DeckType.Void:
+                owner.theVoid = gameObject.GetComponent<Deck>();
+                break;
+
+            case DeckType.NotInGame:
+                owner.notInGame = gameObject.GetComponent<Deck>();
+                break;
+
+            case DeckType.Battlefield:
+                owner.battlefield = gameObject.GetComponent<Deck>();
+                break;
         }
     }
 
 
     public void RPCTransferCard(PhotonTargets targets, CardVisual card, Deck targetLocation) {
 
-        //Debug.Log(targetLocation);
+        //Debug.Log(card.cardData.cardName + " is being sent from " + card.currentDeck.decktype.ToString() + " to " + targetLocation.decktype.ToString());
 
         int cardID = card.photonView.viewID;
         int deckID = targetLocation.photonView.viewID;
@@ -643,6 +669,7 @@ public class Deck : Photon.MonoBehaviour {
                     card.transform.position = card.battlefieldPos.position;
                     card.RPCSetCardAciveState(PhotonTargets.All, false);
                     card.RPCSetCardPosition(PhotonTargets.Others, card.battlefieldPos.position);
+                    card.DisplaySummoneEffect();
                 }
 
                 break;

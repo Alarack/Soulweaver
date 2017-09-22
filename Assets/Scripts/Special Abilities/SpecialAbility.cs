@@ -135,6 +135,9 @@ public abstract class SpecialAbility {
             return;
         }
 
+        if (source.photonView == null)
+            return;
+
         RegisterListeners();
         InitializeEffects();
         source.specialAbilities.Add(this);
@@ -487,7 +490,7 @@ public abstract class SpecialAbility {
 
     public virtual void RegisterListeners() {
 
-        if (!source.photonView.isMine)
+        if (source.photonView != null && !source.photonView.isMine)
             return;
 
 
@@ -1128,6 +1131,18 @@ public abstract class SpecialAbility {
 
         if (ability.triggerConstraints.oncePerTurn && ability.triggerConstraints.triggeredThisTurn)
             return false;
+
+        if (ability.triggerConstraints.dependantOnOncePerTurnAbility) {
+
+            SpecialAbility target = source.FindSpecialAbilityByName(ability.triggerConstraints.oncePerTurnAbilityname);
+
+            if(target != null) {
+                if (target.triggerConstraints.triggeredThisTurn) {
+                    return false;
+                }
+            }
+
+        }
 
         //if (targetConstraints.neverTargetSelf && triggeringCard == source)
         //    return false;
@@ -2004,9 +2019,14 @@ public abstract class SpecialAbility {
         public bool thisCardOnly;
         public bool oncePerTurn;
         public bool triggeredThisTurn;
+
         public bool neverTargetSelf;
 
         public bool suspendTrigger;
+
+        //Dependant on Once Per turn
+        public bool dependantOnOncePerTurnAbility;
+        public string oncePerTurnAbilityname;
 
         ////Adjacent Targets
         //public bool applyToAdjacenTagets;

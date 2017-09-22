@@ -26040,7 +26040,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -38950,6 +38950,9 @@ MonoBehaviour:
     type: 2}
   defaultSoulCrypt: {fileID: 1857061015209064, guid: 6d72ff4b67846514ba05b21fbba1ecdf,
     type: 2}
+  defaultVoid: {fileID: 0}
+  defaultNotInGame: {fileID: 0}
+  defaultBattlefield: {fileID: 0}
   rillockGrimoire: {fileID: 1920508968966266, guid: 74e122f1ce7f03e46a9f4330191ba3ed,
     type: 2}
   rillockDomain: {fileID: 1780107244512956, guid: 1908e79b4d1ea844f9c8e9e5011d88d1,
@@ -38966,7 +38969,6 @@ MonoBehaviour:
     type: 2}
   custom1Domain: {fileID: 1780107244512956, guid: 5a82f61928b8a0141a51f6b9194a2024,
     type: 2}
-  customDeckData: []
   startGameButton: {fileID: 1566849441787022}
   userDeckTemplate: {fileID: 114499199847599324}
   userDeckContainer: {fileID: 224213299611563668}
@@ -43909,6 +43911,12 @@ MonoBehaviour:
     deck: {fileID: 1780107244512956, guid: 3a669ae059b144b49976182081e4b2e2, type: 2}
   - deckType: 4
     deck: {fileID: 1857061015209064, guid: 6d72ff4b67846514ba05b21fbba1ecdf, type: 2}
+  - deckType: 6
+    deck: {fileID: 1666004131678968, guid: aaf7b00c429c3344aaff39a35736b688, type: 2}
+  - deckType: 8
+    deck: {fileID: 1666004131678968, guid: cd2e5f4ccf175384f99fea1d82364a8f, type: 2}
+  - deckType: 5
+    deck: {fileID: 1666004131678968, guid: 092098cabcd5cfb4b861b669f3e19bb4, type: 2}
   hud: {fileID: 1266457769110374}
   myCamera: {fileID: 1341306738509736}
   endTurnButton: {fileID: 114150764853571970}
@@ -43919,6 +43927,11 @@ MonoBehaviour:
   activeDomain: {fileID: 0}
   activeCrypt: {fileID: 0}
   battlefield: {fileID: 0}
+  grimoire: {fileID: 0}
+  domain: {fileID: 0}
+  crypt: {fileID: 0}
+  theVoid: {fileID: 0}
+  notInGame: {fileID: 0}
   gameResources: []
   gameResourceDisplay: {fileID: 114498885379992284}
   opponent: {fileID: 0}
@@ -139245,10 +139258,10 @@ RectTransform:
   m_Father: {fileID: 224160629230215796}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000058501, y: -112}
-  m_SizeDelta: {x: 919, y: 292}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -95.499985}
+  m_SizeDelta: {x: 0, y: 259}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224213864294355398
 RectTransform:

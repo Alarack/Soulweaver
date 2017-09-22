@@ -55,10 +55,11 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
         cardQuantity--;
         deckbuilder.RemoveCardCount();
         deckbuilder.deckInProgress.savedDecklist.Remove((int)card.cardID);
-        deckbuilder.currentListings.Remove(this);
+
         quantityText.text = "x" + cardQuantity.ToString();
 
         if (cardQuantity <= 0) {
+            deckbuilder.currentListings.Remove(this);
             Destroy(gameObject);
         }
         else {

@@ -74,11 +74,6 @@ public class CreatureCardVisual : CardVisual {
 
     public override void ResetCardData() {
         base.ResetCardData();
-
-
-
-
-
         StartCoroutine(ResetCardVisualData());
     }
 
@@ -114,7 +109,7 @@ public class CreatureCardVisual : CardVisual {
     }
 
     public override void AlterCardStats(Constants.CardStats stat, int value, CardVisual source, bool waitForVFX = true, bool sendEvent = true, bool setStats = false) {
-        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent, setStats);
+        //base.AlterCardStats(stat, value, source, waitForVFX, sendEvent, setStats);
 
         //Debug.Log("creature card alter stat");
         switch (stat) {
@@ -219,6 +214,9 @@ public class CreatureCardVisual : CardVisual {
 
                 break;
         }
+
+
+        base.AlterCardStats(stat, value, source, waitForVFX, sendEvent, setStats);
 
         if (waitForVFX) {
             SpecialAbility.StatAdjustment latest = new SpecialAbility.StatAdjustment(stat, value, false, false, null);
@@ -442,6 +440,15 @@ public class CreatureCardVisual : CardVisual {
 
     }
 
+    public override void UnregisterEverything() {
+        base.UnregisterEverything();
+
+        Grid.EventManager.RemoveMyListeners(this);
+
+        //Debug.Log(gameObject.name + " is unregistering");
+    }
+
+
     #endregion
 
 
@@ -541,6 +548,26 @@ public class CreatureCardVisual : CardVisual {
             CardVFX cardVFX = deathVFX.GetComponent<CardVFX>();
             cardVFX.Initialize(this, false, false);
         }
+
+    }
+
+    public override void DisplaySummoneEffect() {
+        base.DisplaySummoneEffect();
+
+
+
+        GameObject summonVFX;
+
+        bool hasSummonEffect = string.IsNullOrEmpty(summonEffect);
+
+        if (!hasSummonEffect)
+            summonVFX = PhotonNetwork.Instantiate(summonEffect, battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        else {
+            summonVFX = PhotonNetwork.Instantiate("VFX_Summon_BasicBlue", battleToken.incomingEffectLocation.position, Quaternion.identity, 0) as GameObject;
+        }
+
+        summonVFX.GetComponent<CardVFX>().Initialize(this, false, false);
+
 
     }
 

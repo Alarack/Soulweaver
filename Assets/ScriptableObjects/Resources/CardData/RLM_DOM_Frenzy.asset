@@ -300,7 +300,7 @@ MonoBehaviour:
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
-      types: 0400000005000000
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 

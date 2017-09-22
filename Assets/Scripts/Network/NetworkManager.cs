@@ -9,10 +9,13 @@ public class NetworkManager : Photon.MonoBehaviour {
     private const string VERSION = "v0.0.0.1";
     public static NetworkManager _networkManager;
 
+    public static List<Deck> _allDecks = new List<Deck>();
+
     public string roomName = "Mario's Hammer2";
     public string playerPrefabName = "NetworkPlayer";
     //public string player2Name = "NetworkPlayer2";
     //public Transform spawnPoint;
+    public RectTransform mainMenu;
     public Transform[] spawnpoints;
     //public GameObject mainMenu;
     //public GameObject endGameScreen;
@@ -28,7 +31,18 @@ public class NetworkManager : Photon.MonoBehaviour {
 
 
     void Awake() {
+
         _networkManager = this;
+
+        //DontDestroyOnLoad(gameObject);
+
+        //if (_networkManager == null) {
+
+        //}
+        //else {
+        //    Destroy(gameObject);
+        //}
+
     }
 
     void Start() {
@@ -37,8 +51,13 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     public void ConnectToGame() {
         PhotonNetwork.ConnectUsingSettings(VERSION);
+        //mainMenu.gameObject.SetActive(false);
         //mainMenu.SetActive(false);
     }
+
+    //public void GoToDeckBuilder() {
+    //    SceneManager.LoadScene("DeckBuilder");
+    //}
 
     private void Update() {
         connetionText.text = PhotonNetwork.connectionStateDetailed.ToString();

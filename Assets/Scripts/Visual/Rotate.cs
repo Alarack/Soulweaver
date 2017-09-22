@@ -41,7 +41,7 @@ public class Rotate : MonoBehaviour {
 
 
     private void BeginRotation() {
-        Debug.Log("Rotating");
+        //Debug.Log("Rotating");
 
         transform.Rotate(xAxisRotateSpeed * Time.deltaTime, yAxisRotateSpeed * Time.deltaTime, zAxisRotateSpeed * Time.deltaTime);
 

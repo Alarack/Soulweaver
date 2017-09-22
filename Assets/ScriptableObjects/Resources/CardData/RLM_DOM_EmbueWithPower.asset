@@ -8,35 +8,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5b779a16c70de4d9181a479446b574, type: 3}
-  m_Name: RLM_ShaperSavantYorvThan
+  m_Script: {fileID: 11500000, guid: 58cf7a05299b988458c206030937263b, type: 3}
+  m_Name: RLM_DOM_EmbueWithPower
   m_EditorClassIdentifier: 
-  cardID: 30023
-  cardName: Shaper Savant Yorv'than
-  cardText: 'Whenever you spend Hardlight: Summon a Hardlight Golem'
-  cardCost: 4
-  cardImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  cardImagePos: {x: 0, y: 36.7}
-  attackEffect: VFX_Primal_Slash
+  cardID: 30102
+  cardName: Embue with Power
+  cardText: The first soul you summon each turn has Spell Damage 1 until the end of
+    your turn.
+  cardCost: 0
+  cardImage: {fileID: 0}
+  cardImagePos: {x: 0, y: 0}
+  attackEffect: 
   movingVFX: 0
   deathVFX: 
   faction: 4
-  primaryCardType: 1
+  primaryCardType: 5
   otherCardTypes: 
-  attunements: 0f00000005000000
-  subTypes: 270000002a000000
+  attunements: 0f000000
+  subTypes: 
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
-  - trigger: 0c000000
-    effectDuration: 0
+  - trigger: 01000000
+    effectDuration: 2
     triggerDuration: 0
     triggerConstraints:
-      types: 
-      owner: 0
+      types: 010000000200000004000000
+      owner: 2
       whosTurn: 0
-      primaryType: 
+      primaryType: 01000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -48,7 +49,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -59,7 +60,7 @@ MonoBehaviour:
       mostStat: 0
       leastStat: 0
       thisCardOnly: 0
-      oncePerTurn: 0
+      oncePerTurn: 1
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
@@ -85,8 +86,8 @@ MonoBehaviour:
       moreOrlessResource: 0
       amountOfResourceRequried: 0
       consumeResource: 0
-      resourceThatChanged: 2
-      resourceGainedOrLost: 1
+      resourceThatChanged: 0
+      resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
       types: 04000000
@@ -144,7 +145,7 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 3
+    effect: 6
     abilityName: 
     source: {fileID: 0}
     targets: []
@@ -268,35 +269,32 @@ MonoBehaviour:
       abilityToGatherTargetsFrom: 
     effectHolder:
       zoneChanges: []
-      tokenSpanws:
-      - effectType: 0
-        source: {fileID: 0}
-        spawnMethod: 0
-        spawnableTokenDataName: RLM_TKN_HarlightGolem
-        spawnTokenLocation: 5
-        spawnCardType: 1
-        numberOfSpawns: 1
-        spawnForOpponent: 0
-        tokenSeriesNames: []
+      tokenSpanws: []
       statAdjustments: []
       generateResources: []
       addOrRemoveKeywords: []
-      addOrRemoveSpecialAttribute: []
+      addOrRemoveSpecialAttribute:
+      - effectType: 0
+        source: {fileID: 0}
+        attributeAction: 0
+        specialAttributes:
+        - attributeType: 4
+          attributeValue: 1
+          uniqueID: -1
+        modificationValue: 0
       chooseOne: []
       bestowAbility: []
     manualTriggerAbilityNames: []
     togglePresets: 1
     toggleTriggerOptions: 1
-    toggleSourceOptions: 1
+    toggleSourceOptions: 0
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 0
+    logicTargetingMethod: 3
     numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
     targetAbilityName: 
   specialAttributes: []
-  attack: 2
-  size: 3
-  health: 4
+  domainIcon: {fileID: 21300146, guid: 99ac3219bd862444e9b9d53ef6d03bd1, type: 3}

@@ -47,6 +47,7 @@ public class EffectStatAdjustment : Effect {
     public bool setStatToValue;
     public int maxValue;
 
+    private List<int> baseAdjValues = new List<int>();
 
     public override void Initialize(CardVisual source, SpecialAbility parent) {
         base.Initialize(source, parent);
@@ -101,6 +102,8 @@ public class EffectStatAdjustment : Effect {
 
             adjustments[i].source = source;
 
+            baseAdjValues.Add(adjustments[i].value);
+
             //source.CheckAdjID(adjustments[i].uniqueID, parentAbility.abilityName, source.cardData.cardName);
 
             //source.RPCCheckAdjID(PhotonTargets.All, adjustments[i].uniqueID, parentAbility.abilityName, source.cardData.cardName);
@@ -120,7 +123,9 @@ public class EffectStatAdjustment : Effect {
 
                 //Debug.Log(spellDamage + " is the amount of spelldamage reported");
 
-                adjustments[i].value += -spellDamage;
+                
+
+                adjustments[i].value = baseAdjValues[i] -spellDamage;
 
                 source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
             }
