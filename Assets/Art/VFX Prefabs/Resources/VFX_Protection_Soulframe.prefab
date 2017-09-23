@@ -446,7 +446,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1784436921965432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 65.67, y: -3.49, z: -2.90625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4513633216551616}
@@ -776,7 +776,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 731537417
+  randomSeed: -41526204
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -1610,13 +1610,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -1641,8 +1641,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -1650,7 +1650,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -3419,7 +3419,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1042006515
+  randomSeed: -1063606022
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4253,13 +4253,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -4284,8 +4284,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -4293,7 +4293,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -6062,7 +6062,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 806001972
+  randomSeed: -1105157013
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6896,13 +6896,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -6927,8 +6927,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -6936,7 +6936,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -8705,7 +8705,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1996534177
+  randomSeed: 1567681217
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -9539,13 +9539,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -9570,8 +9570,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -9579,7 +9579,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -11348,7 +11348,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1663514132
+  randomSeed: -2044507227
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -12182,13 +12182,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -12213,8 +12213,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -12222,7 +12222,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -13991,7 +13991,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 697442310
+  randomSeed: 1124618604
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14825,13 +14825,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -14856,8 +14856,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -14865,7 +14865,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -16634,7 +16634,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 539098254
+  randomSeed: -1595330941
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -17468,13 +17468,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -17499,8 +17499,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -17508,7 +17508,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -19277,7 +19277,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1784639262
+  randomSeed: -1397255952
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -20111,13 +20111,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -20142,8 +20142,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -20151,7 +20151,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -21920,7 +21920,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -579137781
+  randomSeed: 1626336894
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -22754,13 +22754,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -22785,8 +22785,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -22794,7 +22794,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -24563,7 +24563,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1817120663
+  randomSeed: -66784871
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -25397,13 +25397,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -25428,8 +25428,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -25437,7 +25437,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -27206,7 +27206,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1158654783
+  randomSeed: 55997755
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -28040,13 +28040,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 4294961664
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 4291140608
@@ -28071,7 +28071,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
+        atime1: 32768
         atime2: 65535
         atime3: 57218
         atime4: 65535
@@ -28080,7 +28080,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -29849,7 +29849,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1011972178
+  randomSeed: -152613259
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -30683,13 +30683,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -30714,8 +30714,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -30723,7 +30723,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -32492,7 +32492,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -593150589
+  randomSeed: -483396309
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -33326,13 +33326,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -33357,8 +33357,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -33366,7 +33366,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -35135,7 +35135,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -211691311
+  randomSeed: 1288798962
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -35969,13 +35969,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -36000,16 +36000,16 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
-        atime3: 0
+        atime1: 32768
+        atime2: 65535
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -37778,7 +37778,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -147378042
+  randomSeed: 1203504889
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -38612,13 +38612,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -38643,8 +38643,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -38652,7 +38652,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -40421,7 +40421,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -816241680
+  randomSeed: 1652016219
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -41255,13 +41255,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -41286,8 +41286,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -41295,7 +41295,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -43064,7 +43064,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1983909741
+  randomSeed: -875027667
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -43898,13 +43898,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -43929,8 +43929,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -43938,7 +43938,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -45707,7 +45707,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1213629893
+  randomSeed: -900646257
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -46541,13 +46541,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -46572,8 +46572,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -46581,7 +46581,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -48350,7 +48350,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1889399456
+  randomSeed: -1831077545
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -49184,13 +49184,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -49215,8 +49215,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -49224,7 +49224,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -50993,7 +50993,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 747438119
+  randomSeed: 1463429008
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -51827,13 +51827,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -51858,16 +51858,16 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
-        atime3: 0
+        atime1: 32768
+        atime2: 65535
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -53636,7 +53636,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 769294377
+  randomSeed: 554633907
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -54470,13 +54470,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -54501,8 +54501,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -54510,7 +54510,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -56279,7 +56279,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1584542126
+  randomSeed: -1916343980
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -57113,13 +57113,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 1690672128
         key1:
           serializedVersion: 2
-          rgba: 4291140608
+          rgba: 2529532928
         key2:
           serializedVersion: 2
-          rgba: 16771584
+          rgba: 1694493184
         key3:
           serializedVersion: 2
           rgba: 12950528
@@ -57144,8 +57144,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 32768
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -57153,7 +57153,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 5
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
