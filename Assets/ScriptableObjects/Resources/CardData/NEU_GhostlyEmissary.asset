@@ -13,17 +13,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 80030
   cardName: Ghostly Emisarry
-  cardText: 'Finale: Restore 3 Health to your General'
+  cardText: 'Finale: Restore 4 Health to your General'
   cardCost: 2
   cardImage: {fileID: 21300000, guid: bfd3d4b7c5010704390745cc6c1090a8, type: 3}
   cardImagePos: {x: 0, y: 16.8}
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
+  faction: 0
   primaryCardType: 1
   otherCardTypes: 
   attunements: 080000000f000000
-  subTypes: 40000000
+  subTypes: 4e000000
   keywords: 
   specialAbilityTypes: 
   userTargtedAbilities: []
@@ -62,6 +64,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -118,6 +122,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -179,6 +185,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -240,6 +248,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -274,7 +284,7 @@ MonoBehaviour:
         valueSetmethod: 0
         adjustments:
         - stat: 4
-          value: 3
+          value: 4
           nonStacking: 0
           temporary: 1
           source: {fileID: 0}
@@ -315,6 +325,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 

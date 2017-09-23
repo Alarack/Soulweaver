@@ -156,8 +156,11 @@ public class DeckBuilder : MonoBehaviour {
 
     private void DestroyAllDisplays() {
 
-        for (int i = 0; i < allCards.activeCards.Count; i++) {
-            Destroy(allCards.activeCards[i].gameObject);
+        for (int i = allCards.activeCards.Count -1; i >= 0 ; i--) {
+
+            allCards.activeCards[i].UnregisterEverything();
+
+           Destroy(allCards.activeCards[i].gameObject);
         }
 
         allCards.activeCards.Clear();
@@ -166,6 +169,11 @@ public class DeckBuilder : MonoBehaviour {
 
     private void DestroyAllListings() {
         for (int i = 0; i < currentListings.Count; i++) {
+
+            if(currentListings[i].visualTooltip != null) {
+                currentListings[i].visualTooltip.UnregisterEverything();
+            }
+
             Destroy(currentListings[i].gameObject);
         }
 
@@ -508,6 +516,7 @@ public class DeckBuilder : MonoBehaviour {
 
         //deckInProgress = data;
         deckNameText.text = data.deckName;
+        deckInProgress.deckName = data.deckName;
 
         List<CardData> decklist = data.GetCardData();
 
@@ -536,11 +545,23 @@ public class DeckBuilder : MonoBehaviour {
 
     public void GoToMainMenu() {
 
-        for (int i = 0; i < allCards.activeCards.Count; i++) {
+        for (int i = allCards.activeCards.Count -1 ; i >= 0; i--) {
             //Debug.Log(Deck._allCards.activeCards[i].gameObject.name + " is unreging");
+            if(allCards.activeCards[i].visualTooltip != null) {
+                allCards.activeCards[i].visualTooltip.UnregisterEverything();
+            }
+
             allCards.activeCards[i].UnregisterEverything();
         }
 
+        Grid.EventManager.RemoveMyListeners(this);
+
+        StartCoroutine(ReturnToMenu());
+     
+    }
+
+    private IEnumerator ReturnToMenu() {
+        yield return new WaitForSeconds(1f);
 
         NetworkManager._allDecks.Clear();
         allCards.activeCards.Clear();

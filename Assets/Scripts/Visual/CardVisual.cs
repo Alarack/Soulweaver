@@ -75,7 +75,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public DomainTile domainTile;
 
-    protected CardVisual visualTooltip;
+    public CardVisual visualTooltip;
 
     protected float tooltipTimer;
 

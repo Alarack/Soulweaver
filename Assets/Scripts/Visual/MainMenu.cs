@@ -10,34 +10,34 @@ public class MainMenu : MonoBehaviour {
     private bool gameEnded;
 
 
+
+    public void QuitGame() {
+        Application.Quit();
+    }
+
+
     public void GotoPlayMode() {
         SceneManager.LoadScene("Main");
     }
 
     public void GoToDeckBuilder() {
-
+        if (gameEnded)
+            return;
 
         if (PhotonNetwork.connected) {
-            for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
 
+            for (int i = Deck._allCards.activeCards.Count - 1; i >= 0; i--) {
                 if (Deck._allCards.activeCards[i] != null)
-                    Deck._allCards.activeCards[i].RPCUnregisterCard(PhotonTargets.All, Deck._allCards.activeCards[i].photonView.viewID);
-
-                //if (Deck._allCards.activeCards[i] != null)
-                //    Deck._allCards.activeCards[i].UnregisterEverything();
-
+                    Deck._allCards.activeCards[i].RPCUnregisterCard(PhotonTargets.AllBufferedViaServer, Deck._allCards.activeCards[i].photonView.viewID);
             }
 
             ClearEventStuff();
 
-            //StartCoroutine(EndGame("DeckBuilder"));
+            StartCoroutine(EndGame("DeckBuilder"));
             return;
-            //PhotonNetwork.Disconnect();
         }
 
         SceneManager.LoadScene("DeckBuilder");
-
-        
     }
 
 
@@ -46,32 +46,13 @@ public class MainMenu : MonoBehaviour {
         if (gameEnded)
             return;
 
-        //for (int i = 0; i < Deck._allCards.activeCards.Count; i++) {
-
-        //    if (Deck._allCards.activeCards[i] != null && Deck._allCards.activeCards[i].photonView.isMine)
-        //        Deck._allCards.activeCards[i].RPCUnregisterCard(PhotonTargets.All, Deck._allCards.activeCards[i].photonView.viewID);
-
-        //    //if (Deck._allCards.activeCards[i] != null)
-        //    //    Deck._allCards.activeCards[i].UnregisterEverything();
-        //}
-
         for(int i = Deck._allCards.activeCards.Count -1; i >= 0; i--) {
             if (Deck._allCards.activeCards[i] != null)
                 Deck._allCards.activeCards[i].RPCUnregisterCard(PhotonTargets.AllBufferedViaServer, Deck._allCards.activeCards[i].photonView.viewID);
-
         }
 
         ClearEventStuff();
-
-
         StartCoroutine(EndGame("TitleScreen"));
-
-        //if (PhotonNetwork.connected) {
-        //    PhotonNetwork.Disconnect();
-        //}
-
-        //SceneManager.LoadScene("TitleScreen");
-
     }
 
     private void ClearEventStuff() {
@@ -90,17 +71,13 @@ public class MainMenu : MonoBehaviour {
         if(menuContainer != null) {
             menuContainer.gameObject.SetActive(true);
         }
-
     }
-
-
-
 
     private IEnumerator EndGame(string targetScene) {
 
         gameEnded = true;
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
 
         if (PhotonNetwork.connected) {
             PhotonNetwork.Disconnect();
