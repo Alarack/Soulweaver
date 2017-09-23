@@ -13,13 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 10010
   cardName: Blaze-Go-Round
-  cardText: 'At the start of your turn, deal 1 damage to the Soul with the least Health. '
+  cardText: 'At the start of your turn, deal 1 damage to an enemy Soul with the least
+    Health. '
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
   faction: 1
   primaryCardType: 5
   otherCardTypes: 
@@ -63,6 +65,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -119,6 +123,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -151,7 +157,7 @@ MonoBehaviour:
     triggeringCards: []
     targetConstraints:
       types: 02000000040000000b00000001000000
-      owner: 1
+      owner: 3
       whosTurn: 0
       primaryType: 01000000
       notPrimaryType: 0
@@ -180,6 +186,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -241,6 +249,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -316,6 +326,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 

@@ -111,4 +111,8 @@ MonoBehaviour:
   - RemoteRemoveSpecialAbility
   - Dispel
   - DisplayCardPlayed
+  - UnregisterCard
+  - BroadcastDeckSelection
+  - SetOpponent
+  - ShowStartGameButton
   DisableAutoOpenWizard: 1

@@ -101,6 +101,10 @@ public class CombatManager : Photon.MonoBehaviour {
 
     private IEnumerator Reset() {
         yield return new WaitForSeconds(0.2f);
+
+        if (isChoosingTarget)
+            isChoosingTarget = false;
+
         targetingMode = TargetingMode.CombatTargeting;
     }
 
@@ -406,8 +410,8 @@ public class CombatManager : Photon.MonoBehaviour {
             if (confirmedTargetCallback(currentTarget)) {
 
                 //Debug.Log(currentTarget.cardData.cardName + " has been clicked");
-                if (isChoosingTarget)
-                    isChoosingTarget = false;
+                //if (isChoosingTarget)
+                //    isChoosingTarget = false;
 
 
                 StartCoroutine(Reset());
@@ -432,9 +436,9 @@ public class CombatManager : Photon.MonoBehaviour {
         }
 
 
-        EventData data = new EventData();
-        data.AddMonoBehaviour("Card", cardSelected);
-        Grid.EventManager.SendEvent(Constants.GameEvent.CardClicked, data);
+        //EventData data = new EventData();
+        //data.AddMonoBehaviour("Card", cardSelected);
+        //Grid.EventManager.SendEvent(Constants.GameEvent.CardClicked, data);
 
         return cardSelected;
     }

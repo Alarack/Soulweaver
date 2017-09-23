@@ -13,13 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 79003
   cardName: Fearsom Presence
-  cardText: '(1)(E): Give a soul -2 Attack until your next turn.'
+  cardText: '(2)(E): Give a soul -2 Attack until your next turn.'
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
   faction: 5
   primaryCardType: 5
   otherCardTypes: 
@@ -62,6 +63,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -118,6 +121,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -179,6 +184,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -240,6 +247,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -260,7 +269,7 @@ MonoBehaviour:
       counter: 0
       requiredResourceType: 1
       moreOrlessResource: 0
-      amountOfResourceRequried: 1
+      amountOfResourceRequried: 2
       consumeResource: 1
       resourceThatChanged: 0
       resourceGainedOrLost: 0
@@ -315,6 +324,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
@@ -394,6 +405,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -450,6 +463,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -511,6 +526,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -572,6 +589,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
