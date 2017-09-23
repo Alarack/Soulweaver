@@ -19952,6 +19952,7 @@ MonoBehaviour:
   cardBack: {fileID: 1228555207926188}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -20582,6 +20583,7 @@ MonoBehaviour:
   cardBack: {fileID: 1904131321080102}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -22173,6 +22175,7 @@ MonoBehaviour:
   cardBack: {fileID: 1235737007505862}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -22688,6 +22691,7 @@ MonoBehaviour:
   cardBack: {fileID: 1047372596006370}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -24004,6 +24008,7 @@ MonoBehaviour:
   cardBack: {fileID: 1817564764246272}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -24414,6 +24419,7 @@ MonoBehaviour:
   cardBack: {fileID: 1530182705064390}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -24788,6 +24794,7 @@ MonoBehaviour:
   cardBack: {fileID: 1997441357573508}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -26576,6 +26583,7 @@ MonoBehaviour:
   cardBack: {fileID: 1951317440211060}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -27509,6 +27517,7 @@ MonoBehaviour:
   cardBack: {fileID: 1575390648438692}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -27989,6 +27998,7 @@ MonoBehaviour:
   cardBack: {fileID: 1230899485375290}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -30903,6 +30913,7 @@ MonoBehaviour:
   cardBack: {fileID: 1994494072779166}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -31454,6 +31465,7 @@ MonoBehaviour:
   cardBack: {fileID: 1724660896291632}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -32045,6 +32057,7 @@ MonoBehaviour:
   cardBack: {fileID: 1882398594713028}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -35223,6 +35236,7 @@ MonoBehaviour:
   cardBack: {fileID: 1773910779705862}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -36460,6 +36474,7 @@ MonoBehaviour:
   cardBack: {fileID: 1022381167157566}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -39040,6 +39055,7 @@ MonoBehaviour:
   cardBack: {fileID: 1654137847259880}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -39395,6 +39411,7 @@ MonoBehaviour:
   cardBack: {fileID: 1388613069294074}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -40077,6 +40094,7 @@ MonoBehaviour:
   cardBack: {fileID: 1331744739100760}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -41097,6 +41115,7 @@ MonoBehaviour:
   cardBack: {fileID: 1177650999896896}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -41592,6 +41611,7 @@ MonoBehaviour:
   cardBack: {fileID: 1991466011298372}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -42009,6 +42029,7 @@ MonoBehaviour:
   cardBack: {fileID: 1555185024142820}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -42749,6 +42770,7 @@ MonoBehaviour:
   cardBack: {fileID: 1505717329504110}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -43018,6 +43040,7 @@ MonoBehaviour:
   cardBack: {fileID: 1560357264460468}
   attackEffect: 
   deathEffect: 
+  summonEffect: 
   activeColor:
     serializedVersion: 2
     rgba: 4282703931
@@ -43935,7 +43958,10 @@ MonoBehaviour:
   gameResources: []
   gameResourceDisplay: {fileID: 114498885379992284}
   opponent: {fileID: 0}
+  startGameButton: {fileID: 114663863048339760}
   gameHasStarted: 0
+  myDeckChosen: 0
+  theirDeckChosen: 0
   dragger: {fileID: 114537894808448892}
   combatManager: {fileID: 0}
 --- !u!114 &114977745389399978

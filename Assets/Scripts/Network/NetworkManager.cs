@@ -96,6 +96,8 @@ public class NetworkManager : Photon.MonoBehaviour {
             player2 = PhotonNetwork.Instantiate(playerPrefabName, spawnpoints[spawnIndex].position, spawnpoints[spawnIndex].rotation, 0);
             player2.GetComponent<Player>().RPCAmPlayer2(PhotonTargets.All);
             player2.transform.localPosition = Vector3.zero;
+            //player1.GetComponent<Player>().RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
+            //player2.GetComponent<Player>().RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
         }
 
         sceneCamera.enabled = false;

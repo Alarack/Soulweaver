@@ -36,9 +36,9 @@ public class CreatureCardVisual : CardVisual {
     public CardCreatureData _creatureData;
 
 
-    private void OnDisable() {
-        UnregisterEverything();
-    }
+    //private void OnDestroy() {
+    //    UnregisterEverything();
+    //}
 
 
     public override void SetupCardData() {

@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
+using SoulWeaver;
 
 using DeckData = DeckBuilder.DeckData;
 using LibraryData = DeckBuilder.LibraryData;
@@ -59,7 +60,9 @@ public class DeckSelector : MonoBehaviour {
         savedDecks = LoadLibraryList();
 
         LoadAllCustomDecks();
-	}
+
+
+    }
 
 
 
@@ -128,9 +131,27 @@ public class DeckSelector : MonoBehaviour {
     }
 
     private void ShowStartGame() {
-        startGameButton.SetActive(true);
+
+        //EventData data = new EventData();
+        //data.AddMonoBehaviour("Player", player);
+
+        //Grid.EventManager.SendEvent(Constants.GameEvent.DeckSelected, data);
+        //Debug.Log(player.gameObject.name + " " + player.photonView.viewID);
+        //player.RPCSetOpponent(PhotonTargets.Others, player.photonView.viewID);
+        player.RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
+
+
+        
+
+        if(player.startGameButton.testing)
+            startGameButton.SetActive(true);
+        else
+            player.RPCBroadcastDeckSelection(PhotonTargets.AllBufferedViaServer);
+
+
         gameObject.SetActive(false);
     }
+
 
 
     private void DeckAssignmentHelper(GameObject grimoire, GameObject domain, GameObject soulcrypt) {

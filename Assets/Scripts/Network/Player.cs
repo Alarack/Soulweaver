@@ -80,7 +80,11 @@ public class Player : Photon.MonoBehaviour {
     //public Deck myHand;
 
     //[HideInInspector]
+    public StartGameButton startGameButton;
     public bool gameHasStarted = false;
+    //public bool myDeckChosen;
+    [Space(10)]
+    public bool deckSelected;
 
     public ClickMoveDrop dragger;
 
@@ -126,7 +130,7 @@ public class Player : Photon.MonoBehaviour {
                     if (battlefield != null) {
                         RefreshMySouls();
                     }
-                        
+
 
                     StartCoroutine(RPCBroadcastTurnStart(PhotonTargets.All, this));
 
@@ -206,6 +210,27 @@ public class Player : Photon.MonoBehaviour {
 
     //}
 
+    //void OnPhotonPlayerConnected(PhotonPlayer player) {
+
+    //    Debug.Log("Joined");
+
+    //    Debug.Log(PhotonNetwork.countOfPlayers);
+
+
+    //    StartCoroutine(FindOpponents());
+
+
+    //}
+
+    //private IEnumerator FindOpponents() {
+    //    yield return new WaitForSeconds(2f);
+    //    Debug.Log("I see you");
+    //    RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
+    //    Debug.Log(opponent);
+
+    //}
+
+
     public IEnumerator StartGame() {
         //domainManager = activeDomain.GetComponent<DomainManager>();
 
@@ -218,7 +243,7 @@ public class Player : Photon.MonoBehaviour {
         RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
 
         if (myTurn) {
-            
+
             gameState = GameStates.Refresh;
             //Debug.Log("My turn " + gameState.ToString());
         }
@@ -319,7 +344,7 @@ public class Player : Photon.MonoBehaviour {
         //Torture
         List<CardVisual> torturedSouls = Finder.FindAllCardsInZone(Constants.DeckType.Battlefield, Constants.Keywords.Tortured, Constants.OwnerConstraints.Mine, Constants.CardType.Soul);
 
-        for(int i = 0; i < torturedSouls.Count; i++) {
+        for (int i = 0; i < torturedSouls.Count; i++) {
 
             SpecialAbility.StatAdjustment torture = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -1, false, false, torturedSouls[i]);
 
@@ -339,8 +364,8 @@ public class Player : Photon.MonoBehaviour {
 
         for (int i = 0; i < regeneratorSouls.Count; i++) {
 
-            for(int j = 0; j < regeneratorSouls[i].specialAttributes.Count; j++) {
-                if(regeneratorSouls[i].specialAttributes[j].attributeType == SpecialAttribute.AttributeType.Regeneration) {
+            for (int j = 0; j < regeneratorSouls[i].specialAttributes.Count; j++) {
+                if (regeneratorSouls[i].specialAttributes[j].attributeType == SpecialAttribute.AttributeType.Regeneration) {
                     SpecialAbility.StatAdjustment regen = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, regeneratorSouls[i].specialAttributes[j].attributeValue, false, false, regeneratorSouls[i]);
                     regeneratorSouls[i].RPCApplyUntrackedStatAdjustment(PhotonTargets.All, regen, regeneratorSouls[i], false);
                 }
@@ -460,6 +485,8 @@ public class Player : Photon.MonoBehaviour {
     #region RPCs
 
     public void RPCCheckOpponents(PhotonTargets targets) {
+        Debug.Log("Checking opponents");
+
         photonView.RPC("CheckOpponents", targets);
     }
 
@@ -469,11 +496,51 @@ public class Player : Photon.MonoBehaviour {
 
         foreach (Player p in allPlayers) {
             if (p != this) {
-                opponent = p;
-                p.opponent = this;
+                if (opponent == null) {
+                    opponent = p;
+                }
+                if (p.opponent == null) {
+                    p.opponent = this;
+                }
             }
         }
+
+
+        //if (photonView.isMine) {
+        //    opponent.theirDeckChosen = true;
+
+        //    if (theirDeckChosen == true) {
+        //        Debug.Log("great");
+
+        //        Debug.Log("Activating my button");
+        //        startGameButton.buttonObject.SetActive(true);
+        //        photonView.RPC("ShowStartGameButton", PhotonTargets.Others);
+
+
+        //    }
+        //}
+
+
+
+
+
         //Debug.Log(opponent.gameObject.name);
+    }
+
+
+    public void RPCShowStartGameButton(PhotonTargets targets) {
+
+        photonView.RPC("ShowStartGameButton", targets);
+
+    }
+
+
+    [PunRPC]
+    public void ShowStartGameButton() {
+        Debug.Log(gameObject.name + photonView.viewID);
+        //theirDeckChosen = true;
+        //Debug.Log(startGameButton.buttonObject);
+        startGameButton.buttonObject.SetActive(true);
     }
 
     public void RPCResetState(PhotonTargets targets) {
@@ -605,9 +672,9 @@ public class Player : Photon.MonoBehaviour {
         Grid.EventManager.SendEvent(Constants.GameEvent.TurnEnded, data);
     }
 
-    public void RPCSetupResources(PhotonTargets targets, bool firstResource, 
-        GameResource.ResourceType resourceType = GameResource.ResourceType.None, 
-        int current = 0, 
+    public void RPCSetupResources(PhotonTargets targets, bool firstResource,
+        GameResource.ResourceType resourceType = GameResource.ResourceType.None,
+        int current = 0,
         int max = 0,
         string resourceName = "",
         int resourceCap = 0) {
@@ -634,11 +701,11 @@ public class Player : Photon.MonoBehaviour {
 
         GameObject newTextGO = HUDRegistrar.FindHudElementByID(textID);
 
-        if(newTextGO == null) {
+        if (newTextGO == null) {
 
             GameObject[] allHUD = GameObject.FindGameObjectsWithTag("HUD");
 
-            foreach(GameObject go in allHUD) {
+            foreach (GameObject go in allHUD) {
                 if (go.GetPhotonView().viewID == textID) {
                     newTextGO = go;
                     break;
@@ -708,12 +775,55 @@ public class Player : Photon.MonoBehaviour {
     }
 
 
-    //[PunRPC]
-    //public void ActivateEndGameButton() {
-    //    returnToMenuButton.SetActive(true);
-    //    if (opponent != null)
-    //        opponent.returnToMenuButton.SetActive(true);
+
+
+    public void RPCBroadcastDeckSelection(PhotonTargets targets) {
+
+        photonView.RPC("BroadcastDeckSelection", targets);
+    }
+
+    [PunRPC]
+    public void BroadcastDeckSelection() {
+
+
+        deckSelected = true;
+
+        //Debug.Log(gameObject.name + " " + photonView.viewID + " is telling people about deck selection");
+
+        if (opponent.deckSelected && photonView.isMine) {
+            //Debug.Log(gameObject.name + " " + photonView.viewID + " is starting the game");
+
+            startGameButton.buttonObject.SetActive(true);
+            opponent.RPCShowStartGameButton(PhotonTargets.Others);
+        }
+
+    }
+
+    //public void RPCSetOpponent(PhotonTargets targets, int id) {
+
+    //    photonView.RPC("SetOpponent", targets, id);
     //}
+
+    //[PunRPC]
+    //public void SetOpponent(int playerID) {
+    //    Player[] allPlayers = FindObjectsOfType<Player>();
+
+    //    Debug.Log(allPlayers.Length + " is the number of players found by " + gameObject.name + " " + photonView.viewID);
+
+    //    for (int i = 0; i < allPlayers.Length; i++) {
+
+    //        if (allPlayers[i].photonView.viewID == playerID && allPlayers[i] != this) {
+
+    //            Debug.Log(allPlayers[i].gameObject.name + " : " + allPlayers[i].photonView.viewID + " is what I got and " + gameObject.name + " is what I am " + " : " + photonView.viewID);
+
+    //            opponent = allPlayers[i];
+    //            deckSelected = true;
+    //        }
+
+    //    }
+
+    //}
+
 
     #endregion
 

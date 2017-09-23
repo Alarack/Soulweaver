@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SoulWeaver;
 
 public class StartGameButton : MonoBehaviour {
 
@@ -19,7 +20,20 @@ public class StartGameButton : MonoBehaviour {
         if (!player.player2) {
             buttonText.text = "Waiting For Opponent";
         }
+
+        //Grid.EventManager.RegisterListener(Constants.GameEvent.DeckSelected, OnDeckSelected);
     }
+
+
+    //private void OnDeckSelected(EventData data) {
+    //    Player p = data.GetMonoBehaviour("Player") as Player;
+
+    //    if(p != player && !player.player2) {
+    //        buttonText.text = "Start Game";
+    //    }
+
+    //}
+
 
     void OnPhotonPlayerConnected(PhotonPlayer player) {
         if (!this.player.player2) {

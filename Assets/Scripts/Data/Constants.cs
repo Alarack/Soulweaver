@@ -353,8 +353,9 @@ public class Constants {
         CardSelected = 1000,
         CardDeselected = 1001,
 
-        //End Game
+        //Game State Events
         GameEnding = 1200,
+        DeckSelected = 1201,
     }
 
 

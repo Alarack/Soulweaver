@@ -95,9 +95,9 @@ public class CardVisual : Photon.MonoBehaviour {
         combatManager = FindObjectOfType<CombatManager>();
     }
 
-    private void OnDisable() {
-        UnregisterEverything();
-    }
+    //private void OnDestroy() {
+    //    UnregisterEverything();
+    //}
 
     protected virtual void Update() {
 
@@ -172,7 +172,7 @@ public class CardVisual : Photon.MonoBehaviour {
         SetUpSpecialAbilities();
 
         Grid.EventManager.RegisterListener(Constants.GameEvent.CardLeftZone, OnLeavesBattlefield);
-        Grid.EventManager.RegisterListener(Constants.GameEvent.CardEnteredZone, OnEntersBattlefield);
+        Grid.EventManager.RegisterListener(Constants.GameEvent.CardEnteredZone, OnEnterZone);
         //Grid.EventManager.RegisterListener(Constants.GameEvent.GameEnding, OnGameEnd);
     }
 
@@ -517,6 +517,8 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
     public virtual void UnregisterEverything() {
+        //RPCUnregisterCard(PhotonTargets.All, photonView.viewID);
+
         Grid.EventManager.RemoveMyListeners(this);
         for (int i = 0; i < specialAbilities.Count; i++) {
             UnregisterSpecialAbility(specialAbilities[i]);
@@ -764,7 +766,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         //Playing Card from hand
         if (currentDeck.decktype == Constants.DeckType.Hand && primaryCardType != Constants.CardType.Player && Input.GetMouseButtonUp(0)
-            && photonView.isMine && Vector3.Distance(transform.position, handPos.position) > 10f && owner.myTurn) {
+            && photonView.isMine && Vector3.Distance(transform.position, handPos.position) > 10f && owner.myTurn && !combatManager.isChoosingTarget) {
 
             if (owner.battleFieldManager.IsCollectionFull() && cardData.primaryCardType == Constants.CardType.Soul) {
                 Debug.Log("No place to put that");
@@ -1020,6 +1022,7 @@ public class CardVisual : Photon.MonoBehaviour {
             case Constants.CardType.Soul:
             case Constants.CardType.Domain:
             case Constants.CardType.Support:
+            case Constants.CardType.Player:
                 if (deck.decktype != Constants.DeckType.Battlefield)
                     return;
 
@@ -1044,7 +1047,7 @@ public class CardVisual : Photon.MonoBehaviour {
         ResetCardData();
     }
 
-    protected void OnEntersBattlefield(EventData data) {
+    protected void OnEnterZone(EventData data) {
         CardVisual card = data.GetMonoBehaviour("Card") as CardVisual;
         Deck deck = data.GetMonoBehaviour("Deck") as Deck;
 
@@ -1056,12 +1059,15 @@ public class CardVisual : Photon.MonoBehaviour {
             return;
         }
 
-
         if (!photonView.isMine)
             return;
 
         if (!owner.photonView.isMine)
             return;
+
+        if (deck.decktype == Constants.DeckType.Hand) {
+            // Maybe put a delay here?
+        }
 
         if (deck.decktype != Constants.DeckType.Battlefield)
             return;
@@ -1307,6 +1313,24 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public void RPCRegisterCard(PhotonTargets targets, int photonViewID) {
         photonView.RPC("RegisterCard", targets, photonViewID);
+    }
+
+    public void RPCUnregisterCard(PhotonTargets targets, int cardID) {
+        photonView.RPC("UnregisterCard", targets, cardID);
+    }
+
+    [PunRPC]
+    public void UnregisterCard(int cardID) {
+        CardVisual card = Finder.FindCardByID(cardID);
+
+        if(card != null && card.visualTooltip != null) {
+            card.visualTooltip.UnregisterEverything();
+        }
+
+        card.UnregisterEverything();
+
+
+        Deck._allCards.activeCards.Remove(this);
     }
 
     [PunRPC]
