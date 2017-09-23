@@ -236,6 +236,13 @@ public class CombatManager : Photon.MonoBehaviour {
                 allInterceptors.Remove(interceptor);
                 continue;
             }
+
+            if(Finder.CardHasKeyword(interceptor, Keywords.Flight) && !Finder.CardHasKeyword(attacker, Keywords.Flight)) {
+                allInterceptors.Remove(interceptor);
+                continue;
+            }
+
+
         }
 
         //for (int i = 0; i < allInterceptors.Count; i++) {

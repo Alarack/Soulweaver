@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CardListing : MonoBehaviour, IPointerClickHandler {
+public class CardListing : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
 
 
     public Text quantityText;
@@ -16,6 +16,8 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
     public CardData card;
     public int cardQuantity;
     public GameObject quantityImage;
+
+    public CardVisual visualTooltip;
 
     private DeckBuilder deckbuilder;
 
@@ -73,6 +75,35 @@ public class CardListing : MonoBehaviour, IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData data) {
         RemoveCard();
+    }
+
+    public void OnPointerEnter(PointerEventData data) {
+        if(visualTooltip == null) {
+            visualTooltip = CardTooltip.ShowVisualTooltip(card);
+
+            if(visualTooltip != null) {
+                visualTooltip.transform.localScale *= 1.75f;
+                SetVisualTooltipLocation();
+            }
+
+        }
+        else {
+            visualTooltip.gameObject.SetActive(true);
+            SetVisualTooltipLocation();
+        }
+
+    }
+
+    public void OnPointerExit(PointerEventData data) {
+        if (visualTooltip != null && visualTooltip.gameObject.activeInHierarchy) {
+            visualTooltip.gameObject.SetActive(false);
+        }
+
+    }
+
+    private void SetVisualTooltipLocation() {
+        visualTooltip.transform.position = CardTooltip.cardTooltip.staticPosition.position;
+
     }
 
 
