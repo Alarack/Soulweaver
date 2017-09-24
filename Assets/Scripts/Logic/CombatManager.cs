@@ -27,6 +27,7 @@ public class CombatManager : Photon.MonoBehaviour {
     public bool isChoosingTarget;
     public bool isInCombat;
     public bool selectingDefender;
+    public bool selectionComplete;
     [Space(10)]
     public CreatureCardVisual attacker;
     public CreatureCardVisual defender;
@@ -104,6 +105,9 @@ public class CombatManager : Photon.MonoBehaviour {
 
         if (isChoosingTarget)
             isChoosingTarget = false;
+
+        if (selectionComplete)
+            selectionComplete = false;
 
         targetingMode = TargetingMode.CombatTargeting;
     }
@@ -420,8 +424,9 @@ public class CombatManager : Photon.MonoBehaviour {
                 //if (isChoosingTarget)
                 //    isChoosingTarget = false;
 
-
+                selectionComplete = true;
                 StartCoroutine(Reset());
+                //currentTarget.
             }
         }
         else {

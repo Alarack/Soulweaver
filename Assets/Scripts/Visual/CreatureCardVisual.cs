@@ -252,6 +252,7 @@ public class CreatureCardVisual : CardVisual {
             base.DeactivateGlow();
 
         if (currentDeck.decktype == Constants.DeckType.Battlefield) {
+            //Debug.Log("killing glow on token");
             battleToken.battleTokenGlow.SetActive(false);
         }
     }
@@ -318,6 +319,9 @@ public class CreatureCardVisual : CardVisual {
 
     protected override void KeywordHelper(Constants.Keywords keyword, bool add) {
         base.KeywordHelper(keyword, add);
+
+        animationManager.ShowOrHideKeywordVisual(keyword, add);
+
         //Debug.Log("creature visual keyword helper");
         switch (keyword) {
             case Constants.Keywords.Exhausted:

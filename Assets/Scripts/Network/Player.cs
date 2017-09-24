@@ -240,7 +240,7 @@ public class Player : Photon.MonoBehaviour {
         //domainManager.gameObject.GetPhotonView().RPC("InitDomain", PhotonTargets.All);
         activeDomain.GetComponent<DomainManager>().RPCInitializeDomain(PhotonTargets.AllBufferedViaServer);
 
-        RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
+        //RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
 
         if (myTurn) {
 
@@ -485,7 +485,7 @@ public class Player : Photon.MonoBehaviour {
     #region RPCs
 
     public void RPCCheckOpponents(PhotonTargets targets) {
-        Debug.Log("Checking opponents");
+        //Debug.Log("Checking opponents");
 
         photonView.RPC("CheckOpponents", targets);
     }

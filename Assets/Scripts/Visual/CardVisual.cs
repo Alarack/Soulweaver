@@ -671,10 +671,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public virtual void ShowDelayedTooltip() {
 
-        if (tooltipTimer < 1f) {
+        if (tooltipTimer < 1.5f) {
             tooltipTimer += Time.deltaTime;
 
-            if (tooltipTimer >= 1f) {
+            if (tooltipTimer >= 1.5f) {
                 ShowVisualTooltip();
             }
 
@@ -821,7 +821,7 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         //Targeting
-        if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
+        if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat) && !combatManager.selectionComplete) {
 
             RPCTargetCard(PhotonTargets.All, true);
 
@@ -849,6 +849,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         //Untargeting
         if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
+            //Debug.Log("Untargeting");
             RPCTargetCard(PhotonTargets.All, false);
         }
 
@@ -1044,6 +1045,8 @@ public class CardVisual : Photon.MonoBehaviour {
             //    break;
         }
 
+        ShowOrHideKeyowrdVisuals(false);
+
         ResetCardData();
     }
 
@@ -1081,19 +1084,22 @@ public class CardVisual : Photon.MonoBehaviour {
         //Debug.Log(deck.decktype.ToString());
         //Debug.Log(primaryCardType.ToString());
 
+
+
+        ShowOrHideKeyowrdVisuals(true);
         RPCDisplayCardPlayed();
 
     }
 
-    public void OnGameEnd(EventData data) {
-        StartCoroutine(EndGame());
-    }
+    protected void ShowOrHideKeyowrdVisuals(bool show) {
+        for(int i = 0; i < keywords.Count; i++) {
+            animationManager.ShowOrHideKeywordVisual(keywords[i], show);
+        }
 
-    private IEnumerator EndGame() {
-        yield return new WaitForSeconds(0.5f);
-        UnregisterEverything();
+        for (int i = 0; i < specialAttributes.Count; i++) {
+            animationManager.ShowOrHideSpecialAttributeInfo(specialAttributes[i].attributeType, show);
+        }
     }
-
 
 
 
@@ -1569,6 +1575,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         if (targetAttribute != null) {
             specialAttributes.Add(targetAttribute);
+            animationManager.ShowOrHideSpecialAttributeInfo(targetAttribute.attributeType, true);
         }
     }
 
@@ -1586,8 +1593,11 @@ public class CardVisual : Photon.MonoBehaviour {
         SpecialAttribute targetAttribute = GetSpecialAttributeFromSource(sourceID, attributeID);
 
         if (targetAttribute != null) {
-            if (specialAttributes.Contains(targetAttribute))
+            if (specialAttributes.Contains(targetAttribute)) {
                 specialAttributes.Remove(targetAttribute);
+                animationManager.ShowOrHideSpecialAttributeInfo(targetAttribute.attributeType, false);
+            }
+                
         }
     }
 
@@ -1701,9 +1711,12 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     public virtual void RPCTargetCard(PhotonTargets targets, bool target) {
-        if (target)
+        if (target) {
+            //Debug.Log("target to be true");
             photonView.RPC("TargetCard", targets);
+        }
         else {
+            //Debug.Log("target to be false");
             photonView.RPC("UntargetCard", targets);
         }
     }
@@ -1716,6 +1729,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     [PunRPC]
     public void UntargetCard() {
+        //Debug.Log("Now deactivating");
         DeactivateGlow();
     }
 

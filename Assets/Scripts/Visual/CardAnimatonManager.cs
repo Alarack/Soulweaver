@@ -7,7 +7,9 @@ public class CardAnimatonManager : MonoBehaviour {
 
 
     public List<TextAnimationInfo> textAnimInfo = new List<TextAnimationInfo>();
-
+    [Space(15)]
+    public List<KeywordVisualInfo> keywordVisualInfo = new List<KeywordVisualInfo>();
+    public List<SpecialAttributeVisualInfo> specialAttributeVisualInfo = new List<SpecialAttributeVisualInfo>();
 
     private CardVisual card;
 
@@ -37,6 +39,24 @@ public class CardAnimatonManager : MonoBehaviour {
         }
     }
 
+    public void ShowOrHideKeywordVisual(Constants.Keywords keyword, bool add) {
+
+        for(int i = 0; i < keywordVisualInfo.Count; i++) {
+            if (keywordVisualInfo[i].keyword == keyword) {
+                keywordVisualInfo[i].ShowOrHide(add);
+                break;
+            }
+        }
+    }
+
+    public void ShowOrHideSpecialAttributeInfo(SpecialAttribute.AttributeType attributeType, bool add) {
+        for (int i = 0; i < specialAttributeVisualInfo.Count; i++) {
+            if (specialAttributeVisualInfo[i].attributeType == attributeType) {
+                specialAttributeVisualInfo[i].ShowOrHide(add);
+                break;
+            }
+        }
+    }
 
 
 
@@ -44,6 +64,40 @@ public class CardAnimatonManager : MonoBehaviour {
     public class TextAnimationInfo {
         public RectTransform rect;
         public Constants.CardStats stat;
+    }
+
+    [System.Serializable]
+    public class KeywordVisualInfo {
+        public Constants.Keywords keyword;
+        public GameObject visualEffect;
+
+
+        public void ShowOrHide(bool show) {
+            if (show)
+                Show();
+            else
+                Hide();
+        }
+
+        public void Show() {
+            if(visualEffect != null && !visualEffect.activeInHierarchy) {
+                visualEffect.SetActive(true);
+            }
+        }
+
+        public void Hide() {
+            if (visualEffect != null && visualEffect.activeInHierarchy) {
+                visualEffect.SetActive(false);
+            }
+        }
+
+    }
+
+    [System.Serializable]
+    public class SpecialAttributeVisualInfo : KeywordVisualInfo {
+
+        public SpecialAttribute.AttributeType attributeType;
+
     }
 
 }
