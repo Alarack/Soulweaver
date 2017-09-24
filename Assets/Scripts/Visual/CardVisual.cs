@@ -1045,7 +1045,7 @@ public class CardVisual : Photon.MonoBehaviour {
             //    break;
         }
 
-        ShowOrHideKeyowrdVisuals(false);
+        RPCShowOrHideKeywordVisual(PhotonTargets.All, false);
 
         ResetCardData();
     }
@@ -1086,20 +1086,12 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
 
-        ShowOrHideKeyowrdVisuals(true);
+        RPCShowOrHideKeywordVisual(PhotonTargets.All, true);
         RPCDisplayCardPlayed();
 
     }
 
-    protected void ShowOrHideKeyowrdVisuals(bool show) {
-        for(int i = 0; i < keywords.Count; i++) {
-            animationManager.ShowOrHideKeywordVisual(keywords[i], show);
-        }
 
-        for (int i = 0; i < specialAttributes.Count; i++) {
-            animationManager.ShowOrHideSpecialAttributeInfo(specialAttributes[i].attributeType, show);
-        }
-    }
 
 
 
@@ -1983,6 +1975,27 @@ public class CardVisual : Photon.MonoBehaviour {
         ShowcardPlayed();
 
     }
+
+
+    public void RPCShowOrHideKeywordVisual(PhotonTargets targets, bool show) {
+
+        photonView.RPC("ShowOrHideKeywordVisuals", targets, show);
+
+    }
+
+
+    [PunRPC]
+    public void ShowOrHideKeywordVisuals(bool show) {
+        for (int i = 0; i < keywords.Count; i++) {
+            animationManager.ShowOrHideKeywordVisual(keywords[i], show);
+        }
+
+        for (int i = 0; i < specialAttributes.Count; i++) {
+            animationManager.ShowOrHideSpecialAttributeInfo(specialAttributes[i].attributeType, show);
+        }
+    }
+
+
 
 
     #endregion
