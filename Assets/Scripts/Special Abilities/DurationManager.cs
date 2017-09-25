@@ -36,7 +36,7 @@ public class DurationManager : MonoBehaviour {
 
         savedAbilities.Add(holder);
 
-        Debug.Log(savedAbilities.Count + " is the list count");
+        //Debug.Log(savedAbilities.Count + " is the list count");
 
     }
 
@@ -75,7 +75,7 @@ public class DurationManager : MonoBehaviour {
             return;
         }
 
-        for(int i = 0; i < savedAbilities.Count; i++) {
+        for(int i = savedAbilities.Count -1; i >=0; i--) {
             if (savedAbilities[i].ability.effectDuration != Constants.Duration.StartOfTurn)
                 continue;
 
@@ -135,15 +135,17 @@ public class DurationManager : MonoBehaviour {
         Player player = data.GetMonoBehaviour("Player") as Player;
 
         if (savedAbilities.Count < 1) {
-            //Debug.Log("List empty");
+            Debug.Log("List empty");
             return;
         }
 
-        for (int i = 0; i < savedAbilities.Count; i++) {
+        for (int i = savedAbilities.Count -1; i >=0; i--) {
             if (savedAbilities[i].ability.effectDuration != Constants.Duration.EndOfTurn)
                 continue;
 
             if (savedAbilities[i].ability != null) {
+
+                //Debug.Log(savedAbilities[i].ability.abilityName + " is being removed");
 
                 RemoveAbilityEffect(savedAbilities[i], player);
 

@@ -56,14 +56,16 @@ MonoBehaviour:
   cards:
   - {fileID: 11400000, guid: ae4bdfd0b2f584b4fb009c324d22a197, type: 2}
   - {fileID: 11400000, guid: 16ea33cc329619743a7d8ed89fa39180, type: 2}
-  - {fileID: 11400000, guid: c77b589fa2edab749928e154d9836e23, type: 2}
-  - {fileID: 11400000, guid: c77b589fa2edab749928e154d9836e23, type: 2}
-  - {fileID: 11400000, guid: c77b589fa2edab749928e154d9836e23, type: 2}
-  - {fileID: 11400000, guid: c77b589fa2edab749928e154d9836e23, type: 2}
-  - {fileID: 11400000, guid: c77b589fa2edab749928e154d9836e23, type: 2}
-  - {fileID: 11400000, guid: c77b589fa2edab749928e154d9836e23, type: 2}
-  - {fileID: 11400000, guid: c77b589fa2edab749928e154d9836e23, type: 2}
-  - {fileID: 11400000, guid: c77b589fa2edab749928e154d9836e23, type: 2}
+  - {fileID: 11400000, guid: 7581026222157d64ab24701ed8c0c8aa, type: 2}
+  - {fileID: 11400000, guid: 7581026222157d64ab24701ed8c0c8aa, type: 2}
+  - {fileID: 11400000, guid: 7581026222157d64ab24701ed8c0c8aa, type: 2}
+  - {fileID: 11400000, guid: 7581026222157d64ab24701ed8c0c8aa, type: 2}
+  - {fileID: 11400000, guid: 6b7ed7e001623bb42942c4b62df97bc1, type: 2}
+  - {fileID: 11400000, guid: 6b7ed7e001623bb42942c4b62df97bc1, type: 2}
+  - {fileID: 11400000, guid: 6b7ed7e001623bb42942c4b62df97bc1, type: 2}
+  - {fileID: 11400000, guid: 6b7ed7e001623bb42942c4b62df97bc1, type: 2}
+  - {fileID: 11400000, guid: 6b7ed7e001623bb42942c4b62df97bc1, type: 2}
+  - {fileID: 11400000, guid: 6b7ed7e001623bb42942c4b62df97bc1, type: 2}
   activeCards: []
   owner: {fileID: 0}
 --- !u!114 &114408855425483394
