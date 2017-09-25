@@ -20,6 +20,8 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
+  faction: 0
   primaryCardType: 1
   otherCardTypes: 
   attunements: 
@@ -61,6 +63,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -117,6 +121,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -143,7 +149,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 1
-    abilityName: 
+    abilityName: Buff
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -178,6 +184,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 1
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -239,6 +247,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -314,6 +324,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
@@ -340,7 +352,10 @@ MonoBehaviour:
           resourceGainedOrLost: 0
           abilityToGatherTargetsFrom: 
         targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
         invertValue: 0
+        setStatToValue: 0
         maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []

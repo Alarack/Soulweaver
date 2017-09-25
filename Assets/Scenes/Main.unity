@@ -1994,6 +1994,7 @@ GameObject:
   - component: {fileID: 1475846785}
   - component: {fileID: 1475846784}
   - component: {fileID: 1475846786}
+  - component: {fileID: 1475846787}
   m_Layer: 0
   m_Name: __AllCards
   m_TagString: AllCards
@@ -2067,6 +2068,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allCardData: []
+--- !u!114 &1475846787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1475846782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6efadf8545bee7e4ba5cf3c183cab053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1498812643 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224316315242123974, guid: 3a8fd792cd394b34c8c99006f42868f0,

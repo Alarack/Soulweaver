@@ -291,6 +291,9 @@ public class EffectStatAdjustment : Effect {
                     //Debug.Log("Match Found");
                     targetAdjustments.Add(card.statAdjustments[i]);
                 }
+                else {
+                    Debug.Log(card.statAdjustments[i].uniqueID + " is the id I'm looking at and " + adjustments[j].uniqueID + " is my id");
+                }
             }
         }
 

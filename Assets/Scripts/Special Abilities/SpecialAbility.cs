@@ -329,10 +329,22 @@ public abstract class SpecialAbility {
         }
 
 
+
+        if(effectDuration == Duration.StartOfTurn || effectDuration == Duration.EndOfTurn) {
+            DurationManager.RegisterAbility(this);
+        }
+
+
+
         if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateSingleTargetVFX(card);
         }
 
+    }
+
+
+    public void ExternalRemoval(List<CardVisual> cards) {
+        RemoveEffect(cards);
     }
 
     protected virtual void RemoveEffect(List<CardVisual> cards) {
@@ -341,6 +353,8 @@ public abstract class SpecialAbility {
 
                 case EffectType.StatAdjustment:
                     //RemoveStatAdjustments(cards[i]);
+
+                    //Debug.Log("Removing a stat adjustment from " + cards[i].gameObject.name);
 
                     for (int j = 0; j < effectHolder.statAdjustments.Count; j++) {
                         effectHolder.statAdjustments[j].Remove(cards[i]);
@@ -509,11 +523,14 @@ public abstract class SpecialAbility {
 
 
         //Effect Duration
-        if (effectDuration == Duration.EndOfTurn)
-            Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndDuration);
+        if (effectDuration == Duration.EndOfTurn) {
+            //DurationManager.RegisterAbility(this);
+            //Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndDuration);
+        }
+
 
         if (effectDuration == Duration.StartOfTurn)
-            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStartEndDuration);
+            //Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStartEndDuration);
 
         if (effectDuration == Duration.WhileInZone)
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZoneEndDuration);

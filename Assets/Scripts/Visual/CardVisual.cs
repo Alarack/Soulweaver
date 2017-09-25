@@ -319,11 +319,6 @@ public class CardVisual : Photon.MonoBehaviour {
             //Debug.Log("Unreging " + newSpecialAbilities[i].abilityName);
             UnregisterSpecialAbility(FindSpecialAbilityByName(specialAbilities[i].abilityName));
 
-            //if (specialAbilities.Contains(newSpecialAbilities[i])) {
-            //    //Debug.Log("Removing " + newSpecialAbilities[i].abilityName);
-            //    specialAbilities.Remove(newSpecialAbilities[i]);
-            //}
-
             if (specialAbilities[i] is LogicTargetedAbility) {
                 LogicTargetedAbility lta = specialAbilities[i] as LogicTargetedAbility;
                 if (multiTargetAbiliies.Contains(lta)) {
@@ -574,7 +569,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
 
     public virtual void ShowDeckBuilderTooltip() {
-        if(currentDeck != null)
+        if (currentDeck != null)
             CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + cardData.cardCost.ToString() + "\n" + cardData.cardText);
     }
 
@@ -1036,13 +1031,13 @@ public class CardVisual : Photon.MonoBehaviour {
 
                 break;
 
-            //case Constants.CardType.Player:
-            //    if (deck.decktype != Constants.DeckType.Battlefield)
-            //        return;
+                //case Constants.CardType.Player:
+                //    if (deck.decktype != Constants.DeckType.Battlefield)
+                //        return;
 
-            //    GameObject.FindGameObjectWithTag("MainMenu").SetActive(true);
+                //    GameObject.FindGameObjectWithTag("MainMenu").SetActive(true);
 
-            //    break;
+                //    break;
         }
 
         RPCShowOrHideKeywordVisual(PhotonTargets.All, false);
@@ -1075,8 +1070,8 @@ public class CardVisual : Photon.MonoBehaviour {
         if (deck.decktype != Constants.DeckType.Battlefield)
             return;
 
-        if (keywords.Contains(Constants.Keywords.Token))
-            return;
+        //if (keywords.Contains(Constants.Keywords.Token))
+        //    return;
 
         if (primaryCardType == Constants.CardType.Player || primaryCardType == Constants.CardType.Domain)
             return;
@@ -1321,7 +1316,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public void UnregisterCard(int cardID) {
         CardVisual card = Finder.FindCardByID(cardID);
 
-        if(card != null && card.visualTooltip != null) {
+        if (card != null && card.visualTooltip != null) {
             card.visualTooltip.UnregisterEverything();
         }
 
@@ -1492,30 +1487,86 @@ public class CardVisual : Photon.MonoBehaviour {
     public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX, bool setStats) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        //Debug.Log(source.gameObject.name + " is removeing stat adjustments");
+        Debug.Log(source.gameObject.name + " is removeing stat adjustments");
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
-        //Debug.Log(allAdjustments.Count + " is the number of adjustments found on " + gameObject.name);
+        List<SpecialAbility.StatAdjustment> savedAjds = DurationManager.GatherAllSpecialAbilityStatAdjustments();
 
-        for (int i = 0; i < allAdjustments.Count; i++) {
-            if (allAdjustments[i].uniqueID == adjID) {
-                if (!allAdjustments[i].temporary) {
-                    continue;
-                }
+        //Debug.Log(adjID + " is the ID Being Sent to Remove");
 
-                //Debug.Log(source.gameObject.name + " is SUCCESSFULLY removeing stat adjustments");
 
-                if (setStats) {
-                    AlterCardStats(allAdjustments[i].stat, GetStatValue(allAdjustments[i].stat), allAdjustments[i].source, waitForVFX, false, true);
-                }
-                else {
-                    AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
-                }
+        SpecialAbility.StatAdjustment target = FindMatchingStatAdjustment(allAdjustments, adjID);
 
-                statAdjustments.Remove(allAdjustments[i]);
+        if(target == null) {
+            target = FindMatchingStatAdjustment(savedAjds, adjID);
+        }
+
+        if(target != null) {
+            if (setStats) {
+                AlterCardStats(target.stat, GetStatValue(target.stat), target.source, waitForVFX, false, true);
+            }
+            else {
+                AlterCardStats(target.stat, -target.value, target.source, waitForVFX);
+            }
+            statAdjustments.Remove(target);
+
+            //SpecialAbility.StatAdjustment saved = FindMatchingStatAdjustment(savedAjds, adjID);
+
+            //if(saved != null) {
+            //    DurationManager.UnRegisterAbility(source);
+            //}
+
+        }
+        else {
+            Debug.LogError("No Stat adjustment with id " + adjID + " could be found.");
+        }
+
+
+
+        //for (int i = 0; i < allAdjustments.Count; i++) {
+        //    //Debug.Log(allAdjustments[i].uniqueID + " is an id on the source of the effect");
+        //    if (allAdjustments[i].uniqueID == adjID) {
+        //        if (!allAdjustments[i].temporary) {
+        //            continue;
+        //        }
+        //        //Debug.Log(source.gameObject.name + " is SUCCESSFULLY removeing stat adjustments");
+        //        if (setStats) {
+        //            AlterCardStats(allAdjustments[i].stat, GetStatValue(allAdjustments[i].stat), allAdjustments[i].source, waitForVFX, false, true);
+        //        }
+        //        else {
+        //            AlterCardStats(allAdjustments[i].stat, -allAdjustments[i].value, allAdjustments[i].source, waitForVFX);
+        //        }
+        //        statAdjustments.Remove(allAdjustments[i]);
+        //    }
+        //}
+    }
+
+
+    private SpecialAbility.StatAdjustment FindMatchingStatAdjustment(List<SpecialAbility.StatAdjustment> adjustments, int adjID) {
+        SpecialAbility.StatAdjustment result = null;
+
+        for (int i = 0; i < adjustments.Count; i++) {
+            if (adjustments[i].uniqueID == adjID) {
+                result = adjustments[i];
+                break;
             }
         }
+
+        return result;
+    }
+
+    private SpecialAttribute FindMatchingSpecialAttribute(List<SpecialAttribute> attributes, int ID) {
+        SpecialAttribute result = null;
+
+        for(int i = 0; i < attributes.Count; i++) {
+            if(attributes[i].uniqueID == ID) {
+                result = attributes[i];
+                break;
+            }
+        }
+
+        return result;
     }
 
 
@@ -1589,7 +1640,7 @@ public class CardVisual : Photon.MonoBehaviour {
                 specialAttributes.Remove(targetAttribute);
                 animationManager.ShowOrHideSpecialAttributeInfo(targetAttribute.attributeType, false);
             }
-                
+
         }
     }
 
@@ -1600,14 +1651,22 @@ public class CardVisual : Photon.MonoBehaviour {
         CardVisual source = Finder.FindCardByID(sourceID);
 
         List<SpecialAttribute> allAttributes = source.GatherAllSpecialAbilitySpecialAttributes();
-        SpecialAttribute targetAttribute = null;
+        List<SpecialAttribute> savedAttributes = DurationManager.GatherAllSpecialAttributes();
 
-        for (int i = 0; i < allAttributes.Count; i++) {
-            if (allAttributes[i].uniqueID == attributeID) {
-                targetAttribute = allAttributes[i];
-                break;
-            }
+
+        SpecialAttribute targetAttribute = FindMatchingSpecialAttribute(allAttributes, attributeID);
+
+        if(targetAttribute == null) {
+            targetAttribute = FindMatchingSpecialAttribute(savedAttributes, attributeID);
         }
+
+
+        //for (int i = 0; i < allAttributes.Count; i++) {
+        //    if (allAttributes[i].uniqueID == attributeID) {
+        //        targetAttribute = allAttributes[i];
+        //        break;
+        //    }
+        //}
 
         if (targetAttribute == null) {
             Debug.LogError("No Special Attribute with ID " + attributeID + " could be found on source card: " + source.cardData.cardName);
@@ -1955,6 +2014,10 @@ public class CardVisual : Photon.MonoBehaviour {
             if (keywords[i] != Constants.Keywords.Interceptor && keywords[i] != Constants.Keywords.Token) {
                 ToggleKeyword(false, (int)keywords[i]);
             }
+        }
+
+        for (int i = 0; i < specialAttributes.Count; i++) {
+            ShowOrHideKeywordVisuals(false);
         }
 
         specialAttributes.Clear();
