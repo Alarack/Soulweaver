@@ -150,12 +150,7 @@ public class EffectStatAdjustment : Effect {
         source.RPCCreateStatAdjustment(PhotonTargets.All, second, parentAbility.abilityName);
 
         ApplyStatAdjustment(target);
-
-
-
     }
-
-
 
     //When a stat adjustment is based on the value of another target's stat. Determine which target to derive that stat from.
     private void DetermineSourceOfTargetStat() {

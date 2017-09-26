@@ -135,7 +135,7 @@ public class DurationManager : MonoBehaviour {
         Player player = data.GetMonoBehaviour("Player") as Player;
 
         if (savedAbilities.Count < 1) {
-            Debug.Log("List empty");
+            //Debug.Log("List empty");
             return;
         }
 

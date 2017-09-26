@@ -305,6 +305,9 @@ public class CardVisual : Photon.MonoBehaviour {
         int cost = cardData.cardCost;
         essenceCost = cost;
 
+        cardCostText.text = cardData.cardCost.ToString();
+        TextTools.AlterTextColor(essenceCost, cardData.cardCost, cardCostText);
+
         //ResetSpecialAttributes();
 
         StartCoroutine(ResetSpecials());
