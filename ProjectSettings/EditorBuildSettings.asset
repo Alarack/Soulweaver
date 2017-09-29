@@ -8,6 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TitleScreen.unity
   - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+  - enabled: 1
     path: Assets/Scenes/Main.unity
   - enabled: 1
     path: Assets/Scenes/DeckBuilder.unity
+  - enabled: 1
+    path: Assets/Scenes/TestRoom.unity

@@ -55,6 +55,7 @@ public class CardVisual : Photon.MonoBehaviour {
     //public bool isToken;
     public bool isMulligand;
     public bool isBeingChosen;
+    public bool isShowingOptions;
     public Constants.CardType primaryCardType;
     public List<Constants.CardType> otherCardTypes = new List<Constants.CardType>();
     public List<Constants.Attunements> attunements = new List<Constants.Attunements>();
@@ -72,10 +73,11 @@ public class CardVisual : Photon.MonoBehaviour {
     public List<EffectOnTarget> userTargtedAbilities = new List<EffectOnTarget>();
     public List<LogicTargetedAbility> multiTargetAbiliies = new List<LogicTargetedAbility>();
 
-
+    [Header("UI Things")]
     public DomainTile domainTile;
-
     public CardVisual visualTooltip;
+    public CardOptions cardOptions;
+
 
     protected float tooltipTimer;
 
@@ -105,6 +107,10 @@ public class CardVisual : Photon.MonoBehaviour {
             return;
 
         if (photonView.isMine) {
+
+            if (cardOptions != null && Input.GetMouseButtonDown(1) && cardOptions.gameObject.activeInHierarchy)
+                HideCardOptions();
+
 
             if (!owner.dragger.moveableIsGrabbed && currentDeck.decktype == Constants.DeckType.Hand && handPos != null && Vector3.Distance(transform.position, handPos.position) > 0.2f) {
                 KeepCardInhand();
@@ -605,8 +611,6 @@ public class CardVisual : Photon.MonoBehaviour {
 
         Grid.EventManager.RemoveMyListeners(tempTooltip);
         Destroy(tempTooltip.gameObject, 2f);
-
-
     }
 
     private void SetVisualTokenLocation() {
@@ -638,7 +642,6 @@ public class CardVisual : Photon.MonoBehaviour {
             if (visualTooltip != null) {
                 visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y + testValue);
             }
-
             return;
         }
 
@@ -649,15 +652,12 @@ public class CardVisual : Photon.MonoBehaviour {
             if (visualTooltip != null) {
                 visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y - testValue);
             }
-
             return;
         }
 
         if (visualTooltip != null) {
             visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y);
         }
-
-
     }
 
     public virtual void HideVisualTooltip() {
@@ -675,9 +675,7 @@ public class CardVisual : Photon.MonoBehaviour {
             if (tooltipTimer >= 1.5f) {
                 ShowVisualTooltip();
             }
-
         }
-
     }
 
 
@@ -695,76 +693,167 @@ public class CardVisual : Photon.MonoBehaviour {
 
     protected virtual void OnMouseOver() {
 
-        //Choose One
-        if (isBeingChosen) {
-            if (Input.GetMouseButtonDown(0)) {
-                isBeingChosen = false;
-                currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
-
-                List<CardVisual> others = Finder.FindAllCardsBeingChosen();
-
-                for (int i = 0; i < others.Count; i++) {
-                    //others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], owner.notInGame);
-                    others[i].transform.position = new Vector3(-100f, 20f, -40f);
-                }
-            }
-        }
+        //Handle Choose 1 selection
+        ChooseOne();
 
         if (currentDeck.decktype == Constants.DeckType.NotInGame) {
             return;
         }
 
-        if (photonView.isMine || currentDeck.decktype == Constants.DeckType.Battlefield) {
-            //CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
+        //Show the visual tooltip
+        CardTooltipHandler();
 
-            if (Input.GetMouseButton(0)) {
-                HideVisualTooltip();
-            }
-            else {
-                if (!Mulligan.choosingMulligan && primaryCardType != Constants.CardType.Player) {
-
-                    if (currentDeck.decktype == Constants.DeckType.Hand) {
-                        ShowVisualTooltip();
-                    }
-                    else {
-                        ShowDelayedTooltip();
-                    }
-
-
-                }
-
-            }
-        }
-
-        if (photonView.isMine) {
-
-            if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) > 10f && !Mulligan.choosingMulligan) {
-                //mainHudText.text = "Play " + cardName + "?";
-                if (Input.GetMouseButton(0)) {
-                    ActivateGlow(Color.cyan);
-
-                    if (this is CreatureCardVisual)
-                        owner.battleFieldManager.GetNearestCardPosition(transform.position);
-                    //Debug.Log(nearest.gameObject.name);
-                }
-            }
-
-            if (currentDeck.decktype == Constants.DeckType.Hand && Vector3.Distance(transform.position, handPos.position) < 10f && !Mulligan.choosingMulligan) {
-                //mainHudText.text = "Play " + cardName + "?";
-                if (Input.GetMouseButton(0)) {
-                    ActivateGlow(Color.green);
-                }
-
-                if (Input.GetMouseButtonUp(0)) {
-                    owner.battleFieldManager.ClearAllHighlights();
-                }
-
-            }
-        }
+        //Highlight cards and battlefield positions
+        CardAndBattlefieldHilightHandler();
 
         //Playing Card from hand
-        if (currentDeck.decktype == Constants.DeckType.Hand && primaryCardType != Constants.CardType.Player && Input.GetMouseButtonUp(0)
-            && photonView.isMine && Vector3.Distance(transform.position, handPos.position) > 10f && owner.myTurn && !combatManager.isChoosingTarget) {
+        PlayCardFromHand();
+
+        //Dev tools. Remove from final game.
+        DevDamageAndHeals();
+
+        //Targeting
+        CardTargetingHandler();
+        CardUntargetingHandler();
+
+        //Intercepting
+        CardInterceptHandler();
+
+        //Activating Abilities
+        CardActivatedAbilityHandler();
+
+        //Mulligan
+        CardMulliganHandler();
+
+    }
+
+    public void ShowCardOptions() {
+        cardOptions.gameObject.SetActive(true);
+
+        if (keywords.Contains(Constants.Keywords.Interceptor)) {
+            cardOptions.ShowOrHideElement(CardOptions.CardOptionType.Unintercept, true);
+        }
+        else {
+            cardOptions.ShowOrHideElement(CardOptions.CardOptionType.Unintercept, false);
+
+            if (CheckForInterceptionPrevention()) {
+                cardOptions.ShowOrHideElement(CardOptions.CardOptionType.Intercept, true);
+            }
+            else {
+                cardOptions.ShowOrHideElement(CardOptions.CardOptionType.Intercept, false);
+            }
+
+        }
+
+        if (CheckForUserActivatedAbilities()) {
+            cardOptions.ShowOrHideElement(CardOptions.CardOptionType.Activate, true);
+        }
+        else {
+            cardOptions.ShowOrHideElement(CardOptions.CardOptionType.Activate, false);
+        }
+    }
+
+    public void HideCardOptions() {
+        cardOptions.gameObject.SetActive(false);
+
+    }
+
+
+    #region MOUSE OVER
+
+    private void ChooseOne() {
+
+        if (!isBeingChosen)
+            return;
+
+        if (Input.GetMouseButtonDown(0)) {
+            isBeingChosen = false;
+            currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
+
+            List<CardVisual> others = Finder.FindAllCardsBeingChosen();
+
+            for (int i = 0; i < others.Count; i++) {
+                //others[i].currentDeck.RPCTransferCard(PhotonTargets.All, others[i], owner.notInGame);
+                others[i].transform.position = new Vector3(-100f, 20f, -40f);
+            }
+        }
+
+    }
+
+    private void CardTooltipHandler() {
+        if (!photonView.isMine && currentDeck.decktype != Constants.DeckType.Battlefield)
+            return;
+
+        if (Mulligan.choosingMulligan)
+            return;
+
+        if (primaryCardType == Constants.CardType.Player)
+            return;
+
+        //CardTooltip.ShowTooltip(cardData.cardName + "\n" + "Cost: " + essenceCost.ToString() + "\n" + cardData.cardText);
+        if (Input.GetMouseButton(0)) {
+            HideVisualTooltip();
+        }
+        else {
+            if (currentDeck.decktype == Constants.DeckType.Hand) {
+                ShowVisualTooltip();
+            }
+            else {
+                ShowDelayedTooltip();
+            }
+        }
+    }
+
+    private void CardAndBattlefieldHilightHandler() {
+        if (!photonView.isMine)
+            return;
+
+        if (currentDeck.decktype != Constants.DeckType.Hand)
+            return;
+
+        if (Mulligan.choosingMulligan)
+            return;
+
+        if (Vector3.Distance(transform.position, handPos.position) > 10f) {
+            //mainHudText.text = "Play " + cardName + "?";
+            if (Input.GetMouseButton(0)) {
+                ActivateGlow(Color.cyan);
+
+                if (this is CreatureCardVisual)
+                    owner.battleFieldManager.GetNearestCardPosition(transform.position);
+                //Debug.Log(nearest.gameObject.name);
+            }
+        }
+
+        if (Vector3.Distance(transform.position, handPos.position) < 10f) {
+            //mainHudText.text = "Play " + cardName + "?";
+            if (Input.GetMouseButton(0)) {
+                ActivateGlow(Color.green);
+            }
+
+            if (Input.GetMouseButtonUp(0)) {
+                owner.battleFieldManager.ClearAllHighlights();
+            }
+        }
+    }
+
+    private void PlayCardFromHand() {
+        if (!photonView.isMine)
+            return;
+
+        if (currentDeck.decktype != Constants.DeckType.Hand)
+            return;
+
+        if (primaryCardType == Constants.CardType.Player)
+            return;
+
+        if (!owner.myTurn)
+            return;
+
+        if (combatManager.isChoosingTarget)
+            return;
+
+        if (Input.GetMouseButtonUp(0) && Vector3.Distance(transform.position, handPos.position) > 10f) {
 
             if (owner.battleFieldManager.IsCollectionFull() && cardData.primaryCardType == Constants.CardType.Soul) {
                 Debug.Log("No place to put that");
@@ -776,26 +865,22 @@ public class CardVisual : Photon.MonoBehaviour {
                 return;
             }
 
-            if (currentDeck.decktype != Constants.DeckType.Hand)
-                return;
-
             if (this is CreatureCardVisual) {
                 Transform nearest = owner.battleFieldManager.GetNearestCardPosition(transform.position);
-
                 if (nearest == null)
                     return;
             }
 
-
             owner.gameResourceDisplay.RPCRemoveResource(PhotonTargets.All, GameResource.ResourceType.Essence, essenceCost);
-
-            //owner.gameResourceDisplay.resourceDisplayInfo[0].resource.RemoveResource(essenceCost);
 
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.battlefield);
             HideVisualTooltip();
-
         }
 
+
+    }
+
+    private void DevDamageAndHeals() {
         //Dev delete
         if (Input.GetKeyDown(KeyCode.Delete)) {
             currentDeck.RPCTransferCard(PhotonTargets.All, this, owner.activeCrypt.GetComponent<Deck>());
@@ -805,35 +890,78 @@ public class CardVisual : Photon.MonoBehaviour {
         //Dev Damage
         if (Input.GetKeyDown(KeyCode.K)) {
             SpecialAbility.StatAdjustment damage = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, -1, false, false, this);
-
             RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this, false);
-
         }
 
         //Dev Heals
         if (Input.GetKeyDown(KeyCode.H)) {
             SpecialAbility.StatAdjustment damage = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, 1, false, false, this);
-
             RPCApplyUntrackedStatAdjustment(PhotonTargets.All, damage, this, false);
-
         }
+    }
 
-        //Targeting
-        if (currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat) && !combatManager.selectionComplete) {
+    private void CardTargetingHandler() {
+        if (currentDeck.decktype != Constants.DeckType.Battlefield)
+            return;
 
-            RPCTargetCard(PhotonTargets.All, true);
+        if (!combatManager.isChoosingTarget && !combatManager.isInCombat)
+            return;
 
-            //Drawing Lines
-            if (this is CreatureCardVisual && combatManager.isInCombat) {
-                CreatureCardVisual soul = this as CreatureCardVisual;
-                combatManager.lineDrawer.RPCBeginDrawing(PhotonTargets.Others, combatManager.attacker.battleToken.incomingEffectLocation.position, soul.battleToken.incomingEffectLocation.position);
-            }
+        if (combatManager.selectionComplete)
+            return;
+
+        RPCTargetCard(PhotonTargets.All, true);
+        //Drawing Lines
+        if (this is CreatureCardVisual && combatManager.isInCombat) {
+            CreatureCardVisual soul = this as CreatureCardVisual;
+            combatManager.lineDrawer.RPCBeginDrawing(PhotonTargets.Others, combatManager.attacker.battleToken.incomingEffectLocation.position, soul.battleToken.incomingEffectLocation.position);
         }
+    }
 
-        //Intercepting
-        if (Input.GetKeyDown(KeyCode.I) && owner.myTurn && !combatManager.isChoosingTarget && !combatManager.isInCombat
-            && (primaryCardType == Constants.CardType.Soul || (primaryCardType == Constants.CardType.Player && keywords.Contains(Constants.Keywords.GeneralIntercept))
-            && currentDeck.decktype == Constants.DeckType.Battlefield)) {
+    private void CardUntargetingHandler() {
+        if (currentDeck.decktype != Constants.DeckType.Battlefield)
+            return;
+
+        if (!combatManager.isInCombat && !combatManager.isChoosingTarget)
+            return;
+
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) {
+            //Debug.Log("Untargeting");
+            RPCTargetCard(PhotonTargets.All, false);
+        }
+    }
+
+    private void CardActivatedAbilityHandler() {
+        if (!owner.myTurn || !photonView.isMine)
+            return;
+
+        if (combatManager.isChoosingTarget || combatManager.isInCombat)
+            return;
+
+        if (currentDeck.decktype != Constants.DeckType.Battlefield)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetMouseButtonUp(1)) {
+            if (CheckForUserActivatedAbilities())
+                ActivateAbility();
+        }
+    }
+
+    private void CardInterceptHandler() {
+        if (!photonView.isMine && !owner.myTurn)
+            return;
+
+        if (currentDeck.decktype != Constants.DeckType.Battlefield)
+            return;
+
+        if (combatManager.isChoosingTarget || combatManager.isInCombat)
+            return;
+
+        if (primaryCardType != Constants.CardType.Soul && (primaryCardType != Constants.CardType.Player && !keywords.Contains(Constants.Keywords.GeneralIntercept)))
+            return;
+
+
+        if (Input.GetKeyDown(KeyCode.I)) {
 
             if (!CheckForInterceptionPrevention())
                 return;
@@ -844,29 +972,25 @@ public class CardVisual : Photon.MonoBehaviour {
                 RPCToggleIntercept(PhotonTargets.All, true);
             }
         }
+    }
 
-        //Untargeting
-        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && currentDeck.decktype == Constants.DeckType.Battlefield && (combatManager.isChoosingTarget || combatManager.isInCombat)) {
-            //Debug.Log("Untargeting");
-            RPCTargetCard(PhotonTargets.All, false);
-        }
+    private void CardMulliganHandler() {
+        if (!photonView.isMine)
+            return;
 
-        //Activating Abilities
-        if (owner.myTurn && photonView.isMine && (Input.GetKeyDown(KeyCode.A) || Input.GetMouseButtonUp(1)) && !combatManager.isChoosingTarget && !combatManager.isInCombat) {
-            if (CheckForUserActivatedAbilities())
-                ActivateAbility();
-        }
+        if (!Mulligan.choosingMulligan)
+            return;
 
+        if (currentDeck.decktype != Constants.DeckType.Hand)
+            return;
 
-        //Mulligan
-        if (Mulligan.choosingMulligan && photonView.isMine && currentDeck.decktype == Constants.DeckType.Hand && Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0)) {
             ToggleMulligan();
         }
-
-
-
-
     }
+
+    #endregion
+
 
     protected bool CheckForInterceptionPrevention() {
         bool result = true;
@@ -1042,6 +1166,8 @@ public class CardVisual : Photon.MonoBehaviour {
 
                 //    break;
         }
+
+        owner.battleFieldManager.ClearAllHighlights();
 
         RPCShowOrHideKeywordVisual(PhotonTargets.All, false);
 
@@ -1501,11 +1627,11 @@ public class CardVisual : Photon.MonoBehaviour {
 
         SpecialAbility.StatAdjustment target = FindMatchingStatAdjustment(allAdjustments, adjID);
 
-        if(target == null) {
+        if (target == null) {
             target = FindMatchingStatAdjustment(savedAjds, adjID);
         }
 
-        if(target != null) {
+        if (target != null) {
             if (setStats) {
                 AlterCardStats(target.stat, GetStatValue(target.stat), target.source, waitForVFX, false, true);
             }
@@ -1562,8 +1688,8 @@ public class CardVisual : Photon.MonoBehaviour {
     private SpecialAttribute FindMatchingSpecialAttribute(List<SpecialAttribute> attributes, int ID) {
         SpecialAttribute result = null;
 
-        for(int i = 0; i < attributes.Count; i++) {
-            if(attributes[i].uniqueID == ID) {
+        for (int i = 0; i < attributes.Count; i++) {
+            if (attributes[i].uniqueID == ID) {
                 result = attributes[i];
                 break;
             }
@@ -1659,7 +1785,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
         SpecialAttribute targetAttribute = FindMatchingSpecialAttribute(allAttributes, attributeID);
 
-        if(targetAttribute == null) {
+        if (targetAttribute == null) {
             targetAttribute = FindMatchingSpecialAttribute(savedAttributes, attributeID);
         }
 

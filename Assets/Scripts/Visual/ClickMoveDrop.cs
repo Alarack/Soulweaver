@@ -60,7 +60,7 @@ public class ClickMoveDrop : MonoBehaviour {
             //Debug.Log(target.gameObject.name);
 
             if (target.gameObject.GetPhotonView().isMine && target.gameObject.GetComponent<CardVisual>() != null &&
-               target.gameObject.GetComponent<CardVisual>().currentDeck.decktype == Constants.DeckType.Hand /*&& !Mulligan.choosingMulligan*/) {
+               target.gameObject.GetComponent<CardVisual>().currentDeck.decktype == Constants.DeckType.Hand) {
 
                 //Debug.Log("Clicked on a card");
                 moveableTransform = target;

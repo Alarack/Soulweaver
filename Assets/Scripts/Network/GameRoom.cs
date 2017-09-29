@@ -1,24 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class NetworkManager : Photon.MonoBehaviour {
-
-    private const string VERSION = "v0.0.0.1";
-    public static NetworkManager _networkManager;
+public class GameRoom : Photon.MonoBehaviour {
 
     public static List<Deck> _allDecks = new List<Deck>();
 
-    //public RoomListing roomTemplate;
-
-
-    public string roomName = "Mario's Hammer2";
     public string playerPrefabName = "NetworkPlayer";
-    //public string player2Name = "NetworkPlayer2";
-    //public Transform spawnPoint;
-    public RectTransform mainMenu;
     public Transform[] spawnpoints;
     //public GameObject mainMenu;
     //public GameObject endGameScreen;
@@ -26,44 +14,22 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     private int spawnIndex = 0;
 
-    [SerializeField] Text connetionText;
-    [SerializeField] Camera sceneCamera;
+    [SerializeField]
+    Camera sceneCamera;
 
     private GameObject player1;
     private GameObject player2;
 
-
-    void Awake() {
-
-        _networkManager = this;
-
-
-    }
-
-    void Start() {
-        //ConnectToGame();
-    }
-
-    public void ConnectToGame() {
-        PhotonNetwork.ConnectUsingSettings(VERSION);
-    }
-
-    private void Update() {
-        //if(connetionText != null)
-        //    connetionText.text = PhotonNetwork.connectionStateDetailed.ToString();
-    }
-
-    //private void OnJoinedLobby() {
-    //    RoomOptions roomOptions = new RoomOptions() { IsVisible = false, MaxPlayers = 2 };
-    //    PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
-    //}
-
     private void OnJoinedRoom() {
 
-        sceneCamera.enabled = true;
+        Debug.Log("OnJoinedRoom() : You Have Joined a Room : " + PhotonNetwork.room.Name);
 
         StartSpawnProcess(0.5f);
     }
+
+
+
+
 
     private void StartSpawnProcess(float respawnTime) {
         sceneCamera.enabled = true;
@@ -96,8 +62,6 @@ public class NetworkManager : Photon.MonoBehaviour {
 
 
 
-    #region RPCs
-
     public void RPCFirstPlayerArrived(PhotonTargets targets) {
         photonView.RPC("FirstPlayerArrived", targets);
     }
@@ -106,7 +70,5 @@ public class NetworkManager : Photon.MonoBehaviour {
     public void FirstPlayerArrived() {
         firstPlayer = true;
     }
-
-    #endregion
 
 }

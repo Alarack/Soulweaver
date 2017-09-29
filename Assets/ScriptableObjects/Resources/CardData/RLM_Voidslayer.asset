@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
   faction: 4
   primaryCardType: 1
   otherCardTypes: 
@@ -63,6 +64,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -89,7 +92,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -104,7 +107,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -119,6 +122,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -145,7 +150,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 5
-    abilityName: 
+    abilityName: Remove First Strike
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -180,6 +185,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -241,6 +248,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -283,7 +292,7 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 0
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
@@ -325,6 +334,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -351,7 +362,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     sourceConstraints:
-      types: 
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -366,7 +377,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
+      currentZone: 05000000
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -381,6 +392,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -407,7 +420,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 5
-    abilityName: 
+    abilityName: Add First Strike
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -442,6 +455,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -503,6 +518,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -587,6 +604,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -643,6 +662,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -669,7 +690,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 2
-    abilityName: 
+    abilityName: Draw on Slay
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -704,6 +725,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -765,6 +788,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 

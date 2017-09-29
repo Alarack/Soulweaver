@@ -55,17 +55,15 @@ MonoBehaviour:
   decktype: 1
   cards:
   - {fileID: 11400000, guid: ae4bdfd0b2f584b4fb009c324d22a197, type: 2}
-  - {fileID: 11400000, guid: 16ea33cc329619743a7d8ed89fa39180, type: 2}
-  - {fileID: 11400000, guid: aaf0c4df16cbc30439080b27fa9979da, type: 2}
-  - {fileID: 11400000, guid: aaf0c4df16cbc30439080b27fa9979da, type: 2}
-  - {fileID: 11400000, guid: aaf0c4df16cbc30439080b27fa9979da, type: 2}
-  - {fileID: 11400000, guid: aaf0c4df16cbc30439080b27fa9979da, type: 2}
-  - {fileID: 11400000, guid: b3b98cfb14ff0cd409984650fd0defdb, type: 2}
-  - {fileID: 11400000, guid: b3b98cfb14ff0cd409984650fd0defdb, type: 2}
-  - {fileID: 11400000, guid: b3b98cfb14ff0cd409984650fd0defdb, type: 2}
-  - {fileID: 11400000, guid: b3b98cfb14ff0cd409984650fd0defdb, type: 2}
-  - {fileID: 11400000, guid: b3b98cfb14ff0cd409984650fd0defdb, type: 2}
-  - {fileID: 11400000, guid: b3b98cfb14ff0cd409984650fd0defdb, type: 2}
+  - {fileID: 11400000, guid: 45bde66f56130af45803db862a0ee705, type: 2}
+  - {fileID: 11400000, guid: 45bde66f56130af45803db862a0ee705, type: 2}
+  - {fileID: 11400000, guid: 45bde66f56130af45803db862a0ee705, type: 2}
+  - {fileID: 11400000, guid: 45bde66f56130af45803db862a0ee705, type: 2}
+  - {fileID: 11400000, guid: 1f3b6aae9299d3a4d9694f6463029e79, type: 2}
+  - {fileID: 11400000, guid: 1f3b6aae9299d3a4d9694f6463029e79, type: 2}
+  - {fileID: 11400000, guid: 1f3b6aae9299d3a4d9694f6463029e79, type: 2}
+  - {fileID: 11400000, guid: 1f3b6aae9299d3a4d9694f6463029e79, type: 2}
+  - {fileID: 11400000, guid: 1f3b6aae9299d3a4d9694f6463029e79, type: 2}
   activeCards: []
   owner: {fileID: 0}
 --- !u!114 &114408855425483394

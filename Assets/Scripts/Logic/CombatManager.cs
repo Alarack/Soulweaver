@@ -55,11 +55,17 @@ public class CombatManager : Photon.MonoBehaviour {
     }
 
     void Update() {
-        if (Camera.main != null)
-            clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        else {
+        if (Camera.main == null) {
             Debug.LogError("Camera is null");
+            return;
         }
+
+        if (Input.GetMouseButtonDown(0)) {
+            clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
+
+        if (!owner.myTurn)
+            return;
 
         if (Input.GetMouseButtonDown(1) && isInCombat && owner.myTurn) {
             EndCombat();
@@ -72,16 +78,16 @@ public class CombatManager : Photon.MonoBehaviour {
         }
 
 
-        if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.SpellAbilityTargetng && isChoosingTarget && !isInCombat && owner.myTurn) {
+        if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.SpellAbilityTargetng && isChoosingTarget && !isInCombat) {
             //Debug.Log("Trying to do stuff on a target");
             DoStuffOnTarget();
         }
 
-        if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && !isChoosingTarget && !isInCombat && owner.myTurn) {
+        if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && !isChoosingTarget && !isInCombat) {
             SelectAttacker();
         }
 
-        if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && isInCombat && selectingDefender && owner.myTurn) {
+        if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && isInCombat && selectingDefender) {
             SelectDefender();
         }
 
@@ -127,26 +133,10 @@ public class CombatManager : Photon.MonoBehaviour {
             return;
         }
 
-        //if (currentTarget.hasAttacked) {
-        //    Debug.LogError("That has already attacked");
-        //    return;
-        //}
-
         if (!currentTarget.CanAttack()) {
             Debug.LogError("That cannot attack");
             return;
         }
-
-        //if (Finder.CardHasKeyword(currentTarget, Keywords.Exhausted)) {
-        //    Debug.LogError("That is exhausted");
-        //    return;
-        //}
-
-        //if (currentTarget.attack < 1) {
-        //    Debug.LogError("That has no attack value");
-        //    return;
-        //}
-
 
         attacker = currentTarget;
         isInCombat = true;
@@ -182,7 +172,7 @@ public class CombatManager : Photon.MonoBehaviour {
             return;
         }
 
-        if(currentTarget.keywords.Contains(Keywords.Flight) && !attacker.keywords.Contains(Keywords.Flight) && !attacker.keywords.Contains(Keywords.Reach)){
+        if (currentTarget.keywords.Contains(Keywords.Flight) && !attacker.keywords.Contains(Keywords.Flight) && !attacker.keywords.Contains(Keywords.Reach)) {
             Debug.Log("That target is flying");
             return;
         }
@@ -223,7 +213,7 @@ public class CombatManager : Photon.MonoBehaviour {
                 continue;
             }
 
-            if(Finder.CardHasKeyword(interceptor, Keywords.Invisible)) {
+            if (Finder.CardHasKeyword(interceptor, Keywords.Invisible)) {
                 allInterceptors.Remove(interceptor);
                 //Debug.Log("Defender is invisable, removeing");
                 continue;
@@ -241,7 +231,7 @@ public class CombatManager : Photon.MonoBehaviour {
                 continue;
             }
 
-            if(Finder.CardHasKeyword(interceptor, Keywords.Flight) && !Finder.CardHasKeyword(attacker, Keywords.Flight)) {
+            if (Finder.CardHasKeyword(interceptor, Keywords.Flight) && !Finder.CardHasKeyword(attacker, Keywords.Flight)) {
                 allInterceptors.Remove(interceptor);
                 continue;
             }
@@ -390,7 +380,8 @@ public class CombatManager : Photon.MonoBehaviour {
 
 
     public void EndCombat() {
-        attacker.battlefieldPos.position -= selectedPos;
+        if(attacker != null)
+            attacker.battlefieldPos.position -= selectedPos;
         //TODO: End of Combat Events
 
         if (attacker != null && defender != null) {
@@ -447,6 +438,10 @@ public class CombatManager : Photon.MonoBehaviour {
             cardSelected = clickRayHit.collider.GetComponent<CardVisual>();
         }
 
+        if(cardSelected != null && cardSelected.photonView.isMine && owner.myTurn && cardSelected.currentDeck.decktype == DeckType.Battlefield) {
+            //Debug.Log("show options");
+            cardSelected.ShowCardOptions();
+        }
 
         //EventData data = new EventData();
         //data.AddMonoBehaviour("Card", cardSelected);
@@ -454,6 +449,9 @@ public class CombatManager : Photon.MonoBehaviour {
 
         return cardSelected;
     }
+
+
+
 
     private bool ConfirmCardClicked(CardVisual card, DeckType location = DeckType.None, bool mineOnly = false) {
 

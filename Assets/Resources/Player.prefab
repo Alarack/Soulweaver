@@ -19984,6 +19984,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114187623374597274}
   cardSizeText: {fileID: 114750126849668124}
   cardHealthText: {fileID: 114220340319264476}
@@ -20615,6 +20616,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114245855918478540}
   cardSizeText: {fileID: 114462080224354224}
   cardHealthText: {fileID: 114602932178047254}
@@ -20824,6 +20826,8 @@ MonoBehaviour:
     stat: 5
   - rect: {fileID: 224490239022749666}
     stat: 5
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114047004363757640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -21162,6 +21166,8 @@ MonoBehaviour:
     stat: 5
   - rect: {fileID: 224150682179295872}
     stat: 5
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114062900865930796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -21950,6 +21956,8 @@ MonoBehaviour:
     stat: 5
   - rect: {fileID: 224258944541566250}
     stat: 5
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114095805973188398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -22207,6 +22215,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardSupportValueText: {fileID: 0}
   supportValue: 0
   supportToken: {fileID: 0}
@@ -22723,6 +22732,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114906730572959410}
   cardSizeText: {fileID: 114212872768144690}
   cardHealthText: {fileID: 114919306154984746}
@@ -24040,6 +24050,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114023886800730332}
   cardSizeText: {fileID: 114439608480600934}
   cardHealthText: {fileID: 114714550281494772}
@@ -24307,9 +24318,10 @@ MonoBehaviour:
   isChoosingTarget: 0
   isInCombat: 0
   selectingDefender: 0
+  selectionComplete: 0
   attacker: {fileID: 0}
   defender: {fileID: 0}
-  selectedPos: {x: 0, y: 0, z: -1.5}
+  selectedPos: {x: 0, y: 0, z: -3}
 --- !u!114 &114176602079821000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24451,6 +24463,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114402539414356364}
   cardSizeText: {fileID: 114807167512265358}
   cardHealthText: {fileID: 114098400103294432}
@@ -24826,6 +24839,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114958587267467360}
   cardSizeText: {fileID: 114973847534066744}
   cardHealthText: {fileID: 114652969132310780}
@@ -26392,6 +26406,8 @@ MonoBehaviour:
     stat: 3
   - rect: {fileID: 224014996927330806}
     stat: 4
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114248905329321918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -26615,6 +26631,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114906748188069972}
   cardSizeText: {fileID: 114095805973188398}
   cardHealthText: {fileID: 114552717589133734}
@@ -27386,6 +27403,8 @@ MonoBehaviour:
     stat: 3
   - rect: {fileID: 224846244659322964}
     stat: 4
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114297665935993186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -27549,6 +27568,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114056328423923086}
   cardSizeText: {fileID: 114247755760403906}
   cardHealthText: {fileID: 114136179259780416}
@@ -28030,6 +28050,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114145369938472264}
   cardSizeText: {fileID: 114644029243473450}
   cardHealthText: {fileID: 114564139801611874}
@@ -29832,6 +29853,8 @@ MonoBehaviour:
     stat: 3
   - rect: {fileID: 224386835432162362}
     stat: 4
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114410501125423680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -30945,6 +30968,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114562175513764182}
   cardSizeText: {fileID: 114564331741910698}
   cardHealthText: {fileID: 114912958282157392}
@@ -31497,6 +31521,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114500695326948808}
   cardSizeText: {fileID: 114682367708193824}
   cardHealthText: {fileID: 114317779663894606}
@@ -32089,6 +32114,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114052682986948314}
   cardSizeText: {fileID: 114898136842278386}
   cardHealthText: {fileID: 114627144400158138}
@@ -32637,6 +32663,8 @@ MonoBehaviour:
     stat: 5
   - rect: {fileID: 224673323708968394}
     stat: 5
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114535049148865912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35268,6 +35296,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardSupportValueText: {fileID: 0}
   supportValue: 0
   supportToken: {fileID: 0}
@@ -36506,6 +36535,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114861487493763996}
   cardSizeText: {fileID: 114326438203806870}
   cardHealthText: {fileID: 114989913519106220}
@@ -38849,6 +38879,8 @@ MonoBehaviour:
     stat: 5
   - rect: {fileID: 224962485734073222}
     stat: 5
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114770180384034568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39087,6 +39119,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114468160907132116}
   cardSizeText: {fileID: 114664141372971768}
   cardHealthText: {fileID: 114272490867295362}
@@ -39443,6 +39476,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114326789774228366}
   cardSizeText: {fileID: 114824978310004704}
   cardHealthText: {fileID: 114011491274387520}
@@ -40126,6 +40160,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114953086009033550}
   cardSizeText: {fileID: 114654311699115852}
   cardHealthText: {fileID: 114186757662490926}
@@ -41147,6 +41182,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardSupportValueText: {fileID: 0}
   supportValue: 0
   supportToken: {fileID: 0}
@@ -41643,6 +41679,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114113361338246388}
   cardSizeText: {fileID: 114628374263484256}
   cardHealthText: {fileID: 114783347964629096}
@@ -42061,6 +42098,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114146212072619134}
   cardSizeText: {fileID: 114529760380825334}
   cardHealthText: {fileID: 114501319799097616}
@@ -42802,6 +42840,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114812830322111266}
   cardSizeText: {fileID: 114555704937410894}
   cardHealthText: {fileID: 114416242753881070}
@@ -43072,6 +43111,7 @@ MonoBehaviour:
   userTargtedAbilities: []
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
+  visualTooltip: {fileID: 0}
   cardAttackText: {fileID: 114444936724860714}
   cardSizeText: {fileID: 114894312804169364}
   cardHealthText: {fileID: 114726270891119048}
@@ -43477,6 +43517,8 @@ MonoBehaviour:
     stat: 5
   - rect: {fileID: 224990541144040862}
     stat: 5
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114957246151467846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -43507,6 +43549,8 @@ MonoBehaviour:
     stat: 5
   - rect: {fileID: 224382963088073490}
     stat: 5
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114957518488130944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -43960,8 +44004,7 @@ MonoBehaviour:
   opponent: {fileID: 0}
   startGameButton: {fileID: 114663863048339760}
   gameHasStarted: 0
-  myDeckChosen: 0
-  theirDeckChosen: 0
+  deckSelected: 0
   dragger: {fileID: 114537894808448892}
   combatManager: {fileID: 0}
 --- !u!114 &114977745389399978
@@ -44105,6 +44148,8 @@ MonoBehaviour:
     stat: 5
   - rect: {fileID: 224538635769865548}
     stat: 5
+  keywordVisualInfo: []
+  specialAttributeVisualInfo: []
 --- !u!114 &114988187075506032
 MonoBehaviour:
   m_ObjectHideFlags: 1
