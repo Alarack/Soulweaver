@@ -62,6 +62,15 @@ public class CardListing : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
         if (cardQuantity <= 0) {
             deckbuilder.currentListings.Remove(this);
+            if (visualTooltip != null) {
+
+                //Debug.Log("Killing tooltip");
+                visualTooltip.UnregisterEverything();
+                Destroy(visualTooltip.gameObject);
+
+            }
+
+
             Destroy(gameObject);
         }
         else {

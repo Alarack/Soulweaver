@@ -117,7 +117,7 @@ public abstract class SpecialAbility {
 
         Effect(card);
 
-        
+
         SendManualTrigger();
 
         return check;
@@ -329,10 +329,22 @@ public abstract class SpecialAbility {
         }
 
 
+
+        if (effectDuration == Duration.StartOfTurn || effectDuration == Duration.EndOfTurn) {
+            DurationManager.RegisterAbility(this);
+        }
+
+
+
         if (!(String.IsNullOrEmpty(abilityVFX))) {
             CreateSingleTargetVFX(card);
         }
 
+    }
+
+
+    public void ExternalRemoval(List<CardVisual> cards) {
+        RemoveEffect(cards);
     }
 
     protected virtual void RemoveEffect(List<CardVisual> cards) {
@@ -341,6 +353,8 @@ public abstract class SpecialAbility {
 
                 case EffectType.StatAdjustment:
                     //RemoveStatAdjustments(cards[i]);
+
+                    //Debug.Log("Removing a stat adjustment from " + cards[i].gameObject.name);
 
                     for (int j = 0; j < effectHolder.statAdjustments.Count; j++) {
                         effectHolder.statAdjustments[j].Remove(cards[i]);
@@ -509,14 +523,19 @@ public abstract class SpecialAbility {
 
 
         //Effect Duration
-        if (effectDuration == Duration.EndOfTurn)
-            Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndDuration);
+        //if (effectDuration == Duration.EndOfTurn) {
+        //    //DurationManager.RegisterAbility(this);
+        //    //Grid.EventManager.RegisterListener(GameEvent.TurnEnded, OnTurnEndDuration);
+        //}
 
-        if (effectDuration == Duration.StartOfTurn)
-            Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStartEndDuration);
+        //if (effectDuration == Duration.StartOfTurn) {
+        //    //Grid.EventManager.RegisterListener(GameEvent.TurnStarted, OnTurnStartEndDuration);
+        //}
 
-        if (effectDuration == Duration.WhileInZone)
+        if (effectDuration == Duration.WhileInZone) {
             Grid.EventManager.RegisterListener(GameEvent.CardLeftZone, OnLeavesZoneEndDuration);
+        }
+
 
 
         //Once per turn and resent coutner at end of turn checks
@@ -651,7 +670,6 @@ public abstract class SpecialAbility {
         if (card == source && sourceConstraints.currentZone.Contains(deck.decktype)) {
             RemoveEffect(targets);
         }
-
 
     }
 
@@ -1006,7 +1024,7 @@ public abstract class SpecialAbility {
 
         CardVisual effectTarget = null;
 
-        if (trigger.Contains(AbilityActivationTrigger.Defends)){
+        if (trigger.Contains(AbilityActivationTrigger.Defends)) {
             switch (processTriggerOnWhom) {
 
                 case ApplyEffectToWhom.CauseOfTrigger:
@@ -1136,7 +1154,7 @@ public abstract class SpecialAbility {
 
             SpecialAbility target = source.FindSpecialAbilityByName(ability.triggerConstraints.oncePerTurnAbilityname);
 
-            if(target != null) {
+            if (target != null) {
                 if (target.triggerConstraints.triggeredThisTurn) {
                     return false;
                 }
@@ -1688,7 +1706,7 @@ public abstract class SpecialAbility {
 
         if (constraint.consumeResource) {
 
-            if(targetResource.currentValue - constraint.amountOfResourceRequried < 0) {
+            if (targetResource.currentValue - constraint.amountOfResourceRequried < 0) {
                 return false;
             }
             else {
@@ -1718,7 +1736,7 @@ public abstract class SpecialAbility {
         //Debug.Log(source.gameObject.name + " ::: " + source.cardData.cardName + " is reporting: " + resourceType.ToString() + " is the type that has been reported initially");
 
 
-        if(resourceType != constraints.resourceThatChanged) {
+        if (resourceType != constraints.resourceThatChanged) {
             //Debug.Log(resourceType.ToString() + " is not what " + source.gameObject.name + " is looking for " + "(" + constraints.resourceThatChanged + ")");
             return false;
         }
