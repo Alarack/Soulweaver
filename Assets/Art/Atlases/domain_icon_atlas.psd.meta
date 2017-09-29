@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 99ac3219bd862444e9b9d53ef6d03bd1
-timeCreated: 1500315249
+timeCreated: 1506668913
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -152,6 +152,9 @@ TextureImporter:
     21300290: domain_BON_Faust_TransformNative
     21300292: domain_BON_Faust_TransformWolf
     21300294: domain_OTH_Nitholash_Evolve_Sharpen_ex
+    21300296: Action_RemoveBlocker
+    21300298: Action_DeclareBlocker
+    21300300: Action_ActivateAbility
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -2152,6 +2155,45 @@ TextureImporter:
         y: 1024
         width: 128
         height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Action_RemoveBlocker
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Action_DeclareBlocker
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Action_ActivateAbility
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
