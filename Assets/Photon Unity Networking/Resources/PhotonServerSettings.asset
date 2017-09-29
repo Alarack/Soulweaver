@@ -115,4 +115,5 @@ MonoBehaviour:
   - BroadcastDeckSelection
   - SetOpponent
   - ShowStartGameButton
+  - ShowOrHideKeywordVisuals
   DisableAutoOpenWizard: 1
