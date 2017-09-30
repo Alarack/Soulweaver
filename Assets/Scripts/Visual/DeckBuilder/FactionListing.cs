@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FactionListing : MonoBehaviour {
+
 
     public Constants.Faction faction;
 
@@ -19,5 +21,7 @@ public class FactionListing : MonoBehaviour {
         _deckBuilder.ShowSubPanel(DeckBuilder.DeckBuilderSubPanel.GeneralSelector, faction);
 
     }
+
+
 
 }

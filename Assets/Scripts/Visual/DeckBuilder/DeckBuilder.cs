@@ -136,6 +136,8 @@ public class DeckBuilder : MonoBehaviour {
                     generalSelector.ResetListings(faction);
                 }
 
+                LockFilterButtons(faction);
+
 
                 break;
 
@@ -360,6 +362,22 @@ public class DeckBuilder : MonoBehaviour {
         PageRight();
 
     }
+
+
+    public void LockFilterButtons(Constants.Faction faction) {
+        
+        for(int i = 0; i < filterButtons.Count; i++) {
+            if(filterButtons[i].faction == faction || filterButtons[i].faction == Constants.Faction.Neutral) {
+                filterButtons[i].Unlock();
+            }
+            else {
+                filterButtons[i].Lock();
+            }
+        }
+
+
+    }
+
 
     public void SearchCards(string value) {
 
