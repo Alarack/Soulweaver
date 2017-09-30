@@ -728,6 +728,9 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
     public void ShowCardOptions() {
+        if (cardOptions == null)
+            return;
+
         cardOptions.gameObject.SetActive(true);
 
         if (keywords.Contains(Constants.Keywords.Interceptor)) {
@@ -754,7 +757,8 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
     public void HideCardOptions() {
-        cardOptions.gameObject.SetActive(false);
+        if (cardOptions != null)
+            cardOptions.gameObject.SetActive(false);
 
     }
 
@@ -1019,7 +1023,7 @@ public class CardVisual : Photon.MonoBehaviour {
 
     }
 
-    protected bool CheckForUserActivatedAbilities() {
+    public bool CheckForUserActivatedAbilities() {
         for (int i = 0; i < specialAbilities.Count; i++) {
             if (specialAbilities[i].trigger.Contains(Constants.AbilityActivationTrigger.UserActivated))
                 return true;
@@ -1027,7 +1031,7 @@ public class CardVisual : Photon.MonoBehaviour {
         return false;
     }
 
-    protected void ActivateAbility() {
+    public void ActivateAbility() {
 
         EventData data = new EventData();
         data.AddMonoBehaviour("Card", this);

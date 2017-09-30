@@ -14,9 +14,11 @@ public class CardOptions : MonoBehaviour {
 
 
     public RectTransform interceptContainer;
-    public RectTransform unInterceptContainer;
+    //public RectTransform unInterceptContainer;
     public RectTransform activateContainer;
 
+    public Sprite interceptSprite;
+    public Sprite unInterceptSprite;
 
     private CardVisual myCard;
 
@@ -31,14 +33,17 @@ public class CardOptions : MonoBehaviour {
         switch (type) {
             case CardOptionType.Activate:
                 activateContainer.gameObject.SetActive(show);
+                
                 break;
 
             case CardOptionType.Intercept:
                 interceptContainer.gameObject.SetActive(show);
+                interceptContainer.GetComponent<Image>().sprite = interceptSprite;
                 break;
 
             case CardOptionType.Unintercept:
-                unInterceptContainer.gameObject.SetActive(show);
+                interceptContainer.gameObject.SetActive(show);
+                interceptContainer.GetComponent<Image>().sprite = unInterceptSprite;
                 break;
         }
     }
@@ -48,15 +53,28 @@ public class CardOptions : MonoBehaviour {
         if (myCard.keywords.Contains(Constants.Keywords.Interceptor)) {
             myCard.RPCToggleIntercept(PhotonTargets.All, false);
             interceptContainer.gameObject.SetActive(true);
+            interceptContainer.GetComponent<Image>().sprite = interceptSprite;
         }
         else {
             myCard.RPCToggleIntercept(PhotonTargets.All, true);
-            unInterceptContainer.gameObject.SetActive(true);
+            //unInterceptContainer.gameObject.SetActive(true);
+            interceptContainer.GetComponent<Image>().sprite = unInterceptSprite;
         }
 
         myCard.owner.combatManager.EndCombat();
 
         gameObject.SetActive(false);
+    }
+
+    public void ActivateAbility() {
+        myCard.owner.combatManager.EndCombat();
+
+        if (myCard.CheckForUserActivatedAbilities()) {
+            myCard.ActivateAbility();
+        }
+
+        gameObject.SetActive(false);
+
     }
 
 

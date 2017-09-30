@@ -19974,6 +19974,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -19985,6 +19986,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114187623374597274}
   cardSizeText: {fileID: 114750126849668124}
   cardHealthText: {fileID: 114220340319264476}
@@ -20606,6 +20608,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -20617,6 +20620,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114245855918478540}
   cardSizeText: {fileID: 114462080224354224}
   cardHealthText: {fileID: 114602932178047254}
@@ -22205,6 +22209,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -22216,6 +22221,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardSupportValueText: {fileID: 0}
   supportValue: 0
   supportToken: {fileID: 0}
@@ -22722,6 +22728,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -22733,6 +22740,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114906730572959410}
   cardSizeText: {fileID: 114212872768144690}
   cardHealthText: {fileID: 114919306154984746}
@@ -24040,6 +24048,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -24051,6 +24060,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114023886800730332}
   cardSizeText: {fileID: 114439608480600934}
   cardHealthText: {fileID: 114714550281494772}
@@ -24321,7 +24331,7 @@ MonoBehaviour:
   selectionComplete: 0
   attacker: {fileID: 0}
   defender: {fileID: 0}
-  selectedPos: {x: 0, y: 0, z: -3}
+  selectedPos: {x: 0, y: 0, z: -1.5}
 --- !u!114 &114176602079821000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24453,6 +24463,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -24464,6 +24475,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114402539414356364}
   cardSizeText: {fileID: 114807167512265358}
   cardHealthText: {fileID: 114098400103294432}
@@ -24829,6 +24841,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -24840,6 +24853,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114958587267467360}
   cardSizeText: {fileID: 114973847534066744}
   cardHealthText: {fileID: 114652969132310780}
@@ -26621,6 +26635,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -26632,6 +26647,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114906748188069972}
   cardSizeText: {fileID: 114095805973188398}
   cardHealthText: {fileID: 114552717589133734}
@@ -27558,6 +27574,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -27569,6 +27586,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114056328423923086}
   cardSizeText: {fileID: 114247755760403906}
   cardHealthText: {fileID: 114136179259780416}
@@ -28040,6 +28058,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -28051,6 +28070,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114145369938472264}
   cardSizeText: {fileID: 114644029243473450}
   cardHealthText: {fileID: 114564139801611874}
@@ -30958,6 +30978,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -30969,6 +30990,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114562175513764182}
   cardSizeText: {fileID: 114564331741910698}
   cardHealthText: {fileID: 114912958282157392}
@@ -31511,6 +31533,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -31522,6 +31545,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114500695326948808}
   cardSizeText: {fileID: 114682367708193824}
   cardHealthText: {fileID: 114317779663894606}
@@ -32104,6 +32128,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -32115,6 +32140,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114052682986948314}
   cardSizeText: {fileID: 114898136842278386}
   cardHealthText: {fileID: 114627144400158138}
@@ -35286,6 +35312,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -35297,6 +35324,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardSupportValueText: {fileID: 0}
   supportValue: 0
   supportToken: {fileID: 0}
@@ -36525,6 +36553,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -36536,6 +36565,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114861487493763996}
   cardSizeText: {fileID: 114326438203806870}
   cardHealthText: {fileID: 114989913519106220}
@@ -39109,6 +39139,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -39120,6 +39151,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114468160907132116}
   cardSizeText: {fileID: 114664141372971768}
   cardHealthText: {fileID: 114272490867295362}
@@ -39466,6 +39498,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -39477,6 +39510,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114326789774228366}
   cardSizeText: {fileID: 114824978310004704}
   cardHealthText: {fileID: 114011491274387520}
@@ -40150,6 +40184,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -40161,6 +40196,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114953086009033550}
   cardSizeText: {fileID: 114654311699115852}
   cardHealthText: {fileID: 114186757662490926}
@@ -41172,6 +41208,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -41183,6 +41220,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardSupportValueText: {fileID: 0}
   supportValue: 0
   supportToken: {fileID: 0}
@@ -41669,6 +41707,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -41680,6 +41719,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114113361338246388}
   cardSizeText: {fileID: 114628374263484256}
   cardHealthText: {fileID: 114783347964629096}
@@ -42088,6 +42128,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -42099,6 +42140,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114146212072619134}
   cardSizeText: {fileID: 114529760380825334}
   cardHealthText: {fileID: 114501319799097616}
@@ -42830,6 +42872,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -42841,6 +42884,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114812830322111266}
   cardSizeText: {fileID: 114555704937410894}
   cardHealthText: {fileID: 114416242753881070}
@@ -43101,6 +43145,7 @@ MonoBehaviour:
   essenceCost: 0
   isMulligand: 0
   isBeingChosen: 0
+  isShowingOptions: 0
   primaryCardType: 0
   otherCardTypes: 
   attunements: 
@@ -43112,6 +43157,7 @@ MonoBehaviour:
   multiTargetAbiliies: []
   domainTile: {fileID: 0}
   visualTooltip: {fileID: 0}
+  cardOptions: {fileID: 0}
   cardAttackText: {fileID: 114444936724860714}
   cardSizeText: {fileID: 114894312804169364}
   cardHealthText: {fileID: 114726270891119048}

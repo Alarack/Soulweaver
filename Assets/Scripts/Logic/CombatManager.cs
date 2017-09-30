@@ -380,14 +380,17 @@ public class CombatManager : Photon.MonoBehaviour {
 
 
     public void EndCombat() {
-        if(attacker != null)
+        if(attacker != null) {
             attacker.battlefieldPos.position -= selectedPos;
+            attacker = null;
+        }
+
         //TODO: End of Combat Events
 
-        if (attacker != null && defender != null) {
+        if (defender != null) {
             defender.RPCTargetCard(PhotonTargets.All, false);
 
-            attacker = null;
+
             defender = null;
         }
 
@@ -438,9 +441,20 @@ public class CombatManager : Photon.MonoBehaviour {
             cardSelected = clickRayHit.collider.GetComponent<CardVisual>();
         }
 
-        if(cardSelected != null && cardSelected.photonView.isMine && owner.myTurn && cardSelected.currentDeck.decktype == DeckType.Battlefield) {
+        if(cardSelected != null && cardSelected.photonView.isMine && owner.myTurn && cardSelected.currentDeck.decktype == DeckType.Battlefield && !isInCombat) {
             //Debug.Log("show options");
-            cardSelected.ShowCardOptions();
+            List<CardVisual> cardsOnField = Finder.FindAllCardsInZone(DeckType.Battlefield, OwnerConstraints.Mine);
+
+            for(int i = 0; i < cardsOnField.Count; i++) {
+                if(cardsOnField[i] == cardSelected) {
+                    cardsOnField[i].ShowCardOptions();
+                }
+                else {
+                    cardsOnField[i].HideCardOptions();
+                }
+            }
+
+            //cardSelected.ShowCardOptions();
         }
 
         //EventData data = new EventData();

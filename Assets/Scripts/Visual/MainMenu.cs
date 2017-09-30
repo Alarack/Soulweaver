@@ -65,6 +65,9 @@ public class MainMenu : MonoBehaviour {
         if(cm != null)
             Grid.EventManager.RemoveMyListeners(cm);
 
+        if(DurationManager.durationManager != null)
+            Grid.EventManager.RemoveMyListeners(DurationManager.durationManager);
+
     }
 
     public void ShowMenu() {
