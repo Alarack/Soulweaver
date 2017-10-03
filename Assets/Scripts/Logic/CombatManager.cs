@@ -129,12 +129,12 @@ public class CombatManager : Photon.MonoBehaviour {
             return;
 
         if (!Finder.CardHasPrimaryType(currentTarget, CardType.Soul) && !Finder.CardHasPrimaryType(currentTarget, CardType.Player)) {
-            Debug.LogError("That cannot attack");
+            //Debug.LogError("That cannot attack");
             return;
         }
 
         if (!currentTarget.CanAttack()) {
-            Debug.LogError("That cannot attack");
+            //Debug.LogError("That cannot attack");
             return;
         }
 

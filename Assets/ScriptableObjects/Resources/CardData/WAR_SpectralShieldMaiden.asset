@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: 'Spectral Shield Maiden '
   cardText: 'Flight, Inspire: Give another friendly Soul +5 Health.'
   cardCost: 5
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 21300000, guid: a2dc573a5656d204cba5d34643ad42db, type: 3}
   cardImagePos: {x: 0, y: 0}
   attackEffect: 
   movingVFX: 0

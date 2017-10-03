@@ -2273,48 +2273,18 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114292770457435496, guid: f622566dbca3ad84a9563b0fcf14fd24,
-        type: 2}
-      propertyPath: viewIdField
-      value: 48
-      objectReference: {fileID: 0}
-    - target: {fileID: 114292770457435496, guid: f622566dbca3ad84a9563b0fcf14fd24,
-        type: 2}
-      propertyPath: instantiationId
-      value: 48
-      objectReference: {fileID: 0}
     - target: {fileID: 114842020649077314, guid: f622566dbca3ad84a9563b0fcf14fd24,
         type: 2}
       propertyPath: viewIdField
-      value: 49
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 114842020649077314, guid: f622566dbca3ad84a9563b0fcf14fd24,
         type: 2}
       propertyPath: instantiationId
-      value: 49
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 1412707008206956, guid: f622566dbca3ad84a9563b0fcf14fd24, type: 2}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224428164848831698, guid: f622566dbca3ad84a9563b0fcf14fd24,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 224428164848831698, guid: f622566dbca3ad84a9563b0fcf14fd24,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 224428164848831698, guid: f622566dbca3ad84a9563b0fcf14fd24,
-        type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224428164848831698, guid: f622566dbca3ad84a9563b0fcf14fd24,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
