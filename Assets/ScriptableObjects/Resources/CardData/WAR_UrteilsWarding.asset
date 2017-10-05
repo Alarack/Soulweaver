@@ -21,6 +21,7 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
   faction: 5
   primaryCardType: 2
   otherCardTypes: 
@@ -28,13 +29,12 @@ MonoBehaviour:
   subTypes: 
   keywords: 
   specialAbilityTypes: 
-  userTargtedAbilities: []
-  multiTargetAbilities:
+  userTargtedAbilities:
   - trigger: 01000000
     effectDuration: 3
     triggerDuration: 0
     triggerConstraints:
-      types: 04000000
+      types: 0400000005000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -51,7 +51,7 @@ MonoBehaviour:
       notAttunement: 0
       currentZone: 05000000
       notCurrentZone: 0
-      previousZone: 
+      previousZone: 03000000
       notPreviousZone: 0
       creatureStatus: 
       resources: 
@@ -64,6 +64,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -120,6 +122,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -152,9 +156,9 @@ MonoBehaviour:
     triggeringCards: []
     targetConstraints:
       types: 0400000002000000
-      owner: 2
+      owner: 0
       whosTurn: 0
-      primaryType: 0600000001000000
+      primaryType: 0100000006000000
       notPrimaryType: 0
       additionalType: 
       notAdditionalType: 0
@@ -181,6 +185,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -242,6 +248,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -287,16 +295,13 @@ MonoBehaviour:
     manualTriggerAbilityNames:
     - Heals
     togglePresets: 1
-    toggleTriggerOptions: 0
+    toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
+    toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 1
-    numberofTargets: 0
-    processEffectOnPrimaryEffectTargets: 0
-    targetAbilityName: 
+  multiTargetAbilities:
   - trigger: 
     effectDuration: 0
     triggerDuration: 0
@@ -331,6 +336,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -387,6 +394,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -448,6 +457,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -509,6 +520,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -584,6 +597,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
@@ -666,6 +681,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 1
       triggerablePrimaryAbilityName: Prot
       abilityToRemove: 
@@ -722,6 +739,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -783,6 +802,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -844,6 +865,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
