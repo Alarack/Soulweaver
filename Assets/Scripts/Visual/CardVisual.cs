@@ -76,6 +76,7 @@ public class CardVisual : Photon.MonoBehaviour {
     [Header("UI Things")]
     public DomainTile domainTile;
     public CardVisual visualTooltip;
+    public KeywordReminderManager keywordReminderManager;
     public CardOptions cardOptions;
 
 
@@ -149,10 +150,6 @@ public class CardVisual : Photon.MonoBehaviour {
         attackEffect = cardData.attackEffect;
         deathEffect = cardData.deathVFX;
 
-        if (photonView == null)
-            return;
-
-
         // Initalizing Current Data
         int tempCost = cardData.cardCost;
         essenceCost = tempCost;
@@ -174,6 +171,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
         List<Constants.Keywords> tempKeywords = new List<Constants.Keywords>(cardData.keywords);
         keywords = tempKeywords;
+
+
+        if (photonView == null)
+            return;
 
         SetUpSpecialAbilities();
 
@@ -595,10 +596,18 @@ public class CardVisual : Photon.MonoBehaviour {
 
             SetVisualTokenLocation();
 
+            if(visualTooltip != null && visualTooltip.keywordReminderManager != null) {
+                visualTooltip.keywordReminderManager.CreateReminders(keywords);
+            }
+
         }
         else {
             visualTooltip.gameObject.SetActive(true);
             SetVisualTokenLocation();
+
+            if (visualTooltip != null && visualTooltip.keywordReminderManager != null) {
+                visualTooltip.keywordReminderManager.CreateReminders(keywords);
+            }
         }
     }
 
@@ -669,10 +678,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
     public virtual void ShowDelayedTooltip() {
 
-        if (tooltipTimer < 1.5f) {
+        if (tooltipTimer < 2f) {
             tooltipTimer += Time.deltaTime;
 
-            if (tooltipTimer >= 1.5f) {
+            if (tooltipTimer >= 2f) {
                 ShowVisualTooltip();
             }
         }
