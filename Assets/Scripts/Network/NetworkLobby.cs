@@ -75,6 +75,8 @@ public class NetworkLobby : Photon.MonoBehaviour {
             Destroy(allRooms[i].gameObject);
         }
 
+        allRooms.Clear();
+
     }
 
 
