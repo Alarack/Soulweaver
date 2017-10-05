@@ -1180,6 +1180,14 @@ public class CardVisual : Photon.MonoBehaviour {
                 //    break;
         }
 
+        if(this is CreatureCardVisual) {
+            CreatureCardVisual soul = this as CreatureCardVisual;
+
+            if(soul.battlefieldPos != null && soul.keywords.Contains(Constants.Keywords.Interceptor)) {
+                soul.battlefieldPos.position -= soul.interceptPos;
+            }
+        }
+
         owner.battleFieldManager.ClearAllHighlights();
 
         RPCShowOrHideKeywordVisual(PhotonTargets.All, false);

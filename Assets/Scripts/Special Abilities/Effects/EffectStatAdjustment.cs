@@ -123,8 +123,6 @@ public class EffectStatAdjustment : Effect {
 
                 //Debug.Log(spellDamage + " is the amount of spelldamage reported");
 
-                
-
                 adjustments[i].value = baseAdjValues[i] -spellDamage;
 
                 source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
@@ -254,6 +252,8 @@ public class EffectStatAdjustment : Effect {
     private void SetAdjustmentValuesByResource() {
         for (int i = 0; i < adjustments.Count; i++) {
             adjustments[i].value = SetValueByAmountOfResource(invertValue);
+            baseAdjValues[i] = adjustments[i].value;
+
             source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
         }
 
