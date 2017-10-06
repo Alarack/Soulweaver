@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: 79008
   cardName: Reassignment
-  cardText: '(1)(E): Return a friendly Soul to your hand and draw a card.'
+  cardText: '(1)(E): Return a friendly Soul to your hand, it costs 1 less.'
   cardCost: 0
   cardImage: {fileID: 0}
   cardImagePos: {x: 0, y: 0}
@@ -286,16 +286,17 @@ MonoBehaviour:
       addOrRemoveSpecialAttribute: []
       chooseOne: []
       bestowAbility: []
-    manualTriggerAbilityNames: []
+    manualTriggerAbilityNames:
+    - Reduce Cost
     togglePresets: 1
-    toggleTriggerOptions: 1
-    toggleSourceOptions: 1
-    toggleEffectOptions: 1
+    toggleTriggerOptions: 0
+    toggleSourceOptions: 0
+    toggleEffectOptions: 0
     toggleTargetOptions: 1
-    toggleAdditonalRequirementOptions: 1
+    toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
   multiTargetAbilities:
-  - trigger: 0a000000
+  - trigger: 
     effectDuration: 0
     triggerDuration: 0
     triggerConstraints:
@@ -331,8 +332,8 @@ MonoBehaviour:
       suspendTrigger: 0
       dependantOnOncePerTurnAbility: 0
       oncePerTurnAbilityname: 
-      triggerbySpecificAbility: 1
-      triggerablePrimaryAbilityName: Return
+      triggerbySpecificAbility: 0
+      triggerablePrimaryAbilityName: 
       abilityToRemove: 
       abilityToRetrigger: 
       statGainedOrLost: 0
@@ -414,14 +415,14 @@ MonoBehaviour:
       resourceThatChanged: 0
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
-    effect: 2
-    abilityName: Draw
+    effect: 1
+    abilityName: Reduce Cost
     source: {fileID: 0}
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 0400000001000000
-      owner: 2
+      types: 
+      owner: 0
       whosTurn: 0
       primaryType: 
       notPrimaryType: 0
@@ -435,7 +436,7 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 01000000
+      currentZone: 
       notCurrentZone: 0
       previousZone: 
       notPreviousZone: 0
@@ -541,12 +542,88 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effectHolder:
-      zoneChanges:
+      zoneChanges: []
+      tokenSpanws: []
+      statAdjustments:
       - effectType: 0
         source: {fileID: 0}
-        targetLocation: 3
-      tokenSpanws: []
-      statAdjustments: []
+        valueSetmethod: 0
+        adjustments:
+        - stat: 1
+          value: -1
+          nonStacking: 0
+          temporary: 1
+          source: {fileID: 0}
+          uniqueID: -1
+          spellDamage: 0
+        deriveStatsFromWhom: 0
+        targetStat: 0
+        targetAbilityName: 
+        zoneToCount: 0
+        constraints:
+          types: 
+          owner: 0
+          whosTurn: 0
+          primaryType: 
+          notPrimaryType: 0
+          additionalType: 
+          notAdditionalType: 0
+          subtype: 
+          notSubtype: 0
+          keyword: 
+          notKeyword: 0
+          specialAttributes: 
+          notSpecialAttribute: 0
+          attunement: 
+          notAttunement: 0
+          currentZone: 
+          notCurrentZone: 0
+          previousZone: 
+          notPreviousZone: 0
+          creatureStatus: 
+          resources: 
+          minStats: []
+          maxStats: []
+          mostStat: 0
+          leastStat: 0
+          thisCardOnly: 0
+          oncePerTurn: 0
+          triggeredThisTurn: 0
+          neverTargetSelf: 0
+          suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
+          triggerbySpecificAbility: 0
+          triggerablePrimaryAbilityName: 
+          abilityToRemove: 
+          abilityToRetrigger: 
+          statGainedOrLost: 0
+          statChanged: 0
+          thisCardAdjusts: 0
+          thisCardAdjusted: 0
+          thisCardAttacks: 0
+          thisCardDefends: 0
+          creatureCanAttack: 0
+          zoneToCheckForNumberOfCards: 0
+          moreOrLessCards: 0
+          numberOfcardsInZone: 0
+          requireMultipleTriggers: 0
+          resetCountAtTurnEnd: 0
+          triggersRequired: 0
+          counter: 0
+          requiredResourceType: 0
+          moreOrlessResource: 0
+          amountOfResourceRequried: 0
+          consumeResource: 0
+          resourceThatChanged: 0
+          resourceGainedOrLost: 0
+          abilityToGatherTargetsFrom: 
+        targetResource: 0
+        sourceStat: 0
+        destinationStat: 0
+        invertValue: 0
+        setStatToValue: 0
+        maxValue: 0
       generateResources: []
       addOrRemoveKeywords: []
       addOrRemoveSpecialAttribute: []
@@ -556,14 +633,14 @@ MonoBehaviour:
     togglePresets: 1
     toggleTriggerOptions: 1
     toggleSourceOptions: 0
-    toggleEffectOptions: 0
-    toggleTargetOptions: 0
+    toggleEffectOptions: 1
+    toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
     processTriggerOnWhom: 0
-    logicTargetingMethod: 2
-    numberofTargets: 1
+    logicTargetingMethod: 4
+    numberofTargets: 0
     processEffectOnPrimaryEffectTargets: 0
-    targetAbilityName: 
+    targetAbilityName: Return
   - trigger: 0a000000
     effectDuration: 0
     triggerDuration: 0
@@ -823,7 +900,7 @@ MonoBehaviour:
       chooseOne: []
       bestowAbility: []
     manualTriggerAbilityNames: []
-    togglePresets: 1
+    togglePresets: 0
     toggleTriggerOptions: 0
     toggleSourceOptions: 0
     toggleEffectOptions: 0

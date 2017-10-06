@@ -429,6 +429,23 @@ public class CardVisual : Photon.MonoBehaviour {
         }
     }
 
+    public virtual void RemoveStatAdjustmentsByStat(CardVisual source, SpecialAbility.StatAdjustment adj) {
+
+        for(int i = 0; i < source.specialAbilities.Count; i++) {
+            for(int j =0; j < source.specialAbilities[i].effectHolder.statAdjustments.Count; j++) {
+                EffectStatAdjustment targetAdjEffect = source.specialAbilities[i].effectHolder.statAdjustments[j];
+
+                for(int k = 0; k < targetAdjEffect.adjustments.Count; k++) {
+                    if (targetAdjEffect.adjustments[k] == adj) {
+                        targetAdjEffect.RemoveStatAdjustments(this, adj.stat);
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
+
     public virtual void ActivateGlow(Color32 color) {
         if (!glow.activeInHierarchy) {
             glow.SetActive(true);
@@ -648,6 +665,9 @@ public class CardVisual : Photon.MonoBehaviour {
             float difference = (canvasTransform.sizeDelta.y / 2) - Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2));
             float testValue = Mathf.Abs(difference - (canvasTransform.sizeDelta.y * canvasTransform.pivot.y));
 
+            //Debug.Log("off bottom " + testValue + " is offset");
+            //Debug.Log("off bottom " + difference + " is the difference");
+
             if (visualTooltip != null) {
                 visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y + testValue);
             }
@@ -655,8 +675,12 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         if (temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2) > canvasTransform.sizeDelta.y / 2) {
-            float difference = (canvasTransform.sizeDelta.y / 2) + Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2));
-            float testValue = Mathf.Abs(difference + (canvasTransform.sizeDelta.y * canvasTransform.pivot.y));
+            //float difference = (canvasTransform.sizeDelta.y / 2) - Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2));
+            float difference = canvasTransform.sizeDelta.y - Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y));
+            float testValue = Mathf.Abs(difference - (canvasTransform.sizeDelta.y * canvasTransform.pivot.y));
+
+            //Debug.Log("off top " + testValue + " is offset");
+            //Debug.Log("off top " + difference + " is the difference");
 
             if (visualTooltip != null) {
                 visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y - testValue);
@@ -1610,6 +1634,12 @@ public class CardVisual : Photon.MonoBehaviour {
 
                 targetAdj = allAdjustments[i];
                 //Debug.Log("Match Found!");
+
+
+
+                //if (setStat) {
+                //    RemoveStatAdjustmentsByStat(source, targetAdj);
+                //}
 
                 AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source, waitForVFX, !setStat, setStat);
                 statAdjustments.Add(allAdjustments[i]);

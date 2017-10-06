@@ -121,10 +121,13 @@ public class CreatureCardVisual : CardVisual {
         switch (stat) {
             case Constants.CardStats.Attack:
 
-                if (setStats)
+                if (setStats) {
                     attack = value;
-                else
+                }
+                else{
                     attack += value;
+                }
+
 
                 if (!waitForVFX) {
 

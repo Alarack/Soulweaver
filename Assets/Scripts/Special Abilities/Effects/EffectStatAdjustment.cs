@@ -94,6 +94,18 @@ public class EffectStatAdjustment : Effect {
         RemoveStatAdjustments(target);
     }
 
+    public SpecialAbility GetAdjustmentSource(StatAdjustment adj) {
+
+        for (int i = 0; i < adjustments.Count; i++) {
+            if (adjustments[i].uniqueID == adj.uniqueID) {
+                return parentAbility;
+            }
+        }
+
+        return null;
+
+    }
+
     public void InitializeAdjustments() {
         for (int i = 0; i < adjustments.Count; i++) {
 
@@ -123,7 +135,7 @@ public class EffectStatAdjustment : Effect {
 
                 //Debug.Log(spellDamage + " is the amount of spelldamage reported");
 
-                adjustments[i].value = baseAdjValues[i] -spellDamage;
+                adjustments[i].value = baseAdjValues[i] - spellDamage;
 
                 source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
             }
@@ -296,6 +308,27 @@ public class EffectStatAdjustment : Effect {
             card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, false, setStatToValue);
         }
 
+
+    }
+
+    public void RemoveStatAdjustments(CardVisual card, CardStats stat) {
+        List<StatAdjustment> targetAdjustments = new List<StatAdjustment>();
+
+        for (int i = 0; i < card.statAdjustments.Count; i++) {
+            for (int j = 0; j < adjustments.Count; j++) {
+                if (card.statAdjustments[i].uniqueID == adjustments[j].uniqueID && card.statAdjustments[i].stat == stat) {
+                    //Debug.Log("Match Found");
+                    targetAdjustments.Add(card.statAdjustments[i]);
+                }
+                //else {
+                //    Debug.Log(card.statAdjustments[i].uniqueID + " is the id I'm looking at and " + adjustments[j].uniqueID + " is my id");
+                //}
+            }
+        }
+
+        for (int i = 0; i < targetAdjustments.Count; i++) {
+            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, false, setStatToValue);
+        }
 
     }
 

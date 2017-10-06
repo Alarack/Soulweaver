@@ -150,7 +150,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 1
-    abilityName: 
+    abilityName: Gain Attack
     source: {fileID: 0}
     targets: []
     triggeringCards: []
