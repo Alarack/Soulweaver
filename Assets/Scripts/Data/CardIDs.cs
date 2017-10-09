@@ -431,7 +431,9 @@ public class CardIDs {
         WAR_RequiemsVigil = 70023,
         WAR_LifeConduitSentinel = 70024,
         WAR_Repremand = 70025,
-
+        WAR_HafeldtWarrior = 70026,
+        WAR_EdmundJorn = 70027,
+        WAR_TKN_Retribution = 70028,
 
 
         //Guardian Sub Faction 73001 - 76000
@@ -476,7 +478,7 @@ public class CardIDs {
 		WAR_DOM_Flex = 79006,
 		WAR_DOM_GraveyardShift = 79007,
 		WAR_DOM_Reassignment = 79008,
-		WAR_DOM_UnhinderedFocus = 79009,
+		WAR_DOM_BureaucraticEvasion = 79009,
         WAR_GEN_Urteil = 79010,
         WAR_GEN_Argen = 79011,
         WAR_GEN_Benif = 79012,

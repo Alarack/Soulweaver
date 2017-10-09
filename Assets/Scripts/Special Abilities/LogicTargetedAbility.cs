@@ -43,6 +43,9 @@ public class LogicTargetedAbility : SpecialAbility {
 
 
     public override bool ProcessEffect(CardVisual card) {
+        if (suspend)
+            return false;
+
 
         switch (logicTargetingMethod) {
             case LogicTargeting.AllValidTargets:
@@ -83,13 +86,15 @@ public class LogicTargetedAbility : SpecialAbility {
 
             case LogicTargeting.NoTargetsNeeded:
 
-                if(CheckConstraints(targetConstraints, source) != null)
+                if (CheckConstraints(targetConstraints, source) != null)
                     Effect(source);
 
                 break;
 
             case LogicTargeting.OnlyTargetTriggeringCard:
                 if (CheckConstraints(targetConstraints, card) != null) {
+
+                    //Debug.Log("[LogicTargetedAbility] " + source.gameObject.name + " is affecting " + card.gameObject.name);
                     Effect(card);
 
                 }
@@ -99,7 +104,7 @@ public class LogicTargetedAbility : SpecialAbility {
             case LogicTargeting.UseTargetsFromOtherAbility:
                 List<CardVisual> otherTargets = FindTargetsFromAnotherAbility();
 
-                for(int i = 0; i < otherTargets.Count; i++) {
+                for (int i = 0; i < otherTargets.Count; i++) {
                     if (CheckConstraints(targetConstraints, otherTargets[i]) != null)
                         Effect(otherTargets[i]);
 
@@ -126,7 +131,7 @@ public class LogicTargetedAbility : SpecialAbility {
                 CardVisual leftcard = otherTargets2[0].owner.battleFieldManager.GetCardToTheLeft(otherTargets2[0]);
                 CardVisual rightCard = otherTargets2[0].owner.battleFieldManager.GetCardToTheRight(otherTargets2[0]);
 
-                if(leftcard != null && CheckConstraints(targetConstraints, leftcard) != null) {
+                if (leftcard != null && CheckConstraints(targetConstraints, leftcard) != null) {
                     Effect(leftcard);
                 }
 
@@ -153,6 +158,8 @@ public class LogicTargetedAbility : SpecialAbility {
         }
 
         Debug.Log(abilityName + " on " + source.cardData.cardName + " is firing");
+        string message = abilityName + " on " + source.cardData.cardName + " is firing remotely";
+        source.RPCSendTestMessage(PhotonTargets.Others, message);
 
         SendManualTrigger();
 
@@ -163,8 +170,8 @@ public class LogicTargetedAbility : SpecialAbility {
 
         Debug.Log(targets.Count);
 
-        for(int i = 0; i < targets.Count; i++) {
-            if(CheckConstraints(targetConstraints, targets[i])) {
+        for (int i = 0; i < targets.Count; i++) {
+            if (CheckConstraints(targetConstraints, targets[i])) {
                 Effect(targets[i]);
             }
         }
@@ -175,14 +182,14 @@ public class LogicTargetedAbility : SpecialAbility {
 
         SpecialAbility targetAbility = null;
 
-        for(int i = 0; i < source.specialAbilities.Count; i++) {
-            if(source.specialAbilities[i].abilityName == targetAbilityName) {
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == targetAbilityName) {
                 targetAbility = source.specialAbilities[i];
                 break;
             }
         }
 
-        if(targetAbility != null) {
+        if (targetAbility != null) {
             return targetAbility.targets;
         }
         else {

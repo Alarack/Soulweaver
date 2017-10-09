@@ -913,6 +913,7 @@ public class CardDataEditor : Editor {
                 break;
 
             case EffectType.RemoveOtherEffect:
+            case EffectType.SuspendOtherEffect:
                 entry.targetConstraints.abilityToRemove = EditorGUILayout.TextField("Name of Ability to Remove", entry.targetConstraints.abilityToRemove);
                 break;
 

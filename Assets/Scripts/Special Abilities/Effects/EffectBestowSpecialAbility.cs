@@ -9,13 +9,13 @@ public class EffectBestowSpecialAbility : Effect {
     public string targetAbiliity;
 
     public override void Apply(CardVisual target) {
-        target.ProcessNewSpecialAbility(GetTargetAbility());
-        target.RPCProcessNewSpecialAbility(PhotonTargets.Others, source, targetAbiliity);
+        //target.ProcessNewSpecialAbility(GetTargetAbility());
+        target.RPCProcessNewSpecialAbility(PhotonTargets.All, source, targetAbiliity);
     }
 
     public override void Remove(CardVisual target) {
-        target.RemoveSpecialAbility(targetAbiliity);
-        target.RPCRemoveSpecialAbility(PhotonTargets.Others, targetAbiliity);
+        //target.RemoveSpecialAbility(targetAbiliity);
+        target.RPCRemoveSpecialAbility(PhotonTargets.All, targetAbiliity);
     }
 
     private SpecialAbility GetTargetAbility() {

@@ -140,7 +140,7 @@ public class EffectStatAdjustment : Effect {
                 source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
             }
 
-
+            //Debug.Log("[EffectStatAdjustment] " + source.gameObject.name + " is applying a stat adjstment");
             target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source, !hasVFX, setStatToValue);
         }
     }
@@ -310,27 +310,5 @@ public class EffectStatAdjustment : Effect {
 
 
     }
-
-    public void RemoveStatAdjustments(CardVisual card, CardStats stat) {
-        List<StatAdjustment> targetAdjustments = new List<StatAdjustment>();
-
-        for (int i = 0; i < card.statAdjustments.Count; i++) {
-            for (int j = 0; j < adjustments.Count; j++) {
-                if (card.statAdjustments[i].uniqueID == adjustments[j].uniqueID && card.statAdjustments[i].stat == stat) {
-                    //Debug.Log("Match Found");
-                    targetAdjustments.Add(card.statAdjustments[i]);
-                }
-                //else {
-                //    Debug.Log(card.statAdjustments[i].uniqueID + " is the id I'm looking at and " + adjustments[j].uniqueID + " is my id");
-                //}
-            }
-        }
-
-        for (int i = 0; i < targetAdjustments.Count; i++) {
-            card.RPCRemoveSpecialAbilityStatAdjustment(PhotonTargets.All, targetAdjustments[i].uniqueID, source, false, setStatToValue);
-        }
-
-    }
-
 
 }

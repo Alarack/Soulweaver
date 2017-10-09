@@ -238,10 +238,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
             multiTargetAbiliies.Add(clone);
             newSpecialAbilities.Add(clone);
-            specialAbilities.Add(clone);
+            //specialAbilities.Add(clone);
 
 
-            Debug.Log(clone.abilityName + " is being added.");
+            Debug.Log(clone.abilityName + " is being added to " + cardData.cardName + " ::: " + gameObject.name);
 
             clone.Initialize(this);
         }
@@ -253,7 +253,9 @@ public class CardVisual : Photon.MonoBehaviour {
 
             userTargtedAbilities.Add(clone);
             newSpecialAbilities.Add(clone);
-            specialAbilities.Add(clone);
+            //specialAbilities.Add(clone);
+
+            Debug.Log(clone.abilityName + ", a targeted ability, is being added to " + cardData.cardName + " ::: " + gameObject.name);
 
             clone.Initialize(this);
 
@@ -376,16 +378,16 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
 
-        if (this is CreatureCardVisual && stat == Constants.CardStats.Health) {
-            CreatureCardVisual soul = this as CreatureCardVisual;
-            value = soul.CalcProtection(value);
+        //if (this is CreatureCardVisual && stat == Constants.CardStats.Health) {
+        //    CreatureCardVisual soul = this as CreatureCardVisual;
+        //    value = soul.CalcProtection(value);
 
-            if (value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
-                value = 0;
-            }
+        //    if (value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
+        //        value = 0;
+        //    }
 
-            //Debug.Log(value + " is the value of the stat adjustment being applied to " + gameObject.name);
-        }
+        //    //Debug.Log(value + " is the value of the stat adjustment being applied to " + gameObject.name);
+        //}
 
         if (sendEvent) {
             EventData data = new EventData();
@@ -427,23 +429,6 @@ public class CardVisual : Photon.MonoBehaviour {
 
             lastStatAdjustment = latest;
         }
-    }
-
-    public virtual void RemoveStatAdjustmentsByStat(CardVisual source, SpecialAbility.StatAdjustment adj) {
-
-        for(int i = 0; i < source.specialAbilities.Count; i++) {
-            for(int j =0; j < source.specialAbilities[i].effectHolder.statAdjustments.Count; j++) {
-                EffectStatAdjustment targetAdjEffect = source.specialAbilities[i].effectHolder.statAdjustments[j];
-
-                for(int k = 0; k < targetAdjEffect.adjustments.Count; k++) {
-                    if (targetAdjEffect.adjustments[k] == adj) {
-                        targetAdjEffect.RemoveStatAdjustments(this, adj.stat);
-                        break;
-                    }
-                }
-            }
-        }
-
     }
 
     public virtual void ActivateGlow(Color32 color) {
@@ -1204,13 +1189,13 @@ public class CardVisual : Photon.MonoBehaviour {
                 //    break;
         }
 
-        if(this is CreatureCardVisual) {
-            CreatureCardVisual soul = this as CreatureCardVisual;
+        //if(this is CreatureCardVisual) {
+        //    CreatureCardVisual soul = this as CreatureCardVisual;
 
-            if(soul.battlefieldPos != null && soul.keywords.Contains(Constants.Keywords.Interceptor)) {
-                soul.battlefieldPos.position -= soul.interceptPos;
-            }
-        }
+        //    if(soul.battlefieldPos != null && soul.keywords.Contains(Constants.Keywords.Interceptor)) {
+        //        soul.battlefieldPos.position -= soul.interceptPos;
+        //    }
+        //}
 
         owner.battleFieldManager.ClearAllHighlights();
 
@@ -1667,7 +1652,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX, bool setStats) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(source.gameObject.name + " is removeing stat adjustments");
+        Debug.Log(source.gameObject.name + " is removeing stat adjustments from " + gameObject.name + " ::: " + cardData.cardName);
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
@@ -2239,6 +2224,17 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
+    public void RPCSendTestMessage(PhotonTargets targets, string message) {
+
+        photonView.RPC("SendTestMessage", targets, message);
+    }
+
+    [PunRPC]
+    public void SendTestMessage(string message) {
+
+        Debug.Log(message);
+
+    }
 
 
     #endregion
