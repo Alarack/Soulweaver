@@ -6,7 +6,7 @@ using DeckType = Constants.DeckType;
 [System.Serializable]
 public abstract class Effect {
 
-    public Constants.EffectType effectType;
+    //public Constants.EffectType effectType;
     public CardVisual source;
     public SpecialAbility parentAbility;
 

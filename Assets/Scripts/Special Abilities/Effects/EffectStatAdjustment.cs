@@ -94,6 +94,18 @@ public class EffectStatAdjustment : Effect {
         RemoveStatAdjustments(target);
     }
 
+    public SpecialAbility GetAdjustmentSource(StatAdjustment adj) {
+
+        for (int i = 0; i < adjustments.Count; i++) {
+            if (adjustments[i].uniqueID == adj.uniqueID) {
+                return parentAbility;
+            }
+        }
+
+        return null;
+
+    }
+
     public void InitializeAdjustments() {
         for (int i = 0; i < adjustments.Count; i++) {
 
@@ -123,14 +135,12 @@ public class EffectStatAdjustment : Effect {
 
                 //Debug.Log(spellDamage + " is the amount of spelldamage reported");
 
-                
-
-                adjustments[i].value = baseAdjValues[i] -spellDamage;
+                adjustments[i].value = baseAdjValues[i] - spellDamage;
 
                 source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
             }
 
-
+            //Debug.Log("[EffectStatAdjustment] " + source.gameObject.name + " is applying a stat adjstment");
             target.RPCApplySpecialAbilityStatAdjustment(PhotonTargets.All, adjustments[i], source, !hasVFX, setStatToValue);
         }
     }
@@ -254,6 +264,8 @@ public class EffectStatAdjustment : Effect {
     private void SetAdjustmentValuesByResource() {
         for (int i = 0; i < adjustments.Count; i++) {
             adjustments[i].value = SetValueByAmountOfResource(invertValue);
+            baseAdjValues[i] = adjustments[i].value;
+
             source.RPCUpdateSpecialAbilityStatAdjustment(PhotonTargets.Others, adjustments[i], source, adjustments[i].value);
         }
 
@@ -298,6 +310,5 @@ public class EffectStatAdjustment : Effect {
 
 
     }
-
 
 }

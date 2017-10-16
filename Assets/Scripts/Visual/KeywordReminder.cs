@@ -94,7 +94,11 @@ public class KeywordReminder : MonoBehaviour {
                 break;
 
             case Constants.Keywords.Rush:
-                body.text = "Can't attack immediately, but not Generals.";
+                body.text = "Can attack immediately, but not Generals.";
+                break;
+
+            case Constants.Keywords.Interceptor:
+                body.text = "THis is currently blocking. It must be attacked before non Interceptors";
                 break;
 
 

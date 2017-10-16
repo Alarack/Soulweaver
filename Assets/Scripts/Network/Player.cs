@@ -143,6 +143,8 @@ public class Player : Photon.MonoBehaviour {
                 case GameStates.Draw:
                     DrawFromDomain();
                     DrawFromGrimoire();
+
+                    combatManager.combatState = CombatManager.CombatState.ChoosingAttacker;
                     break;
 
                 case GameStates.Main:
@@ -153,6 +155,7 @@ public class Player : Photon.MonoBehaviour {
                     CheckEndOfTurnEffects();
 
                     myTurn = false;
+                    combatManager.combatState = CombatManager.CombatState.Idle;
 
                     if (opponent != null)
                         opponent.RPCResetState(PhotonTargets.All);

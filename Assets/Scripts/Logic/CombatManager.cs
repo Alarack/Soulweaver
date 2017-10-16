@@ -19,10 +19,20 @@ public class CombatManager : Photon.MonoBehaviour {
         SpellAbilityTargetng
     }
 
+    public enum CombatState {
+        Idle = 0,
+        ChoosingAttacker = 1,
+        ChoosingDefender = 2,
+        SendingCombatEvents = 3,
+        ResolvingCombat = 4,
+        EndingCombat = 5,
+    }
+
 
     public static CombatManager combatManager;
     public DrawLine lineDrawer;
     public TargetingMode targetingMode;
+    public CombatState combatState = CombatState.Idle;
     public LayerMask whatIsCard;
     public bool isChoosingTarget;
     public bool isInCombat;
@@ -67,8 +77,39 @@ public class CombatManager : Photon.MonoBehaviour {
         if (!owner.myTurn)
             return;
 
+
+        switch (combatState) {
+            case CombatState.Idle:
+
+                break;
+
+            case CombatState.ChoosingAttacker:
+                ChooseAttackerState();
+                break;
+
+            case CombatState.ChoosingDefender:
+                ChooseDefenderState();
+                break;
+
+            case CombatState.SendingCombatEvents:
+                SendingCombatEventsState();
+                break;
+
+            case CombatState.ResolvingCombat:
+                ResolvingCombatState();
+                break;
+
+            case CombatState.EndingCombat:
+                EndCombatState();
+                break;
+
+        }
+
+
         if (Input.GetMouseButtonDown(1) && isInCombat && owner.myTurn) {
-            EndCombat();
+            //EndCombat();
+
+            combatState = CombatState.EndingCombat;
         }
 
         if (isInCombat && attacker != null) {
@@ -83,19 +124,65 @@ public class CombatManager : Photon.MonoBehaviour {
             DoStuffOnTarget();
         }
 
+        //if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && !isChoosingTarget && !isInCombat) {
+        //    SelectAttacker();
+        //}
+
+        //if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && isInCombat && selectingDefender) {
+        //    SelectDefender();
+        //}
+
+        //if (attacker != null && defender != null) {
+        //    DoCombat();
+        //   // StartCoroutine(CombatPreflightCheck());
+        //}
+
+    }//End of Update
+
+
+    #region FSM METHODS
+
+    private void ChooseAttackerState() {
         if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && !isChoosingTarget && !isInCombat) {
             SelectAttacker();
         }
+    }
 
+    private void ChooseDefenderState() {
         if (Input.GetMouseButtonDown(0) && targetingMode == TargetingMode.CombatTargeting && isInCombat && selectingDefender) {
             SelectDefender();
         }
-
-        if (attacker != null && defender != null) {
-            DoCombat();
-        }
-
     }
+
+    private void SendingCombatEventsState() {
+        RPCBroadcastAttacker(PhotonTargets.All, attacker);
+        RPCBroadcastDefender(PhotonTargets.All, defender);
+
+        RPCBroadcastCombat(PhotonTargets.All, attacker, defender);
+
+        combatState = CombatState.ResolvingCombat;
+
+        //StartCoroutine(DelayDamage());
+    }
+
+    private IEnumerator DelayDamage() {
+
+        yield return new WaitForSeconds(1f);
+
+        combatState = CombatState.ResolvingCombat;
+    }
+
+    private void ResolvingCombatState() {
+        DoCombat();
+    }
+
+    private void EndCombatState() {
+        EndCombat();
+    }
+
+
+
+    #endregion
 
 
     public void ActivateSpellTargeting() {
@@ -146,6 +233,8 @@ public class CombatManager : Photon.MonoBehaviour {
 
         currentInterceptors = SortInterceptors();
 
+        combatState = CombatState.ChoosingDefender;
+
     }
 
     private void SelectDefender() {
@@ -195,7 +284,9 @@ public class CombatManager : Photon.MonoBehaviour {
             defender = currentTarget;
         }
 
+
         Debug.Log(defender.cardData.cardName + " is Defending");
+        combatState = CombatState.SendingCombatEvents;
 
     }
 
@@ -246,12 +337,15 @@ public class CombatManager : Photon.MonoBehaviour {
         return allInterceptors;
     }
 
+
     private void DoCombat() {
 
-        RPCBroadcastAttacker(PhotonTargets.All, attacker);
-        RPCBroadcastDefender(PhotonTargets.All, defender);
+        //RPCBroadcastAttacker(PhotonTargets.All, attacker);
+        //RPCBroadcastDefender(PhotonTargets.All, defender);
 
-        RPCBroadcastCombat(PhotonTargets.All, attacker, defender);
+        //RPCBroadcastCombat(PhotonTargets.All, attacker, defender);
+
+        //CheckForCombatStatChanges();
 
         if (CheckForCombatEventDeaths()) {
             EndCombat();
@@ -328,6 +422,8 @@ public class CombatManager : Photon.MonoBehaviour {
             tempAttackvalue = -damageDealer.attack;
         }
 
+        //Debug.Log("the attacker's attack value at the time of damage dealt is: " + damageDealer.attack.ToString());
+
         SpecialAbility.StatAdjustment adj = new SpecialAbility.StatAdjustment(Constants.CardStats.Health, tempAttackvalue, false, false, damageDealer);
 
         bool hasVFX = String.IsNullOrEmpty(damageDealer.attackEffect);
@@ -378,6 +474,13 @@ public class CombatManager : Photon.MonoBehaviour {
         return result;
     }
 
+    private void CheckForCombatStatChanges() {
+
+
+        Debug.Log(attacker.attack + " is the attacker's attack");
+
+    }
+
 
     public void EndCombat() {
         if(attacker != null) {
@@ -400,6 +503,8 @@ public class CombatManager : Photon.MonoBehaviour {
         if (lineDrawer.lineRenderer.enabled) {
             lineDrawer.RPCStopDrawing(PhotonTargets.All);
         }
+
+        combatState = CombatState.ChoosingAttacker;
     }
 
     private void DoStuffOnTarget() {
@@ -429,10 +534,16 @@ public class CombatManager : Photon.MonoBehaviour {
 
     }
 
+    private void ShootRay() {
+        clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+    }
+
+
     public CardVisual CardClicked() {
         CardVisual cardSelected = null;
 
         //Debug.Log("Raycasting");
+        ShootRay();
 
         if (Physics.Raycast(clickRay, out clickRayHit, Mathf.Infinity, whatIsCard)) {
 

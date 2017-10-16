@@ -61,7 +61,8 @@ public abstract class SpecialAbility {
     public bool toggleTargetOptions = true;
     public bool toggleAdditonalRequirementOptions;
 
-
+    //Suspend
+    public bool suspend;
 
     [Serializable]
     public class EffectHolder {
@@ -108,12 +109,18 @@ public abstract class SpecialAbility {
     }
 
     public virtual bool ProcessEffect(CardVisual card) {
+        if (suspend)
+            return false;
+
         bool check = CheckConstraints(targetConstraints, card);
 
         if (!check)
             return false;
 
         Debug.Log(abilityName + " on " + source.cardData.cardName + " is firing");
+
+        string message = abilityName + " on " + source.cardData.cardName + " is firing remotely";
+        source.RPCSendTestMessage(PhotonTargets.Others, message);
 
         Effect(card);
 
@@ -140,11 +147,16 @@ public abstract class SpecialAbility {
 
         RegisterListeners();
         InitializeEffects();
-        source.specialAbilities.Add(this);
+
+        if (!source.specialAbilities.Contains(this))
+            source.specialAbilities.Add(this);
+        else {
+            Debug.LogError(abilityName + " has already been added to " + source.gameObject.name + "'s ability list and initialize is trying to add it again.");
+        }
+
     }
 
     public virtual void InitializeEffects() {
-
         effectHolder.InitEffect(effectHolder.statAdjustments, this);
         effectHolder.InitEffect(effectHolder.zoneChanges, this);
         effectHolder.InitEffect(effectHolder.tokenSpanws, this);
@@ -153,37 +165,7 @@ public abstract class SpecialAbility {
         effectHolder.InitEffect(effectHolder.addOrRemoveSpecialAttribute, this);
         effectHolder.InitEffect(effectHolder.chooseOne, this);
         effectHolder.InitEffect(effectHolder.bestowAbility, this);
-
-        //for (int i = 0; i < effectHolder.statAdjustments.Count; i++) {
-        //    effectHolder.statAdjustments[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.zoneChanges.Count; i++) {
-        //    effectHolder.zoneChanges[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.tokenSpanws.Count; i++) {
-        //    effectHolder.tokenSpanws[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.generateResources.Count; i++) {
-        //    effectHolder.generateResources[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.addOrRemoveKeywords.Count; i++) {
-        //    effectHolder.addOrRemoveKeywords[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.addOrRemoveSpecialAttribute.Count; i++) {
-        //    effectHolder.addOrRemoveSpecialAttribute[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.chooseOne.Count; i++) {
-        //    effectHolder.chooseOne[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.bestowAbility.Count; i++) {
-        //    effectHolder.bestowAbility[i].Initialize(source, this);
-        //}
     }
-
-
-
-
-
 
     public List<StatAdjustment> GetAllStatAdjustments() {
         List<StatAdjustment> results = new List<StatAdjustment>();
@@ -302,6 +284,10 @@ public abstract class SpecialAbility {
 
             case EffectType.RetriggerOtherEffect:
                 RetriggerEffect(targetConstraints);
+                break;
+
+            case EffectType.SuspendOtherEffect:
+                SuspendOtherEffect(targetConstraints);
                 break;
 
 
@@ -432,6 +418,20 @@ public abstract class SpecialAbility {
 
         if (target != null) {
             target.RemoveEffect(target.targets);
+        }
+
+    }
+
+    protected void SuspendOtherEffect(ConstraintList constraint) {
+        SpecialAbility target = null;
+
+        for (int i = 0; i < source.specialAbilities.Count; i++) {
+            if (source.specialAbilities[i].abilityName == constraint.abilityToRemove)
+                target = source.specialAbilities[i];
+        }
+
+        if (target != null) {
+            target.suspend = true;
         }
 
     }
@@ -982,9 +982,13 @@ public abstract class SpecialAbility {
             return;
         }
 
+
+
         if (this is LogicTargetedAbility && source.photonView.isMine) {
             ProcessEffect(card);
         }
+
+        //Debug.Log(card.gameObject.name + " is attacking with an attack value of " + ((CreatureCardVisual)card).attack.ToString());
 
         ActivateTargeting();
     }
@@ -1080,6 +1084,8 @@ public abstract class SpecialAbility {
         //if(target == source || sourceOfAdjustment == source)
         //    Debug.Log(target.gameObject.name + " :: " + target.cardData.cardName + " has had " + stat.ToString() + " altered by " + sourceOfAdjustment.gameObject.name + " :: " + sourceOfAdjustment.cardData.cardName);
 
+        //Debug.Log(target.gameObject.name + " has had " + stat.ToString() + " altered by a value of " + value);
+
 
         if (!CheckCreatureStatAltered(triggerConstraints, stat, value, target))
             return;
@@ -1099,6 +1105,7 @@ public abstract class SpecialAbility {
                 effectTarget = source;
                 break;
         }
+
 
         if (!ManageConstraints(effectTarget, this)) {
             return;
@@ -1463,8 +1470,11 @@ public abstract class SpecialAbility {
     private bool CheckCreatureStatAltered(ConstraintList constraint, CardStats stat, int statChangeValue, CardVisual target = null) {
         bool result = true;
 
-        if (stat != constraint.statChanged)
+        if (stat != constraint.statChanged) {
+            //Debug.Log(stat.ToString() + " is not " + constraint.statChanged.ToString());
             return false;
+        }
+
 
 
         //if (stat == CardStats.Health && statChangeValue < 0) {

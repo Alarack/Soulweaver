@@ -116,4 +116,5 @@ MonoBehaviour:
   - SetOpponent
   - ShowStartGameButton
   - ShowOrHideKeywordVisuals
+  - SendTestMessage
   DisableAutoOpenWizard: 1

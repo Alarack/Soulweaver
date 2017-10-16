@@ -252,6 +252,7 @@ public class Constants {
         RetriggerOtherEffect,
         ChooseOne,
         BestowAbility,
+        SuspendOtherEffect,
     }
 
 

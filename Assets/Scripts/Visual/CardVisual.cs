@@ -238,10 +238,10 @@ public class CardVisual : Photon.MonoBehaviour {
 
             multiTargetAbiliies.Add(clone);
             newSpecialAbilities.Add(clone);
-            specialAbilities.Add(clone);
+            //specialAbilities.Add(clone);
 
 
-            Debug.Log(clone.abilityName + " is being added.");
+            Debug.Log(clone.abilityName + " is being added to " + cardData.cardName + " ::: " + gameObject.name);
 
             clone.Initialize(this);
         }
@@ -253,7 +253,9 @@ public class CardVisual : Photon.MonoBehaviour {
 
             userTargtedAbilities.Add(clone);
             newSpecialAbilities.Add(clone);
-            specialAbilities.Add(clone);
+            //specialAbilities.Add(clone);
+
+            Debug.Log(clone.abilityName + ", a targeted ability, is being added to " + cardData.cardName + " ::: " + gameObject.name);
 
             clone.Initialize(this);
 
@@ -376,16 +378,16 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
 
-        if (this is CreatureCardVisual && stat == Constants.CardStats.Health) {
-            CreatureCardVisual soul = this as CreatureCardVisual;
-            value = soul.CalcProtection(value);
+        //if (this is CreatureCardVisual && stat == Constants.CardStats.Health) {
+        //    CreatureCardVisual soul = this as CreatureCardVisual;
+        //    value = soul.CalcProtection(value);
 
-            if (value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
-                value = 0;
-            }
+        //    if (value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
+        //        value = 0;
+        //    }
 
-            //Debug.Log(value + " is the value of the stat adjustment being applied to " + gameObject.name);
-        }
+        //    //Debug.Log(value + " is the value of the stat adjustment being applied to " + gameObject.name);
+        //}
 
         if (sendEvent) {
             EventData data = new EventData();
@@ -648,6 +650,9 @@ public class CardVisual : Photon.MonoBehaviour {
             float difference = (canvasTransform.sizeDelta.y / 2) - Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2));
             float testValue = Mathf.Abs(difference - (canvasTransform.sizeDelta.y * canvasTransform.pivot.y));
 
+            //Debug.Log("off bottom " + testValue + " is offset");
+            //Debug.Log("off bottom " + difference + " is the difference");
+
             if (visualTooltip != null) {
                 visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y + testValue);
             }
@@ -655,8 +660,12 @@ public class CardVisual : Photon.MonoBehaviour {
         }
 
         if (temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2) > canvasTransform.sizeDelta.y / 2) {
-            float difference = (canvasTransform.sizeDelta.y / 2) + Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2));
-            float testValue = Mathf.Abs(difference + (canvasTransform.sizeDelta.y * canvasTransform.pivot.y));
+            //float difference = (canvasTransform.sizeDelta.y / 2) - Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y / 2));
+            float difference = canvasTransform.sizeDelta.y - Mathf.Abs(temp.y + (visualTooltip.cardFront.GetComponent<RectTransform>().sizeDelta.y));
+            float testValue = Mathf.Abs(difference - (canvasTransform.sizeDelta.y * canvasTransform.pivot.y));
+
+            //Debug.Log("off top " + testValue + " is offset");
+            //Debug.Log("off top " + difference + " is the difference");
 
             if (visualTooltip != null) {
                 visualTooltip.transform.localPosition = new Vector2(temp.x, temp.y - testValue);
@@ -1180,6 +1189,14 @@ public class CardVisual : Photon.MonoBehaviour {
                 //    break;
         }
 
+        //if(this is CreatureCardVisual) {
+        //    CreatureCardVisual soul = this as CreatureCardVisual;
+
+        //    if(soul.battlefieldPos != null && soul.keywords.Contains(Constants.Keywords.Interceptor)) {
+        //        soul.battlefieldPos.position -= soul.interceptPos;
+        //    }
+        //}
+
         owner.battleFieldManager.ClearAllHighlights();
 
         RPCShowOrHideKeywordVisual(PhotonTargets.All, false);
@@ -1603,6 +1620,12 @@ public class CardVisual : Photon.MonoBehaviour {
                 targetAdj = allAdjustments[i];
                 //Debug.Log("Match Found!");
 
+
+
+                //if (setStat) {
+                //    RemoveStatAdjustmentsByStat(source, targetAdj);
+                //}
+
                 AlterCardStats(allAdjustments[i].stat, allAdjustments[i].value, allAdjustments[i].source, waitForVFX, !setStat, setStat);
                 statAdjustments.Add(allAdjustments[i]);
             }
@@ -1629,7 +1652,7 @@ public class CardVisual : Photon.MonoBehaviour {
     public void RemoveSpecialAbilityStatAdjustment(int adjID, int sourceID, bool waitForVFX, bool setStats) {
         CardVisual source = Finder.FindCardByID(sourceID);
 
-        Debug.Log(source.gameObject.name + " is removeing stat adjustments");
+        Debug.Log(source.gameObject.name + " is removeing stat adjustments from " + gameObject.name + " ::: " + cardData.cardName);
 
         List<SpecialAbility.StatAdjustment> allAdjustments = source.GatherAllSpecialAbilityStatAdjustments();
 
@@ -2201,6 +2224,17 @@ public class CardVisual : Photon.MonoBehaviour {
     }
 
 
+    public void RPCSendTestMessage(PhotonTargets targets, string message) {
+
+        photonView.RPC("SendTestMessage", targets, message);
+    }
+
+    [PunRPC]
+    public void SendTestMessage(string message) {
+
+        Debug.Log(message);
+
+    }
 
 
     #endregion
