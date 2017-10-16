@@ -157,7 +157,6 @@ public abstract class SpecialAbility {
     }
 
     public virtual void InitializeEffects() {
-
         effectHolder.InitEffect(effectHolder.statAdjustments, this);
         effectHolder.InitEffect(effectHolder.zoneChanges, this);
         effectHolder.InitEffect(effectHolder.tokenSpanws, this);
@@ -166,37 +165,7 @@ public abstract class SpecialAbility {
         effectHolder.InitEffect(effectHolder.addOrRemoveSpecialAttribute, this);
         effectHolder.InitEffect(effectHolder.chooseOne, this);
         effectHolder.InitEffect(effectHolder.bestowAbility, this);
-
-        //for (int i = 0; i < effectHolder.statAdjustments.Count; i++) {
-        //    effectHolder.statAdjustments[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.zoneChanges.Count; i++) {
-        //    effectHolder.zoneChanges[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.tokenSpanws.Count; i++) {
-        //    effectHolder.tokenSpanws[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.generateResources.Count; i++) {
-        //    effectHolder.generateResources[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.addOrRemoveKeywords.Count; i++) {
-        //    effectHolder.addOrRemoveKeywords[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.addOrRemoveSpecialAttribute.Count; i++) {
-        //    effectHolder.addOrRemoveSpecialAttribute[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.chooseOne.Count; i++) {
-        //    effectHolder.chooseOne[i].Initialize(source, this);
-        //}
-        //for (int i = 0; i < effectHolder.bestowAbility.Count; i++) {
-        //    effectHolder.bestowAbility[i].Initialize(source, this);
-        //}
     }
-
-
-
-
-
 
     public List<StatAdjustment> GetAllStatAdjustments() {
         List<StatAdjustment> results = new List<StatAdjustment>();

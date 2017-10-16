@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: 
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
   faction: 5
   primaryCardType: 5
   otherCardTypes: 
@@ -63,6 +64,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -119,6 +122,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -145,7 +150,7 @@ MonoBehaviour:
       resourceGainedOrLost: 0
       abilityToGatherTargetsFrom: 
     effect: 4
-    abilityName: 
+    abilityName: Gain souls
     source: {fileID: 0}
     targets: []
     triggeringCards: []
@@ -180,6 +185,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -241,6 +248,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -288,6 +297,7 @@ MonoBehaviour:
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
+    suspend: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0
