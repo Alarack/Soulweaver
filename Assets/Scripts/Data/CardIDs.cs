@@ -453,6 +453,7 @@ public class CardIDs {
 		WAR_TKN_ShadowOfLurik = 73014,
         WAR_Enforcer = 73015,
         WAR_VeteranHavocCaptain = 73016,
+        WAR_TKN_TagTeamToken = 73017,
 
 		//Ferryman Sub Faction 76001 - 79000
 		WAR_TavernOfSouls = 76001,
