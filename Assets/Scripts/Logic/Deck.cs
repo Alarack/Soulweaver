@@ -647,7 +647,7 @@ public class Deck : Photon.MonoBehaviour {
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowBattleToken);
 
                 if (card.photonView.isMine)
-                    card.battlefieldPos = owner.battleFieldManager.AssignSpecificPosition(owner.battleFieldManager.transform.FindChild("PlayerBattlePos"), card);
+                    card.battlefieldPos = owner.battleFieldManager.AssignSpecificPosition(owner.battleFieldManager.transform.Find("PlayerBattlePos"), card);
 
                 break;
 

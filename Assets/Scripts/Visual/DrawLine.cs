@@ -26,7 +26,7 @@ public class DrawLine : Photon.MonoBehaviour {
 
         lineRenderer.SetPosition(0, _initialPosition);
 
-        lineRenderer.numPositions = 2;
+        lineRenderer.positionCount = 2;
         lineRenderer.enabled = true;
 
         lineRenderer.SetPosition(1, _currentPosition);
@@ -57,7 +57,7 @@ public class DrawLine : Photon.MonoBehaviour {
 
         lineRenderer.SetPosition(0, _initialPosition);
 
-        lineRenderer.numPositions = 2;
+        lineRenderer.positionCount = 2;
         lineRenderer.enabled = true;
 
         lineRenderer.SetPosition(1, _targetPosition);
