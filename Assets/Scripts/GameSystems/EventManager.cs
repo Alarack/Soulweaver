@@ -86,7 +86,7 @@ public class EventManager {
             // We can't have the copy list as a global one (created once), because nested events sent while events are sent will recreate it and mess everything up
             // We would need to keep a stack of lists and add/remove as we go through events --Rudy
 
-            Profiler.BeginSample("EventManager.SendEvent(" + type + ") to " + eventListeners.Count + " listeners");
+            //Profiler.BeginSample("EventManager.SendEvent(" + type + ") to " + eventListeners.Count + " listeners");
 
             for (int i = 0; i < eventListeners.Count; i++) {
 #if UNITY_EDITOR || DEBUG
@@ -135,7 +135,7 @@ public class EventManager {
 #endif
             }
 
-            Profiler.EndSample();
+           //Profiler.EndSample();
 
 #if UNITY_EDITOR
             __sentEventEntries.Add(new __EventEntry(type, eventData, listenerList));

@@ -515,7 +515,8 @@ public class CreatureCardVisual : CardVisual {
                 HandleVolatile(causeOfDeath);
             }
 
-            currentDeck.TransferCard(photonView.viewID, owner.activeCrypt.GetComponent<Deck>().photonView.viewID);
+            //currentDeck.TransferCard(photonView.viewID, owner.activeCrypt.GetComponent<Deck>().photonView.viewID);
+            StartCoroutine(SendToCrypt());
 
             EventData data = new EventData();
 
@@ -540,11 +541,16 @@ public class CreatureCardVisual : CardVisual {
     }
 
 
+    private IEnumerator SendToCrypt() {
+        yield return new WaitForSeconds(0.1f);
+
+        currentDeck.TransferCard(photonView.viewID, owner.activeCrypt.GetComponent<Deck>().photonView.viewID);
+    }
+
 
     protected override IEnumerator DisplayDeathEffect() {
         if (currentDeck.decktype != Constants.DeckType.Battlefield)
             yield return null;
-
 
         yield return new WaitForSeconds(0.7f);
         GameObject deathVFX;
@@ -561,13 +567,10 @@ public class CreatureCardVisual : CardVisual {
             CardVFX cardVFX = deathVFX.GetComponent<CardVFX>();
             cardVFX.Initialize(this, false, false);
         }
-
     }
 
     public override void DisplaySummoneEffect() {
         base.DisplaySummoneEffect();
-
-
 
         GameObject summonVFX;
 
@@ -580,18 +583,11 @@ public class CreatureCardVisual : CardVisual {
         }
 
         summonVFX.GetComponent<CardVFX>().Initialize(this, false, false);
-
-
     }
 
     public void RPCShowDamage(PhotonTargets targets, int damage) {
-        //GameObject dmgVFX = PhotonNetwork.Instantiate(damageVFX, transform.position, Quaternion.identity, 0) as GameObject;
-        //CardVFX vfx = dmgVFX.GetComponent<CardVFX>();
-        //int id = dmgVFX.GetPhotonView().viewID;
-
         photonView.RPC("ShowDamage", targets, damage);
     }
-
 
     [PunRPC]
     public void ShowDamage(int value) {

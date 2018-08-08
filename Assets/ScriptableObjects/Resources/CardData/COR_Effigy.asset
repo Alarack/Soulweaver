@@ -20,6 +20,7 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
   faction: 1
   primaryCardType: 1
   otherCardTypes: 
@@ -62,6 +63,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -118,6 +121,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -179,6 +184,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -240,6 +247,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -269,8 +278,7 @@ MonoBehaviour:
       zoneChanges: []
       tokenSpanws: []
       statAdjustments:
-      - effectType: 0
-        source: {fileID: 0}
+      - source: {fileID: 0}
         valueSetmethod: 1
         adjustments:
         - stat: 2
@@ -329,6 +337,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
@@ -372,6 +382,7 @@ MonoBehaviour:
     toggleEffectOptions: 0
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
+    suspend: 0
     processTriggerOnWhom: 0
   multiTargetAbilities:
   - trigger: 0a000000
@@ -408,6 +419,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 1
       triggerablePrimaryAbilityName: Target Soul
       abilityToRemove: 
@@ -464,6 +477,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -525,6 +540,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -586,6 +603,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -615,8 +634,7 @@ MonoBehaviour:
       zoneChanges: []
       tokenSpanws: []
       statAdjustments:
-      - effectType: 0
-        source: {fileID: 0}
+      - source: {fileID: 0}
         valueSetmethod: 1
         adjustments:
         - stat: 2
@@ -661,6 +679,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
@@ -692,8 +712,7 @@ MonoBehaviour:
         invertValue: 0
         setStatToValue: 0
         maxValue: 0
-      - effectType: 0
-        source: {fileID: 0}
+      - source: {fileID: 0}
         valueSetmethod: 1
         adjustments:
         - stat: 3
@@ -738,6 +757,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
@@ -769,8 +790,7 @@ MonoBehaviour:
         invertValue: 0
         setStatToValue: 0
         maxValue: 0
-      - effectType: 0
-        source: {fileID: 0}
+      - source: {fileID: 0}
         valueSetmethod: 1
         adjustments:
         - stat: 5
@@ -815,6 +835,8 @@ MonoBehaviour:
           triggeredThisTurn: 0
           neverTargetSelf: 0
           suspendTrigger: 0
+          dependantOnOncePerTurnAbility: 0
+          oncePerTurnAbilityname: 
           triggerbySpecificAbility: 0
           triggerablePrimaryAbilityName: 
           abilityToRemove: 
@@ -858,6 +880,7 @@ MonoBehaviour:
     toggleEffectOptions: 0
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
+    suspend: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
@@ -897,6 +920,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -953,6 +978,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -984,7 +1011,7 @@ MonoBehaviour:
     targets: []
     triggeringCards: []
     targetConstraints:
-      types: 
+      types: 04000000
       owner: 0
       whosTurn: 0
       primaryType: 
@@ -999,8 +1026,8 @@ MonoBehaviour:
       notSpecialAttribute: 0
       attunement: 
       notAttunement: 0
-      currentZone: 
-      notCurrentZone: 0
+      currentZone: 04000000
+      notCurrentZone: 1
       previousZone: 
       notPreviousZone: 0
       creatureStatus: 
@@ -1014,6 +1041,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -1075,6 +1104,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -1102,8 +1133,7 @@ MonoBehaviour:
       abilityToGatherTargetsFrom: 
     effectHolder:
       zoneChanges:
-      - effectType: 0
-        source: {fileID: 0}
+      - source: {fileID: 0}
         targetLocation: 4
       tokenSpanws: []
       statAdjustments: []
@@ -1119,6 +1149,7 @@ MonoBehaviour:
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
+    suspend: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 4
     numberofTargets: 0

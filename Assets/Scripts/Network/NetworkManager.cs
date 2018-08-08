@@ -90,7 +90,7 @@ public class NetworkManager : Photon.MonoBehaviour {
             //player2.GetComponent<Player>().RPCCheckOpponents(PhotonTargets.AllBufferedViaServer);
         }
 
-        sceneCamera.enabled = false;
+        sceneCamera.gameObject.SetActive(false);
 
     }
 

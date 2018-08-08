@@ -90,13 +90,11 @@ public class Deck : Photon.MonoBehaviour {
             //Debug.Log(card.gameObject.name + " has been removed from " + decktype.ToString());
         }
 
-
         //List<CardVisual> cardsOnboard = Finder.FindAllCardsInZone(DeckType.Battlefield);
 
         //foreach (CardVisual c in cardsOnboard) {
         //    Debug.Log(c.gameObject.name + " is on the battlefield");
         //}
-
 
         EventData data = new EventData();
 
@@ -104,9 +102,6 @@ public class Deck : Photon.MonoBehaviour {
         data.AddMonoBehaviour("Deck", this);
 
         Grid.EventManager.SendEvent(Constants.GameEvent.CardLeftZone, data);
-
-
-
 
     }
 
@@ -537,7 +532,6 @@ public class Deck : Photon.MonoBehaviour {
 
         cardVisual.cardData = cardData;
     }
-
 
 
     public void RPCSpawnCardRemote(PhotonTargets targets, CardIDs.CardID dataID, string prefabname, DeckType targetDeck = DeckType.None) {

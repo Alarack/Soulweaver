@@ -280,8 +280,7 @@ MonoBehaviour:
       zoneChanges: []
       tokenSpanws: []
       statAdjustments:
-      - effectType: 0
-        source: {fileID: 0}
+      - source: {fileID: 0}
         valueSetmethod: 0
         adjustments:
         - stat: 4
@@ -371,6 +370,7 @@ MonoBehaviour:
     toggleEffectOptions: 0
     toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
+    suspend: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 1
     numberofTargets: 0
@@ -624,8 +624,7 @@ MonoBehaviour:
     effectHolder:
       zoneChanges: []
       tokenSpanws:
-      - effectType: 0
-        source: {fileID: 0}
+      - source: {fileID: 0}
         spawnMethod: 0
         spawnableTokenDataName: WAR_TKN_Retribution
         spawnTokenLocation: 5
@@ -646,6 +645,7 @@ MonoBehaviour:
     toggleEffectOptions: 0
     toggleTargetOptions: 0
     toggleAdditonalRequirementOptions: 0
+    suspend: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 0
     numberofTargets: 0
