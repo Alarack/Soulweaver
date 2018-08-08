@@ -90,13 +90,11 @@ public class Deck : Photon.MonoBehaviour {
             //Debug.Log(card.gameObject.name + " has been removed from " + decktype.ToString());
         }
 
-
         //List<CardVisual> cardsOnboard = Finder.FindAllCardsInZone(DeckType.Battlefield);
 
         //foreach (CardVisual c in cardsOnboard) {
         //    Debug.Log(c.gameObject.name + " is on the battlefield");
         //}
-
 
         EventData data = new EventData();
 
@@ -104,9 +102,6 @@ public class Deck : Photon.MonoBehaviour {
         data.AddMonoBehaviour("Deck", this);
 
         Grid.EventManager.SendEvent(Constants.GameEvent.CardLeftZone, data);
-
-
-
 
     }
 
@@ -539,7 +534,6 @@ public class Deck : Photon.MonoBehaviour {
     }
 
 
-
     public void RPCSpawnCardRemote(PhotonTargets targets, CardIDs.CardID dataID, string prefabname, DeckType targetDeck = DeckType.None) {
         int cardDataID = (int)dataID;
         int deckTypeEnum;
@@ -647,7 +641,7 @@ public class Deck : Photon.MonoBehaviour {
                 card.RPCChangeCardVisualState(PhotonTargets.All, CardVisual.CardVisualState.ShowBattleToken);
 
                 if (card.photonView.isMine)
-                    card.battlefieldPos = owner.battleFieldManager.AssignSpecificPosition(owner.battleFieldManager.transform.FindChild("PlayerBattlePos"), card);
+                    card.battlefieldPos = owner.battleFieldManager.AssignSpecificPosition(owner.battleFieldManager.transform.Find("PlayerBattlePos"), card);
 
                 break;
 

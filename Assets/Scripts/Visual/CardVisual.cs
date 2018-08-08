@@ -378,32 +378,6 @@ public class CardVisual : Photon.MonoBehaviour {
             }
         }
 
-        //if (this is CreatureCardVisual && stat == Constants.CardStats.Health) {
-        //    CreatureCardVisual soul = this as CreatureCardVisual;
-        //    value = soul.CalcProtection(value);
-
-        //    if (value < 0 && keywords.Contains(Constants.Keywords.ImmuneToGenerals) && source.primaryCardType == Constants.CardType.Player) {
-        //        value = 0;
-        //    }
-
-        //    //Debug.Log(value + " is the value of the stat adjustment being applied to " + gameObject.name);
-        //}
-
-        if (sendEvent) {
-            EventData data = new EventData();
-
-            data.AddInt("Stat", (int)stat);
-            data.AddInt("Value", value);
-            data.AddMonoBehaviour("Target", this);
-            data.AddMonoBehaviour("Source", source);
-
-
-            //Debug.Log(gameObject.name + " :: " + cardData.cardName + " has had " + stat.ToString() + " alterd by " + source.gameObject.name + " :: " + source.cardData.cardName);
-
-
-            Grid.EventManager.SendEvent(Constants.GameEvent.CreatureStatAdjusted, data);
-        }
-
         switch (stat) {
             case Constants.CardStats.Cost:
 
@@ -422,6 +396,19 @@ public class CardVisual : Photon.MonoBehaviour {
                 TextTools.AlterTextColor(essenceCost, cardData.cardCost, cardCostText, true);
                 cardCostText.text = essenceCost.ToString();
                 break;
+        }
+
+
+        if (sendEvent) {
+            EventData data = new EventData();
+
+            data.AddInt("Stat", (int)stat);
+            data.AddInt("Value", value);
+            data.AddMonoBehaviour("Target", this);
+            data.AddMonoBehaviour("Source", source);
+
+            //Debug.Log(gameObject.name + " :: " + cardData.cardName + " has had " + stat.ToString() + " alterd by " + source.gameObject.name + " :: " + source.cardData.cardName);
+            Grid.EventManager.SendEvent(Constants.GameEvent.CreatureStatAdjusted, data);
         }
 
         if (waitForVFX) {

@@ -21,12 +21,13 @@ MonoBehaviour:
   attackEffect: VFX_Primal_Slash
   movingVFX: 0
   deathVFX: 
+  summonVFX: 
   faction: 1
   primaryCardType: 1
   otherCardTypes: 
   attunements: 08000000
   subTypes: 12000000
-  keywords: 1a000000
+  keywords: 1a00000001000000
   specialAbilityTypes: 
   userTargtedAbilities: []
   multiTargetAbilities:
@@ -64,6 +65,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -120,6 +123,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -195,6 +200,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -256,6 +263,8 @@ MonoBehaviour:
       triggeredThisTurn: 0
       neverTargetSelf: 0
       suspendTrigger: 0
+      dependantOnOncePerTurnAbility: 0
+      oncePerTurnAbilityname: 
       triggerbySpecificAbility: 0
       triggerablePrimaryAbilityName: 
       abilityToRemove: 
@@ -284,8 +293,7 @@ MonoBehaviour:
     effectHolder:
       zoneChanges: []
       tokenSpanws:
-      - effectType: 0
-        source: {fileID: 0}
+      - source: {fileID: 0}
         spawnMethod: 1
         spawnableTokenDataName: 
         spawnTokenLocation: 5
@@ -306,6 +314,7 @@ MonoBehaviour:
     toggleEffectOptions: 1
     toggleTargetOptions: 1
     toggleAdditonalRequirementOptions: 0
+    suspend: 0
     processTriggerOnWhom: 0
     logicTargetingMethod: 2
     numberofTargets: 1

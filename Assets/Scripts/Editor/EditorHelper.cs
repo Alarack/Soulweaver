@@ -1651,12 +1651,12 @@ public static class EditorHelper {
 
         GameObject instancedParent = null;
 
-        if (PrefabUtility.GetPrefabParent(prefabInstance) as GameObject == parent)
+        if (PrefabUtility.GetCorrespondingObjectFromSource(prefabInstance) as GameObject == parent)
             instancedParent = prefabInstance;
 
         if (instancedParent == null)
             foreach (Transform transform in prefabInstance.transform)
-                if (PrefabUtility.GetPrefabParent(transform.gameObject) as GameObject == parent)
+                if (PrefabUtility.GetCorrespondingObjectFromSource(transform.gameObject) as GameObject == parent)
                     instancedParent = transform.gameObject;
 
         if (instancedParent == null)
@@ -1669,10 +1669,10 @@ public static class EditorHelper {
         newChild.transform.parent = instancedParent.transform;
 
         // Update actual prefab
-        PrefabUtility.ReplacePrefab(prefabInstance, PrefabUtility.GetPrefabParent(prefabInstance), ReplacePrefabOptions.ConnectToPrefab);
+        PrefabUtility.ReplacePrefab(prefabInstance, PrefabUtility.GetCorrespondingObjectFromSource(prefabInstance), ReplacePrefabOptions.ConnectToPrefab);
 
         // Get the actual child under the updated prefab (not the one that will get destroyed)
-        GameObject prefabChild = PrefabUtility.GetPrefabParent(newChild) as GameObject;
+        GameObject prefabChild = PrefabUtility.GetCorrespondingObjectFromSource(newChild) as GameObject;
 
         // Get rid of prefab instance
         GameObject.DestroyImmediate(prefabInstance);
@@ -1705,13 +1705,13 @@ public static class EditorHelper {
         GameObject instanceChild = null;
 
         foreach (Transform tempChild in prefabInstance.transform) {
-            if (PrefabUtility.GetPrefabParent(tempChild.gameObject) as GameObject == child) {
+            if (PrefabUtility.GetCorrespondingObjectFromSource(tempChild.gameObject) as GameObject == child) {
                 instanceChild = tempChild.gameObject;
                 break;
             }
 
             foreach (Transform tempGrandchild in tempChild.transform) {
-                if (PrefabUtility.GetPrefabParent(tempGrandchild.gameObject) as GameObject == child) {
+                if (PrefabUtility.GetCorrespondingObjectFromSource(tempGrandchild.gameObject) as GameObject == child) {
                     instanceChild = tempGrandchild.gameObject;
                     break; // Come on C#, break 2;
                 }
@@ -1728,7 +1728,7 @@ public static class EditorHelper {
             GameObject.DestroyImmediate(instanceChild);
 
             // Update actual prefab
-            PrefabUtility.ReplacePrefab(prefabInstance, PrefabUtility.GetPrefabParent(prefabInstance), ReplacePrefabOptions.ConnectToPrefab);
+            PrefabUtility.ReplacePrefab(prefabInstance, PrefabUtility.GetCorrespondingObjectFromSource(prefabInstance), ReplacePrefabOptions.ConnectToPrefab);
 
             // Get rid of prefab instance
             GameObject.DestroyImmediate(prefabInstance);
@@ -1768,7 +1768,7 @@ public static class EditorHelper {
         Component[] tempChildren = prefabInstance.GetComponentsInChildren<Component>();
 
         foreach (Component tempChild in tempChildren) {
-            if (PrefabUtility.GetPrefabParent(tempChild) as Component == child) {
+            if (PrefabUtility.GetCorrespondingObjectFromSource(tempChild) as Component == child) {
                 instanceChild = tempChild;
                 break;
             }
@@ -1781,7 +1781,7 @@ public static class EditorHelper {
             GameObject.DestroyImmediate(instanceChild);
 
             // Update actual prefab
-            PrefabUtility.ReplacePrefab(prefabInstance, PrefabUtility.GetPrefabParent(prefabInstance), ReplacePrefabOptions.ConnectToPrefab);
+            PrefabUtility.ReplacePrefab(prefabInstance, PrefabUtility.GetCorrespondingObjectFromSource(prefabInstance), ReplacePrefabOptions.ConnectToPrefab);
 
             // Get rid of prefab instance
             GameObject.DestroyImmediate(prefabInstance);
